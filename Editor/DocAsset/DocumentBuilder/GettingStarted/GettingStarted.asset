@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: GettingStarted
+  m_EditorClassIdentifier: 
+  Name: GettingStarted
+  DocType: 4
+  MenuIcon: {fileID: 2800000, guid: fca640037a0513a49b8928326ed227b4, type: 3}
+  SubPages:
+  - {fileID: 11400000, guid: 84f638fa72b6a2049afb9bc1ab76ee81, type: 2}
+  - {fileID: 11400000, guid: 20d67fadd0b281740a4dbe4d36fe7fdd, type: 2}
+  - {fileID: 11400000, guid: 1afa0f79110664144b6843f8381efde7, type: 2}
+  - {fileID: 11400000, guid: e31f5ccf09677214fbd3ef18b7b50dab, type: 2}
+  Components:
+  - ComponentType: 3
+    Text:
+    - Intro
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - "Here will show you how to create your own document.\nAll steps can be finish
+      in this window. For customized, \nyou can do it in UnityEditor or even in Scripts.\n"
+    Picture: {fileID: 0}

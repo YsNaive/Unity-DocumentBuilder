@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: IterateAllRecipes
+  m_EditorClassIdentifier: 
+  Name: 
+  DocType: 0
+  MenuIcon: {fileID: 2800000, guid: fa744213ccd214341971668cb5afda0d, type: 3}
+  SubPages: []
+  Components:
+  - ComponentType: 3
+    Text:
+    - Description
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - Iterate through recipeList in this table
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - bool
+    - IterateAllRecipes
+    - 'Func<SOCraftRecipe,int,bool>
+
+      func'
+    - iterate through recipeList
+    Picture: {fileID: 0}
+  - ComponentType: 5
+    Text:
+    - input func parameters%column%
+    - SOCraftRecipe%column%Iterating recipe
+    - int%column%Iterating recipe's index
+    - return bool%column%return true if you finish and want\nto break iterator.
+    Picture: {fileID: 0}

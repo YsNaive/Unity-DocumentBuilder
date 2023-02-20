@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: Inventory
+  m_EditorClassIdentifier: 
+  Name: Inventory
+  DocType: 1
+  MenuIcon: {fileID: 2800000, guid: a701817c8dd65c54c819e08fac8e2daf, type: 3}
+  SubPages:
+  - {fileID: 11400000, guid: 32a22d7c5aef83649b4af8fc8b525c28, type: 2}
+  - {fileID: 11400000, guid: da45bbda0ff934b4889d6672d7e31dd6, type: 2}
+  - {fileID: 11400000, guid: 813bf76faae143b4a8e8a857f85004c6, type: 2}
+  - {fileID: 11400000, guid: f9a74ff271984d04781ca90dd115d761, type: 2}
+  - {fileID: 11400000, guid: 4bb81f5febb1db14382441f15ef6f820, type: 2}
+  - {fileID: 11400000, guid: 41d298849468a5f4fbc1ee72a217da6d, type: 2}
+  - {fileID: 11400000, guid: 69f9a982ae20632469074afb3ff005ce, type: 2}
+  Components:
+  - ComponentType: 3
+    Text:
+    - Description
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - "With this class, you can controller item IO easily.\n- Feture\n    - Item
+      IO\n    - Item Search\n    - Item Crafting\n    - Custom Inspector"
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - Properties
+    Picture: {fileID: 0}
+  - ComponentType: 5
+    Text:
+    - Type%column%Name%column%Get%column%Set%column%Usage
+    - "Action%column%OnItemChanged%column%   \u25A0%column%   \u25A0%column%Called
+      when Inventory's state changed."
+    - "ItemStack[ ]%column%Slots%column%   \u25A0%column%   \u25A0%column%use as
+      Inventory's slot."
+    - "int%column%Capacity%column%   \u25A0%column%%column%"
+    - "int%column%Size%column%   \u25A0%column%%column%Inventory's useable size."
+    - "int%column%Count%column%   \u25A0%column%%column%How many slots has been used."
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - Methods
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - ItemStack
+    - Push
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - ItemStack
+    - PushAt
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - void
+    - Pop
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - void
+    - PopAt
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - bool
+    - TryPop
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - bool
+    - TryPopAt
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - void
+    - Swap
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - List<int>
+    - FindItem
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - List<int>
+    - FindItemByTag
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - int
+    - CountItem
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - void
+    - Sort
+    - 
+    Picture: {fileID: 0}

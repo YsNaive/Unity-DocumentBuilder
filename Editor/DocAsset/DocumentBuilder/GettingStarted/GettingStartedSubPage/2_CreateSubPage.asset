@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: 2_CreateSubPage
+  m_EditorClassIdentifier: 
+  Name: Create Subpage
+  DocType: 8
+  MenuIcon: {fileID: 2800000, guid: 16d4dc9b017898842af40885ffb79c02, type: 3}
+  SubPages: []
+  Components:
+  - ComponentType: 3
+    Text:
+    - 2.1 Select your Book and change into Edit Mode
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.28
+    Picture: {fileID: 2800000, guid: a738cef2875d77f4eacb13f9664ebe88, type: 3}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - 2.2 Edit Mode will show you all elements can edit.
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - "it's same with ScriptableObject's Inspector. So you can also \nedit it on
+      Inspector,  but in this  window is more  convenient."
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.52
+    Picture: {fileID: 2800000, guid: 6220b26908f9c994485fc877209e4ee6, type: 3}
+  - ComponentType: 5
+    Text:
+    - Editing Target%column%The ScriptableObject asset\nthat you are editing.
+    - Name%column%Little title display at UpLeft
+    - Document Icon Type%column%Little icon display in left Menu
+    - Sub Pages%column%Will show it's subpage in left Menu
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - 2.3 Click AddSubpage button
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.52
+    Picture: {fileID: 2800000, guid: fbf7158359bc5a943a880ed240cc9517, type: 3}
+  - ComponentType: 0
+    Text:
+    - "Now you can select exist document or use Auto Create\n\n- Exist document\n      
+      Create DocInformation in same way as create BookRoot\n       and select or
+      drag it into field.\n\n- AutoCreate\n       Click AutoCreate and name the new
+      page. If the name is\n       not allow,  you will  not be  able to  click \"Create\"
+      button.\n       It will auto create SubFolder in editing target's folder and\n      
+      generate asset in it.\n"
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.9
+    Picture: {fileID: 2800000, guid: f76e798b3029e144eb2130f478dca435, type: 3}
+  - ComponentType: 0
+    Text:
+    - Now it will appear in menu
+    Picture: {fileID: 0}

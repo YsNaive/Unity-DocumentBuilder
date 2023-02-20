@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: SetItem
+  m_EditorClassIdentifier: 
+  Name: 
+  DocType: 0
+  MenuIcon: {fileID: 2800000, guid: fa744213ccd214341971668cb5afda0d, type: 3}
+  SubPages: []
+  Components:
+  - ComponentType: 3
+    Text:
+    - Description
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - "Set this ItemStack.\n\nValue asigned before will not affect in this \nfunction
+      and the count limited will  decide \nby SOItemBase.StackLimit."
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - int
+    - SetItem
+    - 'SOItemBase
+
+      item'
+    - 'int
+
+      count'
+    - "Set input parametor to the value,  but \nif count bigger than Item's StackLimit,\nIt 
+      only  set  it  to  the  limit  and return \noverflow count."
+    Picture: {fileID: 0}

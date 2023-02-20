@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: 4_DocComponent
+  m_EditorClassIdentifier: 
+  Name: Doc Component
+  DocType: 8
+  MenuIcon: {fileID: 2800000, guid: 16d4dc9b017898842af40885ffb79c02, type: 3}
+  SubPages: []
+  Components:
+  - ComponentType: 3
+    Text:
+    - Description
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - 'Here will show you every Types od DocComponent
+
+      the picture is layout
+      in EditMode, and below is the result.'
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - Description
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.59
+    Picture: {fileID: 2800000, guid: 4085b861f7b64f94d8a3ed029b9e3b0b, type: 3}
+  - ComponentType: 0
+    Text:
+    - Just type description in the field
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - '
+
+'
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - Func Display
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.745
+    Picture: {fileID: 2800000, guid: 2a17cd89ebe8573478db17e56f589d74, type: 3}
+  - ComponentType: 2
+    Text:
+    - void
+    - MyFunc
+    - 'int
+
+      index'
+    - You can display your function and usage with color !
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - '
+
+'
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - Label
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.6
+    Picture: {fileID: 2800000, guid: 1ae7498efdf6c1c4c9b96737ae662890, type: 3}
+  - ComponentType: 3
+    Text:
+    - Yea, It's label
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - '
+
+'
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - Picture
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.6
+    Picture: {fileID: 2800000, guid: 817201c40e652ea4e99cb11be4f86c19, type: 3}
+  - ComponentType: 0
+    Text:
+    - 'Notice that if you want to display picture,
+
+      you need to set Texture
+      Type into Sprite
+
+      and Resize Algorithm to Bilinear.'
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - '
+
+'
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - Matrix
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.6
+    Picture: {fileID: 2800000, guid: 81b10719c5cd07c48bca128ac206aad9, type: 3}
+  - ComponentType: 5
+    Text:
+    - This%column%is%column%Matrix
+    - and%column%you can%column%use\nNewLine !
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - '
+
+'
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - DividerLine
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.6
+    Picture: {fileID: 2800000, guid: 5a7d5fe0e0549694aa6e4e6a0821414c, type: 3}
+  - ComponentType: 6
+    Text:
+    - As you can see, It's Divider Line
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - '
+
+'
+    Picture: {fileID: 0}

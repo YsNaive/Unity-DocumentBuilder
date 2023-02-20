@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: Swap
+  m_EditorClassIdentifier: 
+  Name: Inventory.Swap
+  DocType: 0
+  MenuIcon: {fileID: 2800000, guid: fa744213ccd214341971668cb5afda0d, type: 3}
+  SubPages: []
+  Components:
+  - ComponentType: 3
+    Text:
+    - Description
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - swap two slot
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - void
+    - Swap
+    - 'int
+
+      a'
+    - 'int
+
+      b'
+    - this overload is for two InventorySlot in same Inventory
+    Picture: {fileID: 0}
+  - ComponentType: 5
+    Text:
+    - a%column%index of first InventorySlot
+    - b%column%index of second InventorySlot
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - void
+    - Swap
+    - "Inventory \ntarget"
+    - 'int
+
+      targetIndex'
+    - 'int
+
+      selfIndex'
+    - this overload is for two InventorySlot in different Inventory
+    Picture: {fileID: 0}
+  - ComponentType: 5
+    Text:
+    - target%column%the target Inventory
+    - targetIndex%column%the index of InventorySlot in target
+    - selfIndex%column%index of InventorySlot in the self Inventory
+    Picture: {fileID: 0}

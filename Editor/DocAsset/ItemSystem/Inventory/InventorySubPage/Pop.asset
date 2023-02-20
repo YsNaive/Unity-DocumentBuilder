@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: Pop
+  m_EditorClassIdentifier: 
+  Name: 
+  DocType: 2
+  MenuIcon: {fileID: 2800000, guid: d6e6bc97dd225ac44be5c5bc867bc81d, type: 3}
+  SubPages:
+  - {fileID: 11400000, guid: f46100a7acdf1ad428ddd17eec41b220, type: 2}
+  - {fileID: 11400000, guid: 06b2888cdae66a64f92013b6837545ac, type: 2}
+  - {fileID: 11400000, guid: 4dbd4b6cf6ac55c4e95f79bb1b6ee201, type: 2}
+  - {fileID: 11400000, guid: 7ff78761f4f92bf41b2e0d16b54bcdf6, type: 2}
+  Components:
+  - ComponentType: 0
+    Text:
+    - Method about Pop item into inventory.
+    Picture: {fileID: 0}

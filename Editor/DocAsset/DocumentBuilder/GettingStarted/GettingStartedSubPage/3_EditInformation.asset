@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: 3_EditInformation
+  m_EditorClassIdentifier: 
+  Name: Edit Information
+  DocType: 8
+  MenuIcon: {fileID: 2800000, guid: 16d4dc9b017898842af40885ffb79c02, type: 3}
+  SubPages: []
+  Components:
+  - ComponentType: 3
+    Text:
+    - Description
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - 'DocInformation is construct by many DocComponent.
+
+      You can add  as 
+      many as  you  want.
+
+
+      You can checkout DocComponent type''s detail in
+      the next part.'
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - Add New DocComponent
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - "Just use Add or Paste, \nbut notice that you can't Paste before Copy"
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.75
+    Picture: {fileID: 2800000, guid: 9d1a976230d64054eac6a77144db7c29, type: 3}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - Basic Edit Function
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.53
+    Picture: {fileID: 2800000, guid: dd8a9c88126881b42bd7723ea88bb133, type: 3}
+  - ComponentType: 5
+    Text:
+    - "\u25B2 & \u25BC%column%Change the sort order of components"
+    - Copy%column%Copy this component into System Clipboard
+    - Paste%column%Paste component from System Clipboard
+    - Dup%column%Duplicate this component
+    - Type%column%Select this component's type
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - DocComponent Template
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - "\rAfter creating some general component structures, \nyou can store  them 
+      as  Templates,  which can be \ncalled directly in the future."
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.51
+    Picture: {fileID: 2800000, guid: 7bfc4d3fa49b7b84498aff3d3a0e36e0, type: 3}
+  - ComponentType: 5
+    Text:
+    - Save as new%column%Save this component structures
+    - Loas from old%column%Load structures saved before
+    - edit%column%You can delete useless Template here
+    Picture: {fileID: 0}

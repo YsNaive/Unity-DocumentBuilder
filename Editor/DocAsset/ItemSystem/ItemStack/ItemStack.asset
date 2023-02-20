@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: ItemStack
+  m_EditorClassIdentifier: 
+  Name: ItemStack
+  DocType: 1
+  MenuIcon: {fileID: 2800000, guid: a701817c8dd65c54c819e08fac8e2daf, type: 3}
+  SubPages:
+  - {fileID: 11400000, guid: 733489152ec99664dba9acf0ce56f179, type: 2}
+  - {fileID: 11400000, guid: a1f4e7bb1f22cc3498a81ffcf74d72e6, type: 2}
+  - {fileID: 11400000, guid: 84adb6a896dee7342a7f49799c191aa7, type: 2}
+  - {fileID: 11400000, guid: 2f6ce74d30758254493ce5b789368d1f, type: 2}
+  Components:
+  - ComponentType: 3
+    Text:
+    - Description
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - "A struct to save items data,\nnotice that it is a ValueType, \nmeans it send
+      dupliecate to other when calling it."
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - Properties
+    Picture: {fileID: 0}
+  - ComponentType: 5
+    Text:
+    - Type%column%Name%column%Get%column%Set%column%Usage
+    - "SOItemBase%column%Item%column%   \u25A0%column%   \u25A0%column%the item store
+      in this ItemStack"
+    - "int%column%Count%column%   \u25A0%column%   \u25A0%column%how many item in
+      this ItemStack"
+    - "bool%column%IsFull%column%   \u25A0%column%%column%return true if Count >=
+      Item's StackLimit"
+    - "bool%column%IsEmpty%column%   \u25A0%column%%column%return true if Count <=0
+      or Item is Null"
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - Opreator
+    Picture: {fileID: 0}
+  - ComponentType: 5
+    Text:
+    - ( int )%column%return count value
+    - ( bool )%column%return IsEmpty
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - Methods
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - void
+    - Clear
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - int
+    - SetItem
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - int
+    - PutItem
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 2
+    Text:
+    - int
+    - TakeItem
+    - 
+    Picture: {fileID: 0}

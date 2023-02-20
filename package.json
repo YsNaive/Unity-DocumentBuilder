@@ -1,0 +1,21 @@
+{
+    "name": "com.naive.documentbuilder",
+    "version": "1.0.0",
+    "displayName": "Document Builder",
+    "description": "This is package that can build up yor documentation in UnityEditor.",
+    "unity": "2019.1",
+    "dependencies": {
+   },
+   "keywords": [
+      "Tool",
+      "document",
+      "Annotation",
+      "Editor",
+      "Teams"
+    ],
+    "author": {
+      "name": "Naive",
+      "email": "yi.shi.4589@gmail.com"
+    }
+  }
+  
