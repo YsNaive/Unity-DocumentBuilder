@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Globalization;
+using UnityEditor;
 using UnityEngine;
 
 namespace DocumentBuilder
@@ -8,6 +9,7 @@ namespace DocumentBuilder
         #region Document
         public static DocComponent DocComponentField(DocComponent docComponent, bool isEditMode = false)
         {
+            NumberFormatInfo numberFormat = CultureInfo.InvariantCulture.NumberFormat;
             GUIStyle labelStyle = new GUIStyle();
             labelStyle.fontSize = 16;
             labelStyle.normal.textColor = EditorGUITool.ColorSet.Default;
@@ -78,7 +80,7 @@ namespace DocumentBuilder
                 }
                 else if (DocComponentType.Picture == docComponent.ComponentType)
                 {
-                    float scale = EditorGUILayout.FloatField("Scale", float.Parse(docComponent.Text[0]));
+                    float scale = EditorGUILayout.FloatField("Scale", float.Parse(docComponent.Text[0], numberFormat));
                     if (scale < 0) scale = 0;
                     docComponent.Text[0] = scale.ToString();
                     docComponent.Picture = (Texture2D)EditorGUILayout.ObjectField("Picture", docComponent.Picture, typeof(Texture2D), false, GUILayout.Height(18));
@@ -271,7 +273,7 @@ namespace DocumentBuilder
                     {
                         Vector2 imageSize = new Vector2(docComponent.Picture.width, docComponent.Picture.height);
                         float scale = (float)(imageSize.y / imageSize.x);
-                        imageSize.x *= float.Parse(docComponent.Text[0]);
+                        imageSize.x *= float.Parse(docComponent.Text[0], numberFormat);
                         imageSize.y = imageSize.x * scale;
                         Rect rect = GUILayoutUtility.GetRect(imageSize.x, imageSize.y + 8);
                         rect.width = imageSize.x;
