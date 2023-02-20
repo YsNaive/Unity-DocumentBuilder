@@ -10,10 +10,22 @@ namespace DocumentBuilder
     {
         #region MenuItem
         public static DocumentBuilderWindow Instance { get; private set; }
-        [MenuItem("Tools/NaiveAPI/Document")]
+        [MenuItem("Tools/NaiveAPI/Document Window")]
         public static void ShowWindow()
         {
-            GetWindow<DocumentBuilderWindow>("NaiveAPI Document");
+            Data.Save();
+            if(Instance != null)
+                Instance.titleContent = new GUIContent("Document Window");
+            GetWindow<DocumentBuilderWindow>("Document Window");
+        }
+        public static void ShowWindow(SODocInformation root, string windowName = "Document")
+        {
+            Data.BookRoot = root;
+            Debug.Log(root);
+            Data.Save();
+            if (Instance != null)
+                Instance.titleContent = new GUIContent(windowName);
+            GetWindow<DocumentBuilderWindow>(windowName);
         }
         #endregion
 
@@ -166,6 +178,16 @@ namespace DocumentBuilder
                         isSelectingBook = false;
                     }
                     rect.y -= 16;
+                }
+
+                rect = new Rect(40, position.height - 23, 150, 18);
+                bool isContains = SODocumentBuilderSetting.Get.DocBookList.Contains(Data.SelectingDocInfo);
+                if (GUI.Button(rect, isContains? "Remove shortcut" : "Add shortcut")) {
+                    if (isContains)
+                        SODocumentBuilderSetting.Get.DocBookList.Remove(Data.SelectingDocInfo);
+                    else
+                        SODocumentBuilderSetting.Get.DocBookList.Add(Data.SelectingDocInfo);
+                    EditorUtility.SetDirty(SODocumentBuilderSetting.Get);
                 }
             }
             if (TextureButton(new Rect(3, position.height - 23, 20, 20), selectBookIcon))

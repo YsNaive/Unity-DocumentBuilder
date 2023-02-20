@@ -11,7 +11,8 @@ namespace DocumentBuilder
     public class SODocumentBuilderSetting : ScriptableObject
     {
         public List<SODocInformation> DocBookList;
-
+        public DefaultAsset MarkdownExportFolder;
+        public SODocInformation ExportRoot;
         public static SODocumentBuilderSetting Get
         {
             get
@@ -58,10 +59,25 @@ namespace DocumentBuilder
                             }
                         });
                     }
+
                     if (GUILayout.Button("Add",GUILayout.Width(100)))
                     {
                         data.DocBookList.Add(null);
                     }
+
+                    GUILayout.Space(100);
+                    HorizontalGroup(() =>
+                    {
+                        EditorGUIUtility.labelWidth = 45;
+                        data.MarkdownExportFolder = (DefaultAsset)EditorGUILayout.ObjectField("Path ", data.MarkdownExportFolder, typeof(DefaultAsset), false);
+                        data.ExportRoot = (SODocInformation)EditorGUILayout.ObjectField("root ", data.ExportRoot, typeof(SODocInformation), false);
+                        if (GUILayout.Button("Export as Markdown"))
+                        {
+                            DocumentExporter.ToMarkDown(data.ExportRoot, DocumentBuilderData.Path.ProjectRoot + "/" + AssetDatabase.GetAssetPath(data.MarkdownExportFolder));
+                            AssetDatabase.Refresh();
+                        }
+                    });
+
                     EditorUtility.SetDirty(data);
                 }
             };
