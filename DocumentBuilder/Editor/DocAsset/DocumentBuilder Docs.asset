@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: DocumentBuilder Docs
+  m_EditorClassIdentifier: 
+  Name: Document Builder
+  DocType: 6
+  MenuIcon: {fileID: 2800000, guid: 2bfe18260711d254f89c1844771b1afb, type: 3}
+  SubPages:
+  - {fileID: 11400000, guid: 29994894af7a213458ef1edce20c2d50, type: 2}
+  - {fileID: 11400000, guid: e85c0e9aca0eedd45a35be0edad3a6e0, type: 2}
+  Components:
+  - ComponentType: 3
+    Text:
+    - Naive's API
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.242
+    Picture: {fileID: 2800000, guid: 9d172f34711877841b33cda8ec2287b4, type: 3}
+  - ComponentType: 0
+    Text:
+    - "\nThis API is  constructed by  extracting  the  more commonly\nused and  common 
+      functions  when I developing  games. It \nmay  not be very  suitable  for 
+      large-scale projects and it is \nnot a  deep study of a  certain  functional
+      area, but I believe \nit is  good  for  small  and  medium-sized  projects.
+      Such  as\nGameJem etc.\n\nThis Document Book contains all document about my
+      API's \nclass and function. Hope it can help you to  understand  my\ntools
+      easily. If you have any question, there is  my  Contact \nInformation."
+    Picture: {fileID: 0}
+  - ComponentType: 5
+    Text:
+    - 'Mail%column%yi.shi.4589@gmail.com                                     '
+    - GitHub%column%https://github.com/YsNaive
+    - "Discord%column%\u5929\u771F#3191"
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - '   ( you can copy it in EditMode )
+
+'
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - '
+
+
+      any issue or improvement ? fork or report !
+
+      https://github.com/YsNaive/Unity-DocumentBuilder.git'
+    Picture: {fileID: 0}

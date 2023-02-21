@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: Add Docs Menuitem
+  m_EditorClassIdentifier: 
+  Name: Add Docs Menuitem
+  DocType: 8
+  MenuIcon: {fileID: 2800000, guid: 16d4dc9b017898842af40885ffb79c02, type: 3}
+  SubPages: []
+  Components:
+  - ComponentType: 0
+    Text:
+    - "You can add your menuitem by open specific book root\nJust make a function
+      like below, notice that menuitem \nonly run in Editor, so don't do it at runtime
+      script.\n"
+    Picture: {fileID: 0}
+  - ComponentType: 4
+    Text:
+    - 0.5
+    Picture: {fileID: 2800000, guid: f5086ee2aed8fed489419b1f290f961c, type: 3}
+  - ComponentType: 0
+    Text:
+    - "You can also use DocumentBuilder to write your package's \noffline docs, just
+      remember to add Asset Store dependencies."
+    Picture: {fileID: 0}
