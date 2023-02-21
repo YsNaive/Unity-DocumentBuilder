@@ -1,5 +1,5 @@
 {
-    "name": "Naive.DocumentBuilder,Editor",
+    "name": "Naive.DocumentBuilder.Editor",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [

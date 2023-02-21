@@ -46,6 +46,7 @@ namespace DocumentBuilder
                 {
 
                     DividerLine("Document Book List");
+                    GUILayout.Space(5);
                     for (int i = 0; i < data.DocBookList.Count; i++) 
                     {
                         HorizontalGroup(() =>
@@ -65,13 +66,17 @@ namespace DocumentBuilder
                         data.DocBookList.Add(null);
                     }
 
-                    GUILayout.Space(100);
+                    GUILayout.Space(50);
+                    DividerLine("Export");
+                    GUILayout.Space(5);
                     HorizontalGroup(() =>
                     {
-                        EditorGUIUtility.labelWidth = 45;
+                        EditorGUIUtility.labelWidth = 30;
                         data.MarkdownExportFolder = (DefaultAsset)EditorGUILayout.ObjectField("Path ", data.MarkdownExportFolder, typeof(DefaultAsset), false);
+                        GUILayout.Space(15);
                         data.ExportRoot = (SODocInformation)EditorGUILayout.ObjectField("root ", data.ExportRoot, typeof(SODocInformation), false);
-                        if (GUILayout.Button("Export as Markdown"))
+                        GUILayout.Space(15);
+                        if (GUILayout.Button("Export as Markdown",GUILayout.Width(150)))
                         {
                             DocumentExporter.ToMarkDown(data.ExportRoot, DocumentBuilderData.Path.ProjectRoot + "/" + AssetDatabase.GetAssetPath(data.MarkdownExportFolder));
                             AssetDatabase.Refresh();
