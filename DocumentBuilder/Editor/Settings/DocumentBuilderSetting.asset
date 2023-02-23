@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DocBookList:
   - {fileID: 11400000, guid: 9ecd98288a2e67f4fb0b377159f08744, type: 2}
-  MarkdownExportFolder: {fileID: 0}
-  ExportRoot: {fileID: 0}
+  MarkdownExportFolder: {fileID: 102900000, guid: ff440c791a669054399c72167cb76d17, type: 3}
+  ExportRoot: {fileID: 11400000, guid: 9ecd98288a2e67f4fb0b377159f08744, type: 2}

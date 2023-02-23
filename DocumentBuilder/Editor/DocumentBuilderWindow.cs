@@ -398,7 +398,9 @@ namespace DocumentBuilder
             public static void Load()
             {
                 if (!File.Exists(Application.temporaryCachePath + "\\DocumentWindowData.txt"))
+                {
                     Save();
+                }
 
                 string[] datas = File.ReadAllText(Application.temporaryCachePath + "\\DocumentWindowData.txt").Split("%DATA%");
                 MenuWidth = float.Parse(datas[0]);
@@ -418,6 +420,11 @@ namespace DocumentBuilder
                     string[] temp = data.Split("$KEY$");
                     MenuDisplaySettings.Add((SODocInformation)AssetDatabase.LoadAssetAtPath(temp[0], typeof(SODocInformation)), JsonUtility.FromJson<MenuDisplaySetting>(temp[1]));
                 }
+
+                if(BookRoot == null)
+                    BookRoot = AssetDatabase.LoadAssetAtPath<SODocInformation>(DocumentBuilderData.Path.DocumentBuilderRoot + "/Editor/DocAsset/DocumentBuilder Docs.asset");
+                if(SelectingDocInfo == null)
+                    SelectingDocInfo = BookRoot;
             }
             public static void Save()
             {
