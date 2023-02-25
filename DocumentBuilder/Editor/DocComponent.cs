@@ -64,6 +64,14 @@ namespace DocumentBuilder
                     break;
             }
         }
+        public DocComponent(DocComponent docComponent)
+        {
+            ComponentType = docComponent.ComponentType;
+            Text = new List<string>();
+            foreach (string str in docComponent.Text)
+                Text.Add(new string(str));
+            Picture = docComponent.Picture;
+        }
 
         public override string ToString()
         {

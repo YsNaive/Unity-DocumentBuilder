@@ -92,6 +92,7 @@ namespace DocumentBuilder
             // Draw Menu and Document
             HorizontalGroup(() =>
             {
+                #region Menu
                 if (isOpenMenu)
                 {
                     VerticalGroup(() =>
@@ -131,20 +132,14 @@ namespace DocumentBuilder
                         isOpenMenu = true;
                     }
                 }
+                #endregion
 
+                #region DocComponents
                 VerticalGroup(() =>
                 {
-                    infoViewPosition = EditorGUILayout.BeginScrollView(infoViewPosition);
-                    drawDocInformation();
-                    GUILayoutUtility.GetRect(0, 120);
-                    EditorGUILayout.EndScrollView();
-                });
-
-                if (isEditMode)
-                {
-                    VerticalGroup(() =>
+                    if( isEditMode)
                     {
-                        EditorGUILayout.LabelField("", GUILayout.Height(5));
+                        EditorGUILayout.Space(25);
                         HorizontalGroup(() =>
                         {
                             EditorGUILayout.LabelField("- Editing Target ", GUILayout.Width(105));
@@ -153,8 +148,16 @@ namespace DocumentBuilder
                             EditorGUI.EndDisabledGroup();
                         });
                         editingDocument.OnInspectorGUI();
-                    }, GUILayout.Width(600));
-                }
+                    }
+                    else
+                    {
+                        infoViewPosition = EditorGUILayout.BeginScrollView(infoViewPosition);
+                        drawDocInformation();
+                        GUILayoutUtility.GetRect(0, 120);
+                        EditorGUILayout.EndScrollView();
+                    }
+                });
+                #endregion
             });
 
             // Draw Select Menu          
