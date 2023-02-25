@@ -56,16 +56,30 @@ MonoBehaviour:
     Text:
     - Basic Edit Function
     Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - 'While in edit mode, you can click on a component,
+
+      and it will highlight 
+      as  green  color  meaning  you
+
+      are editting it.'
+    Picture: {fileID: 0}
   - ComponentType: 4
     Text:
-    - 0.53
+    - 0.6
     Picture: {fileID: 2800000, guid: dd8a9c88126881b42bd7723ea88bb133, type: 3}
+  - ComponentType: 0
+    Text:
+    - 'tool bar from left to right :'
+    Picture: {fileID: 0}
   - ComponentType: 5
     Text:
     - "\u25B2 & \u25BC%column%Change the sort order of components"
     - Copy%column%Copy this component into System Clipboard
     - Paste%column%Paste component from System Clipboard
     - Dup%column%Duplicate this component
+    - Delete%column%" It can not be redo ! "
     - Type%column%Select this component's type
     Picture: {fileID: 0}
   - ComponentType: 6

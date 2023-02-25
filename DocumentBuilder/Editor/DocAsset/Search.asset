@@ -15,17 +15,5 @@ MonoBehaviour:
   Name: Search
   DocType: 4
   MenuIcon: {fileID: 2800000, guid: fca640037a0513a49b8928326ed227b4, type: 3}
-  SubPages:
-  - {fileID: 11400000, guid: 9c53d60f60b67664087d39aa3ae45a08, type: 2}
-  - {fileID: 11400000, guid: 1c4e29559bfb1e748b0c9abbfcf0729e, type: 2}
-  - {fileID: 11400000, guid: 4bb81f5febb1db14382441f15ef6f820, type: 2}
-  - {fileID: 11400000, guid: 404abadef43cef543b06a4400a76852d, type: 2}
-  - {fileID: 11400000, guid: cafa751efe071a2438d203ec7d54ca97, type: 2}
-  - {fileID: 11400000, guid: 4dbe6fd71b5bdc34aa493805a8a0b7a0, type: 2}
-  - {fileID: 11400000, guid: ae8a1742cbae6ce40813d93fb6404219, type: 2}
-  - {fileID: 11400000, guid: d47dd151770dc31429cd396518d56435, type: 2}
-  - {fileID: 11400000, guid: d5d24dd5d61e0284088bbc5e1f5eaf92, type: 2}
-  - {fileID: 11400000, guid: f8bcaae1d69f3e54ea6f552743421ff7, type: 2}
-  - {fileID: 11400000, guid: 29994894af7a213458ef1edce20c2d50, type: 2}
-  - {fileID: 11400000, guid: 20d67fadd0b281740a4dbe4d36fe7fdd, type: 2}
+  SubPages: []
   Components: []

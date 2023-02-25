@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48b1c19eb373eb44a4af20652592e29, type: 3}
+  m_Name: Hotkeys
+  m_EditorClassIdentifier: 
+  Name: Control Hotkeys
+  DocType: 5
+  MenuIcon: {fileID: 2800000, guid: 5ef2d3b6c7cd12b4a8c79d22db7ddf47, type: 3}
+  SubPages: []
+  Components:
+  - ComponentType: 3
+    Text:
+    - Ctrl+S
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - 'Save and quit editing DocComponent
+
+      allow you to view the  preview 
+      better.'
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - "Ctrl+\u2191 / Ctrl+\u2193"
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - Move editing component up or down
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - 
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - Ctrl+Q
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - "While start editing a   component,  (blue bar \nturn into green). It will
+      auto  make a  backup\nThis hotkey can switch between the editing\nand the old
+      one.\n\nNotice that it's NOT the REDO feture."
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - '
+
+
+'
+    Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - This only work in DocumentWindow
+    Picture: {fileID: 0}
+  - ComponentType: 3
+    Text:
+    - Ctrl+E
+    Picture: {fileID: 0}
+  - ComponentType: 0
+    Text:
+    - Switch between Edit mode and View mode
+    Picture: {fileID: 0}

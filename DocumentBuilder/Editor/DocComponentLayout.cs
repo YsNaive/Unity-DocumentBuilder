@@ -84,6 +84,16 @@ namespace DocumentBuilder
                     if (scale < 0) scale = 0;
                     docComponent.Text[0] = scale.ToString();
                     docComponent.Picture = (Texture2D)EditorGUILayout.ObjectField("Picture", docComponent.Picture, typeof(Texture2D), false, GUILayout.Height(18));
+                    Vector2 imageSize = new Vector2(docComponent.Picture.width, docComponent.Picture.height);
+                    scale = (float)(imageSize.y / imageSize.x);
+                    imageSize.x *= float.Parse(docComponent.Text[0], numberFormat);
+                    imageSize.y = imageSize.x * scale;
+                    Rect rect = GUILayoutUtility.GetRect(imageSize.x, imageSize.y + 8);
+                    rect.width = imageSize.x;
+                    rect.height = imageSize.y;
+                    rect.x += (EditorGUI.indentLevel + 1) * 15f;
+                    rect.y += 4;
+                    GUI.DrawTexture(rect, docComponent.Picture);
                 }
                 else if (DocComponentType.Label == docComponent.ComponentType)
                 {
@@ -309,13 +319,12 @@ namespace DocumentBuilder
                                 height[i] = 22 + (14 * (lines.Length - 1));
                         }
                     }
-
-                    Rect rowRect = GUILayoutUtility.GetRect(0, 0);
+                    Rect rowRect = EditorGUILayout.GetControlRect(false,0);
                     rowRect.y = rowRect.yMax + 5;
                     rowRect.height = 20;
                     for (int i = 0; i < docComponent.Text.Count; i++)
                     {
-                        rowRect.x = 25;
+                        rowRect.x = 40;
                         string[] contents = docComponent.Text[i].Split("%column%");
                         Rect colRect = rowRect;
                         for (int j = 0; j < contents.Length; j++)
@@ -324,16 +333,17 @@ namespace DocumentBuilder
                             colRect.width = width[j];
                             string[] lines = contents[j].Split("\\n");
                             colRect.y += (height[i] - 18 * lines.Length) / 2f;
+
                             for (int l = 0; l < lines.Length; l++)
                             {
-                                EditorGUI.LabelField(colRect, lines[l]);
-                                EditorGUITool.DrawRectangle(new Rect(colRect.x + 12f, rowRect.y + 0.5f, width[j], height[i]), EditorGUITool.ColorSet.LightGray, .5f);
+                                GUI.Label(colRect, lines[l]);
+                                EditorGUITool.DrawRectangle(new Rect(colRect.x -5f, rowRect.y + 0.5f, width[j], height[i]), EditorGUITool.ColorSet.LightGray, .5f);
                                 colRect.y += 14;
                             }
                             colRect.x += width[j];
                         }
                         rowRect.y += height[i];
-                        EditorGUILayout.LabelField("", GUILayout.Height(height[i]), GUILayout.Width(colRect.x + 18));
+                        GUILayoutUtility.GetRect(0,0, GUILayout.Height(height[i]+3), GUILayout.Width(colRect.x + 18));
                     }
                 }
                 else if (DocComponentType.DividerLine == docComponent.ComponentType)

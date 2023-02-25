@@ -38,7 +38,7 @@ MonoBehaviour:
     Picture: {fileID: 0}
   - ComponentType: 4
     Text:
-    - 0.59
+    - 0.6
     Picture: {fileID: 2800000, guid: 4085b861f7b64f94d8a3ed029b9e3b0b, type: 3}
   - ComponentType: 0
     Text:
@@ -46,9 +46,7 @@ MonoBehaviour:
     Picture: {fileID: 0}
   - ComponentType: 0
     Text:
-    - '
-
-'
+    - 
     Picture: {fileID: 0}
   - ComponentType: 6
     Text:
@@ -56,7 +54,7 @@ MonoBehaviour:
     Picture: {fileID: 0}
   - ComponentType: 4
     Text:
-    - 0.745
+    - 0.6
     Picture: {fileID: 2800000, guid: 2a17cd89ebe8573478db17e56f589d74, type: 3}
   - ComponentType: 2
     Text:
@@ -106,7 +104,7 @@ MonoBehaviour:
       you need to set Texture
       Type into Sprite
 
-      and Resize Algorithm to Bilinear.'
+      and Resize Algorithm to Bilinear for better view.'
     Picture: {fileID: 0}
   - ComponentType: 0
     Text:

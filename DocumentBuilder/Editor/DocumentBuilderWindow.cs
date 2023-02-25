@@ -34,13 +34,15 @@ namespace DocumentBuilder
         private SODocInformation searchDocument; // use to display search result
         private bool isEditMode = false;
         private bool isOpenMenu = true;
+        private bool hotkeyState = false;
         private Editor editingDocument;
+        private Color littleTitleColor = ColorSet.Information;
         private void OnEnable()
         {
             menuStyle.normal.textColor = ColorSet.Default;
             minSize = new Vector2(500, 100);
             Instance = this;
-
+            littleTitleColor.a = .65f;
             Data.Load();
             selectBookIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(DocumentBuilderData.Path.DocumentBuilderRoot + "/Editor/DocAsset/DefaultMenuIcon/Gear.png");
             searchIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(DocumentBuilderData.Path.DocumentBuilderRoot + "/Editor/DocAsset/DefaultMenuIcon/Search.png");
@@ -78,13 +80,17 @@ namespace DocumentBuilder
             #endregion
 
             #region Edit Mode
-            if (GUI.Button(new Rect(position.width - 60, 5, 45, 20), isEditMode ? "Edit" : "View"))
+            if (GUI.Button(new Rect(position.width - 60, 5, 45, 20), isEditMode ? "Edit" : "View") ||
+                (Event.current.control && Event.current.keyCode == KeyCode.E && !hotkeyState))
             {
                 isEditMode = !isEditMode;
                 if (isEditMode)
                     editingDocument = Editor.CreateEditor(Data.SelectingDocInfo);
+                hotkeyState = true;
+                return;
             }
-
+            if (Event.current.type == EventType.KeyUp)
+                hotkeyState = false;
             #endregion
 
             #region Menu and Information Layout
@@ -139,7 +145,6 @@ namespace DocumentBuilder
                 {
                     if( isEditMode)
                     {
-                        EditorGUILayout.Space(25);
                         HorizontalGroup(() =>
                         {
                             EditorGUILayout.LabelField("- Editing Target ", GUILayout.Width(105));
@@ -147,10 +152,25 @@ namespace DocumentBuilder
                             EditorGUILayout.ObjectField(Data.SelectingDocInfo, typeof(SODocInformation), false, GUILayout.Width(350));
                             EditorGUI.EndDisabledGroup();
                         });
-                        editingDocument.OnInspectorGUI();
+                        infoViewPosition = EditorGUILayout.BeginScrollView(infoViewPosition);
+                        HorizontalGroup(() =>
+                        {
+                            GUILayout.Space(5);
+                            VerticalGroup(() =>
+                            {
+                                editingDocument.OnInspectorGUI();
+                            });
+                        });
+                        EditorGUILayout.EndScrollView();
                     }
                     else
                     {
+                        ColorRegion(littleTitleColor, () =>
+                        {
+                            EditorGUI.indentLevel = 0;
+                            EditorGUILayout.LabelField(Data.SelectingDocInfo.Name);
+                        });
+
                         infoViewPosition = EditorGUILayout.BeginScrollView(infoViewPosition);
                         drawDocInformation();
                         GUILayoutUtility.GetRect(0, 120);
@@ -199,7 +219,7 @@ namespace DocumentBuilder
             }
 
             #endregion
-
+            Repaint();
             // Save data if isDirty
             if (isDirty)
             {
@@ -357,14 +377,6 @@ namespace DocumentBuilder
         /// </summary>
         private void drawDocInformation()
         {
-            Color color = ColorSet.Information;
-            color.a = .65f;
-            ColorRegion(color, () =>
-            {
-                EditorGUI.indentLevel = 0;
-                EditorGUILayout.LabelField(Data.SelectingDocInfo.Name);
-            });
-
             EditorGUI.indentLevel++;
             EditorGUILayout.Space(5);
             foreach (var doc in Data.SelectingDocInfo.Components)

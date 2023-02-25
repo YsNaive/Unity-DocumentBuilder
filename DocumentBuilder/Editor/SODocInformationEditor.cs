@@ -14,12 +14,12 @@ namespace DocumentBuilder
         private bool isLoadTemplate = false;
         private bool isEditTemplate = false;
         private bool doubleCheck = false;
+        private bool hotkeyState = false;
         private int isAutoCreateSubpage = -1;
         private string autoCreateSubpageName = "";
         private string templateName = "";
         private string[] allTemplate;
         private DocComponent backup = null;
-        private Vector2 scrollView = new Vector2();
         private void OnEnable()
         {
             isSaveTemplate = false;
@@ -38,44 +38,45 @@ namespace DocumentBuilder
 
             if (m_target == null)
                 m_target = target as SODocInformation;
-
-
-            scrollView = EditorGUILayout.BeginScrollView(scrollView);
-
             #region Hotkey
-            if (Event.current.control && Event.current.type == EventType.KeyDown)
+            if (Event.current.control && !hotkeyState)
             {
-                if(Event.current.keyCode == KeyCode.S)
+                EditorGUIUtility.editingTextField = false;
+                if (Event.current.keyCode == KeyCode.S)
+                {
                     selectingComponent = -1;
-                if (Event.current.keyCode == KeyCode.C)
+                    hotkeyState = true;
+                }
+                if (Event.current.keyCode == KeyCode.Q)
                     if (lastSelectingComponent != -1)
                     {
                         var temp = new DocComponent(backup);
                         backup = new DocComponent(m_target.Components[lastSelectingComponent]);
                         m_target.Components[lastSelectingComponent] = temp;
+                        hotkeyState = true;
                     }
                 if(Event.current.keyCode == KeyCode.UpArrow)
-                {
                     if(selectingComponent > 0)
                     {
                         var temp = m_target.Components[selectingComponent];
                         m_target.Components[selectingComponent] = m_target.Components[selectingComponent - 1];
                         m_target.Components[selectingComponent - 1] = temp;
                         selectingComponent--;
+                        hotkeyState = true;
                     }
-                }
                 if(Event.current.keyCode == KeyCode.DownArrow)
-                {
                     if (selectingComponent < m_target.Components.Count-1)
                     {
                         var temp = m_target.Components[selectingComponent];
                         m_target.Components[selectingComponent] = m_target.Components[selectingComponent + 1];
                         m_target.Components[selectingComponent + 1] = temp;
                         selectingComponent++;
+                        hotkeyState = true;
                     }
-                }
             }
 
+            if (Event.current.type == EventType.KeyUp)
+                hotkeyState = false;
             m_target.Name = EditorGUILayout.TextField("Name", m_target.Name);
             m_target.DocType = (SODocInformation.DocumentType)EditorGUILayout.EnumPopup("Document Icon Type", m_target.DocType);
 
@@ -387,8 +388,8 @@ namespace DocumentBuilder
                     rect = GUILayoutUtility.GetLastRect();
                     DisableGroup(selectingComponent != i, () =>
                     {
+                        // Allow Edit
                         if (selectingComponent == i)
-                        {
                             HorizontalGroup(() =>
                             {
                                 if (i != 0)
@@ -402,9 +403,7 @@ namespace DocumentBuilder
                                     }
                                 }
                                 else
-                                {
-                                    GUILayout.Label("", GUILayout.Width(20), GUILayout.Height(20));
-                                }
+                                    GUILayoutUtility.GetRect(0,0, GUILayout.Width(20), GUILayout.Height(20));
                                 if (i != m_target.Components.Count - 1)
                                 {
                                     if (GUILayout.Button("▼", GUILayout.Width(20), GUILayout.Height(20)))
@@ -415,12 +414,13 @@ namespace DocumentBuilder
                                         selectingComponent++;
                                     }
                                 }
-
-                                Rect btnRect = GUILayoutUtility.GetLastRect();
+                                else
+                                    GUILayoutUtility.GetRect(0, 0, GUILayout.Width(20), GUILayout.Height(20));
+                                Rect btnRect = GUILayoutUtility.GetRect(0,0,GUILayout.Width(25),GUILayout.Height(25));
                                 btnRect.y -= 3;
-                                btnRect.height = 25;
-                                btnRect.width = 25;
-                                btnRect.x = btnRect.xMax + 10;
+                                btnRect.x -= 5;
+
+                                btnRect.x = btnRect.xMax;
                                 if (TextureButton(btnRect,Icon.Copy))
                                 {
                                     GUIUtility.systemCopyBuffer = m_target.Components[i].ToString();
@@ -442,7 +442,11 @@ namespace DocumentBuilder
                                     selectingComponent++;
                                 }
 
-                                btnRect.x =  EditorGUIUtility.currentViewWidth - 43;
+
+                                GUILayout.Label("");
+                                btnRect = GUILayoutUtility.GetRect(0, 0, GUILayout.Width(25), GUILayout.Height(25));
+                                btnRect.y -= 3;
+                                btnRect.x -= 5;
                                 if (TextureButton(btnRect, Icon.Delete))
                                 {
                                     m_target.Components.RemoveAt(i);
@@ -451,11 +455,11 @@ namespace DocumentBuilder
                                     lastSelectingComponent = -1;
                                 }
                             });
-                        }
                         if (i < m_target.Components.Count && i >= 0)
                             m_target.Components[i] = DocComponentLayout.DocComponentField(m_target.Components[i], selectingComponent == i);
+
                         if(selectingComponent == i)
-                            EditorGUILayout.Space(20);
+                            EditorGUILayout.Space(15);
                         
                     });
                     rect.y = rect.yMax;
@@ -463,11 +467,13 @@ namespace DocumentBuilder
                     rect.height = GUILayoutUtility.GetRect(0,15).y - rect.y;
                     if (selectingComponent != i)
                     {
+                        // check if click component
                         if (GUI.Button(rect, "", new GUIStyle()))
                         {
                             selectingComponent = i;
                             selectingRect = rect;
                             backup = new DocComponent(m_target.Components[selectingComponent]);
+                            EditorGUIUtility.editingTextField = false;
                         }
                         EditorGUI.DrawRect(new Rect(rect.x - 12, rect.y - 3, 6, rect.height + 6), new Color(.8f,.8f,1f,0.25f));
                     }
@@ -485,6 +491,7 @@ namespace DocumentBuilder
                             DocComponent newComponent = new DocComponent();
                             m_target.Components.Insert(i+1, newComponent);
                             selectingComponent++;
+                            EditorGUIUtility.editingTextField = false;
                         }
                     }
                 }
@@ -504,7 +511,6 @@ namespace DocumentBuilder
             });
             #endregion
 
-            EditorGUILayout.EndScrollView();
 
             if (selectingComponent != -1)
                 lastSelectingComponent = selectingComponent;
