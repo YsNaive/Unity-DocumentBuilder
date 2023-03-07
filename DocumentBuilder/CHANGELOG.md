@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.0] -2023-
+Add. Object field DocComponent
+
 ## [1.2.0] -2023-02-26
 Refactored. better UI for edit docs
 Add. hotkey for edit docs

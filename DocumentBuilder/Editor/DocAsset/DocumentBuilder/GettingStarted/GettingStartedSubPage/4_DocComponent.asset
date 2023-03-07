@@ -149,3 +149,11 @@ MonoBehaviour:
 
 '
     Picture: {fileID: 0}
+  - ComponentType: 6
+    Text:
+    - ObjectField
+    Picture: {fileID: 0}
+  - ComponentType: 7
+    Text:
+    - Assets/docs/GettingStarted/1_CreateBookRoot.html
+    Picture: {fileID: 0}

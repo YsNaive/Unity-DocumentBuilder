@@ -15,6 +15,7 @@ namespace DocumentBuilder
         Picture,
         Matrix,
         DividerLine,
+        ObjectField,
     }
     [System.Serializable]
     public class DocComponent
@@ -61,6 +62,9 @@ namespace DocumentBuilder
                 case DocComponentType.Matrix:
                     Text.Add("%column%");
                     Text.Add("%column%");
+                    break;
+                case DocComponentType.ObjectField:
+                    Text.Add("");
                     break;
             }
         }

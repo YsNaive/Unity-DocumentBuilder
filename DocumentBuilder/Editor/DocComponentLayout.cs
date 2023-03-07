@@ -209,6 +209,11 @@ namespace DocumentBuilder
                 {
                     docComponent.Text[0] = EditorGUILayout.TextField("Title", docComponent.Text[0]);
                 }
+                else if(DocComponentType.ObjectField == docComponent.ComponentType)
+                {
+                    docComponent.Text[0] = AssetDatabase.GetAssetPath(
+                        EditorGUILayout.ObjectField("Target", AssetDatabase.LoadAssetAtPath<Object>(docComponent.Text[0]), typeof(Object), false));
+                }
             }
             else            //------------------------------- Display ------------------------------------------//
             {
@@ -351,6 +356,13 @@ namespace DocumentBuilder
                     EditorGUILayout.LabelField("", GUILayout.Height(10));
                     EditorGUITool.DividerLine(docComponent.Text[0] != "" ? $"{docComponent.Text[0]}         " : "", EditorGUITool.ColorSet.DarkGray, EditorGUITool.ColorSet.Default, 2.5f);
                     EditorGUILayout.LabelField("", GUILayout.Height(5));
+                }
+                else if (DocComponentType.ObjectField == docComponent.ComponentType)
+                {
+                    EditorGUITool.DisableGroup(true, () =>
+                    {
+                        EditorGUILayout.ObjectField(AssetDatabase.LoadAssetAtPath<Object>(docComponent.Text[0]), typeof(Object), false);
+                    });
                 }
             }
 
