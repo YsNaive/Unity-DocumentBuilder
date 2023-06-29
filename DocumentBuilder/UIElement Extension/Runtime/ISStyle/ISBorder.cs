@@ -13,5 +13,19 @@ namespace NaiveAPI_UI
         public float Top;
         public float Right;
         public float Bottom;
+
+        public ISBorder() { }
+
+        public ISBorder(Color color, float size)
+        {
+            LeftColor = color;
+            TopColor = color;
+            RightColor = color;
+            BottomColor = color;
+            Left = size;
+            Top = size;
+            Right = size;
+            Bottom = size;
+        }
     }
 }

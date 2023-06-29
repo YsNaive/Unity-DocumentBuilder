@@ -1,3 +1,4 @@
+using NaiveAPI_UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,8 @@ namespace DocumentBuilder
     {
         public const bool AllowRuntime = true;
         public List<string> StrData = new List<string>();
-        public List<GameObject> ObjData = new List<GameObject>();
+        public List<Object> ObjData = new List<Object>();
+        public List<ISStyle> StyleData = new List<ISStyle>();
         public abstract VisualElement CreateRuntimeGUI();
         public abstract VisualElement CreateEditorGUI();
     }
