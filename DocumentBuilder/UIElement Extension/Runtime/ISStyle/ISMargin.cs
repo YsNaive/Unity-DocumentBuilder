@@ -128,10 +128,10 @@ namespace NaiveAPI_UI
         {
             return new ISMargin
             {
-                Left = ISStyleLength.Pixel(percent),
-                Top = ISStyleLength.Pixel(percent),
-                Right = ISStyleLength.Pixel(percent),
-                Bottom = ISStyleLength.Pixel(percent)
+                Left = ISStyleLength.Percent(percent),
+                Top = ISStyleLength.Percent(percent),
+                Right = ISStyleLength.Percent(percent),
+                Bottom = ISStyleLength.Percent(percent)
             };
         }
 
