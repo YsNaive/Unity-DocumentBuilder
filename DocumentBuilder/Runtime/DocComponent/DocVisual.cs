@@ -7,6 +7,7 @@ public abstract class DocVisual
 {
     public abstract VisualElement CreateEditGUI(ref DocComponent docComponent); 
     public abstract VisualElement CreateViewGUI(DocComponent docComponent);
+    public abstract DocComponent SaveFromEditGUI(VisualElement visualElement);
 }
 
 public class TestVisual : DocVisual
@@ -20,6 +21,11 @@ public class TestVisual : DocVisual
     {
         Debug.Log(docComponent.JsonData);
         return null;
+    }
+
+    public override DocComponent SaveFromEditGUI(VisualElement visualElement)
+    {
+        throw new System.NotImplementedException();
     }
 }
 
