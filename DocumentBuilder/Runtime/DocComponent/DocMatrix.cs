@@ -13,6 +13,9 @@ namespace NaiveAPI.DocumentBuilder
         private static ISPadding padding = ISPadding.None;
         private float space;
         private VisualElement matrixVisual;
+
+        public override string DisplayName => "Matrix";
+
         public override VisualElement CreateEditGUI(DocComponent docComponent, int width)
         {
             VisualElement root = new VisualElement();
@@ -71,7 +74,7 @@ namespace NaiveAPI.DocumentBuilder
             return root;
         }
 
-        public override DocComponent SaveTo(VisualElement visualElement, ref DocComponent docComponent)
+        public override DocComponent SaveTo(VisualElement visualElement, DocComponent docComponent)
         {
             throw new System.NotImplementedException();
         }

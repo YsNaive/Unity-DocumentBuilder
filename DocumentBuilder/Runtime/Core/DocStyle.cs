@@ -13,6 +13,9 @@ namespace NaiveAPI.DocumentBuilder
         public Color FrontGroundColor;
         public Color SubFrontGroundColor;
 
+        public int MainTextSize;
+        public int LabelTextSize;
+
         public ISText MainText;
         public ISText LabelText;
 
@@ -21,7 +24,17 @@ namespace NaiveAPI.DocumentBuilder
         public Color TypeColor;
 
         public float GUIScale = 1;
-        public float TextScale = 1;
+        public float TextScale
+        {
+            get { return m_textScale; }
+            set { 
+                m_textScale = value;
+                MainText.FontSize = (int)(MainTextSize * m_textScale);
+                LabelText.FontSize = (int)(LabelTextSize * m_textScale);
+            }
+        }
+
+        private float m_textScale = 1;
 
         public static DocStyle Dark = new DocStyle()
         {
@@ -29,6 +42,8 @@ namespace NaiveAPI.DocumentBuilder
             SubBackgroundColor = new Color(0.2f, 0.2f, 0.22f),
             FrontGroundColor = new Color(0.65f,0.65f,0.65f),
             SubFrontGroundColor = new Color(0.55f, 0.55f, 0.55f),
+            MainTextSize = 14,
+            LabelTextSize = 20,
             MainText = new ISText(){Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 14},
             LabelText = new ISText(){Color = new Color(0.9f, 0.9f, 0.9f),FontSize = 20},
             FuncColor = new Color(1f, 0.9f, 0.35f),

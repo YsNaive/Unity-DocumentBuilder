@@ -12,7 +12,6 @@ public class ttst : MonoBehaviour
     void Start()
     {
         doc.JsonData = "";
-        UIDocument.rootVisualElement.Add(new DocEditView(doc, Screen.width));
     }
 
     // Update is called once per frame

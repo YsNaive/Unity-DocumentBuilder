@@ -8,27 +8,18 @@ namespace NaiveAPI_UI
         public FlexDirection Direction;
         public Wrap Wrap;
 
-        public static ISFlex Horizontal
+        public static ISFlex Horizontal => horizontal;
+        private static ISFlex horizontal = new ISFlex
         {
-            get
-            {
-                return new ISFlex
-                {
-                    Direction = FlexDirection.Row,
-                    Wrap = Wrap.Wrap
-                };
-            }
-        }
-        public static ISFlex Vertical
+            Direction = FlexDirection.Row,
+            Wrap = Wrap.Wrap,
+        };
+
+        public static ISFlex Vertical => vertical;
+        private static ISFlex vertical = new ISFlex
         {
-            get
-            {
-                return new ISFlex
-                {
-                    Direction = FlexDirection.Column,
-                    Wrap = Wrap.Wrap
-                };
-            }
-        }
+            Direction = FlexDirection.Column,
+            Wrap = Wrap.Wrap
+        };
     }
 }

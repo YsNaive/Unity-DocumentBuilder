@@ -11,7 +11,7 @@ public class test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UIDocument.rootVisualElement.Add(new DocEditView(new DocComponent(),Screen.width));
+        UIDocument.rootVisualElement.Add(new DocEditVisual(new DocComponent(),Screen.width));
         
     }
 
