@@ -14,13 +14,12 @@ public class TestVisual : DocVisual
 {
     public override VisualElement CreateEditGUI(DocComponent docComponent, int width)
     {
-        throw new System.NotImplementedException();
+        return new Label("TTEST");
     }
 
     public override VisualElement CreateViewGUI(DocComponent docComponent, int width)
     {
-        Debug.Log(docComponent.JsonData);
-        return null;
+        return new Label("TTEST");
     }
 
     public override DocComponent SaveTo(VisualElement visualElement, ref DocComponent docComponent)

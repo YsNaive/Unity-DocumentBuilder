@@ -2,17 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class test : MonoBehaviour
 {
-    [SerializeField]
-    DocComponent DocComponent;
+    public UIDocument UIDocument;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(typeof(TestVisual).AssemblyQualifiedName);
-        ((DocVisual)Activator.CreateInstance(Type.GetType(DocComponent.Type))).CreateViewGUI(DocComponent, 400);
+        UIDocument.rootVisualElement.Add(new DocEditView(new DocComponent(),Screen.width));
         
     }
 
