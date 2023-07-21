@@ -12,7 +12,7 @@ public class test : MonoBehaviour
     void Start()
     {
         Debug.Log(typeof(TestVisual).AssemblyQualifiedName);
-        ((DocVisual)Activator.CreateInstance(Type.GetType(DocComponent.Type))).CreateViewGUI(DocComponent);
+        ((DocVisual)Activator.CreateInstance(Type.GetType(DocComponent.Type))).CreateViewGUI(DocComponent, 400);
         
     }
 
