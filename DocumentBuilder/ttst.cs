@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using NaiveAPI.DocumentBuilder;
 
 public class ttst : MonoBehaviour
 {
@@ -11,8 +12,7 @@ public class ttst : MonoBehaviour
     void Start()
     {
         doc.JsonData = "";
-        DocMatrix docMatrix = new DocMatrix();
-        UIDocument.rootVisualElement.Add(docMatrix.CreateEditGUI(doc, 400));
+        UIDocument.rootVisualElement.Add(new DocEditView(doc, Screen.width));
     }
 
     // Update is called once per frame
