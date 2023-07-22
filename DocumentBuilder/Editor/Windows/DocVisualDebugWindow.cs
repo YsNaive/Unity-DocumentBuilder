@@ -72,15 +72,14 @@ namespace NaiveAPI_Editor.window
             btn.clicked += () =>
             {
                 docComponent.FromVisual(editView[1]);
-                var ve = docComponent.CreateViewGUI((int)position.width);
-                ve.style.marginLeft = 10;
+                var ve = docComponent.CreateViewGUI((int)position.width - 20);
                 rootVisualElement[0].RemoveAt(4);
                 rootVisualElement[0].Add(ve);
             };
             btn.text = "Repaint";
             btn.style.width = 100;
             root.Add(btn);
-            root.Add(docComponent.CreateViewGUI((int)position.width));
+            root.Add(docComponent.CreateViewGUI((int)position.width - 20));
             return root;
         }
     }

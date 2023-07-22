@@ -1,8 +1,8 @@
 using NaiveAPI_UI;
-using NUnit.Framework.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling.Memory.Experimental;
 using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
@@ -11,10 +11,9 @@ namespace NaiveAPI.DocumentBuilder
     {
         public override string DisplayName => "Label";
 
-        Data data = new Data();
         public override VisualElement CreateEditGUI(DocComponent docComponent, int width)
         {
-            data = JsonUtility.FromJson<Data>(docComponent.JsonData);
+            Data data = JsonUtility.FromJson<Data>(docComponent.JsonData);
             data ??= new Data();
             VisualElement hor = new VisualElement();
             hor.style.SetIS_Style(ISFlex.Horizontal);
@@ -61,7 +60,7 @@ namespace NaiveAPI.DocumentBuilder
 
         public override VisualElement CreateViewGUI(DocComponent docComponent, int width)
         {
-            data = JsonUtility.FromJson<Data>(docComponent.JsonData);
+            Data data = JsonUtility.FromJson<Data>(docComponent.JsonData);
             data ??= new Data();
             TextElement text = new TextElement();
             text.text = data.Content;
@@ -73,7 +72,14 @@ namespace NaiveAPI.DocumentBuilder
 
         public override DocComponent SaveTo(VisualElement visualElement, DocComponent docComponent)
         {
-            docComponent.JsonData = JsonUtility.ToJson(data);
+            Data newData = new Data();
+            newData.Content = ((TextField)visualElement[0]).value;
+            if (!int.TryParse(((TextField)visualElement[1]).value, out newData.TextSize))
+                newData.TextSize = -1;
+            if (!ColorUtility.TryParseHtmlString(((TextField)visualElement[2]).value, out newData.TextColor))
+                newData.TextColor = Color.clear;
+            docComponent.JsonData = JsonUtility.ToJson(newData);
+            docComponent.ObjData.Clear();
             return docComponent;
         }
 
