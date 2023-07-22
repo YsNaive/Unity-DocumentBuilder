@@ -1,6 +1,7 @@
 using NaiveAPI_UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Profiling.Memory.Experimental;
 using UnityEngine.UIElements;
@@ -18,6 +19,10 @@ namespace NaiveAPI.DocumentBuilder
             VisualElement hor = new VisualElement();
             hor.style.SetIS_Style(ISFlex.Horizontal);
             TextField field = new TextField();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < data.Level; i++) sb.Append('#');
+            sb.Append(' ');
+            data.Content = sb.ToString() + data.Content;
             field.value = data.Content;
             field.label = DisplayName;
             field.ElementAt(0).style.minWidth = width*0.1f;
@@ -74,6 +79,16 @@ namespace NaiveAPI.DocumentBuilder
         {
             Data newData = new Data();
             newData.Content = ((TextField)visualElement[0]).value;
+            newData.Level = 0;
+            int index = -1;
+            foreach (char c in newData.Content)
+            {
+                index++;
+                if (c == '#') newData.Level++;
+                else if (c == ' ') continue;
+                else break;
+            }
+            newData.Content = newData.Content.Substring(index);
             if (!int.TryParse(((TextField)visualElement[1]).value, out newData.TextSize))
                 newData.TextSize = -1;
             if (!ColorUtility.TryParseHtmlString(((TextField)visualElement[2]).value, out newData.TextColor))
@@ -89,6 +104,7 @@ namespace NaiveAPI.DocumentBuilder
             public int TextSize = -1;
             public Color TextColor = Color.clear;
             public string Content = "";
+            public int Level = 0;
         }
     }
 }

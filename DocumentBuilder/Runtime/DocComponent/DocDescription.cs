@@ -12,10 +12,9 @@ namespace NaiveAPI.DocumentBuilder
 
         public override VisualElement CreateEditGUI(DocComponent docComponent, int width)
         {
-            Data data = getData(docComponent);
             TextField field = new TextField();
             field.multiline = true;
-            field.value = data.Content;
+            field.value = docComponent.JsonData;
             return field;
         }
 
@@ -23,28 +22,15 @@ namespace NaiveAPI.DocumentBuilder
         {
             TextElement textElement = new TextElement();
             textElement.style.width = width;
-            textElement.text = getData(docComponent).Content;
+            textElement.text = docComponent.JsonData;
             textElement.style.SetIS_Style(DocStyle.Current.MainText);
             return textElement;
         }
 
         public override DocComponent SaveTo(VisualElement visualElement, DocComponent docComponent)
         {
-            Data data = new Data();
-            data.Content = ((TextField)visualElement).value;
-            docComponent.JsonData = JsonUtility.ToJson(data);
+            docComponent.JsonData = ((TextField)visualElement).value;
             return docComponent;
-        }
-        [System.Serializable]
-        class Data
-        {
-            public string Content;
-        }
-        Data getData(DocComponent docComponent)
-        {
-            Data data = JsonUtility.FromJson<Data>(docComponent.JsonData);
-            if(data == null) { data = new Data(); }
-            return data;
         }
     }
 

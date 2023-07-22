@@ -22,6 +22,7 @@ public class DocEditVisual : VisualElement
         });
         if (dropdownField.index < 0) dropdownField.index = 0;
         dropdownField.label = "Doc Type";
+        dropdownField[0].style.minWidth = 70;
         dropdownField.RegisterValueChangedCallback((val) =>
         {
             DocComponent.Type = DocData.ComponentTypeNames[dropdownField.index];

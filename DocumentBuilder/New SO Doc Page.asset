@@ -20,12 +20,17 @@ MonoBehaviour:
   - Type: NaiveAPI.DocumentBuilder.DocDescription, Naive.DocumentBuilder.Runtime,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     ObjData: []
-    JsonData: '{"Content":"aaa"}'
+    JsonData: 
   - Type: NaiveAPI.DocumentBuilder.DocLabel, Naive.DocumentBuilder.Runtime, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     ObjData: []
-    JsonData: '{"TextSize":-1,"TextColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"Content":"ccc"}'
+    JsonData: '{"TextSize":-1,"TextColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0},"Content":"
+      ","Level":0}'
   - Type: NaiveAPI.DocumentBuilder.DocDescription, Naive.DocumentBuilder.Runtime,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     ObjData: []
-    JsonData: "{\"Content\":\"Haha\\n\u7B11\u6B7B\u6C92\u5BE6\u4F5C\\n\\n\"}"
+    JsonData: 
+  - Type: NaiveAPI.DocumentBuilder.DocDescription, Naive.DocumentBuilder.Runtime,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    ObjData: []
+    JsonData: QQ
