@@ -10,6 +10,7 @@ public class DocComponent
 {
     public string Type = "";
     public List<Object> ObjData = new List<Object>();
+    public string TextData = "";
     public string JsonData = "";
     public VisualElement CreateEditGUI(int width)
     {

@@ -26,6 +26,8 @@ public class DocEditVisual : VisualElement
         dropdownField.RegisterValueChangedCallback((val) =>
         {
             DocComponent.Type = DocData.ComponentTypeNames[dropdownField.index];
+            DocComponent.JsonData = "";
+            DocComponent.ObjData.Clear();
             if(editView != null)
                 Remove(editView);
             editView = null;
