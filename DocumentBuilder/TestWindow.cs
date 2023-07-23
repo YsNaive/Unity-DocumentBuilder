@@ -21,7 +21,6 @@ namespace NaiveAPI.DocumentBuilder
         }
         private void CreateGUI()
         {
-            rootVisualElement.Add(new DocStyleVisual());
         }
     }
 }

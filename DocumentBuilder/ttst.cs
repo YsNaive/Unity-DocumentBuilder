@@ -6,12 +6,10 @@ using NaiveAPI.DocumentBuilder;
 
 public class ttst : MonoBehaviour
 {
-    public DocComponent doc = new DocComponent();
     public UIDocument UIDocument;
     // Start is called before the first frame update
     void Start()
     {
-        doc.JsonData = "";
     }
 
     // Update is called once per frame
