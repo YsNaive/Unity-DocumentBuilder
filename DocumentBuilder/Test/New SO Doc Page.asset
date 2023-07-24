@@ -12,21 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
   m_Name: New SO Doc Page
   m_EditorClassIdentifier: 
-  SubPages:
-  - {fileID: 0}
-  Components:
-  - VisualID: 1
-    JsonData: 
-    TextData:
-    - CCC
-    ObjsData: []
-  - VisualID: 1
-    JsonData: 
-    TextData:
-    - CCC
-    ObjsData: []
-  - VisualID: 2
-    JsonData: 
-    TextData:
-    - CCC
-    ObjsData: []
+  SubPages: []
+  Components: []
