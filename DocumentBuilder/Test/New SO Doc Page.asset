@@ -13,4 +13,39 @@ MonoBehaviour:
   m_Name: New SO Doc Page
   m_EditorClassIdentifier: 
   SubPages: []
-  Components: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Label
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - '
+
+
+
+
+
+
+'
+    ObjsData: []
+  - VisualID: 3
+    JsonData: '{"row":3,"col":3,"anchors":[4,3,3]}'
+    TextData:
+    - 
+    - A
+    - B
+    - 1st
+    - 40
+    - 25
+    - 2nd
+    - 160
+    - 90
+    ObjsData: []

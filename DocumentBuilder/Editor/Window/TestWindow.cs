@@ -19,11 +19,9 @@ namespace NaiveAPI.DocumentBuilder
             }
             window = CreateWindow<TestWindow>("Test Window");
         }
-        private void OnGUI()
+        private void CreateGUI()
         {
-            if (GUILayout.Button("Create"))
-            {
-            }
+            rootVisualElement.Add(new ColorField(Color.cyan,"Color"));
         }
     }
 }
