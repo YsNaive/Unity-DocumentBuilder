@@ -14,6 +14,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override void OnCreateGUI()
         {
             TextField textInput = new TextField();
+            if (Target.TextData.Count == 0)
+                Target.TextData.Add(string.Empty);
             textInput.value = Target.TextData[0];
             textInput.multiline = true;
             textInput.RegisterValueChangedCallback((val) =>

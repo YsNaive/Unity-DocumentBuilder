@@ -13,7 +13,8 @@ namespace NaiveAPI.DocumentBuilder
         public override void OnCreateGUI()
         {
             TextElement text = new TextElement();
-            text.text = Target.TextData[0];
+            if (Target.TextData.Count > 0)
+                text.text = Target.TextData[0];
             text.style.SetIS_Style(DocStyle.Current.LabelText);
             Add(text);
         }
