@@ -261,6 +261,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be85c2a3100f9842bf7d81e73e3bc38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ISText:
+    FontAsset: {fileID: 0}
+    FontStyle: 0
+    FontSize: 14
+    Color: {r: 0, g: 0, b: 0, a: 1}
+    Align: 3
+    Wrap: 0
 --- !u!1 &1693241506
 GameObject:
   m_ObjectHideFlags: 0

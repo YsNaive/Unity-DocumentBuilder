@@ -16,14 +16,17 @@ MonoBehaviour:
   - {fileID: 0}
   Components:
   - VisualID: 1
-    TextData: "\u6A19\u984C\u4E00"
     JsonData: 
+    TextData:
+    - CCC
     ObjsData: []
   - VisualID: 1
-    TextData: "\u6A19\u984C\u4E8C"
     JsonData: 
+    TextData:
+    - CCC
     ObjsData: []
   - VisualID: 2
-    TextData: CCCCCCCCCC!
     JsonData: 
+    TextData:
+    - CCC
     ObjsData: []

@@ -8,10 +8,6 @@ namespace NaiveAPI.DocumentBuilder
     [System.Serializable]
     public class DocStyle
     {
-        static DocStyle()
-        {
-            Current = DocCache.CurrentStyle;
-        }
         public Color BackgroundColor;
         public Color SubBackgroundColor;
         public Color FrontGroundColor;
@@ -55,6 +51,6 @@ namespace NaiveAPI.DocumentBuilder
             ArgsColor = new Color(0.65f, 0.85f, 0.95f),
             TypeColor = new Color(0.35f, 0.70f, 0.65f),
         };
-        public static DocStyle Current;
+        public static DocStyle Current => DocCache.Get().CurrentStyle;
     }
 }

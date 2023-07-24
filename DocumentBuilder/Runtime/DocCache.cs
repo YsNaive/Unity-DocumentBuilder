@@ -10,32 +10,34 @@ namespace NaiveAPI.DocumentBuilder
     [System.Serializable]
     public class DocCache
     {
-        static string path = Application.temporaryCachePath + "/DocumentBuilderSettings.json";
         private static DocCache instance;
-        public static DocCache Get()
+        public static DocCache Get() { return Get(Application.temporaryCachePath + "/DocumentBuilderSettings.json"); }
+        public static DocCache Get(string path)
         {
             instance = null;
             if (instance == null)
             {
                 if (File.Exists(path))
-                    instance = JsonUtility.FromJson<DocCache>(File.ReadAllText(path));
+                    Load(path);
                 else
                 {
                     instance = new DocCache();
-                    instance.currentStyle = DocStyle.Dark;
-                    Save();
+                    instance.CurrentStyle = DocStyle.Dark;
+                    Save(path);
                 }
             }
             return instance;
         }
-        public static void Save()
+        public static void Save(string path)
         {
             File.WriteAllText(path, JsonUtility.ToJson(instance));
         }
-        public static List<string> LanguageList => Get().languageList;
-        public static DocStyle CurrentStyle => Get().currentStyle;
+        public static void Load(string path)
+        {
+            instance = JsonUtility.FromJson<DocCache>(File.ReadAllText(path));
+        }
 
-        [SerializeField] private List<string> languageList = new List<string>();
-        [SerializeField] private DocStyle currentStyle = new DocStyle();
+        [SerializeField] public List<string> LanguageList = new List<string>();
+        [SerializeField] public DocStyle CurrentStyle = new DocStyle();
     }
 }
