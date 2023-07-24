@@ -70,9 +70,20 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = new VisualElement();
             root.style.paddingLeft = 10;
+            root.style.paddingRight = 10;
             root.Add(editText);
             root.Add(DocEditor.CreateEditVisual(docComponent));
+            Button repaint = new Button();
+            repaint.text = "Repaint";
+            repaint.style.width = 80;
+            repaint.clicked += () =>
+            {
+                root.RemoveAt(4);
+                root.Insert(4,DocRuntime.CreateVisual(docComponent));
+            };
             root.Add(viewText);
+            root.Add(repaint);
+            root.Add(DocRuntime.CreateVisual(docComponent));
             root.Add(dataText);
             root.Add(new IMGUIContainer(() =>
             {

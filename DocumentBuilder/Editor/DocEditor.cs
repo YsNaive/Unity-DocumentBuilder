@@ -43,27 +43,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         public static VisualElement CreateEditVisual(DocComponent docComponent)
         {
-            VisualElement root = new VisualElement();
-            DropdownField dropdown = new DropdownField();
-            dropdown.label = "Type";
-            dropdown.choices = VisualNameList;
-            dropdown.index = VisualNameList.FindIndex(0, (str) => { return str == docComponent.VisualID; });
-            if (dropdown.index == -1) dropdown.index = 0;
-            dropdown.RegisterValueChangedCallback((val) =>
-            {
-                if (val.previousValue != "None") root.RemoveAt(1);
-                if (val.newValue == "None")
-                {
-                    docComponent.VisualID = string.Empty;
-                    return;
-                }
-                docComponent.VisualID = val.newValue;
-                DocEditVisual doc = (DocEditVisual)System.Activator.CreateInstance(VisualID2Type[VisualName2ID[val.newValue]]);
-                doc.SetTarget(docComponent);
-                root.Add(doc);
-            });
-            root.Add(dropdown);
-            return root;
+            return new DocEditField(docComponent);
         }
     }
 

@@ -14,7 +14,7 @@ namespace NaiveAPI
         {
             Reload();
         }
-        public static Dictionary<string, Type> VisualID_Dict;
+        public static Dictionary<string, Type> VisualID_Dict = new Dictionary<string, Type>();
 
         public static void Reload()
         {
@@ -38,7 +38,11 @@ namespace NaiveAPI
         {
             Type t;
             if (!VisualID_Dict.TryGetValue(docComponent.VisualID, out t))
-                return new VisualElement();
+            {
+                TextElement textElement = new TextElement();
+                textElement.text = $"Not Fount EditVisual for ID \"{docComponent.VisualID}\"";
+                return textElement;
+            }
             DocVisual doc = (DocVisual)System.Activator.CreateInstance(t);
             doc.SetTarget(docComponent);
             return doc;
