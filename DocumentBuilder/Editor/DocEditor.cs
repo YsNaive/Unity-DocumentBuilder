@@ -48,25 +48,21 @@ namespace NaiveAPI_Editor.DocumentBuilder
             dropdown.label = "Type";
             dropdown.choices = VisualNameList;
             dropdown.index = VisualNameList.FindIndex(0, (str) => { return str == docComponent.VisualID; });
+            if (dropdown.index == -1) dropdown.index = 0;
             dropdown.RegisterValueChangedCallback((val) =>
             {
-                docComponent.VisualID = val.newValue;
                 if (val.previousValue != "None") root.RemoveAt(1);
-                if (val.newValue == "None") return;
+                if (val.newValue == "None")
+                {
+                    docComponent.VisualID = string.Empty;
+                    return;
+                }
+                docComponent.VisualID = val.newValue;
                 DocEditVisual doc = (DocEditVisual)System.Activator.CreateInstance(VisualID2Type[VisualName2ID[val.newValue]]);
-                doc.Target = docComponent;
+                doc.SetTarget(docComponent);
                 root.Add(doc);
             });
             root.Add(dropdown);
-            Type t;
-            if (!VisualID2Type.TryGetValue(docComponent.VisualID, out t))
-                root.Add(new VisualElement());
-            else
-            {
-                DocEditVisual doc = (DocEditVisual)System.Activator.CreateInstance(t);
-                doc.Target = docComponent;
-                root.Add(doc);
-            }
             return root;
         }
     }

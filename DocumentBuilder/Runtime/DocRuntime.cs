@@ -40,7 +40,7 @@ namespace NaiveAPI
             if (!VisualID_Dict.TryGetValue(docComponent.VisualID, out t))
                 return new VisualElement();
             DocVisual doc = (DocVisual)System.Activator.CreateInstance(t);
-            doc.Target = docComponent;
+            doc.SetTarget(docComponent);
             return doc;
         }
     }

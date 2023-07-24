@@ -12,37 +12,36 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public abstract string DisplayName { get; }
         public abstract string VisualID { get; }
         public float Width = -1.0f;
-        public DocComponent Target
-        {
-            get => m_target;
-            set
-            {
-                m_target = value;
-                Repaint();
-            }
-        }
+        public DocComponent Target => m_target;
 
         private DocComponent m_target;
+        public void SetTarget(DocComponent target)
+        {
+            m_target = target;
+            OnCreateGUI();
+        }
         /// <summary>
         /// Call after Target is set
         /// </summary>
-        public abstract void Repaint();
+        public abstract void OnCreateGUI();
         public virtual string ToMarkdown() { return string.Empty; }
     }
 }
 
 public class TestEditVisual : DocEditVisual
 {
-    public TestEditVisual()
-    {
-        Add(new TextField());
-    }
     public override string DisplayName => "TextVisual";
 
     public override string VisualID => "Test";
 
-    public override void Repaint()
+    public override void OnCreateGUI()
     {
-        ((TextField)this[0]).value = "Test";
+        var tx = new TextField();
+        tx.value = Target.TextData;
+        tx.RegisterValueChangedCallback((val) =>
+        {
+            Target.TextData = val.newValue;
+        });
+        Add(tx);
     }
 }

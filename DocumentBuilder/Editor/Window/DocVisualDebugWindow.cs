@@ -53,12 +53,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
             viewText.style.borderBottomColor = Color.gray;
             viewText.style.borderBottomWidth = 2f;
             viewText.style.marginTop = 30;
+            dataText = new TextElement();
+            dataText.text = " Data";
+            dataText.style.borderBottomColor = Color.gray;
+            dataText.style.borderBottomWidth = 2f;
+            dataText.style.marginTop = 30;
 
             docComponent = new DocComponent();
-            rootVisualElement.Add(createView());
+            ScrollView scrollView = new ScrollView();
+            scrollView.Add(createView());
+            rootVisualElement.Add(scrollView);
         }
 
-        TextElement editText, viewText;
+        TextElement editText, viewText, dataText;
         private VisualElement createView()
         {
             VisualElement root = new VisualElement();
@@ -66,6 +73,22 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.Add(editText);
             root.Add(DocEditor.CreateEditVisual(docComponent));
             root.Add(viewText);
+            root.Add(dataText);
+            root.Add(new IMGUIContainer(() =>
+            {
+                EditorGUI.BeginDisabledGroup(true);
+                EditorGUILayout.LabelField("ID: "+docComponent.VisualID);
+                EditorGUILayout.LabelField("Text:");
+                EditorGUILayout.TextArea(docComponent.TextData);
+                EditorGUILayout.LabelField("Json:");
+                EditorGUILayout.TextArea(docComponent.JsonData);
+                EditorGUILayout.LabelField("Objs:");
+                foreach (var obj in docComponent.ObjsData)
+                {
+                    EditorGUILayout.ObjectField(obj, typeof(Object), false);
+                }
+                EditorGUI.EndDisabledGroup();
+            }));
             return root;
         }
     }
