@@ -52,5 +52,23 @@ namespace NaiveAPI.DocumentBuilder
             TypeColor = new Color(0.35f, 0.70f, 0.65f),
         };
         public static DocStyle Current => DocCache.Get().CurrentStyle;
+        public DocStyle Copy()
+        {
+            DocStyle copy = new DocStyle();
+
+            copy.BackgroundColor = this.BackgroundColor;
+            copy.SubBackgroundColor = this.SubBackgroundColor;
+            copy.FrontGroundColor = this.FrontGroundColor;
+            copy.SubFrontGroundColor = this.SubFrontGroundColor;
+            copy.MainTextSize = this.MainTextSize;
+            copy.LabelTextSize = this.LabelTextSize;
+            copy.MainText = this.MainText.Copy();
+            copy.LabelText = this.LabelText.Copy();
+            copy.FuncColor = this.FuncColor;
+            copy.ArgsColor = this.ArgsColor;
+            copy.TypeColor = this.TypeColor;
+
+            return copy;
+        }
     }
 }

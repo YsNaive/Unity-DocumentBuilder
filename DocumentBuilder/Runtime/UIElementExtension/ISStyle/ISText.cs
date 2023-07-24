@@ -18,6 +18,18 @@ namespace NaiveAPI_UI
             this.Wrap = src.Wrap;
         }
 
+        public ISText Copy()
+        {
+            var copy = new ISText();
+            copy.FontAsset = this.FontAsset;
+            copy.FontStyle = this.FontStyle;
+            copy.FontSize = this.FontSize;
+            copy.Color = this.Color;
+            copy.Align = this.Align;
+            copy.Wrap = this.Wrap;
+            return copy;
+        }
+
         public FontAsset FontAsset;
         public FontStyle FontStyle;
         public int FontSize = 14;

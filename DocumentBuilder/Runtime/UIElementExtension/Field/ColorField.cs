@@ -1,3 +1,4 @@
+using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System;
 using System.Collections;
@@ -5,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace NaiveAPI.DocumentBuilder
+namespace NaiveAPI_UI
 {
     public class ColorField : VisualElement
     {
@@ -52,14 +53,28 @@ namespace NaiveAPI.DocumentBuilder
         float s = 0.5f, v = 0.5f;
         float height;
         float foldoutHeight;
-        Color nowColor;
-        public ColorField(Color initVal, string label = "") {
+        public Color value
+        {
+            get => m_color;
+            private set
+            {
+                if (m_color != value)
+                {
+                    m_color = value;
+                    OnValueChange?.Invoke(m_color);
+                }
+            }
+        }
+        private Color m_color;
+        public event Action<Color> OnValueChange;
+        public ColorField(Color initVal, string label = "", int maxWidth = -1) {
             foldout.text = label;
             foldout.value = false;
-            nowColor = initVal;
+            value = initVal;
             foldout.style.SetIS_Style(DocStyle.Current.MainText);
-            previewImg3.style.backgroundColor = nowColor;
-            previewImg3.style.width = Length.Percent(50);
+            if(maxWidth != -1)foldout.Q("unity-content").style.width = maxWidth;
+            previewImg3.style.backgroundColor = value;
+            previewImg3.style.width = Length.Percent(33);
             previewImg3.style.position = Position.Absolute;
             Add(previewImg3);
             foldout.RegisterCallback<GeometryChangedEvent>(e =>
@@ -68,10 +83,9 @@ namespace NaiveAPI.DocumentBuilder
                 {
                     foldoutHeight = e.newRect.height;
                     previewImg3.style.height = foldoutHeight;
-                    previewImg3.style.left = e.newRect.xMax / 2;
                     previewImg3.style.top = e.newRect.y;
-                    Debug.Log(e.newRect);
                 }
+                previewImg3.style.left = (e.newRect.xMax / 3f)*2f;
             });
             foldout.RegisterValueChangedCallback(val =>
             {
@@ -79,15 +93,14 @@ namespace NaiveAPI.DocumentBuilder
             });
             Add(foldout);
             Color.RGBToHSV(initVal, out h, out s, out v);
-            style.SetIS_Style(ISMargin.Pixel(10));
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.SetIS_Style(ISPadding.Percent(5));
 
             VisualElement colorHor = new VisualElement();
             colorHor.style.SetIS_Style(ISFlex.Horizontal);
-            previewImg.style.backgroundColor = nowColor;
+            previewImg.style.backgroundColor = value;
             previewImg.style.width = Length.Percent(46);
-            previewImg2.style.backgroundColor = nowColor;
+            previewImg2.style.backgroundColor = value;
             previewImg2.style.width = Length.Percent(47);
             previewImg2.style.marginRight = Length.Percent(5);
             colorHor.Add(previewImg2);
@@ -110,8 +123,8 @@ namespace NaiveAPI.DocumentBuilder
                 svImg.style.backgroundImage = renderSVimg(h, s, v);
                 reloadColor();
             });
-            hImg.RegisterCallback<PointerUpEvent>(e => { isMouseDown = false; previewImg2.style.backgroundColor = nowColor; previewImg3.style.backgroundColor = nowColor; });
-            hImg.RegisterCallback<PointerLeaveEvent>(e => { isMouseDown = false; previewImg2.style.backgroundColor = nowColor; previewImg3.style.backgroundColor = nowColor; });
+            hImg.RegisterCallback<PointerUpEvent>(e => { isMouseDown = false; previewImg2.style.backgroundColor = value; previewImg3.style.backgroundColor = value; });
+            hImg.RegisterCallback<PointerLeaveEvent>(e => { isMouseDown = false; previewImg2.style.backgroundColor = value; previewImg3.style.backgroundColor = value; });
             hImg.RegisterCallback<PointerMoveEvent>(onHueChanged );
             svImg.RegisterCallback<PointerDownEvent>(e => {
                 isMouseDown = true;
@@ -120,8 +133,8 @@ namespace NaiveAPI.DocumentBuilder
                 svImg.style.backgroundImage = renderSVimg(h,s,v);
                 reloadColor();
             });
-            svImg.RegisterCallback<PointerUpEvent>(e => { isMouseDown = false; previewImg2.style.backgroundColor = nowColor; previewImg3.style.backgroundColor = nowColor; });
-            svImg.RegisterCallback<PointerLeaveEvent>(e => { isMouseDown = false; previewImg2.style.backgroundColor = nowColor; previewImg3.style.backgroundColor = nowColor; });
+            svImg.RegisterCallback<PointerUpEvent>(e => { isMouseDown = false; previewImg2.style.backgroundColor = value; previewImg3.style.backgroundColor = value; });
+            svImg.RegisterCallback<PointerLeaveEvent>(e => { isMouseDown = false; previewImg2.style.backgroundColor = value; previewImg3.style.backgroundColor = value; });
             svImg.RegisterCallback<PointerMoveEvent>(onSVChanged );
             svImg.RegisterCallback<GeometryChangedEvent>(e =>
             {
@@ -135,7 +148,10 @@ namespace NaiveAPI.DocumentBuilder
                 }
             });
             foldout.Add(hor);
-
+            var border = new ISBorder(DocStyle.Current.FrontGroundColor, 2);
+            previewImg.style.SetIS_Style(border);
+            previewImg2.style.SetIS_Style(border);
+            previewImg3.style.SetIS_Style(border);
 
             hor = new VisualElement();
             hor.style.SetIS_Style(ISFlex.Horizontal);
@@ -194,10 +210,10 @@ namespace NaiveAPI.DocumentBuilder
         }
         private void reloadColor()
         {
-            nowColor = Color.HSVToRGB(h, s, v);
-            nowColor.a = a.value;
-            htmlColor.value = '#'+ColorUtility.ToHtmlStringRGBA(nowColor);
-            previewImg.style.backgroundColor = nowColor;
+            value = Color.HSVToRGB(h, s, v);
+            m_color.a = a.value;
+            htmlColor.value = '#'+ColorUtility.ToHtmlStringRGBA(value);
+            previewImg.style.backgroundColor = value;
         }
     }
 

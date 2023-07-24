@@ -28,10 +28,12 @@ namespace NaiveAPI.DocumentBuilder
             }
             return instance;
         }
+        public static void Save() { Save(Application.temporaryCachePath + "/DocumentBuilderSettings.json"); }
         public static void Save(string path)
         {
             File.WriteAllText(path, JsonUtility.ToJson(instance));
         }
+        public static void Load() { Load(Application.temporaryCachePath + "/DocumentBuilderSettings.json"); }
         public static void Load(string path)
         {
             instance = JsonUtility.FromJson<DocCache>(File.ReadAllText(path));

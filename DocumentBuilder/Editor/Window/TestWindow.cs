@@ -1,8 +1,10 @@
 using NaiveAPI_Editor.window;
+using NaiveAPI_UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -19,9 +21,19 @@ namespace NaiveAPI.DocumentBuilder
             }
             window = CreateWindow<TestWindow>("Test Window");
         }
+        DocStyleField styleField;
         private void CreateGUI()
         {
-            rootVisualElement.Add(new ColorField(Color.cyan,"Color"));
+            styleField = new DocStyleField(DocStyle.Current);
+            Button save = new Button();
+            save.text = "Save";
+            save.clicked += () =>
+            {
+                DocCache.Get().CurrentStyle = styleField.Target;
+                DocCache.Save();
+            };
+            rootVisualElement.Add(save);
+            rootVisualElement.Add(styleField);
         }
     }
 }

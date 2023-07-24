@@ -11,7 +11,7 @@ public class test : MonoBehaviour
     {        
         // 將顏色選擇器的根元素添加到UI面板中
         var uiRoot = GetComponent<UIDocument>().rootVisualElement;
-        uiRoot.Add(new ColorField(Color.cyan));
+        uiRoot.Add(new ColorField(Color.cyan,"Color",500));
 
     }
 
