@@ -19,8 +19,11 @@ namespace NaiveAPI.DocumentBuilder
             }
             window = CreateWindow<TestWindow>("Test Window");
         }
-        private void CreateGUI()
+        private void OnGUI()
         {
+            if (GUILayout.Button("Create"))
+            {
+            }
         }
     }
 }

@@ -279,7 +279,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIDocument: {fileID: 1622008858}
-  Page: {fileID: 11400000, guid: 5b880dddf1f37a64eac45a490a668381, type: 2}
 --- !u!1 &1693241506
 GameObject:
   m_ObjectHideFlags: 0
