@@ -1,0 +1,22 @@
+using NaiveAPI_UI;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace NaiveAPI.DocumentBuilder
+{
+    public class DocDescription : DocVisual
+    {
+        public override string VisualID => "2";
+
+        public override void OnCreateGUI()
+        {
+            TextElement text = new TextElement();
+            text.text = Target.TextData[0];
+            text.style.SetIS_Style(DocStyle.Current.MainText);
+            Add(text);
+        }
+    }
+
+}

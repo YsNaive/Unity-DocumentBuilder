@@ -40,7 +40,7 @@ namespace NaiveAPI
             if (!VisualID_Dict.TryGetValue(docComponent.VisualID, out t))
             {
                 TextElement textElement = new TextElement();
-                textElement.text = $"Not Fount EditVisual for ID \"{docComponent.VisualID}\"";
+                textElement.text = $"Not Fount View for ID \"{docComponent.VisualID}\"";
                 return textElement;
             }
             DocVisual doc = (DocVisual)System.Activator.CreateInstance(t);

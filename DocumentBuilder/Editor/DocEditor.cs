@@ -14,16 +14,18 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             Reload();
         }
-        public static List<string> VisualNameList = new List<string>();
-        public static Dictionary<string,string> VisualName2ID = new Dictionary<string,string>();
-        public static Dictionary<string, Type> VisualID2Type = new Dictionary<string, Type>();
+        public static List<string> NameList = new List<string>();
+        public static Dictionary<string,string> Name2ID = new Dictionary<string,string>();
+        public static Dictionary<string,string> ID2Name = new Dictionary<string,string>();
+        public static Dictionary<string, Type> ID2Type = new Dictionary<string, Type>();
 
         public static void Reload()
         {
-            VisualID2Type.Clear();
-            VisualName2ID.Clear();
-            VisualNameList.Clear();
-            VisualNameList.Add("None");
+            ID2Type.Clear();
+            Name2ID.Clear();
+            ID2Name.Clear();
+            NameList.Clear();
+            NameList.Add("None");
             Type baseType = typeof(DocEditVisual);
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
@@ -34,9 +36,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     if (type.IsSubclassOf(baseType) && !type.IsAbstract)
                     {
                         DocEditVisual doc = (DocEditVisual)System.Activator.CreateInstance(type);
-                        VisualName2ID.Add(doc.DisplayName, doc.VisualID);
-                        VisualID2Type.Add(doc.VisualID, type);
-                        VisualNameList.Add(doc.DisplayName);
+                        NameList.Add(doc.DisplayName);
+                        Name2ID.Add(doc.DisplayName, doc.VisualID);
+                        ID2Type.Add(doc.VisualID, type);
+                        ID2Name.Add(doc.VisualID, doc.DisplayName);
                     }
                 }
             }

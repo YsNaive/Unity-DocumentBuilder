@@ -8,8 +8,8 @@ namespace NaiveAPI.DocumentBuilder
     public class DocComponent
     {
         public string VisualID = string.Empty;
-        public string TextData = string.Empty;
         public string JsonData = string.Empty;
+        public List<string> TextData = new List<string>();
         public List<Object> ObjsData = new List<Object>();
     }
 }

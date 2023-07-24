@@ -90,7 +90,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 EditorGUI.BeginDisabledGroup(true);
                 EditorGUILayout.LabelField("ID: "+docComponent.VisualID);
                 EditorGUILayout.LabelField("Text:");
-                EditorGUILayout.TextArea(docComponent.TextData);
+                foreach(var str in docComponent.TextData)
+                    EditorGUILayout.TextArea(str);
                 EditorGUILayout.LabelField("Json:");
                 EditorGUILayout.TextArea(docComponent.JsonData);
                 EditorGUILayout.LabelField("Objs:");

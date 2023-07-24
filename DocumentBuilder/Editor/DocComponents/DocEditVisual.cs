@@ -27,21 +27,3 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public virtual string ToMarkdown() { return string.Empty; }
     }
 }
-
-public class TestEditVisual : DocEditVisual
-{
-    public override string DisplayName => "TextVisual";
-
-    public override string VisualID => "Test";
-
-    public override void OnCreateGUI()
-    {
-        var tx = new TextField();
-        tx.value = Target.TextData;
-        tx.RegisterValueChangedCallback((val) =>
-        {
-            Target.TextData = val.newValue;
-        });
-        Add(tx);
-    }
-}
