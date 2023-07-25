@@ -18,7 +18,7 @@ namespace NaiveAPI.DocumentBuilder
         {
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;
-            matrixVisual = generateViewMatrixVisual(data, Width);
+            matrixVisual = generateViewMatrixVisual(data, -1);
             matrixVisual[matrixVisual.childCount - 1].RegisterCallback<GeometryChangedEvent>(repaintMatrix);
             this.Add(matrixVisual);
         }

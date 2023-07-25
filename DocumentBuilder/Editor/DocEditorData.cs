@@ -8,7 +8,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public class DocEditorData : ScriptableSingleton<DocEditorData>
     {
+        static DocEditorData()
+        {
+        }
         public SODocPage EditingDocPage;
+        public string EditingState;
     }
 
 }

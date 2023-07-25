@@ -13,6 +13,7 @@ namespace NaiveAPI.DocumentBuilder
         /// </summary>
         public event Action<PageMenuVisual, PageMenuVisual> OnChangeSelect;
         public SODocPage Root;
+        public List<SODocPage> AddedPages = new List<SODocPage>(); 
         public PageMenuVisual RootVisual;
         public PageMenuVisual Selecting
         {

@@ -36,6 +36,7 @@ namespace NaiveAPI.DocumentBuilder
             MenuHandler.Root ??= page;
             MenuHandler.RootVisual ??= this;
             MenuHandler.Selecting ??= this;
+            MenuHandler.AddedPages.Add(page);
             VisualElement icon = new VisualElement();
             TextElement name = new TextElement();
             name.text = Target.name;
@@ -68,9 +69,14 @@ namespace NaiveAPI.DocumentBuilder
             Add(name);
             foreach(var subPage in Target.SubPages)
             {
-                var ve = new PageMenuVisual(subPage, menuHandler);
-                SubMenuVisual.Add(ve);
-                Add(ve);
+                Debug.Log(MenuHandler.AddedPages.Count);
+                if (!MenuHandler.AddedPages.Contains(subPage))
+                {
+                    var ve = new PageMenuVisual(subPage, menuHandler);
+                    SubMenuVisual.Add(ve);
+                    Add(ve);
+                    MenuHandler.AddedPages.Add(subPage);
+                }
             }
 
             icon.RegisterCallback<MouseDownEvent>(e => { IsOpen = !IsOpen; });
