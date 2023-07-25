@@ -33,7 +33,6 @@ namespace NaiveAPI.DocumentBuilder
             for (int i = 0; i < data.row; i++)
             {
                 VisualElement child = new VisualElement();
-                child.style.backgroundColor = Color.blue;
                 child.style.SetIS_Style(ISFlex.Horizontal);
                 for (int j = 0; j < data.col; j++)
                 {
@@ -54,12 +53,11 @@ namespace NaiveAPI.DocumentBuilder
                         label.style.borderRightWidth = 1;
                         label.style.borderRightColor = DocStyle.Current.SubFrontGroundColor;
                     }
-                    label.style.marginTop = 10;
-                    label.style.marginBottom = 10;
-                    label.style.unityTextAlign = data.anchors[j];
                     label.style.SetIS_Style(margin);
                     label.style.SetIS_Style(padding);
+                    label.style.paddingLeft = 5;
                     label.style.SetIS_Style(DocStyle.Current.MainText);
+                    label.style.unityTextAlign = data.anchors[j];
                     child.Add(label);
                 }
                 root.Add(child);
@@ -114,6 +112,7 @@ namespace NaiveAPI.DocumentBuilder
             {
                 heightLength[i] = maxHeight[i] / sumHeight * 100;
             }
+            sumWidth += (data.col * 5);
             sumHeight += (data.row * 5);
 
             ISPosition position = new ISPosition();
@@ -135,7 +134,10 @@ namespace NaiveAPI.DocumentBuilder
                 }
                 position.Left = ISStyleLength.Percent(0);
             }
-            matrixRoot.style.width = Length.Percent(100);
+            if (data.mode == Mode.FixedWidth)
+                matrixRoot.style.width = Length.Percent(100);
+            else if (data.mode == Mode.FixedText)
+                matrixRoot.style.width = sumWidth;
             matrixRoot.style.height = sumHeight;
             matrixRoot[matrixRoot.childCount - 1].UnregisterCallback<GeometryChangedEvent>(repaintMatrix);
         }
@@ -146,6 +148,7 @@ namespace NaiveAPI.DocumentBuilder
             public int row, col;
             public string[,] contents;
             public TextAnchor[] anchors;
+            public Mode mode = Mode.FixedWidth;
 
             public Data()
             {
@@ -196,6 +199,50 @@ namespace NaiveAPI.DocumentBuilder
 
                 this.contents = newContents;
             }
+
+            public void DeleteRow(int row)
+            {
+                if (row < 0 || row >= this.row)
+                    return;
+                this.row--;
+                string[,] newContents = new string[this.row, this.col];
+                int i1 = 0;
+                for (int i = 0;i < this.row; i++)
+                {
+                    if (i1 == row)
+                        i1++;
+                    for (int j = 0;j < this.col; j++)
+                    {
+                        Debug.Log(i1 + " " + j);
+                        newContents[i, j] = this.contents[i1, j];
+                    }
+                }
+                this.contents = newContents;
+            }
+
+            public void DeleteCol(int col)
+            {
+                if (col < 0 || col >= this.col)
+                    return;
+                this.col--;
+                string[,] newContents = new string[this.row, this.col];
+                int j1 = 0;
+                for (int i = 0; i < this.row; i++)
+                {
+                    for (int j = 0; j < this.col; j++)
+                    {
+                        if (j1 == col)
+                            j1++;
+                        newContents[i, j] = this.contents[i, j1];
+                    }
+                }
+                this.contents = newContents;
+            }
+        }
+
+        public enum Mode
+        {
+            FixedWidth, FixedText
         }
     }
 }
