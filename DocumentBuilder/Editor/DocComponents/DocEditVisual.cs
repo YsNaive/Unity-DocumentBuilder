@@ -1,5 +1,6 @@
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_Editor.DocumentBuilder;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,20 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public abstract class DocEditVisual : VisualElement
     {
+        public DocEditVisual()
+        {
+            RegisterCallback<GeometryChangedEvent>(e =>
+            {
+                if (e.oldRect.width != e.newRect.width)
+                    OnWidthChanged?.Invoke(e.newRect.width);
+                if (e.oldRect.height != e.newRect.height)
+                    OnHeightChanged?.Invoke(e.newRect.height);
+            });
+        }
         public abstract string DisplayName { get; }
         public abstract string VisualID { get; }
-        public float Width = -1.0f;
+        public Action<float> OnHeightChanged;
+        public Action<float> OnWidthChanged;
         public DocComponent Target => m_target;
 
         private DocComponent m_target;

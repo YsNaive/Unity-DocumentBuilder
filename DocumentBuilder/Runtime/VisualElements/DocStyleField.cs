@@ -56,6 +56,14 @@ namespace NaiveAPI.DocumentBuilder
             colorField.OnValueChange += val => { Target.ArgsColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.TypeColor, "Type", colorWidth);
             colorField.OnValueChange += val => { Target.TypeColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.SuccessColor, "Success", colorWidth);
+            colorField.OnValueChange += val => { Target.SuccessColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.WarningColor, "Warning", colorWidth);
+            colorField.OnValueChange += val => { Target.WarningColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.DangerColor, "Danger", colorWidth);
+            colorField.OnValueChange += val => { Target.DangerColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.HintColor, "Hint", colorWidth);
+            colorField.OnValueChange += val => { Target.HintColor = val; }; scrollView.Add(colorField);
         }
         void createText(ISText text, string label)
         {

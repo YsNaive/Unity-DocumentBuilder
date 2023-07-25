@@ -27,9 +27,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.TextData.Clear();
                 Target.TextData.Add(val.newValue);
             });
+            labelInput.style.SetIS_Style(ISMargin.None);
             Add(labelInput);
             UnityEditor.UIElements.ColorField colorField = new UnityEditor.UIElements.ColorField();
             colorField.style.width = Length.Percent(25);
+            colorField.style.SetIS_Style(ISMargin.None);
             colorField.value = Color.white;
             Add(colorField);
         }

@@ -23,6 +23,11 @@ namespace NaiveAPI.DocumentBuilder
         public Color ArgsColor;
         public Color TypeColor;
 
+        public Color SuccessColor;
+        public Color WarningColor;
+        public Color DangerColor;
+        public Color HintColor;
+
         public float GUIScale = 1;
         public float TextScale
         {
@@ -50,7 +55,12 @@ namespace NaiveAPI.DocumentBuilder
             FuncColor = new Color(1f, 0.9f, 0.35f),
             ArgsColor = new Color(0.65f, 0.85f, 0.95f),
             TypeColor = new Color(0.35f, 0.70f, 0.65f),
+            SuccessColor = new Color(0.2f, 0.3f, 0.2f),
+            WarningColor = new Color(0.3f, 0.3f, 0.2f),
+            DangerColor  = new Color(0.3f, 0.2f, 0.2f),
+            HintColor    = new Color(0.2f, 0.2f, 0.3f),
         };
+
         public static DocStyle Current => DocCache.Get().CurrentStyle;
         public DocStyle Copy()
         {
@@ -67,6 +77,10 @@ namespace NaiveAPI.DocumentBuilder
             copy.FuncColor = this.FuncColor;
             copy.ArgsColor = this.ArgsColor;
             copy.TypeColor = this.TypeColor;
+            copy.SuccessColor = this.SuccessColor;
+            copy.WarningColor = this.WarningColor;
+            copy.DangerColor = this.DangerColor;
+            copy.HintColor = this.HintColor;
 
             return copy;
         }

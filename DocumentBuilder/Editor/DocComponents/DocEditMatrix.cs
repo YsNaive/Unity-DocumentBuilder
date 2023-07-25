@@ -20,14 +20,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override void OnCreateGUI()
         {
             this.style.backgroundColor = DocStyle.Current.BackgroundColor;
-            this.style.width = Width;
+            this.style.width = -1;
             DocMatrix.Data data = setData(Target.JsonData, Target.TextData);
 
             rowColVisual = generateRowCol(data);
             this.Add(rowColVisual);
             anchorVisual = generateAnchors(data);
             this.Add(anchorVisual);
-            matrixVisual = generateEditMatrixVisual(data, Width);
+            matrixVisual = generateEditMatrixVisual(data, -1);
             this.Add(matrixVisual);
         }
 
@@ -91,7 +91,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     this.Remove(matrixVisual);
                     data.ResizeContent(rowNum, data.col);
                     resetTargetData(data);
-                    matrixVisual = generateEditMatrixVisual(data, Width);
+                    matrixVisual = generateEditMatrixVisual(data, -1);
                     this.Add(matrixVisual);
                 }
             });
@@ -115,7 +115,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     this.Remove(matrixVisual);
                     data.ResizeContent(data.row, colNum);
                     resetTargetData(data);
-                    matrixVisual = generateEditMatrixVisual(data, Width);
+                    matrixVisual = generateEditMatrixVisual(data, -1);
                     anchorVisual = generateAnchors(data);
                     this.Add(anchorVisual);
                     this.Add(matrixVisual);

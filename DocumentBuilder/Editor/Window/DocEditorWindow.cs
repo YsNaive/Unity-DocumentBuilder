@@ -49,17 +49,22 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 rootVisualElement.Add(pageRootSelector);
                 PageRoot = val.newValue as SODocPage;
                 BookVisual = new DocBookVisual(PageRoot);
+                //BookVisual.MenuHandler.SetState(DocEditorData.instance.EditingState);
                 BookVisual.MenuHandler.OnChangeSelect += (oldVal, newVal) =>
                 {
+                    SODocPageEditor editor;
                     InspectorInstance.rootVisualElement.Clear();
-                    ScrollView scrollView = new ScrollView();
-                    SODocPageEditor editor = (SODocPageEditor)Editor.CreateEditor(newVal.Target);
+                    editor = (SODocPageEditor)Editor.CreateEditor(newVal.Target);
                     editor.OnSaveData += tar =>
                     {
                         BookVisual.MenuHandler.Selecting = BookVisual.MenuHandler.Selecting;
                     };
-                    scrollView.Add(editor.CreateInspectorGUI());
-                    InspectorInstance.rootVisualElement.Add(scrollView);
+                    InspectorInstance.rootVisualElement.Add(editor.CreateInspectorGUI());
+                    editor.OnSubPagesChange += () =>
+                    {
+                        rootVisualElement.Clear() ;
+                        CreateGUI();
+                    };
                 };
                 rootVisualElement.Add(BookVisual);
             });
@@ -67,7 +72,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             pageRootSelector.value = DocEditorData.instance.EditingDocPage;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             m_editorInstance = null;
             if(m_InspectorInstance != null)
@@ -82,7 +87,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
     }
     public class DocInspectorWindow : EditorWindow
     {
-        private void OnDisable()
+        private void OnDestroy()
         {
             DocEditorWindow.TryClose();
         }

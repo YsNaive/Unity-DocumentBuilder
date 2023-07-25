@@ -36,8 +36,8 @@ namespace NaiveAPI.DocumentBuilder
             {
                 texture = (Texture2D)Target.ObjsData[0];
                 root.style.backgroundImage = texture;
-                if (Width < texture.width * data.scale || data.scale == -1)
-                    imageWidth = Width;
+                if (-1 < texture.width * data.scale || data.scale == -1)
+                    imageWidth = -1;
                 else
                     imageWidth = texture.width * data.scale;
                 height = texture.height * (imageWidth / texture.width);
@@ -47,7 +47,7 @@ namespace NaiveAPI.DocumentBuilder
             {
                 root.style.backgroundColor = Color.black;
                 label.text = "No Image";
-                imageWidth = Width;
+                imageWidth = -1;
                 height = imageWidth * 0.6f;
             }
             ISPosition position = new ISPosition();
