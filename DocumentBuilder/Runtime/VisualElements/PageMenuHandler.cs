@@ -14,6 +14,7 @@ namespace NaiveAPI.DocumentBuilder
         public event Action<PageMenuVisual, PageMenuVisual> OnChangeSelect;
         public SODocPage Root;
         public List<SODocPage> AddedPages = new List<SODocPage>(); 
+        public List<PageMenuVisual> AddedVisual = new List<PageMenuVisual>(); 
         public PageMenuVisual RootVisual;
         public PageMenuVisual Selecting
         {
@@ -26,6 +27,18 @@ namespace NaiveAPI.DocumentBuilder
         }
         private PageMenuVisual m_selecting;
         const int menuContentsChildCount = 2;
+        public void Repaint()
+        {
+            AddedPages.Clear();
+            AddedVisual.Clear();
+            RootVisual.Clear();
+            var parent = RootVisual.parent;
+            int i = parent.IndexOf(RootVisual);
+            parent.RemoveAt(i);
+            RootVisual = new PageMenuVisual(Root, this);
+            parent.Insert(i, RootVisual);
+            Selecting = AddedVisual.Find(m => { return m.Target == m_selecting.Target; });
+        }
         public string GetState()
         {
             StringBuilder sb = new StringBuilder();

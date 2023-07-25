@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
   m_Name: Test2
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  SubPages:
-  - {fileID: 11400000}
+  Icon: {fileID: -4528830608231651361, guid: aded1c94c327f154f901537e8753f677, type: 3}
+  SubPages: []
   Components: []

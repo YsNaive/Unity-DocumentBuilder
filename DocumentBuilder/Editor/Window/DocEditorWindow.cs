@@ -15,7 +15,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public static void ShowWindow()
         {
             m_editorInstance = GetWindow<DocEditorWindow>("Document Editor");
-            m_InspectorInstance = GetWindow<DocInspectorWindow>("Document Inspector");
         }
         public static DocEditorWindow EditorInstance
         {
@@ -25,22 +24,25 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 return m_editorInstance;
             }
         }
-        public static DocInspectorWindow InspectorInstance
-        {
-            get
-            {
-                m_InspectorInstance ??= GetWindow<DocInspectorWindow>("Document Inspector");
-                return m_InspectorInstance;
-            }
-        }
         static DocEditorWindow m_editorInstance;
-        static DocInspectorWindow m_InspectorInstance;
         #endregion
 
         public SODocPage PageRoot;
         public DocBookVisual BookVisual;
         private void CreateGUI()
         {
+            SODocPageEditor.OnCreateEditor += e =>
+            {
+                e.OnSaveData += tar =>
+                {
+                    BookVisual.MenuHandler.Selecting = BookVisual.MenuHandler.Selecting;
+                };
+                e.OnSubPagesChange += () =>
+                {
+                    BookVisual.MenuHandler.RootVisual.schedule.Execute(BookVisual.MenuHandler.Repaint);
+                };
+            };
+            rootVisualElement.Clear();
             ObjectField pageRootSelector = new ObjectField("Root");
             pageRootSelector.objectType = typeof(SODocPage);
             pageRootSelector.RegisterValueChangedCallback(val =>
@@ -49,47 +51,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 rootVisualElement.Add(pageRootSelector);
                 PageRoot = val.newValue as SODocPage;
                 BookVisual = new DocBookVisual(PageRoot);
-                //BookVisual.MenuHandler.SetState(DocEditorData.instance.EditingState);
                 BookVisual.MenuHandler.OnChangeSelect += (oldVal, newVal) =>
                 {
-                    SODocPageEditor editor;
-                    InspectorInstance.rootVisualElement.Clear();
-                    editor = (SODocPageEditor)Editor.CreateEditor(newVal.Target);
-                    editor.OnSaveData += tar =>
-                    {
-                        BookVisual.MenuHandler.Selecting = BookVisual.MenuHandler.Selecting;
-                    };
-                    InspectorInstance.rootVisualElement.Add(editor.CreateInspectorGUI());
-                    editor.OnSubPagesChange += () =>
-                    {
-                        rootVisualElement.Clear() ;
-                        CreateGUI();
-                    };
+                    Selection.activeObject = newVal.Target;
                 };
                 rootVisualElement.Add(BookVisual);
             });
             rootVisualElement.Add(pageRootSelector);
-            pageRootSelector.value = DocEditorData.instance.EditingDocPage;
-        }
-
-        private void OnDestroy()
-        {
-            m_editorInstance = null;
-            if(m_InspectorInstance != null)
-                m_InspectorInstance.Close();
-        }
-        public static void TryClose()
-        {
-            m_InspectorInstance = null;
-            if (m_editorInstance != null)
-                m_editorInstance.Close();
-        }
-    }
-    public class DocInspectorWindow : EditorWindow
-    {
-        private void OnDestroy()
-        {
-            DocEditorWindow.TryClose();
+            pageRootSelector.value = DocEditorData.Instance.EditingDocPage;
         }
     }
 }

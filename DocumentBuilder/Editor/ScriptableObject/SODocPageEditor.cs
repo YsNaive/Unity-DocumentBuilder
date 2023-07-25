@@ -13,6 +13,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
     [CustomEditor(typeof(SODocPage))]
     public class SODocPageEditor : Editor
     {
+        public static event Action<SODocPageEditor> OnCreateEditor;
+        private void OnEnable()
+        {
+            OnCreateEditor?.Invoke(this);
+        }
         SODocPage Target;
         VisualElement root;
         bool isEditMode = true;
@@ -50,7 +55,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.Add(new IMGUIContainer(() => { 
                 EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("SubPages"));
-                if (EditorGUI.EndChangeCheck()) { OnSubPagesChange?.Invoke(); }
+                if (EditorGUI.EndChangeCheck()) { OnSubPagesChange?.Invoke(); serializedObject.ApplyModifiedProperties(); }
             }));
             editMode.clicked += () =>
             {
@@ -137,7 +142,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             if (Target == null) return;
             
-            serializedObject.ApplyModifiedProperties();
             if(Target.SubPages != null)
             {
                 for (int i = 0; i < Target.SubPages.Count; i++)

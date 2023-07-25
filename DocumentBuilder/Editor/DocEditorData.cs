@@ -6,11 +6,18 @@ using UnityEngine;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
-    public class DocEditorData : ScriptableSingleton<DocEditorData>
+    public class DocEditorData : ScriptableObject
     {
-        static DocEditorData()
+        public static DocEditorData Instance
         {
+            get
+            {
+                if (instance == null)
+                    instance = Resources.LoadAll<DocEditorData>("")[0];
+                return instance;
+            }
         }
+        private static DocEditorData instance;
         public SODocPage EditingDocPage;
         public string EditingState;
     }

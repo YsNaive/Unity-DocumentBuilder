@@ -37,6 +37,15 @@ namespace NaiveAPI.DocumentBuilder
             MenuHandler.RootVisual ??= this;
             MenuHandler.Selecting ??= this;
             MenuHandler.AddedPages.Add(page);
+            MenuHandler.AddedVisual.Add(this);
+            if(MenuHandler.RootVisual == this)
+            {
+                MenuHandler.OnChangeSelect += (oldval, newval) =>
+                {
+                    oldval.RepaintUnselect();
+                    newval.RepaintSelect();
+                };
+            }
             VisualElement icon = new VisualElement();
             TextElement name = new TextElement();
             name.text = Target.name;
@@ -57,38 +66,38 @@ namespace NaiveAPI.DocumentBuilder
                     icon.style.position = Position.Absolute;
                 }
             });
-            name.RegisterCallback<PointerDownEvent>(e =>
-            {
-                repaintUnselect(MenuHandler.Selecting);
-                repaintSelect(this);
-                MenuHandler.Selecting = this;
-            });
+            name.RegisterCallback<PointerDownEvent>(e => { MenuHandler.Selecting = this; });
 
 
             Add(icon);
             Add(name);
             foreach(var subPage in Target.SubPages)
             {
-                Debug.Log(MenuHandler.AddedPages.Count);
-                if (!MenuHandler.AddedPages.Contains(subPage))
+                if (subPage == null) continue;
+                    if (!MenuHandler.AddedPages.Contains(subPage))
                 {
                     var ve = new PageMenuVisual(subPage, menuHandler);
                     SubMenuVisual.Add(ve);
                     Add(ve);
-                    MenuHandler.AddedPages.Add(subPage);
                 }
             }
 
             icon.RegisterCallback<MouseDownEvent>(e => { IsOpen = !IsOpen; });
         }
 
-        void repaintSelect(VisualElement visualElement)
+        public void RepaintSelect()
         {
-            visualElement.Q<TextElement>().style.borderBottomWidth = 3;
+            var ve = this.Q<TextElement>();
+            Color c = DocStyle.Current.SuccessColor;
+            c.a = 0.5f;
+            if (ve != null)
+                ve.style.backgroundColor = c;
         }
-        void repaintUnselect(VisualElement visualElement)
+        public void RepaintUnselect()
         {
-            visualElement.Q<TextElement>().style.borderBottomWidth = 0;
+            var ve = this.Q<TextElement>();
+            if (ve != null)
+                ve.style.backgroundColor = Color.clear;
         }
     }
 
