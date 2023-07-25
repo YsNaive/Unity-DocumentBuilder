@@ -113,6 +113,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             if(isEditMode)
             {
                 List<DocComponent> newComponents = new List<DocComponent>();
+                if (editRoot == null) return;
                 foreach (var visual in editRoot.Children())
                 {
                     var edit = visual.Q<DocEditVisual>();

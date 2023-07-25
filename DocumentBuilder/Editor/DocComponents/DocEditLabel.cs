@@ -16,7 +16,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         public override void OnCreateGUI()
         {
+            style.SetIS_Style(ISFlex.Horizontal);
             TextField labelInput = new TextField();
+            labelInput.style.width = Length.Percent(74);
             if (Target.TextData.Count == 0)
                 Target.TextData.Add(string.Empty);
             labelInput.value = Target.TextData[0];
@@ -26,6 +28,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.TextData.Add(val.newValue);
             });
             Add(labelInput);
+            UnityEditor.UIElements.ColorField colorField = new UnityEditor.UIElements.ColorField();
+            colorField.style.width = Length.Percent(25);
+            colorField.value = Color.white;
+            Add(colorField);
         }
     }
 }

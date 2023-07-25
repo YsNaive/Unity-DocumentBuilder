@@ -14,11 +14,12 @@ namespace NaiveAPI.DocumentBuilder
         int colorWidth;
         public DocStyleField(DocStyle style, int colorFieldMaxWidth = 200)
         {
+            this.style.backgroundColor = DocStyle.Dark.BackgroundColor;
             defaultStyle = style;  
             colorWidth = colorFieldMaxWidth;
             Target = defaultStyle.Copy();
-            
-            createVisual(); 
+
+            create();
             Button reset = new Button();
             reset.style.SetIS_Style(new ISMargin(TextAnchor.LowerCenter));
             reset.text = "Reset to DarkTheme";
@@ -26,19 +27,25 @@ namespace NaiveAPI.DocumentBuilder
             {
                 Target = DocStyle.Dark.Copy();
                 scrollView.Clear();
-                createVisual();
+                create();
             };
 
             Add(scrollView);
             Add(reset);
         }
-        void createVisual()
+        void create()
+        {
+            createColor();
+            createText(Target.MainText,"Main text");
+            createText(Target.LabelText, "Label text");
+        }
+        void createColor()
         {
             ColorField colorField;
             colorField = new ColorField(Target.BackgroundColor, "Background", colorWidth);
             colorField.OnValueChange += val => { Target.BackgroundColor = val; }; scrollView.Add(colorField);
-            colorField = new ColorField(Target.SubFrontGroundColor, "Sub Background", colorWidth);
-            colorField.OnValueChange += val => { Target.SubFrontGroundColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.SubBackgroundColor, "Sub Background", colorWidth);
+            colorField.OnValueChange += val => { Target.SubBackgroundColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.FrontGroundColor, "Frontground", colorWidth);
             colorField.OnValueChange += val => { Target.FrontGroundColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.SubFrontGroundColor, "Sub Frontground", colorWidth);
@@ -49,8 +56,27 @@ namespace NaiveAPI.DocumentBuilder
             colorField.OnValueChange += val => { Target.ArgsColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.TypeColor, "Type", colorWidth);
             colorField.OnValueChange += val => { Target.TypeColor = val; }; scrollView.Add(colorField);
-
-
+        }
+        void createText(ISText text, string label)
+        {
+            Foldout foldout = new Foldout();
+            foldout.Q("unity-content").style.marginLeft = 40;
+            foldout.value = false;
+            foldout.text = label;
+            TextField size = new TextField();
+            size.value = text.FontSize.ToString();
+            size.label = "text size";
+            size.RegisterValueChangedCallback(val =>
+            {
+                int newVal;
+                if(int.TryParse(val.newValue,out newVal))
+                    text.FontSize = newVal;
+            });
+            foldout.Add(size);
+            ColorField colorField = new ColorField(text.Color,"text color");
+            colorField.OnValueChange += val => { text.Color = val; };
+            foldout.Add(colorField);
+            scrollView.Add(foldout);
         }
     }
 

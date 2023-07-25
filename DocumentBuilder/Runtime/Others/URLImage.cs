@@ -15,15 +15,15 @@ namespace NaiveAPI.DocumentBuilder
         }
         public UnityWebRequest URL = null;
         public Texture2D Texture = null;
-        }
-        private static bool urlRequest()
-        {
-            if (requestToURL.SendWebRequest().isDone)
-            {
-                textureToLoad = ((DownloadHandlerTexture)requestToURL.downloadHandler).texture;
-                return true;
-            }
-            return false;
-        }
+        
+        //private static bool urlRequest()
+        //{
+        //    if (requestToURL.SendWebRequest().isDone)
+        //    {
+        //        textureToLoad = ((DownloadHandlerTexture)requestToURL.downloadHandler).texture;
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }

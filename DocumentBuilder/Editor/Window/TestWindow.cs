@@ -21,19 +21,17 @@ namespace NaiveAPI.DocumentBuilder
             }
             window = CreateWindow<TestWindow>("Test Window");
         }
-        DocStyleField styleField;
         private void CreateGUI()
         {
-            styleField = new DocStyleField(DocStyle.Current);
-            Button save = new Button();
-            save.text = "Save";
-            save.clicked += () =>
-            {
-                DocCache.Get().CurrentStyle = styleField.Target;
-                DocCache.Save();
+            rootVisualElement.Add(new DocPageMenuVisual(AssetDatabase.LoadAssetAtPath<SODocPage>("Assets/DocumentBuilder/Test/P1.asset"),new PageMenuHandler()));
+            Button btn = new Button();
+            btn.text = "Debug State";
+            btn.clicked += () => {
+                var handle = ((DocPageMenuVisual)rootVisualElement[0]).MenuHandler;
+                Debug.Log(handle.GetState());
+                handle.SetState(":1\r\n0:0\r\n00:0\r\n1:0\r\n");
             };
-            rootVisualElement.Add(save);
-            rootVisualElement.Add(styleField);
+            rootVisualElement.Add(btn);
         }
     }
 }
