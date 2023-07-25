@@ -32,6 +32,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             EnumField enumField = new EnumField();
             enumField.Init(DocImage.Mode.Url);
+            enumField.value = data.mode;
             enumField.style.width = Width;
             enumField.RegisterValueChangedCallback(value =>
             {
