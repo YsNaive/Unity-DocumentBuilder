@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -7,8 +8,22 @@ namespace NaiveAPI.DocumentBuilder
 {
     public class PageMenuHandler
     {
+        /// <summary>
+        /// <old, new>
+        /// </summary>
+        public event Action<PageMenuVisual, PageMenuVisual> OnChangeSelect;
         public SODocPage Root;
-        public DocPageMenuVisual RootVisual;
+        public PageMenuVisual RootVisual;
+        public PageMenuVisual Selecting
+        {
+            get => m_selecting;
+            set
+            {
+                OnChangeSelect?.Invoke(m_selecting, value);
+                m_selecting = value;
+            }
+        }
+        private PageMenuVisual m_selecting;
         const int menuContentsChildCount = 2;
         public string GetState()
         {
@@ -23,21 +38,21 @@ namespace NaiveAPI.DocumentBuilder
             {
                 if(string.IsNullOrEmpty(path)) continue;
                 var cmd = path.Split(':');
-                DocPageMenuVisual cur = RootVisual;
+                PageMenuVisual cur = RootVisual;
                 foreach (char i in cmd[0]) {
                     int index = i - '0' + 2;
                     if (index >= cur.childCount) continue;
-                    cur = (DocPageMenuVisual)cur[index];
+                    cur = (PageMenuVisual)cur[index];
                 }
                 cur.IsOpen = (cmd[1] == "1") ? true : false; 
             }
         }
-        void calStateRec(DocPageMenuVisual current,string path, StringBuilder buffer)
+        void calStateRec(PageMenuVisual current,string path, StringBuilder buffer)
         {
             buffer.Append(path).Append(':').Append((current.childCount > menuContentsChildCount) ?'1':'0').Append('\n');
             int i = 0;
             foreach (var subPage in current.SubMenuVisual)
-                calStateRec((DocPageMenuVisual)subPage, path + (i++).ToString(), buffer);
+                calStateRec((PageMenuVisual)subPage, path + (i++).ToString(), buffer);
         }
     }
 }

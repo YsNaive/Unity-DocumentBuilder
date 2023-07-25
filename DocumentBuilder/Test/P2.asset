@@ -12,11 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
   m_Name: P2
   m_EditorClassIdentifier: 
-  Icon: {fileID: 2800000, guid: c76700ea0062413d9f69409b4e9e151b, type: 3}
+  Icon: {fileID: 0}
   SubPages: []
-  Components:
-  - VisualID: 2
-    JsonData: 
-    TextData:
-    - 
-    ObjsData: []
+  Components: []

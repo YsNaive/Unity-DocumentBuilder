@@ -13,19 +13,46 @@ MonoBehaviour:
   m_Name: P1
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 8bc445bb79654bf496c92d0407840a92, type: 3}
-  SubPages:
-  - {fileID: 11400000, guid: d2db207bb55077c46b153193177fb49b, type: 2}
-  - {fileID: 11400000, guid: dfbbfa54365192d4a9d6985eed0805b5, type: 2}
+  SubPages: []
   Components:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Label
+    - NO ! This is fine, no not good
     ObjsData: []
   - VisualID: 2
     JsonData: 
     TextData:
-    - 'some description with
-
-      new line hehe'
+    - "\u651D\u6C0F100\u5EA6\u5594"
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - "\u8766 \u6771\u897F\u54E9 CC"
+    ObjsData: []
+  - VisualID: 3
+    JsonData: '{"row":3,"col":3,"anchors":[3,3,3]}'
+    TextData:
+    - v
+    - aaa
+    - cc
+    - a
+    - v
+    - ccccc
+    - 
+    - aaa
+    - v
+    ObjsData: []
+  - VisualID: 3
+    JsonData: '{"row":3,"col":3,"anchors":[3,3,3]}'
+    TextData:
+    - aa
+    - 
+    - 
+    - 
+    - vv
+    - dddd
+    - dddd
+    - 
+    - cc
     ObjsData: []

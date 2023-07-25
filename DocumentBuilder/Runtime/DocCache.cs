@@ -11,6 +11,12 @@ namespace NaiveAPI.DocumentBuilder
     public class DocCache
     {
         private static DocCache instance;
+
+        [SerializeField] public List<string> LanguageList = new List<string>();
+        [SerializeField] public DocStyle CurrentStyle = new DocStyle();
+        [SerializeField] public string OpeningBookHierarchy = "";
+
+
         public static DocCache Get() { return Get(Application.temporaryCachePath + "/DocumentBuilderSettings.json"); }
         public static DocCache Get(string path)
         {
@@ -39,7 +45,5 @@ namespace NaiveAPI.DocumentBuilder
             instance = JsonUtility.FromJson<DocCache>(File.ReadAllText(path));
         }
 
-        [SerializeField] public List<string> LanguageList = new List<string>();
-        [SerializeField] public DocStyle CurrentStyle = new DocStyle();
     }
 }

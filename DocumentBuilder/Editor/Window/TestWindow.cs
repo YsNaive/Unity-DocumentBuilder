@@ -23,15 +23,26 @@ namespace NaiveAPI.DocumentBuilder
         }
         private void CreateGUI()
         {
-            rootVisualElement.Add(new DocPageMenuVisual(AssetDatabase.LoadAssetAtPath<SODocPage>("Assets/DocumentBuilder/Test/P1.asset"),new PageMenuHandler()));
-            Button btn = new Button();
-            btn.text = "Debug State";
-            btn.clicked += () => {
-                var handle = ((DocPageMenuVisual)rootVisualElement[0]).MenuHandler;
-                Debug.Log(handle.GetState());
-                handle.SetState(":1\r\n0:0\r\n00:0\r\n1:0\r\n");
-            };
-            rootVisualElement.Add(btn);
+            SODocPage rootPage = AssetDatabase.LoadAssetAtPath<SODocPage>("Assets/DocumentBuilder/Test/P1.asset");
+            rootVisualElement.Add(new DocBookVisual(rootPage));
+            //var handle = new PageMenuHandler();
+            //rootVisualElement.Add(new PageMenuVisual(AssetDatabase.LoadAssetAtPath<SODocPage>("Assets/DocumentBuilder/Test/P1.asset"), handle));
+            //Button btn = new Button();
+            //btn.text = "Debug State";
+            //btn.clicked += () => {
+            //    var handle = ((PageMenuVisual)rootVisualElement[0]).MenuHandler;
+            //    Debug.Log(handle.GetState());
+            //    handle.SetState(":1\r\n0:0\r\n00:0\r\n1:0\r\n");
+            //};
+            //rootVisualElement.Add(btn);
+            //var pageView = new DocPageVisual(handle.Root);
+            //rootVisualElement.Add(pageView);
+            //handle.OnChangeSelect += (oldVal, newVal) =>
+            //{
+            //    rootVisualElement.Remove(pageView);
+            //    pageView = new DocPageVisual(newVal.Target);
+            //    rootVisualElement.Add(pageView);
+            //};
         }
     }
 }

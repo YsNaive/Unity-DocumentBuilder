@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocPageMenuVisual : VisualElement
+    public class PageMenuVisual : VisualElement
     {
         public SODocPage Target;
         public bool IsOpen
@@ -29,17 +29,20 @@ namespace NaiveAPI.DocumentBuilder
         private bool m_isOpen = true;
         public List<VisualElement> SubMenuVisual = new List<VisualElement>();
         public PageMenuHandler MenuHandler;
-        public DocPageMenuVisual(SODocPage page, PageMenuHandler menuHandler)
+        public PageMenuVisual(SODocPage page, PageMenuHandler menuHandler)
         {
             Target = page;
             MenuHandler ??= menuHandler;
             MenuHandler.Root ??= page;
             MenuHandler.RootVisual ??= this;
+            MenuHandler.Selecting ??= this;
             VisualElement icon = new VisualElement();
             TextElement name = new TextElement();
             name.text = Target.name;
+            name.style.borderBottomColor = DocStyle.Current.FrontGroundColor;
             name.style.SetIS_Style(DocStyle.Current.MainText);
             name.style.SetIS_Style(ISMargin.None);
+            name.style.whiteSpace = WhiteSpace.NoWrap;
             icon.style.SetIS_Style(ISMargin.None);
             if(Target.Icon != null) { icon.style.backgroundImage =  Target.Icon; }
             name.RegisterCallback<GeometryChangedEvent>(e =>
@@ -50,14 +53,22 @@ namespace NaiveAPI.DocumentBuilder
                     icon.style.width = e.newRect.height;
                     icon.style.marginLeft = -5- e.newRect.height;
                     style.marginLeft = e.newRect.height + 5;
-                    name.style.position = Position.Absolute;
+                    icon.style.position = Position.Absolute;
                 }
             });
+            name.RegisterCallback<PointerDownEvent>(e =>
+            {
+                repaintUnselect(MenuHandler.Selecting);
+                repaintSelect(this);
+                MenuHandler.Selecting = this;
+            });
+
+
             Add(icon);
             Add(name);
             foreach(var subPage in Target.SubPages)
             {
-                var ve = new DocPageMenuVisual(subPage, menuHandler);
+                var ve = new PageMenuVisual(subPage, menuHandler);
                 SubMenuVisual.Add(ve);
                 Add(ve);
             }
@@ -65,6 +76,14 @@ namespace NaiveAPI.DocumentBuilder
             icon.RegisterCallback<MouseDownEvent>(e => { IsOpen = !IsOpen; });
         }
 
+        void repaintSelect(VisualElement visualElement)
+        {
+            visualElement.Q<TextElement>().style.borderBottomWidth = 3;
+        }
+        void repaintUnselect(VisualElement visualElement)
+        {
+            visualElement.Q<TextElement>().style.borderBottomWidth = 0;
+        }
     }
 
 }

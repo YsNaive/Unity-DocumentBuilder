@@ -39,11 +39,12 @@ namespace NaiveAPI
             Type t;
             if (!VisualID_Dict.TryGetValue(docComponent.VisualID, out t))
             {
-                TextElement textElement = new TextElement();
-                textElement.text = $"Not Fount View for ID \"{docComponent.VisualID}\"";
+                DocLabel textElement = new DocLabel();
+                textElement.SetTarget(new DocComponent { VisualID = "1", TextData =new List<string>() { $"Not Fount View for ID \"{docComponent.VisualID}\"" } });
+                textElement.OnCreateGUI();
                 return textElement;
             }
-            DocVisual doc = (DocVisual)System.Activator.CreateInstance(t);
+            DocVisual doc = (DocVisual)Activator.CreateInstance(t);
             doc.SetTarget(docComponent);
             return doc;
         }

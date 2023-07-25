@@ -1,6 +1,7 @@
 using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -18,9 +19,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
         bool isDraging = false;
         VisualElement dragingTarget;
         ISPosition dragPosition;
+        ScrollView scrollView;
         public override VisualElement CreateInspectorGUI()
         {
             Target = target as SODocPage;
+            scrollView = new ScrollView();
             root = new VisualElement();
             root.style.SetIS_Style(ISPadding.Pixel(10));
             clickMask = new VisualElement();
@@ -32,40 +35,49 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button editMode = new Button();
             Button viewMode = new Button();
             Button defuMode = new Button();
+            Button saveBtn = new Button();
             editMode.text = "Edit Layout";
             viewMode.text = "View Layout";
             defuMode.text = "Inspector";
+            saveBtn.text = "Save";
+            saveBtn.style.SetIS_Style(new ISMargin(TextAnchor.MiddleRight));
             bar.Add(editMode);
             bar.Add(viewMode);
             bar.Add(defuMode);
+            bar.Add(saveBtn);
             root.Add(bar);
-
             editMode.clicked += () =>
             {
-                save();
+                Save();
                 isEditMode = true;
-                root.RemoveAt(1);
-                root.Add(createEdit());
+                scrollView.Clear();
+                scrollView.Add(createEdit());
             };
             viewMode.clicked += () =>
             {
-                save();
+                Save();
                 isEditMode = false;
-                root.RemoveAt(1);
-                root.Add(createView());
+                scrollView.Clear();
+                scrollView.Add(createView());
             };
             defuMode.clicked += () =>
             {
-                save();
+                Save();
                 isEditMode = false;
-                root.RemoveAt(1);
-                root.Add(new IMGUIContainer(() => { DrawDefaultInspector(); }));
+                scrollView.Clear();
+                scrollView.Add(new IMGUIContainer(() => { DrawDefaultInspector(); }));
             };
-
-            root.Add(createEdit());
+            saveBtn.clicked += Save;
+            root.RegisterCallback<KeyDownEvent>(e =>
+            {
+                if(e.ctrlKey && e.keyCode==KeyCode.S) { Save(); }
+            });
+            scrollView.Add(createEdit());
+            scrollView.mode = ScrollViewMode.Vertical;
+            root.Add(scrollView);
             return root;
         }
-        private void OnDisable(){ save(); }
+        private void OnDisable(){ Save(); }
 
         VisualElement editRoot;
         VisualElement clickMask;
@@ -108,7 +120,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return root;
         }
 
-        void save()
+        public event Action<SODocPage> OnSaveData;
+        public void Save()
         {
             if(isEditMode)
             {
@@ -124,6 +137,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.Components = newComponents;
             }
             EditorUtility.SetDirty(target);
+            OnSaveData?.Invoke(Target);
         }
 
         VisualElement createUnit(DocComponent doc)
@@ -220,6 +234,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
             root.Remove(clickMask);
             clickMask.UnregisterCallback<MouseDownEvent>(endDraging);
+            Save();
         }
         int calDragingIndex()
         {
