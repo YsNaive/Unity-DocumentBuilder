@@ -39,11 +39,13 @@ namespace NaiveAPI.DocumentBuilder
                 else
                     LoadedTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
 
-                if(LoadedTexture == null)
+                if (LoadedTexture == null)
                     text = "Image Not Found";
                 else
+                {
                     style.backgroundImage = LoadedTexture;
-                onTextureLoaded?.Invoke(LoadedTexture);
+                    onTextureLoaded?.Invoke(LoadedTexture);
+                }
             }
             else
             {

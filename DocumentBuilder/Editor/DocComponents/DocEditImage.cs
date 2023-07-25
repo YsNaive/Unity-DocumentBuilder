@@ -24,7 +24,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             TextField scaleField = new TextField();
             scaleField.label = "scale";
             scaleField.value = data.scale + "";
-            scaleField.style.width = Width;
             scaleField.RegisterValueChangedCallback(value =>
             {
                 float.TryParse(value.newValue, out data.scale);
@@ -33,7 +32,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             EnumField enumField = new EnumField();
             enumField.Init(DocImage.Mode.Url);
             enumField.value = data.mode;
-            enumField.style.width = Width;
             enumField.RegisterValueChangedCallback(value =>
             {
                 data.mode = (DocImage.Mode) value.newValue;
@@ -73,7 +71,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             ObjectField objectField = new ObjectField();
             objectField.objectType = typeof(Texture2D);
             objectField.value = texture;
-            objectField.style.width = Width;
             objectField.RegisterValueChangedCallback(value =>
             {
                 Target.ObjsData.Clear();
@@ -88,7 +85,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             TextField urlField = new TextField();
             urlField.label = "url";
             urlField.value = data.url + "";
-            urlField.style.width = Width;
             urlField.RegisterValueChangedCallback(value =>
             {
                 data.url = value.newValue;
