@@ -16,9 +16,11 @@ namespace NaiveAPI.DocumentBuilder
         float widthSpace = 15;
         public DocBookVisual(SODocPage rootPage)
         {
+            style.backgroundColor = DocStyle.Current.BackgroundColor;
+            if (rootPage == null) return;
             style.SetIS_Style(ISFlex.Horizontal);
             divLineBar.style.width = 5;
-            divLineBar.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            divLineBar.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
 
             MenuHandler.Root = rootPage;
             menuVisual = new PageMenuVisual(rootPage, MenuHandler);
@@ -29,6 +31,7 @@ namespace NaiveAPI.DocumentBuilder
             menuVisual.style.SetIS_Style(ISPadding.None);
             MenuHandler.OnChangeSelect += (oldVal, newVal) =>
             {
+                if (newVal == null) return;
                 if(pageView != null)
                     Remove(pageView);
                 pageView = new DocPageVisual(newVal.Target);
@@ -36,8 +39,7 @@ namespace NaiveAPI.DocumentBuilder
                 pageView.style.width = (layout.width - widthSpace) * (1f- menuWidthPercent);
                 Add(pageView);
             };
-
-
+            MenuHandler.SetState(DocCache.Get().OpeningBookHierarchy);
             ScrollView menuScrollView = new ScrollView();
             menuScrollView.Add(menuVisual);
             menuScrollView.mode = ScrollViewMode.VerticalAndHorizontal;

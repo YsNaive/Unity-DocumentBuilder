@@ -22,6 +22,7 @@ namespace NaiveAPI.DocumentBuilder
                     docVisual.style.marginTop = 5;
                 }
                 Add(docVisual);
+                docVisual.IntroAnimation?.Invoke();
             }
         }
     }

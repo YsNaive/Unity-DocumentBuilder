@@ -16,6 +16,7 @@ namespace NaiveAPI.DocumentBuilder
             text.text = Target.TextData[0];
             text.style.SetIS_Style(DocStyle.Current.MainText);
             Add(text);
+            IntroAnimation = () => { text.TextFadeIn(500); };
         }
     }
 

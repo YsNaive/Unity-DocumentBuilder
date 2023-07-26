@@ -21,23 +21,35 @@ namespace NaiveAPI.DocumentBuilder
             get => m_selecting;
             set
             {
-                OnChangeSelect?.Invoke(m_selecting, value);
+                if(value!=null)
+                {
+                    OnChangeSelect?.Invoke(m_selecting, value);
+                };
                 m_selecting = value;
             }
         }
         private PageMenuVisual m_selecting;
-        const int menuContentsChildCount = 2;
+        const int menuContentsChildCount = 1;
+        public void InvokeOnChangeSelect() { OnChangeSelect?.Invoke(m_selecting, m_selecting); }
         public void Repaint()
         {
+            Debug.Log(GetState());
+            DocCache.Get().OpeningBookHierarchy = GetState();
             AddedPages.Clear();
             AddedVisual.Clear();
             RootVisual.Clear();
             var parent = RootVisual.parent;
             int i = parent.IndexOf(RootVisual);
             parent.RemoveAt(i);
-            RootVisual = new PageMenuVisual(Root, this);
-            parent.Insert(i, RootVisual);
-            Selecting = AddedVisual.Find(m => { return m.Target == m_selecting.Target; });
+            if(Root != null)
+            {
+                RootVisual = new PageMenuVisual(Root, this);
+                RootVisual.style.marginTop = 10;
+                parent.Insert(i, RootVisual);
+            }
+            if(m_selecting != null)
+                Selecting = AddedVisual.Find(m => { return m.Target == m_selecting.Target; });
+            SetState(DocCache.Get().OpeningBookHierarchy);
         }
         public string GetState()
         {
@@ -53,17 +65,23 @@ namespace NaiveAPI.DocumentBuilder
                 if(string.IsNullOrEmpty(path)) continue;
                 var cmd = path.Split(':');
                 PageMenuVisual cur = RootVisual;
+                bool skip = false;
                 foreach (char i in cmd[0]) {
-                    int index = i - '0' + 2;
-                    if (index >= cur.childCount) continue;
+                    int index = i - '0' + menuContentsChildCount;
+                    if (index >= cur.childCount)
+                    {
+                        skip = true;
+                        continue;
+                    }
                     cur = (PageMenuVisual)cur[index];
                 }
-                cur.IsOpen = (cmd[1] == "1") ? true : false; 
+                if(!skip)
+                    cur.IsOpen = (cmd[1] == "1");
             }
         }
         void calStateRec(PageMenuVisual current,string path, StringBuilder buffer)
         {
-            buffer.Append(path).Append(':').Append((current.childCount > menuContentsChildCount) ?'1':'0').Append('\n');
+            buffer.Append(path).Append(':').Append((current.childCount > (menuContentsChildCount+2)) ?'1':'0').Append('\n');
             int i = 0;
             foreach (var subPage in current.SubMenuVisual)
                 calStateRec((PageMenuVisual)subPage, path + (i++).ToString(), buffer);

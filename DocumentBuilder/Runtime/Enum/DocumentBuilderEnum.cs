@@ -1,0 +1,6 @@
+
+enum DocVisualAnimateMode
+{
+    None,
+    Fade,
+}

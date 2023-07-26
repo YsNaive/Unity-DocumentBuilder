@@ -20,7 +20,6 @@ namespace NaiveAPI.DocumentBuilder
         public static DocCache Get() { return Get(Application.temporaryCachePath + "/DocumentBuilderSettings.json"); }
         public static DocCache Get(string path)
         {
-            instance = null;
             if (instance == null)
             {
                 if (File.Exists(path))

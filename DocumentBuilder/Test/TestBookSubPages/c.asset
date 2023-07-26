@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e81aa9702d672b41af3fd22bd3d7c3d, type: 3}
-  m_Name: DocEditorData
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: c
   m_EditorClassIdentifier: 
-  EditingDocPage: {fileID: 11400000, guid: 87cae223bf824af41a724825352a03ab, type: 2}
-  EditingState: 
+  Icon: {fileID: 0}
+  SubPages:
+  - {fileID: 11400000, guid: be69390ea6c4404488cb86763156cbda, type: 2}
+  - {fileID: 11400000, guid: be69390ea6c4404488cb86763156cbda, type: 2}
+  Components: []

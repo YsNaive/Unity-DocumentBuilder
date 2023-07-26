@@ -16,7 +16,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             m_editorInstance = GetWindow<DocEditorWindow>("Document Editor");
         }
-        public static DocEditorWindow EditorInstance
+        public static DocEditorWindow Instance
         {
             get
             {
@@ -29,19 +29,40 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         public SODocPage PageRoot;
         public DocBookVisual BookVisual;
+        private void OnEnable()
+        {
+            SODocPageEditor.OnCreateEditor -= onCreateEditor;
+            SODocPageEditor.OnCreateEditor += onCreateEditor;
+        }
+        private void OnDisable()
+        {
+            DocCache.Get().OpeningBookHierarchy = BookVisual.MenuHandler.GetState();
+            DocCache.Save();
+        }
+        private void onCreateEditor(SODocPageEditor e)
+        {
+            if (BookVisual == null) return;
+            e.OnSubPagesChange += () =>
+            {
+                BookVisual.MenuHandler.RootVisual.schedule.Execute(BookVisual.MenuHandler.Repaint);
+            };
+            e.OnSaveData += (page) =>
+            {
+                var find = BookVisual.MenuHandler.AddedVisual.Find(m => { return m.Target == Selection.activeObject; });
+                if (find != null)
+                    BookVisual.MenuHandler.Selecting = find;
+            };
+        }
+        public static void RepaintMenu()
+        {
+            Instance.rootVisualElement.schedule.Execute(() =>
+            {
+                Instance.BookVisual.MenuHandler.Repaint();
+            }).ExecuteLater(50);
+        }
         private void CreateGUI()
         {
-            SODocPageEditor.OnCreateEditor += e =>
-            {
-                e.OnSaveData += tar =>
-                {
-                    BookVisual.MenuHandler.Selecting = BookVisual.MenuHandler.Selecting;
-                };
-                e.OnSubPagesChange += () =>
-                {
-                    BookVisual.MenuHandler.RootVisual.schedule.Execute(BookVisual.MenuHandler.Repaint);
-                };
-            };
+            SODocPageEditor.OnCreateEditor += onCreateEditor;
             rootVisualElement.Clear();
             ObjectField pageRootSelector = new ObjectField("Root");
             pageRootSelector.objectType = typeof(SODocPage);
@@ -53,9 +74,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 BookVisual = new DocBookVisual(PageRoot);
                 BookVisual.MenuHandler.OnChangeSelect += (oldVal, newVal) =>
                 {
-                    Selection.activeObject = newVal.Target;
+                    if (BookVisual.MenuHandler.AddedVisual.Contains(oldVal) || oldVal == null)
+                        Selection.activeObject = newVal.Target;
                 };
                 rootVisualElement.Add(BookVisual);
+                DocEditorData.Instance.EditingDocPage = (SODocPage)pageRootSelector.value;
+                EditorUtility.SetDirty(DocEditorData.Instance);
             });
             rootVisualElement.Add(pageRootSelector);
             pageRootSelector.value = DocEditorData.Instance.EditingDocPage;

@@ -14,6 +14,7 @@ public class test : MonoBehaviour
     void Start()
     {
         document.rootVisualElement.Add(new DocBookVisual(page));
+        //document.rootVisualElement.Add(new DocStyleField(DocStyle.Current));
     }
 
 }

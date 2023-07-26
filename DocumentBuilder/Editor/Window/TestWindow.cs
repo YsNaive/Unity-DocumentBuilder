@@ -1,7 +1,10 @@
+using NaiveAPI_Editor.DocumentBuilder;
 using NaiveAPI_Editor.window;
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -23,26 +26,23 @@ namespace NaiveAPI.DocumentBuilder
         }
         private void CreateGUI()
         {
-            SODocPage rootPage = AssetDatabase.LoadAssetAtPath<SODocPage>("Assets/DocumentBuilder/Test/P1.asset");
-            rootVisualElement.Add(new DocBookVisual(rootPage));
-            //var handle = new PageMenuHandler();
-            //rootVisualElement.Add(new PageMenuVisual(AssetDatabase.LoadAssetAtPath<SODocPage>("Assets/DocumentBuilder/Test/P1.asset"), handle));
-            //Button btn = new Button();
-            //btn.text = "Debug State";
-            //btn.clicked += () => {
-            //    var handle = ((PageMenuVisual)rootVisualElement[0]).MenuHandler;
-            //    Debug.Log(handle.GetState());
-            //    handle.SetState(":1\r\n0:0\r\n00:0\r\n1:0\r\n");
-            //};
-            //rootVisualElement.Add(btn);
-            //var pageView = new DocPageVisual(handle.Root);
-            //rootVisualElement.Add(pageView);
-            //handle.OnChangeSelect += (oldVal, newVal) =>
-            //{
-            //    rootVisualElement.Remove(pageView);
-            //    pageView = new DocPageVisual(newVal.Target);
-            //    rootVisualElement.Add(pageView);
-            //};
+            var btn = new CheckButton();
+            btn.text = "Test Check Btn";
+            btn.Confirm += () =>
+            {
+                Debug.Log("YES");
+                btn.style.opacity = 1;
+                btn.Fade(0, 1000, 50, () => { btn.Fade(1, 1000); });
+            };
+            btn.Cancel += () =>
+            {
+                Type t = typeof(DocComponent);
+                foreach(var info in t.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+                {
+                    Debug.Log(info.Name);
+                }
+            };
+            rootVisualElement.Add(btn);
         }
     }
 }
