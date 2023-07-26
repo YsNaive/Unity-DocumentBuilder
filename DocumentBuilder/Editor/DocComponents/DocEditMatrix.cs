@@ -194,6 +194,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Button deleteButton = new Button();
                 deleteButton.style.SetIS_Style(ISMargin.None);
                 deleteButton.style.SetIS_Style(ISPadding.None);
+                deleteButton.style.backgroundColor = DocStyle.Current.DangerColor;
                 deleteButton.style.width = Length.Percent(5);
                 deleteButton.clicked += () =>
                 {
@@ -221,6 +222,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 };
                 deleteButton.style.SetIS_Style(ISMargin.None);
                 deleteButton.style.SetIS_Style(ISPadding.None);
+                deleteButton.style.backgroundColor = DocStyle.Current.DangerColor;
                 deleteButton.style.width = Length.Percent(percent);
                 deleteColButton.Add(deleteButton);
             }

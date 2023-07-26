@@ -213,9 +213,10 @@ namespace NaiveAPI.DocumentBuilder
                         i1++;
                     for (int j = 0;j < this.col; j++)
                     {
-                        Debug.Log(i1 + " " + j);
+                        //Debug.Log(i1 + " " + j);
                         newContents[i, j] = this.contents[i1, j];
                     }
+                    i1++;
                 }
                 this.contents = newContents;
             }
@@ -233,8 +234,11 @@ namespace NaiveAPI.DocumentBuilder
                     {
                         if (j1 == col)
                             j1++;
+                        //Debug.Log(i + " " + j1);
                         newContents[i, j] = this.contents[i, j1];
+                        j1++;
                     }
+                    j1 = 0;
                 }
                 this.contents = newContents;
             }

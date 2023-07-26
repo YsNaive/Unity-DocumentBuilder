@@ -69,6 +69,18 @@ namespace NaiveAPI.DocumentBuilder
                 }
             });
 
+            OnWidthChanged += (newWidth) =>
+            {
+                if (texture != null)
+                {
+                    float width = texture.width * data.scale;
+                    if (width > newWidth || data.scale == -1)
+                        width = newWidth;
+                    root.style.width = width;
+                    root.style.height = texture.height * (width / texture.width);
+                }
+            };
+
             return root;
         }
 
@@ -79,20 +91,30 @@ namespace NaiveAPI.DocumentBuilder
             float width = 0;
             URLImage urlImage = new URLImage(data.url, (image) => {
                 img = image;
-                root.style.height = img.height * (width / image.width);
-            });
-            urlImage.RegisterCallback<GeometryChangedEvent>(e =>
-            {
-                width = e.newRect.width;
-                if (e.oldRect.width != e.newRect.width && img != null)
-                {
-                    root.style.height = img.height * (e.newRect.width / img.width);
-                }
+                float imageWidth = img.width * data.scale;
+                if (imageWidth > width || data.scale == -1)
+                    imageWidth = width;
+                root.style.width = imageWidth;
+                root.style.height = img.height * (imageWidth / image.width);
             });
             urlImage.style.height = Length.Percent(100);
             root.Add(urlImage);
+
+            OnWidthChanged += newWidth =>
+            {
+                width = newWidth;
+                if (img != null)
+                {
+                    width = img.width * data.scale;
+                    if (width > newWidth || data.scale == -1)
+                        width = newWidth;
+                    root.style.width = width;
+                    root.style.height = img.height * (newWidth / img.width);
+                }
+            };
             return root;
         }
+
         public class Data
         {
             public float scale = -1;
