@@ -16,7 +16,31 @@ namespace NaiveAPI.DocumentBuilder
             text.text = Target.TextData[0];
             text.style.SetIS_Style(DocStyle.Current.MainText);
             Add(text);
-            IntroAnimation = () => { text.TextFadeIn(500); };
+            Data data = JsonUtility.FromJson<Data>(Target.JsonData);
+            data ??= new Data();
+            switch (data.AnimateMode)
+            {
+                case AniMode.None:
+                    break;
+                case AniMode.Fade:
+                    IntroAnimation = () => { this.Fade(1, 500); };
+                    break;
+                case AniMode.TextFade:
+                    IntroAnimation = () => { text.TextFadeIn(500); };
+                    break;
+            }
+        }
+
+        public class Data
+        {
+            public AniMode AnimateMode = AniMode.Fade;
+            public int IntroAniTime = 500;
+        }
+        public enum AniMode
+        {
+            None,
+            Fade,
+            TextFade,
         }
     }
 

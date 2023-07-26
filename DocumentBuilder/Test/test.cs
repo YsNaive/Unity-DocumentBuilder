@@ -1,3 +1,4 @@
+using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System;
@@ -11,10 +12,10 @@ public class test : MonoBehaviour
 {
     public UIDocument document;
     public SODocPage page;
+    public DocComponent doc;
     void Start()
     {
-        document.rootVisualElement.Add(new DocBookVisual(page));
-        //document.rootVisualElement.Add(new DocStyleField(DocStyle.Current));
+        document.rootVisualElement.Add(DocRuntime.CreateVisual(doc));
     }
 
 }

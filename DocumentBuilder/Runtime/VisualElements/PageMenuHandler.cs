@@ -33,7 +33,6 @@ namespace NaiveAPI.DocumentBuilder
         public void InvokeOnChangeSelect() { OnChangeSelect?.Invoke(m_selecting, m_selecting); }
         public void Repaint()
         {
-            Debug.Log(GetState());
             DocCache.Get().OpeningBookHierarchy = GetState();
             AddedPages.Clear();
             AddedVisual.Clear();

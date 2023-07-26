@@ -1,5 +1,5 @@
 
-enum DocVisualAnimateMode
+public enum DocVisualAnimateMode
 {
     None,
     Fade,

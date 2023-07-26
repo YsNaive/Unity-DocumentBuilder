@@ -36,8 +36,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         private void OnDisable()
         {
-            DocCache.Get().OpeningBookHierarchy = BookVisual.MenuHandler.GetState();
-            DocCache.Save();
+            if(BookVisual != null)
+            {
+                DocCache.Get().OpeningBookHierarchy = BookVisual.MenuHandler.GetState();
+                DocCache.Save();
+            }
         }
         private void onCreateEditor(SODocPageEditor e)
         {

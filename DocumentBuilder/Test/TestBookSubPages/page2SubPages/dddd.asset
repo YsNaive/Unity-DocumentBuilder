@@ -14,4 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 7433338533053954386, guid: aded1c94c327f154f901537e8753f677, type: 3}
   SubPages: []
-  Components: []
+  Components:
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - asdasd
+    ObjsData: []

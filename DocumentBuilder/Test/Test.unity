@@ -333,6 +333,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   document: {fileID: 1648585211}
   page: {fileID: 11400000, guid: 87cae223bf824af41a724825352a03ab, type: 2}
+  doc:
+    VisualID: 3
+    JsonData: '{"row":3,"col":3,"anchors":[3,3,3],"mode":0}'
+    TextData:
+    - aaa
+    - 
+    - 
+    - 
+    - aaa
+    - 
+    - 
+    - 
+    - ccc
+    ObjsData: []
 --- !u!114 &1648585211
 MonoBehaviour:
   m_ObjectHideFlags: 0
