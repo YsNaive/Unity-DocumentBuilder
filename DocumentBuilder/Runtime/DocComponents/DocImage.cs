@@ -11,7 +11,7 @@ namespace NaiveAPI.DocumentBuilder
     {
         public override string VisualID => "5";
 
-        public override void OnCreateGUI()
+        protected override void OnCreateGUI()
         {
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null)

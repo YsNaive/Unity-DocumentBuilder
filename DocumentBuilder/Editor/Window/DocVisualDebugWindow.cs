@@ -78,7 +78,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
             repaint.style.width = 80;
             repaint.clicked += () =>
             {
-                root.RemoveAt(4);
+                var ve = root.Q<DocVisual>();
+                if(ve != null)
+                    root.Remove(ve);
                 root.Insert(4,DocRuntime.CreateVisual(docComponent));
             };
             root.Add(viewText);

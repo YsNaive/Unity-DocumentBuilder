@@ -35,7 +35,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         /// <summary>
         /// Call after Target is set
         /// </summary>
-        public abstract void OnCreateGUI();
+        protected abstract void OnCreateGUI();
         public virtual string ToMarkdown(string dstPath) { return string.Empty; }
     }
 }

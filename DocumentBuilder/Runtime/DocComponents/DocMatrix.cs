@@ -14,7 +14,7 @@ namespace NaiveAPI.DocumentBuilder
         private static ISPadding padding = ISPadding.None;
         private VisualElement matrixVisual;
 
-        public override void OnCreateGUI()
+        protected override void OnCreateGUI()
         {
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;

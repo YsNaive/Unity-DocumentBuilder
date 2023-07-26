@@ -17,7 +17,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         private VisualElement rowColVisual, matrixVisual, anchorVisual;
 
-        public override void OnCreateGUI()
+        protected override void OnCreateGUI()
         {
             this.style.backgroundColor = DocStyle.Current.BackgroundColor;
             this.style.width = -1;

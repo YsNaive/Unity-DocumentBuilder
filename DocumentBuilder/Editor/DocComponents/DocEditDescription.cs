@@ -12,34 +12,59 @@ namespace NaiveAPI_Editor.DocumentBuilder
     {
         public override string DisplayName => "Description";
         public override string VisualID => "2";
-        public override void OnCreateGUI()
+        DocDescription.Data data;
+        protected override void OnCreateGUI()
         {
-            DocDescription.Data data = JsonUtility.FromJson<DocDescription.Data>(Target.JsonData);
+            data = JsonUtility.FromJson<DocDescription.Data>(Target.JsonData);
             data ??= new DocDescription.Data();
             VisualElement bar = new VisualElement();
             bar.style.SetIS_Style(ISFlex.Horizontal);
             EnumField field = new EnumField();
             field.Init(DocDescription.AniMode.Fade);
             field.value = data.AnimateMode;
-            field.style.width = Length.Percent(49);
+            field.style.width = Length.Percent(50);
+            field.label = "Intro Mode";
+            field[0].style.minWidth = 80;
+            field[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            field.style.ClearMarginPadding();
+            field.RegisterValueChangedCallback(val =>
+            {
+                data.AnimateMode = (DocDescription.AniMode)val.newValue;
+                save();
+            });
             bar.Add(field);
             IntegerField msField = new IntegerField();
-            msField.style.width = Length.Percent(49);
+            msField.style.width = Length.Percent(40);
+            msField.style.ClearMarginPadding();
+            msField.style.marginLeft = Length.Percent(9);
             msField.value = data.IntroAniTime;
+            msField.label = "Duration";
+            msField[0].style.minWidth = 60;
+            msField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            msField.RegisterValueChangedCallback(val =>
+            {
+                data.IntroAniTime = val.newValue;
+                save();
+            });
             bar.Add(msField);
             TextField textInput = new TextField();
             if (Target.TextData.Count == 0)
                 Target.TextData.Add(string.Empty);
             textInput.value = Target.TextData[0];
             textInput.multiline = true;
+            textInput.style.ClearMarginPadding();
             textInput.RegisterValueChangedCallback((val) =>
             {
                 Target.TextData.Clear();
                 Target.TextData.Add(val.newValue);
             });
+            save();
             Add(bar);
             Add(textInput);
         }
-
+        void save()
+        {
+            Target.JsonData = JsonUtility.ToJson(data);
+        }
     }
 }

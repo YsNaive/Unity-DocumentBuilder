@@ -16,7 +16,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         private VisualElement root, urlVisual, objVisual;
 
-        public override void OnCreateGUI()
+        protected override void OnCreateGUI()
         {
             DocImage.Data data = JsonUtility.FromJson<DocImage.Data>(Target.JsonData);
             if (data == null)

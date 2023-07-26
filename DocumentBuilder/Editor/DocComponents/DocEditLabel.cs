@@ -14,7 +14,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override string DisplayName => "Label";
         public override string VisualID => "1";
 
-        public override void OnCreateGUI()
+        protected override void OnCreateGUI()
         {
             style.SetIS_Style(ISFlex.Horizontal);
             TextField labelInput = new TextField();

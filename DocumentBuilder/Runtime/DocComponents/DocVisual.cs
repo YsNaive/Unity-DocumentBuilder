@@ -33,5 +33,5 @@ public abstract class DocVisual : VisualElement
     /// <summary>
     /// Call after Target is set
     /// </summary>
-    public abstract void OnCreateGUI();
+    protected abstract void OnCreateGUI();
 }

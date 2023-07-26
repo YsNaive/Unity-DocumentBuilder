@@ -10,7 +10,7 @@ namespace NaiveAPI.DocumentBuilder
     {
         public override string VisualID => "1";
 
-        public override void OnCreateGUI()
+        protected override void OnCreateGUI()
         {
             TextElement text = new TextElement();
             if (Target.TextData.Count > 0)

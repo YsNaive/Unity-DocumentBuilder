@@ -1,4 +1,5 @@
 using NaiveAPI.DocumentBuilder;
+using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         DocComponent target;
         public DocEditField(DocComponent docComponent)
         {
+            style.ClearMarginPadding();
             target = docComponent;
             createDropfield();
             repaintDocEdit();
@@ -23,6 +25,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             DropdownField dropdown = new DropdownField();
             dropdown.choices = DocEditor.NameList;
+            dropdown.style.ClearMarginPadding();
             string tName = string.Empty;
             DocEditor.ID2Name.TryGetValue(target.VisualID, out tName);
             dropdown.index = DocEditor.NameList.FindIndex(0, (str) => { return str == tName; });
