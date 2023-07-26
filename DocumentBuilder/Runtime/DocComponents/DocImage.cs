@@ -59,15 +59,6 @@ namespace NaiveAPI.DocumentBuilder
             label.style.unityTextAlign = TextAnchor.MiddleCenter;
             label.style.SetIS_Style(position);
             root.Add(label);
-            root.RegisterCallback<GeometryChangedEvent>(e =>
-            {
-                if (texture != null && e.oldRect.width != e.newRect.width)
-                {
-                    float width = texture.width * data.scale;
-                    root.style.width = width;
-                    root.style.height = texture.height * (width / texture.width);
-                }
-            });
 
             OnWidthChanged += (newWidth) =>
             {

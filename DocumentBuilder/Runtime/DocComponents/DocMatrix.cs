@@ -56,6 +56,7 @@ namespace NaiveAPI.DocumentBuilder
                     label.style.SetIS_Style(margin);
                     label.style.SetIS_Style(padding);
                     label.style.paddingLeft = 5;
+                    label.style.paddingRight = 5;
                     label.style.SetIS_Style(DocStyle.Current.MainText);
                     label.style.unityTextAlign = data.anchors[j];
                     child.Add(label);
@@ -240,7 +241,111 @@ namespace NaiveAPI.DocumentBuilder
                     }
                     j1 = 0;
                 }
+
                 this.contents = newContents;
+                deleteColAnchor(col);
+            }
+
+            private void deleteColAnchor(int col)
+            {
+                int i1 = 0;
+                TextAnchor[] newAnchors = new TextAnchor[this.col];
+                for (int i = 0;i < this.col; i++)
+                {
+                    if (i1 == col)
+                        i1++;
+                    newAnchors[i] = this.anchors[i1];
+                    i1++;
+                }
+
+                this.anchors = newAnchors;
+            }
+
+            public void AddRow(int row)
+            {
+                if (row < 0 || row >= this.row)
+                    return;
+                this.row++;
+                string[,] newContents = new string[this.row, this.col];
+                int i1 = 0;
+                bool isDone = false;
+                for (int i = 0; i < this.row; i++)
+                {
+                    if (i == row + 1 && !isDone)
+                    {
+                        i1--;
+                        for (int j = 0; j < this.col; j++)
+                        {
+                            newContents[i, j] = "";
+                        }
+                        isDone = true;
+                    }
+                    else
+                    {
+                        for (int j = 0; j < this.col; j++)
+                        {
+                            //Debug.Log(i1 + " " + j);
+                            newContents[i, j] = this.contents[i1, j];
+                        }
+                    }
+                    i1++;
+                }
+                this.contents = newContents;
+            }
+
+            public void AddCol(int col)
+            {
+                if (col < 0 || col >= this.col)
+                    return;
+                this.col++;
+                string[,] newContents = new string[this.row, this.col];
+                int j1 = 0;
+                bool isDone;
+                for (int i = 0; i < this.row; i++)
+                {
+                    isDone = false;
+                    for (int j = 0; j < this.col; j++)
+                    {
+                        if (j1 == col + 1 && !isDone)
+                        {
+                            j1--;
+                            newContents[i, j] = "";
+                            isDone = true;
+                        }
+                        else
+                        {
+                            //Debug.Log(i + " " + j1);
+                            newContents[i, j] = this.contents[i, j1];
+                        }
+                        j1++;
+                    }
+                    j1 = 0;
+                }
+                this.contents = newContents;
+                addColAnchor(col);
+            }
+
+            private void addColAnchor(int col)
+            {
+                int i1 = 0;
+                TextAnchor[] newAnchors = new TextAnchor[this.col];
+                bool isDone = false;
+                for (int i = 0; i < this.col; i++)
+                {
+                    if (i1 == col + 1 && !isDone)
+                    {
+                        i1--;
+                        newAnchors[i] = TextAnchor.MiddleLeft;
+                        isDone = true;
+                    }
+                    else
+                    {
+                        newAnchors[i] = this.anchors[i1];
+                    }
+                    i1++;
+                }
+
+                this.anchors = newAnchors;
             }
         }
 
