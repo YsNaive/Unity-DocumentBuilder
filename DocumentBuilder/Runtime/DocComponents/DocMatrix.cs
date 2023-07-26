@@ -36,7 +36,7 @@ namespace NaiveAPI.DocumentBuilder
                 child.style.SetIS_Style(ISFlex.Horizontal);
                 for (int j = 0; j < data.col; j++)
                 {
-                    Label label = new Label();
+                    TextElement label = new TextElement();
                     label.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
                     label.text = texts[i * data.col + j];
                     label.style.borderLeftWidth = 1;
