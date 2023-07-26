@@ -37,6 +37,20 @@ namespace NaiveAPI_UI
             element.paddingLeft = 0;
             element.paddingRight = 0;
             element.paddingBottom = 0;
+        }        
+        public static void ClearPadding(this IStyle element)
+        {
+            element.paddingTop = 0;
+            element.paddingLeft = 0;
+            element.paddingRight = 0;
+            element.paddingBottom = 0;
+        }
+        public static void ClearMargin(this IStyle element)
+        {
+            element.marginTop = 0;
+            element.marginLeft = 0;
+            element.marginRight = 0;
+            element.marginBottom = 0;
         }
 
         #region IS_Style setting

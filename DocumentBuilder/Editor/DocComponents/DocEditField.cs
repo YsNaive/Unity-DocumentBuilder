@@ -13,11 +13,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
     public class DocEditField : VisualElement
     {
         public event Action<Type> OnDocTypeChange;
-        DocComponent target;
+        public DocComponent Target;
         public DocEditField(DocComponent docComponent)
         {
             style.ClearMarginPadding();
-            target = docComponent;
+            Target = docComponent;
             createDropfield();
             repaintDocEdit();
         }
@@ -27,19 +27,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
             dropdown.choices = DocEditor.NameList;
             dropdown.style.ClearMarginPadding();
             string tName = string.Empty;
-            DocEditor.ID2Name.TryGetValue(target.VisualID, out tName);
+            DocEditor.ID2Name.TryGetValue(Target.VisualID, out tName);
             dropdown.index = DocEditor.NameList.FindIndex(0, (str) => { return str == tName; });
             if (dropdown.index == -1) dropdown.index = 0;
             dropdown.RegisterValueChangedCallback((val) =>
             {
-                target.TextData.Clear();
-                target.JsonData = string.Empty;
-                target.ObjsData.Clear();
+                Target.TextData.Clear();
+                Target.JsonData = string.Empty;
+                Target.ObjsData.Clear();
                 RemoveAt(1);
                 if (val.newValue == "None")
-                    target.VisualID = string.Empty;
+                    Target.VisualID = string.Empty;
                 else
-                    target.VisualID = DocEditor.Name2ID[val.newValue];
+                    Target.VisualID = DocEditor.Name2ID[val.newValue];
                 repaintDocEdit();
             });
             dropdown.value = DocEditor.NameList[dropdown.index];
@@ -48,16 +48,16 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private void repaintDocEdit()
         {
             Type docType = null;
-            if (DocEditor.ID2Type.TryGetValue(target.VisualID, out docType))
+            if (DocEditor.ID2Type.TryGetValue(Target.VisualID, out docType))
             {
                 DocEditVisual doc = (DocEditVisual)System.Activator.CreateInstance(docType);
-                doc.SetTarget(target);
+                doc.SetTarget(Target);
                 Add(doc);
             }
             else
             {
                 TextElement text = new TextElement();
-                text.text = $"Not Fount EditVisual for ID \"{target.VisualID}\"";
+                text.text = $"Not Fount EditVisual for ID \"{Target.VisualID}\"";
                 Add(text);
             }
             OnDocTypeChange?.Invoke(docType);

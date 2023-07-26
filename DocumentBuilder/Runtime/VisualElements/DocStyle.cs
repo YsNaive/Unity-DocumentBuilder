@@ -19,6 +19,7 @@ namespace NaiveAPI.DocumentBuilder
 
         public ISText MainText;
         public ISText LabelText;
+        public ISText ButtonText;
 
         public Color FuncColor;
         public Color ArgsColor;
@@ -28,6 +29,10 @@ namespace NaiveAPI.DocumentBuilder
         public Color WarningColor;
         public Color DangerColor;
         public Color HintColor;
+
+        public float MarginVer;
+        public float MarginHor;
+        public float LineHeight;
 
         public float GUIScale = 1;
         public float TextScale
@@ -43,16 +48,18 @@ namespace NaiveAPI.DocumentBuilder
 
         private float m_textScale = 1;
 
+
         public static DocStyle Dark = new DocStyle()
         {
             BackgroundColor = new Color(0.15f, 0.15f, 0.16f),
-            SubBackgroundColor = new Color(0.2f, 0.2f, 0.22f),
+            SubBackgroundColor = new Color(0.25f, 0.25f, 0.28f),
             FrontGroundColor = new Color(0.65f, 0.65f, 0.65f),
             SubFrontGroundColor = new Color(0.55f, 0.55f, 0.55f),
             MainTextSize = 14,
             LabelTextSize = 20,
-            MainText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 12 },
-            LabelText = new ISText() { Color = new Color(0.9f, 0.9f, 0.9f), FontSize = 18 },
+            MainText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 12, Align = TextAnchor.MiddleLeft },
+            LabelText = new ISText() { Color = new Color(0.9f, 0.9f, 0.9f), FontSize = 18, Align = TextAnchor.MiddleLeft },
+            ButtonText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 12,Align = TextAnchor.MiddleCenter },
             FuncColor = new Color(1f, 0.9f, 0.35f),
             ArgsColor = new Color(0.65f, 0.85f, 0.95f),
             TypeColor = new Color(0.35f, 0.70f, 0.65f),
@@ -60,6 +67,9 @@ namespace NaiveAPI.DocumentBuilder
             WarningColor = new Color(0.3f, 0.3f, 0.2f),
             DangerColor  = new Color(0.3f, 0.2f, 0.2f),
             HintColor    = new Color(0.2f, 0.2f, 0.3f),
+            MarginHor = 0,
+            MarginVer = 3,
+            LineHeight = 18,
         };
         
         public static DocStyle Current => DocCache.Get().CurrentStyle;
@@ -75,6 +85,7 @@ namespace NaiveAPI.DocumentBuilder
             copy.LabelTextSize = this.LabelTextSize;
             copy.MainText = this.MainText.Copy();
             copy.LabelText = this.LabelText.Copy();
+            copy.ButtonText = this.ButtonText.Copy();
             copy.FuncColor = this.FuncColor;
             copy.ArgsColor = this.ArgsColor;
             copy.TypeColor = this.TypeColor;
@@ -82,6 +93,9 @@ namespace NaiveAPI.DocumentBuilder
             copy.WarningColor = this.WarningColor;
             copy.DangerColor = this.DangerColor;
             copy.HintColor = this.HintColor;
+            copy.MarginHor = this.MarginHor;
+            copy.MarginVer = this.MarginVer;
+            copy.LineHeight = this.LineHeight;
 
             return copy;
         }

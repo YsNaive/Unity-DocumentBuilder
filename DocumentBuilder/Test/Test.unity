@@ -334,19 +334,12 @@ MonoBehaviour:
   document: {fileID: 1648585211}
   page: {fileID: 11400000, guid: 87cae223bf824af41a724825352a03ab, type: 2}
   doc:
-    VisualID: 3
-    JsonData: '{"row":3,"col":3,"anchors":[3,3,3],"mode":0}'
+    VisualID: 2
+    JsonData: '{"AnimateMode":1,"IntroAniTime":500}'
     TextData:
-    - aaa
-    - 
-    - 
-    - 
-    - aaa
-    - 
-    - 
-    - 
-    - ccc
-    ObjsData: []
+    - asdasdadadadasdasd
+    ObjsData:
+    - {fileID: -1304905567622442630, guid: aded1c94c327f154f901537e8753f677, type: 3}
 --- !u!114 &1648585211
 MonoBehaviour:
   m_ObjectHideFlags: 0

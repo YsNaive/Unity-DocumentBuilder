@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DocEditorData
   m_EditorClassIdentifier: 
   EditingDocPage: {fileID: 11400000, guid: 87cae223bf824af41a724825352a03ab, type: 2}
-  EditingState: 
+  DocTemplateFolder: {fileID: 102900000, guid: 4a61098f990fc2048b3ba9471f832739, type: 3}

@@ -15,7 +15,9 @@ public class test : MonoBehaviour
     public DocComponent doc;
     void Start()
     {
-        document.rootVisualElement.Add(DocRuntime.CreateVisual(doc));
+        var ve = DocRuntime.CreateVisual(doc);
+        document.rootVisualElement.Add(ve);
+        ((DocVisual)ve).IntroAnimation?.Invoke(null);
     }
 
 }

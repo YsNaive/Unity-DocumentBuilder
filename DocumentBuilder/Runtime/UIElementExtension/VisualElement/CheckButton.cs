@@ -16,6 +16,8 @@ namespace NaiveAPI_UI
         public event Action Confirm;
         public event Action Cancel;
         public Button MainBtn;
+        public Button ConfirmButton;
+        public Button CancelButton;
         public string text
         {
             get { return MainBtn.text; }
@@ -28,32 +30,32 @@ namespace NaiveAPI_UI
             MainBtn.clicked += () =>
             {
                 Clear();
-                Button confirm = new Button();
-                confirm.style.ClearMarginPadding();
-                confirm.text = ConfirmText;
-                confirm.style.backgroundColor = ConfirmColor;
-                confirm.style.width = Length.Percent(49);
-                confirm.clicked += () =>
-                {
-                    Clear();
-                    Add(MainBtn);
-                    Confirm?.Invoke();
-                };
-                Add(confirm);
-                Button cancel = new Button();
-                cancel.style.ClearMarginPadding();
-                cancel.text = CancelText;
-                cancel.style.backgroundColor = CancelColor;
-                cancel.style.width = Length.Percent(49);
-                cancel.style.marginLeft = Length.Percent(1);
-                cancel.clicked += () =>
-                {
-                    Clear();
-                    Add(MainBtn);
-                    Cancel?.Invoke();
-                };
-                Add(cancel);
+                Add(ConfirmButton);
+                Add(CancelButton);
 
+            };
+            ConfirmButton = new Button();
+            ConfirmButton.style.ClearMarginPadding();
+            ConfirmButton.text = ConfirmText;
+            ConfirmButton.style.backgroundColor = ConfirmColor;
+            ConfirmButton.style.width = Length.Percent(49);
+            ConfirmButton.clicked += () =>
+            {
+                Clear();
+                Add(MainBtn);
+                Confirm?.Invoke();
+            };
+            CancelButton = new Button();
+            CancelButton.style.ClearMarginPadding();
+            CancelButton.text = CancelText;
+            CancelButton.style.backgroundColor = CancelColor;
+            CancelButton.style.width = Length.Percent(49);
+            CancelButton.style.marginLeft = Length.Percent(1);
+            CancelButton.clicked += () =>
+            {
+                Clear();
+                Add(MainBtn);
+                Cancel?.Invoke();
             };
             Add(MainBtn);
         }

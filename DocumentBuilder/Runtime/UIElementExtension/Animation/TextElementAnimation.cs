@@ -8,10 +8,9 @@ namespace NaiveAPI_UI
 {
     public static class TextElementAnimation
     {
-        public static void TextFadeIn(this TextElement ve, int ms, int lenPerStep = 1)
+        public static void TextFadeIn(this TextElement ve, int msPerLen = 50, int lenPerStep = 1, Action endCallback = null)
         {
             int len = ve.text.Length;
-            int msPerStep = (int)(ms / ((float)len / lenPerStep));
             string content = ve.text;
             ve.text = string.Empty;
             Action exe = null;
@@ -23,7 +22,9 @@ namespace NaiveAPI_UI
                     ve.text += content[curIndex];
                 }
                 if (curIndex < len)
-                    ve.schedule.Execute(exe).ExecuteLater(msPerStep);
+                    ve.schedule.Execute(exe).ExecuteLater(msPerLen);
+                else
+                    endCallback?.Invoke();
             };
             exe();
         }

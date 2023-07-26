@@ -1,3 +1,4 @@
+using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System.Collections;
@@ -19,20 +20,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             data ??= new DocDescription.Data();
             VisualElement bar = new VisualElement();
             bar.style.SetIS_Style(ISFlex.Horizontal);
-            EnumField field = new EnumField();
-            field.Init(DocDescription.AniMode.Fade);
-            field.value = data.AnimateMode;
-            field.style.width = Length.Percent(50);
-            field.label = "Intro Mode";
-            field[0].style.minWidth = 80;
-            field[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            field.style.ClearMarginPadding();
-            field.RegisterValueChangedCallback(val =>
-            {
-                data.AnimateMode = (DocDescription.AniMode)val.newValue;
-                save();
-            });
-            bar.Add(field);
             IntegerField msField = new IntegerField();
             msField.style.width = Length.Percent(40);
             msField.style.ClearMarginPadding();
@@ -46,8 +33,23 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 data.IntroAniTime = val.newValue;
                 save();
             });
+            EnumField field = new EnumField();
+            field.Init(DocDescription.AniMode.Fade);
+            field.value = data.AnimateMode;
+            field.style.width = Length.Percent(50);
+            field.label = "Intro Mode";
+            field[0].style.minWidth = 80;
+            field[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            field.style.ClearMarginPadding();
+            field.RegisterValueChangedCallback(val =>
+            {
+                data.AnimateMode = (DocDescription.AniMode)val.newValue;
+                msField.visible = data.AnimateMode != DocDescription.AniMode.None;
+                save();
+            });
+            bar.Add(field);
             bar.Add(msField);
-            TextField textInput = new TextField();
+            TextField textInput = DocRuntime.NewTextField();
             if (Target.TextData.Count == 0)
                 Target.TextData.Add(string.Empty);
             textInput.value = Target.TextData[0];
@@ -61,6 +63,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             save();
             Add(bar);
             Add(textInput);
+            msField.visible = data.AnimateMode != DocDescription.AniMode.None;
         }
         void save()
         {

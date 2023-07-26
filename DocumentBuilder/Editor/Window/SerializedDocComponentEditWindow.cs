@@ -1,3 +1,4 @@
+using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             var window = CreateWindow<SerializedDocComponentEditWindow>("Document Component");
             var editView = new SerializedDocEditVisual(property);
             window.rootVisualElement.Add(editView);
-
+            window.rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
             Button save = new Button();
             save.text = "Save";
             save.style.SetIS_Style(new ISMargin(TextAnchor.LowerCenter));

@@ -20,8 +20,8 @@ public abstract class DocVisual : VisualElement
     public abstract string VisualID { get; }
     public Action<float> OnHeightChanged;
     public Action<float> OnWidthChanged;
-    public Action IntroAnimation;
-    public Action OuttroAnimation;
+    public Action<Action> IntroAnimation;
+    public Action<Action> OuttroAnimation;
     public DocComponent Target => m_target;
 
     private DocComponent m_target;

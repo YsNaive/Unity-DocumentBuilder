@@ -1,8 +1,11 @@
+using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
+using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -44,9 +47,48 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 }
             }
         }
-        public static VisualElement CreateEditVisual(DocComponent docComponent)
+        public static DocEditField CreateEditVisual(DocComponent docComponent)
         {
             return new DocEditField(docComponent);
+        }
+
+        public static ObjectField NewObjectField<T>(EventCallback<ChangeEvent<UnityEngine.Object>> valueChange = null) { return NewObjectField<T>("", valueChange); }
+        public static ObjectField NewObjectField<T>(string label = "", EventCallback<ChangeEvent<UnityEngine.Object>> valueChange = null)
+        {
+            ObjectField objectField = new ObjectField();
+            objectField.style.ClearPadding();
+            DocRuntime.ApplyMargin(objectField);
+            objectField.objectType = typeof(T);
+            if(valueChange != null)
+                objectField.RegisterValueChangedCallback(valueChange);
+            objectField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            objectField[0].style.ClearMarginPadding();
+            if(label != "")
+            {
+                objectField.label = label;
+                objectField[0].style.SetIS_Style(DocStyle.Current.MainText);
+                objectField[0].style.ClearMarginPadding();
+            }
+            objectField.style.height = DocStyle.Current.LineHeight;
+            return  objectField;
+        }
+        
+        public static EnumField NewEnumField(string label, Enum initValue, EventCallback<ChangeEvent<Enum>> valueChange = null)
+        {
+            EnumField enumField = new EnumField();
+            enumField.style.ClearPadding();
+            DocRuntime.ApplyMargin(enumField);
+            enumField[0].style.ClearMarginPadding();
+            enumField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            if (label != "")
+            {
+                enumField.label = label;
+                enumField[0].style.ClearMarginPadding();
+            }
+            enumField.Init(initValue);
+            if(valueChange != null) 
+                enumField.RegisterValueChangedCallback(valueChange);
+            return enumField;
         }
     }
 

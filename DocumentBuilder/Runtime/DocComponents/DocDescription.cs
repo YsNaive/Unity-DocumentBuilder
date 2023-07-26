@@ -23,10 +23,10 @@ namespace NaiveAPI.DocumentBuilder
                 case AniMode.None:
                     break;
                 case AniMode.Fade:
-                    IntroAnimation = () => { this.Fade(1, 500); };
+                    IntroAnimation = (callBack) => { this.Fade(1, data.IntroAniTime,50,callBack); };
                     break;
                 case AniMode.TextFade:
-                    IntroAnimation = () => { text.TextFadeIn(500); };
+                    IntroAnimation = (callBack) => { text.TextFadeIn(data.IntroAniTime,1, callBack); };
                     break;
             }
         }
