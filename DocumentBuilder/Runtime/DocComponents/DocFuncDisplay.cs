@@ -42,76 +42,86 @@ namespace NaiveAPI.DocumentBuilder
 
         private string parseSyntax(string synatx)
         {
-            string[] strs = synatx.Split('(');
-            strs[1] = strs[1].Substring(0, strs[1].LastIndexOf(")"));
-
-            string[] prefixs = strs[0].Split(" ");
-            StringBuilder stringBuilder = new StringBuilder();
-            string subFrontGroundColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(Current.SubFrontGroundColor)}>";
-            string prefixColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(Color.blue)}>";
-            string funcColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(Current.FuncColor)}>";
-            string typeColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(typeTextStyle.Color)}>";
-            string paramColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(paramTextStyle.Color)}>";
-            string postfixColor = "</color>";
-            foreach (string str in prefixs)
+            try
             {
-                if (str == prefixs[^1] && str != "void")
-                {
-                    stringBuilder.Append(funcColor);
-                }
-                else if (str == prefixs[^2] && str != "void")
-                {
-                    stringBuilder.Append(typeColor);
-                }
-                else
-                {
-                    stringBuilder.Append(prefixColor);
-                }
-                stringBuilder.Append(str);
-                stringBuilder.Append(postfixColor);
-                stringBuilder.Append(" ");
-            }
+                if (string.IsNullOrEmpty(synatx)) return "";
+                string[] strs = synatx.Split('(');
+                strs[1] = strs[1].Substring(0, strs[1].LastIndexOf(")"));
 
-            stringBuilder.Append("(");
-            foreach (string str in strs[1].Split(","))
-            {
-                string[] param = str.Split(" ");
-                int index = 0;
-                while (param[index] == "")
-                    index++;
-                if (param[index] == "ref" || param[index] == "out" || param[index] == "in")
+                string[] prefixs = strs[0].Split(" ");
+                StringBuilder stringBuilder = new StringBuilder();
+                string subFrontGroundColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(Current.SubFrontGroundColor)}>";
+                string prefixColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(Color.blue)}>";
+                string funcColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(Current.FuncColor)}>";
+                string typeColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(typeTextStyle.Color)}>";
+                string paramColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(paramTextStyle.Color)}>";
+                string postfixColor = "</color>";
+                foreach (string str in prefixs)
                 {
-                    stringBuilder.Append(prefixColor);
-                    stringBuilder.Append(param[index]);
+                    if (str == prefixs[^1] && str != "void")
+                    {
+                        stringBuilder.Append(funcColor);
+                    }
+                    else if (str == prefixs[^2] && str != "void")
+                    {
+                        stringBuilder.Append(typeColor);
+                    }
+                    else
+                    {
+                        stringBuilder.Append(prefixColor);
+                    }
+                    stringBuilder.Append(str);
                     stringBuilder.Append(postfixColor);
                     stringBuilder.Append(" ");
-                    index++;
                 }
-                stringBuilder.Append(typeColor);
-                stringBuilder.Append(param[index++]);
-                stringBuilder.Append(postfixColor);
-                while (param[index] == "")
-                    index++;
-                stringBuilder.Append(" ");
-                stringBuilder.Append(paramColor);
-                stringBuilder.Append(param[index++]);
-                stringBuilder.Append(postfixColor);
-                if (param.Length > index + 1)
-                {
-                    stringBuilder.Append(subFrontGroundColor);
-                    while (index < param.Length)
-                    {
-                        stringBuilder.Append(" ");
-                        stringBuilder.Append(param[index++]);
-                    }
-                    stringBuilder.Append(postfixColor);
-                }
-                stringBuilder.Append(", ");
-            }
-            stringBuilder.Remove(stringBuilder.Length - 2, 2);
-            stringBuilder.Append(");");
 
-            return stringBuilder.ToString();
+                stringBuilder.Append("(");
+                foreach (string str in strs[1].Split(","))
+                {
+                    if (str == "")
+                        continue;
+                    string[] param = str.Split(" ");
+                    int index = 0;
+                    while (param[index] == "")
+                        index++;
+                    if (param[index] == "ref" || param[index] == "out" || param[index] == "in")
+                    {
+                        stringBuilder.Append(prefixColor);
+                        stringBuilder.Append(param[index]);
+                        stringBuilder.Append(postfixColor);
+                        stringBuilder.Append(" ");
+                        index++;
+                    }
+                    stringBuilder.Append(typeColor);
+                    stringBuilder.Append(param[index++]);
+                    stringBuilder.Append(postfixColor);
+                    while (param[index] == "")
+                        index++;
+                    stringBuilder.Append(" ");
+                    stringBuilder.Append(paramColor);
+                    stringBuilder.Append(param[index++]);
+                    stringBuilder.Append(postfixColor);
+                    if (param.Length > index + 1)
+                    {
+                        stringBuilder.Append(subFrontGroundColor);
+                        while (index < param.Length)
+                        {
+                            stringBuilder.Append(" ");
+                            stringBuilder.Append(param[index++]);
+                        }
+                        stringBuilder.Append(postfixColor);
+                    }
+                    stringBuilder.Append(", ");
+                }
+                stringBuilder.Remove(stringBuilder.Length - 2, 2);
+                stringBuilder.Append(");");
+
+                return stringBuilder.ToString();
+            } catch
+            {
+                Debug.LogWarning("DocVisual : DocFuncDisplay Syntax Error");
+                return synatx;
+            }
         }
 
         private VisualElement generateSyntaxContainer(Data data)
