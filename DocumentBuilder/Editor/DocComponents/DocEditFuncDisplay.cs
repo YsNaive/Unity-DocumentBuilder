@@ -3,6 +3,9 @@ using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -21,6 +24,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.style.backgroundColor = DocStyle.Current.BackgroundColor;
             this.style.width = -1;
             DocFuncDisplay.Data data = setData(Target.JsonData, Target.TextData);
+            this.Add(generateAnimVisual(data));
             TextField nameTextField = new TextField();
             nameTextField.label = "Name";
             nameTextField[0].style.minWidth = new Length(20, LengthUnit.Percent);
@@ -57,6 +61,194 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.Add(paramsContainer);
             returnTypeContainer = generateReturnTypeContainer(data);
             this.Add(returnTypeContainer);
+        }
+
+        public static DocComponent LoadMethod(MethodInfo methodInfo)
+        {
+            DocComponent doc = new DocComponent();
+            doc.VisualID = "4";
+            DocFuncDisplay.Data data = new DocFuncDisplay.Data();
+            data.IntroAniMode = DocFuncDisplay.AniMode.Fade;
+            data.OuttroAniMode = DocFuncDisplay.AniMode.Fade;
+            data.IntroDuration = 300;
+            data.OuttroDuration = 300;
+            List<string> texts = new List<string>();
+            data.Name = methodInfo.Name;
+            texts.Add("");
+            data.Syntaxs[0] = GetSignature(methodInfo);
+            string typeName = getTypeName(methodInfo.ReturnType.Name);
+            if (typeName != "void")
+            {
+                data.ReturnTypes[0] = getTypeName(methodInfo.ReturnType.Name);
+                texts.Add("");
+            }
+            else
+            {
+                data.ReturnTypes.Clear();
+            }
+            data.Params = new List<DocFuncDisplay.ParamData>();
+            ParameterInfo[] parameters = methodInfo.GetParameters();
+
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                DocFuncDisplay.ParamData param = new DocFuncDisplay.ParamData();
+                param.ParamName = parameters[i].Name;
+                param.Type = getTypeName(parameters[i].ParameterType.Name);
+                data.Params.Add(param);
+                texts.Add("");
+            }
+
+            doc.JsonData = JsonUtility.ToJson(data);
+            doc.TextData = texts;
+
+            return doc;
+        }
+
+        public static string GetSignature(MethodInfo methodInfo)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.Append(getAccessLevel(methodInfo));
+            if (methodInfo.IsStatic)
+                stringBuilder.Append(" static");
+            stringBuilder.Append(" ");
+            stringBuilder.Append(getTypeName(methodInfo.ReturnType.Name));
+            stringBuilder.Append(" ");
+            stringBuilder.Append(methodInfo.Name);
+            stringBuilder.Append('(');
+
+            ParameterInfo[] parameters = methodInfo.GetParameters();
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                stringBuilder.Append(getTypeName(parameters[i].ParameterType.Name));
+                stringBuilder.Append(" ");
+                stringBuilder.Append(parameters[i].Name);
+                if (i != parameters.Length - 1)
+                    stringBuilder.Append(", ");
+            }
+            stringBuilder.Append(")");
+
+            return stringBuilder.ToString();
+        }
+
+        private static string getAccessLevel(MethodInfo methodInfo)
+        {
+            if (methodInfo.IsPublic)
+            {
+                return "public";
+            }
+            else if (methodInfo.IsFamily)
+            {
+                return "protected";
+            }
+            else if (methodInfo.IsPrivate)
+            {
+                return "private";
+            }
+            else if (methodInfo.IsAssembly)
+            {
+                return "internal";
+            }
+            else if (methodInfo.IsFamilyAndAssembly)
+            {
+                return "protected internal";
+            }
+            else if (methodInfo.IsFamilyOrAssembly)
+            {
+                return "protected internal";
+            }
+
+            return "";
+        }
+
+        private static string getTypeName(string typeName)
+        {
+            switch (typeName)
+            {
+                case "Void":
+                    return "void";
+                case "Int32":
+                    return "int";
+                case "String":
+                    return "string";
+            }
+
+            return typeName;
+        }
+
+        private VisualElement generateAnimVisual(DocFuncDisplay.Data data)
+        {
+            VisualElement root = new VisualElement();
+            root.style.SetIS_Style(ISFlex.Horizontal);
+            root.style.paddingLeft = Length.Percent(1);
+            root.style.paddingRight = Length.Percent(1);
+
+            EnumField introField = new EnumField();
+            introField.Init(DocFuncDisplay.AniMode.None);
+            introField.value = data.IntroAniMode;
+            introField.style.width = Length.Percent(25);
+            introField.label = "Intro Mode";
+            introField[0].style.minWidth = Length.Percent(50);
+            introField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            introField.style.ClearMarginPadding();
+            root.Add(introField);
+            TextField introDurationField = new TextField();
+            introDurationField.label = "IntroDuration";
+            introDurationField.value = data.IntroDuration.ToString();
+            introDurationField.style.width = Length.Percent(25);
+            introDurationField[0].style.minWidth = Length.Percent(50);
+            introDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            introDurationField.visible = data.IntroAniMode != DocFuncDisplay.AniMode.None;
+            introDurationField.style.ClearMarginPadding();
+            root.Add(introDurationField);
+            introField.RegisterValueChangedCallback(value =>
+            {
+                data.IntroAniMode = (DocFuncDisplay.AniMode)value.newValue;
+                introDurationField.visible = data.IntroAniMode != DocFuncDisplay.AniMode.None;
+                Target.JsonData = JsonUtility.ToJson(data);
+            });
+            introDurationField.RegisterValueChangedCallback(value =>
+            {
+                if (int.TryParse(value.newValue, out int duration))
+                {
+                    data.IntroDuration = duration;
+                    Target.JsonData = JsonUtility.ToJson(data);
+                }
+            });
+            EnumField outtroField = new EnumField();
+            outtroField.Init(DocFuncDisplay.AniMode.None);
+            outtroField.label = "Outtro Mode";
+            outtroField.value = data.IntroAniMode;
+            outtroField.style.width = Length.Percent(25);
+            outtroField[0].style.minWidth = Length.Percent(50);
+            outtroField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            outtroField.style.ClearMarginPadding();
+            root.Add(outtroField);
+            TextField outtroDurationField = new TextField();
+            outtroDurationField.label = "OuttroDuration";
+            outtroDurationField.value = data.OuttroDuration.ToString();
+            outtroDurationField.style.width = Length.Percent(25);
+            outtroDurationField[0].style.minWidth = Length.Percent(50);
+            outtroDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            outtroDurationField.visible = data.OuttroAniMode != DocFuncDisplay.AniMode.None;
+            outtroDurationField.style.ClearMarginPadding();
+            root.Add(outtroDurationField);
+            outtroField.RegisterValueChangedCallback(value =>
+            {
+                data.OuttroAniMode = (DocFuncDisplay.AniMode)value.newValue;
+                outtroDurationField.visible = data.OuttroAniMode != DocFuncDisplay.AniMode.None;
+                Target.JsonData = JsonUtility.ToJson(data);
+            });
+            outtroDurationField.RegisterValueChangedCallback(value =>
+            {
+                if (int.TryParse(value.newValue, out int duration))
+                {
+                    data.OuttroDuration = duration;
+                    Target.JsonData = JsonUtility.ToJson(data);
+                }
+            });
+
+            return root;
         }
 
         private DocFuncDisplay.Data setData(string jsonData, List<string> texts)

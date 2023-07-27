@@ -12,32 +12,73 @@ namespace NaiveAPI.DocumentBuilder
     {
         public override string VisualID => "4";
 
-        private static ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = new Color(0.85f, 0.85f, 0.85f), FontSize = Current.LabelTextSize };
+        private static ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = new Color(0.85f, 0.85f, 0.85f), FontSize = Current.MainTextSize };
         private static ISText syntaxTextStyle = new ISText() { Color = Current.ArgsColor, FontSize = Current.MainTextSize };
         private static ISText paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = Current.ArgsColor, FontSize = Current.MainTextSize };
-        private static ISText typeTextStyle = new ISText() { Color = Current.TypeColor, FontSize = 12 };
-        private static ISText labelTextStyle = new ISText() { Color = Current.SubFrontGroundColor, FontSize = 12 };
+        private static ISText typeTextStyle = new ISText() { Color = Current.TypeColor, FontSize = Current.MainTextSize };
+        private static ISText labelTextStyle = new ISText() { Color = Current.SubFrontGroundColor, FontSize = Current.MainTextSize };
         private float tabGap = 2;
+        private VisualElement veFoldOut;
 
         protected override void OnCreateGUI()
         {
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;
-            this.style.paddingLeft = Length.Percent(tabGap);
-            TextElement nameText = new TextElement();
-            nameText.text = data.Name;
-            nameText.style.SetIS_Style(funcNameTextStyle);
-            nameText.style.ClearMarginPadding();
-            this.Add(nameText);
-            TextElement descriptionText = new TextElement();
-            descriptionText.text = Target.TextData[0];
-            descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
-            descriptionText.style.ClearMarginPadding();
-            descriptionText.style.paddingLeft = Length.Percent(tabGap);
-            this.Add(descriptionText);
-            this.Add(generateSyntaxContainer(data));
-            this.Add(generateParamContainer(data));
-            this.Add(generateReturnTypeContainer(data));
+            switch (data.IntroAniMode)
+            {
+                case AniMode.None:
+                    break;
+                case AniMode.Fade:
+                    IntroAnimation = (callBack) => { this.Fade(0, 1, data.IntroDuration, 50, callBack); };
+                    break;
+                case AniMode.TextFade:
+                    break;
+            }
+            switch (data.OuttroAniMode)
+            {
+                case AniMode.None:
+                    break;
+                case AniMode.Fade:
+                    OuttroAnimation = (callBack) => { this.Fade(1, 0, data.OuttroDuration, 50, callBack); };
+                    break;
+                case AniMode.TextFade:
+                    break;
+            }
+            Foldout foldout = new Foldout();
+            foldout.text = data.Name;
+            foldout.value = data.isOn;
+            foldout.style.SetIS_Style(funcNameTextStyle);
+            foldout.Q<Toggle>().style.ClearMarginPadding();
+            foldout.Q("unity-checkmark").style.position = Position.Absolute;
+            foldout.Q("unity-checkmark").visible = false;
+            foldout.style.paddingLeft = 5;
+            foldout.RegisterValueChangedCallback(value =>
+            {
+                if (value.newValue)
+                    this.Add(veFoldOut);
+                else
+                    this.Remove(veFoldOut);
+                data.isOn = value.newValue;
+                Target.JsonData = JsonUtility.ToJson(data);
+            });
+            this.Add(foldout);
+            veFoldOut = new VisualElement();
+            veFoldOut.style.ClearMarginPadding();
+            veFoldOut.style.paddingLeft = 5;
+            if (Target.TextData[0] != "")
+            {
+                TextElement descriptionText = new TextElement();
+                descriptionText.text = Target.TextData[0];
+                descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
+                descriptionText.style.ClearMarginPadding();
+                descriptionText.style.paddingLeft = 1f * Current.MainTextSize;
+                this.Add(descriptionText);
+            }
+            veFoldOut.Add(generateSyntaxContainer(data));
+            veFoldOut.Add(generateParamContainer(data));
+            veFoldOut.Add(generateReturnTypeContainer(data));
+            if (data.isOn)
+                this.Add(veFoldOut);
         }
 
         private string parseSyntax(string synatx)
@@ -72,14 +113,18 @@ namespace NaiveAPI.DocumentBuilder
                     }
                     stringBuilder.Append(str);
                     stringBuilder.Append(postfixColor);
-                    stringBuilder.Append(" ");
+                    if (str != prefixs[^1])
+                        stringBuilder.Append(" ");
                 }
 
                 stringBuilder.Append("(");
                 foreach (string str in strs[1].Split(","))
                 {
                     if (str == "")
-                        continue;
+                    {
+                        stringBuilder.Append("  ");
+                        break;
+                    }
                     string[] param = str.Split(" ");
                     int index = 0;
                     while (param[index] == "")
@@ -128,6 +173,9 @@ namespace NaiveAPI.DocumentBuilder
         {
             VisualElement root = new VisualElement();
 
+            if (data.Syntaxs.Count == 0)
+                return root;
+
             TextElement syntaxLabel = new TextElement();
             syntaxLabel.text = "Syntaxs";
             syntaxLabel.style.SetIS_Style(labelTextStyle);
@@ -164,12 +212,15 @@ namespace NaiveAPI.DocumentBuilder
             paramTypeText.style.ClearMarginPadding();
             paramTypeText.style.paddingLeft = Length.Percent(2 * tabGap);
             root.Add(paramTypeText);
-            TextElement descriptionText = new TextElement();
-            descriptionText.text = description;
-            descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
-            descriptionText.style.ClearMarginPadding();
-            descriptionText.style.paddingLeft = Length.Percent(2 * tabGap);
-            root.Add(descriptionText);
+            if (description != "")
+            {
+                TextElement descriptionText = new TextElement();
+                descriptionText.text = description;
+                descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
+                descriptionText.style.ClearMarginPadding();
+                descriptionText.style.paddingLeft = Length.Percent(2 * tabGap);
+                root.Add(descriptionText);
+            }
 
             return root;
         }
@@ -177,6 +228,9 @@ namespace NaiveAPI.DocumentBuilder
         private VisualElement generateParamContainer(Data data)
         {
             VisualElement root = new VisualElement();
+
+            if (data.Params.Count == 0)
+                return root;
 
             TextElement paramText = new TextElement();
             paramText.text = "Parameters";
@@ -202,12 +256,15 @@ namespace NaiveAPI.DocumentBuilder
             returnTypeText.style.ClearMarginPadding();
             returnTypeText.style.paddingLeft = Length.Percent(tabGap);
             root.Add(returnTypeText);
-            TextElement descriptionText = new TextElement();
-            descriptionText.text = description;
-            descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
-            descriptionText.style.ClearMarginPadding();
-            descriptionText.style.paddingLeft = Length.Percent(tabGap);
-            root.Add(descriptionText);
+            if (description != "")
+            {
+                TextElement descriptionText = new TextElement();
+                descriptionText.text = description;
+                descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
+                descriptionText.style.ClearMarginPadding();
+                descriptionText.style.paddingLeft = Length.Percent(tabGap);
+                root.Add(descriptionText);
+            }
 
             return root;
         }
@@ -215,6 +272,9 @@ namespace NaiveAPI.DocumentBuilder
         private VisualElement generateReturnTypeContainer(Data data)
         {
             VisualElement root = new VisualElement();
+
+            if (data.ReturnTypes.Count == 0)
+                return root;
 
             TextElement returnText = new TextElement();
             returnText.text = "Return Values";
@@ -241,6 +301,9 @@ namespace NaiveAPI.DocumentBuilder
             public List<string> ReturnTypesDescription = new List<string>();
             [System.NonSerialized]
             public List<string> ParamsDescription = new List<string>();
+            public AniMode IntroAniMode = AniMode.None, OuttroAniMode = AniMode.None;
+            public int IntroDuration = 0, OuttroDuration = 0;
+            public bool isOn;
 
             public Data()
             {
@@ -314,6 +377,13 @@ namespace NaiveAPI.DocumentBuilder
         {
             public string ParamName = "";
             public string Type = "";
+        }
+
+        public enum AniMode
+        {
+            None,
+            Fade,
+            TextFade,
         }
     }
 }

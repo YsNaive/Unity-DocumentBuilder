@@ -16,6 +16,24 @@ namespace NaiveAPI.DocumentBuilder
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null)
                 data = new Data();
+
+            switch (data.IntroAniMode)
+            {
+                case AniMode.None:
+                    break;
+                case AniMode.Fade:
+                    IntroAnimation = (callBack) => { this.Fade(0, 1, data.IntroDuration, 50, callBack); };
+                    break;
+            }
+            switch (data.OuttroAniMode)
+            {
+                case AniMode.None:
+                    break;
+                case AniMode.Fade:
+                    OuttroAnimation = (callBack) => { this.Fade(1, 0, data.OuttroDuration, 50, callBack); };
+                    break;
+            }
+
             if (data.mode == Mode.Object)
                 this.Add(generateObjectVisual(data));
             else if (data.mode == Mode.Url)
@@ -100,7 +118,7 @@ namespace NaiveAPI.DocumentBuilder
                     if (width > newWidth || data.scale == -1)
                         width = newWidth;
                     root.style.width = width;
-                    root.style.height = img.height * (newWidth / img.width);
+                    root.style.height = img.height * (width / img.width);
                 }
             };
             return root;
@@ -111,11 +129,19 @@ namespace NaiveAPI.DocumentBuilder
             public float scale = -1;
             public string url = "";
             public Mode mode = Mode.Url;
+            public AniMode IntroAniMode = AniMode.None, OuttroAniMode = AniMode.None;
+            public int IntroDuration = 0, OuttroDuration = 0;
         }
 
         public enum Mode
         {
             Url, Object
+        }
+
+        public enum AniMode
+        {
+            None,
+            Fade,
         }
     }
 }
