@@ -1,4 +1,5 @@
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,11 @@ namespace NaiveAPI.DocumentBuilder
         PageMenuVisual menuVisual;
         public PageMenuHandler MenuHandler = new PageMenuHandler();
         VisualElement divLineBar = new VisualElement();
-        VisualElement pageView;
+        public DocPageVisual DisplayingPage;
         float menuWidthPercent = 0.3f;
         float widthSpace = 15;
+        public bool DontPlayAnimation = false;
+        public bool IsPlayingAinmation { get; private set; }
         public DocBookVisual(SODocPage rootPage)
         {
             style.backgroundColor = DocStyle.Current.BackgroundColor;
@@ -31,13 +34,46 @@ namespace NaiveAPI.DocumentBuilder
             menuVisual.style.SetIS_Style(ISPadding.None);
             MenuHandler.OnChangeSelect += (oldVal, newVal) =>
             {
-                if (newVal == null) return;
-                if(pageView != null)
-                    Remove(pageView);
-                pageView = new DocPageVisual(newVal.Target);
-                pageView.style.SetIS_Style(ISMargin.None);
-                pageView.style.width = (layout.width - widthSpace) * (1f- menuWidthPercent);
-                Add(pageView);
+                var newPage = new DocPageVisual(newVal.Target);
+                newPage.style.SetIS_Style(ISMargin.None);
+                newPage.style.width = (layout.width - widthSpace) * (1f - menuWidthPercent);
+                newPage.style.position = Position.Relative;
+                if (DontPlayAnimation)
+                {
+                    if (DisplayingPage != null)
+                        Remove(DisplayingPage);
+                    DisplayingPage = newPage;
+                    Add(DisplayingPage);
+                    return;
+                }
+                if (DisplayingPage != null)
+                {
+                    IsPlayingAinmation = true;
+                    MenuHandler.LockSelect = true;
+                    DisplayingPage.PlayOuttro(() =>
+                    {
+                        Remove(DisplayingPage);
+                        DisplayingPage = newPage;
+                        Add(DisplayingPage);
+                        DisplayingPage.PlayIntro(() =>
+                        {
+                            IsPlayingAinmation = false;
+                            MenuHandler.LockSelect = false;
+                        });
+                    });
+                }
+                else
+                {
+                    DisplayingPage = newPage;
+                    Add(DisplayingPage);
+                    IsPlayingAinmation = true;
+                    MenuHandler.LockSelect = true;
+                    DisplayingPage.PlayIntro(() =>
+                    {
+                        IsPlayingAinmation = false;
+                        MenuHandler.LockSelect = false;
+                    });
+                }
             };
             MenuHandler.SetState(DocCache.Get().OpeningBookHierarchy);
             ScrollView menuScrollView = new ScrollView();
@@ -51,9 +87,9 @@ namespace NaiveAPI.DocumentBuilder
                 if (e.oldRect.width != e.newRect.width)
                 {
                     menuScrollView.style.width =( e.newRect.width- widthSpace) * menuWidthPercent;
-                    if (pageView != null)
+                    if (DisplayingPage != null)
                     {
-                        pageView.style.width = (e.newRect.width - widthSpace) * (1f- menuWidthPercent);
+                        DisplayingPage.style.width = (e.newRect.width - widthSpace) * (1f- menuWidthPercent);
                     }
                 }
                 if (e.oldRect.height != e.newRect.height)

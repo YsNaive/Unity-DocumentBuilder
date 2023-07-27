@@ -88,9 +88,19 @@ namespace NaiveAPI
         {
             CheckButton button = new CheckButton();
             button.style.height = DocStyle.Current.LineHeight;
+            ApplyMargin(button);
             ApplyStyle(button.MainBtn, color);
             ApplyStyle(button.ConfirmButton, confirm);
             ApplyStyle(button.CancelButton, cancel);
+            button.ConfirmButton.style.width = Length.Percent(50);
+            button.CancelButton.style.width = Length.Percent(50);
+            button.RegisterCallback<GeometryChangedEvent>(e =>
+            {
+                if (e.oldRect.width != e.newRect.width)
+                {
+                    button.style.width = e.newRect.width;
+                };
+            });
             button.text = text;
             if (onClick != null) button.Confirm += onClick;
             return button;

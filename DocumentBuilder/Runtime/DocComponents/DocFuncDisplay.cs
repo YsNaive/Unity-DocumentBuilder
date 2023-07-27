@@ -10,7 +10,7 @@ namespace NaiveAPI.DocumentBuilder
 
         protected override void OnCreateGUI()
         {
-            throw new System.NotImplementedException();
+            this.Add( DocRuntime.NewTextElement("Not IMP"));
         }
 
         public class Data

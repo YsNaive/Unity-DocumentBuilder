@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using static NaiveAPI.DocumentBuilder.SODocPage;
 
@@ -16,14 +18,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
     public class SODocPageEditor : Editor
     {
         public static event Action<SODocPageEditor> OnCreateEditor;
-        public static event Action<SODocPage> OnCreateNewPage;
         private void OnEnable()
         {
             OnCreateEditor?.Invoke(this);
         }
         SODocPage Target;
         VisualElement root;
-        bool isEditMode = true;
         bool isDraging = false;
         VisualElement dragingTarget;
         ISPosition dragPosition;
@@ -33,7 +33,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
         VisualElement addAndDeleteBar;
         Button addPage;
         CheckButton deletePage;
-        VisualElement aniSetting;
+        VisualElement introSetting;
+        VisualElement outtroSetting;
         ObjectField icon;
         public override VisualElement CreateInspectorGUI()
         {
@@ -52,7 +53,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button editMode = DocRuntime.NewButton("Edit Layout", () =>
             {
                 Save();
-                isEditMode = true;
                 root.Insert(1, header);
                 contents.Clear();
                 contents.Add(createEdit());
@@ -60,7 +60,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button viewMode = DocRuntime.NewButton("View Layout", () =>
             {
                 Save();
-                isEditMode = false;
                 if (root.Contains(header)) { root.Remove(header); }
                 contents.Clear();
                 contents.Add(createView());
@@ -68,7 +67,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button defuMode = DocRuntime.NewButton("Inspector", () =>
             {
                 Save();
-                isEditMode = false;
                 if (root.Contains(header)) { root.Remove(header); }
                 contents.Clear();
                 contents.Add(new IMGUIContainer(() => { DrawDefaultInspector(); }));
@@ -91,30 +89,49 @@ namespace NaiveAPI_Editor.DocumentBuilder
             icon = DocEditor.NewObjectField<Texture2D>("icon", (value) =>
             {
                 Target.Icon = (Texture2D)value.newValue;
-                DocEditorWindow.RepaintMenu();
             });
             icon.value = Target.Icon;
             icon[0].style.minWidth = 95;
 
-            aniSetting =DocRuntime.NewEmptyHorizontal();
-            EnumField aniModeField = DocEditor.NewEnumField("Animation Mode", Target.AnimationMode, value =>
+            introSetting =DocRuntime.NewEmptyHorizontal();
+
+            EnumField introMode = DocEditor.NewEnumField("Intro Mode", Target.IntroMode, value =>
             {
-                Target.AnimationMode = (DocPageAniMode)value.newValue;
+                Target.IntroMode = (DocPageAniMode)value.newValue;
             });
-            aniModeField[0].style.minWidth = 96;
-            aniModeField.style.width = Length.Percent(49);
-            aniSetting.Add(aniModeField);
+            introMode[0].style.minWidth = 96;
+            introMode.style.width = Length.Percent(49);
+            introSetting.Add(introMode);
             IntegerField durField = new IntegerField();
             durField.label = "Duration";
             durField.style.ClearMarginPadding();
             durField.style.width = Length.Percent(50);
             durField[0].style.minWidth = 60;
-            durField.value = Target.AnimationDuration;
+            durField.value = Target.IntroDuration;
             durField.RegisterValueChangedCallback((value) =>
             {
-                Target.AnimationDuration = value.newValue;
+                Target.IntroDuration = value.newValue;
             });
-            aniSetting.Add(durField);
+            introSetting.Add(durField);
+            outtroSetting =DocRuntime.NewEmptyHorizontal();
+            EnumField outroMode = DocEditor.NewEnumField("Outtro Mode", Target.IntroMode, value =>
+            {
+                Target.OuttroMode = (DocPageAniMode)value.newValue;
+            });
+            outroMode[0].style.minWidth = 96;
+            outroMode.style.width = Length.Percent(49);
+            outtroSetting.Add(outroMode);
+            IntegerField outroDurField = new IntegerField();
+            outroDurField.label = "Duration";
+            outroDurField.style.ClearMarginPadding();
+            outroDurField.style.width = Length.Percent(50);
+            outroDurField[0].style.minWidth = 60;
+            outroDurField.value = Target.IntroDuration;
+            outroDurField.RegisterValueChangedCallback((value) =>
+            {
+                Target.OuttroDuration = value.newValue;
+            });
+            outtroSetting.Add(outroDurField);
             addAndDeleteBar = DocRuntime.NewEmptyHorizontal();
             addPage = DocRuntime.NewButton("Add New Page", newPageBtn);
             addPage.style.width = Length.Percent(75);
@@ -123,8 +140,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(Target));
                     AssetDatabase.Refresh();
-                    if (DocEditorWindow.Instance != null)
-                        DocEditorWindow.RepaintMenu();
                 });
             deletePage.style.width = Length.Percent(24);
             addAndDeleteBar.Add(addPage);
@@ -133,9 +148,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
             header.style.marginBottom = 20;
             root.Add(header);
             #endregion
+
             root.RegisterCallback<KeyDownEvent>(e =>
             {
-                if (e.ctrlKey && e.keyCode == KeyCode.S) { Save(); }
+                if (e.ctrlKey && e.keyCode == KeyCode.S) { 
+                    Save();
+                    foreach (unit u in EditRoot.Children())
+                        u.ViewMode();
+                }
             });
 
             contents.Add(createEdit());
@@ -257,13 +277,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
             saveAsTemplate.style.width = Length.Percent(50);
             loadAndSave.Add(saveAsTemplate);
 
-            header.Add(aniSetting);
+            header.Add(introSetting);
+            header.Add(outtroSetting);
             header.Add(icon);
             header.Add(addAndDeleteBar);
             header.Add(new IMGUIContainer(() => {
-                EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("SubPages"));
-                if (EditorGUI.EndChangeCheck()) { OnSubPagesChange?.Invoke(); serializedObject.ApplyModifiedProperties(); }
             }));
             header.Add(loadAndSave);
             return root;
@@ -278,6 +297,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             dragPosition = new ISPosition() { Left = ISStyleLength.Pixel(0), Top = ISStyleLength.Pixel(0) };
             dragPosition.Position = Position.Absolute;
             EditRoot = new VisualElement();
+            EditRoot.style.backgroundColor = DocStyle.Current.BackgroundColor;
             EditRoot.style.height = Length.Percent(100);
             foreach (var doc in Target.Components)
             {
@@ -307,8 +327,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return new DocPageVisual(Target);
         }
 
-        public event Action<SODocPage> OnSaveData;
-        public event Action OnSubPagesChange;
         public void Save()
         {
             if (Target == null) return;
@@ -324,39 +342,59 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     }
                 }
             }
-            if (isEditMode)
+            List<DocComponent> newComponents = new List<DocComponent>();
+            if (EditRoot == null) return;
+            foreach (unit v in EditRoot.Children())
             {
-                List<DocComponent> newComponents = new List<DocComponent>();
-                if (EditRoot == null) return;
-                foreach (var visual in EditRoot.Children())
-                {
-                    var edit = visual.Q<DocEditVisual>();
-                    if (edit == null) continue;
-                    if (edit.Target == null) continue;
-                    newComponents.Add(edit.Target);
-                }
-                Target.Components = newComponents;
+                newComponents.Add(v.docComponent);
             }
+            Target.Components = newComponents;
             EditorUtility.SetDirty(target);
-            OnSaveData?.Invoke(Target);
+            serializedObject.ApplyModifiedProperties();
         }
 
-        VisualElement createUnit(DocComponent doc)
+        class unit : VisualElement
         {
-            VisualElement unit = DocRuntime.NewEmpty();
-            VisualElement toolBar = DocRuntime.NewEmptyHorizontal();
-            var docEdit = DocEditor.CreateEditVisual(doc);
-            toolBar.Add(insertBtn(unit));
-            toolBar.Add(dragBtn(unit));
-            toolBar.Add(dupBtn(unit));
-            toolBar.Add(deleteBtn(unit));
-            unit.Add(toolBar);
-            unit.Add(docEdit);
-            unit.style.borderBottomWidth = 3;
+            public VisualElement toolBar;
+            public VisualElement editView;
+            public DocComponent docComponent;
+            public void ViewMode()
+            {
+                Clear();
+                var ve = DocRuntime.CreateVisual(docComponent);
+                ve.style.opacity = 0.7f;
+                ve.style.marginTop = 7;
+                Add(ve);
+                this[0].RegisterCallback<PointerDownEvent>(e => { EditMode(); });
+            }
+            public void EditMode()
+            {
+                foreach (unit u in parent.Children())
+                {
+                    u.ViewMode();
+                }
+                Clear();
+                Add(toolBar);
+                Add(editView);
+            }
+        }
+        unit createUnit(DocComponent doc)
+        {
+            unit unit = new unit();
+            unit.docComponent = doc;
+            unit.style.ClearMarginPadding();
+            unit.toolBar = DocRuntime.NewEmptyHorizontal();
+            VisualElement view = DocRuntime.CreateVisual(doc);
+            unit.editView = DocEditor.CreateEditVisual(doc);
+            unit.toolBar.Add(insertBtn(unit));
+            unit.toolBar.Add(dragBtn(unit));
+            unit.toolBar.Add(dupBtn(unit));
+            unit.toolBar.Add(deleteBtn(unit));
             unit.style.borderBottomColor = DocStyle.Current.SubBackgroundColor;
-            unit.style.borderTopColor = DocStyle.Current.SuccessColor;
-            toolBar.style.marginTop = 7;
+            unit.style.borderBottomWidth = 2;
+            unit.toolBar.style.marginTop = 7;
             unit.style.paddingBottom = 7;
+            unit.ViewMode();
             return unit;
         }
         void newPageBtn()
@@ -383,11 +421,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 sp = sp.GetArrayElementAtIndex(sp.arraySize - 1);
                 sp.objectReferenceValue = asset;
                 serializedObject.ApplyModifiedProperties();
-                Target.SubPages.Add(asset);
                 header.Remove(root);
-
-                OnCreateNewPage?.Invoke(asset);
-                OnSubPagesChange?.Invoke();
                 addPageParent.Insert(addPageIndex, bar);
             });
             Button cancel = DocRuntime.NewButton("Cancel", DocStyle.Current.DangerColor, () =>
@@ -419,7 +453,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         CheckButton deleteBtn(VisualElement unit)
         {
             CheckButton button = DocRuntime.NewCheckButton("Delete", () => { EditRoot.RemoveAt(EditRoot.IndexOf(unit)); });
-            button.style.SetIS_Style(new ISMargin(TextAnchor.MiddleRight));
+            button.style.SetIS_Style(new ISMargin(TextAnchor.UpperRight));
             button.MainBtn.style.width = 80;
             return button;
         }
@@ -509,5 +543,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
             return choice;
         }
+
     }
 }

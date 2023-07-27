@@ -8,10 +8,13 @@ namespace NaiveAPI_UI
 {
     public static class VisualElementAnimation
     {
-        public static void Fade(this VisualElement element, float opacity, float ms, float step = 50, Action encCallback = null) {
+        public static void Fade(this VisualElement element, float to, float ms, float step = 50, Action callback = null) {
+            Fade(element, element.style.opacity.value, to, ms, step, callback);
+        }
+        public static void Fade(this VisualElement element, float from, float to, float ms, float step = 50, Action callback = null) {
             int curStep = 0;
-            float sumVal = element.style.opacity.value;
-            float stepVal = (opacity - sumVal)/step;
+            float sumVal = from;
+            float stepVal = (to - sumVal)/step;
             int stepMs = (int)(ms/step);
             Action exe = null;
             exe = () =>
@@ -23,8 +26,8 @@ namespace NaiveAPI_UI
                     element.schedule.Execute(exe).ExecuteLater(stepMs);
                 else
                 {
-                    element.style.opacity = opacity;
-                    encCallback?.Invoke();
+                    element.style.opacity = to;
+                    callback?.Invoke();
                 }
             };
             exe();

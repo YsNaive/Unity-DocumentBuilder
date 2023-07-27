@@ -23,10 +23,12 @@ namespace NaiveAPI.DocumentBuilder
                 case AniMode.None:
                     break;
                 case AniMode.Fade:
-                    IntroAnimation = (callBack) => { this.Fade(1, data.IntroAniTime,50,callBack); };
+                    IntroAnimation = (callBack) => { this.Fade(0,1, data.IntroAniTime,50,callBack); };
+                    OuttroAnimation = (callBack) => { this.Fade(1,0, data.IntroAniTime, 50, callBack); };
                     break;
                 case AniMode.TextFade:
-                    IntroAnimation = (callBack) => { text.TextFadeIn(data.IntroAniTime,1, callBack); };
+                    IntroAnimation = (callBack) => { text.TextFadeIn(Target.TextData[0],data.IntroAniTime,1, callBack); };
+                    OuttroAnimation = (callBack) => { text.TextFadeOut(data.IntroAniTime,1, callBack); };
                     break;
             }
         }
@@ -34,7 +36,7 @@ namespace NaiveAPI.DocumentBuilder
         public class Data
         {
             public AniMode AnimateMode = AniMode.Fade;
-            public int IntroAniTime = 500;
+            public int IntroAniTime = 250;
         }
         public enum AniMode
         {

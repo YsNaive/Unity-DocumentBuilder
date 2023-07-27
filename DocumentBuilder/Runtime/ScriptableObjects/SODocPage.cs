@@ -10,8 +10,10 @@ namespace NaiveAPI.DocumentBuilder
         public Texture2D Icon;
         public List<SODocPage> SubPages = new List<SODocPage>();
         public List<DocComponent> Components = new List<DocComponent>();
-        public DocPageAniMode AnimationMode = DocPageAniMode.Sametime;
-        public int AnimationDuration = 200;
+        public DocPageAniMode IntroMode = DocPageAniMode.Sametime;
+        public DocPageAniMode OuttroMode = DocPageAniMode.Sametime;
+        public int IntroDuration = 200;
+        public int OuttroDuration = 200;
         public enum DocPageAniMode
         {
             None,

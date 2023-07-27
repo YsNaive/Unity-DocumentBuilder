@@ -2,9 +2,12 @@ using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
+using UnityEngine.XR;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -15,17 +18,42 @@ namespace NaiveAPI.DocumentBuilder
         private UnityWebRequest request;
         private Action<Texture2D> onTextureLoaded;
         private UnityWebRequestAsyncOperation asyncOperation;
+        public bool IsLoadFromCache = false;
+        private static Dictionary<string,Texture2D> ramCache = new Dictionary<string,Texture2D>();
+        string cachePath;
         public URLImage(string url, Action<Texture2D> onTextureLoaded)
         {
             style.SetIS_Style(DocStyle.Current.LabelText);
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.unityTextAlign = TextAnchor.MiddleCenter;
+            string path = Application.temporaryCachePath + "/imgCache";
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
 
+            cachePath =url;
+            foreach (char c in Path.GetInvalidPathChars())
+                cachePath = cachePath.Replace(c, '_');
+            foreach (char c in "/\\?!:.")
+                cachePath = cachePath.Replace(c, '_');
+            cachePath = path + "/" + cachePath;
+            if (File.Exists(cachePath))
+            {
+                IsLoadFromCache = true;
+                url = cachePath;
+            }
             URL = url;
-            request = UnityWebRequestTexture.GetTexture(url);
-            asyncOperation = request.SendWebRequest();
             this.onTextureLoaded = onTextureLoaded;
-            loadTexture();
+            if (ramCache.TryGetValue(cachePath, out LoadedTexture))
+            {
+                style.backgroundImage = LoadedTexture;
+                onTextureLoaded?.Invoke(LoadedTexture);
+            }
+            else
+            {
+                request = UnityWebRequestTexture.GetTexture(url);
+                asyncOperation = request.SendWebRequest();
+                loadTexture();
+            }
         }
         private void loadTexture()
         {
@@ -44,11 +72,16 @@ namespace NaiveAPI.DocumentBuilder
                 {
                     style.backgroundImage = LoadedTexture;
                     onTextureLoaded?.Invoke(LoadedTexture);
+                    if (!IsLoadFromCache)
+                    {
+                        File.WriteAllBytes(cachePath, LoadedTexture.EncodeToPNG());
+                    }
+                    ramCache.TryAdd(cachePath, LoadedTexture);
                 }
             }
             else
             {
-                schedule.Execute(loadTexture).ExecuteLater(25);
+                schedule.Execute(loadTexture).ExecuteLater(50);
             }
         }
     }

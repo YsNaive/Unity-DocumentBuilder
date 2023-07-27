@@ -40,15 +40,6 @@ namespace NaiveAPI.DocumentBuilder
             MenuHandler.RootVisual ??= this;
             MenuHandler.AddedPages.Add(page);
             MenuHandler.AddedVisual.Add(this);
-            if(MenuHandler.RootVisual == this)
-            {
-                MenuHandler.OnChangeSelect += (oldval, newval) =>
-                {
-                    if (oldval != null)
-                        oldval.RepaintUnselect();
-                    newval.RepaintSelect();
-                };
-            }
             VisualElement icon = new VisualElement();
             openState = new VisualElement();
             TextElement name = new TextElement();
@@ -91,10 +82,23 @@ namespace NaiveAPI.DocumentBuilder
                     }
                     style.marginLeft = e.newRect.height + 3;
                     name.style.marginLeft = nameMargin+3;
+                    if (MenuHandler.RootVisual == this)
+                    {
+                        style.marginLeft = nameMargin - 2*e.newRect.height;
+                    }
                 }
             });
             name.RegisterCallback<PointerDownEvent>(e => { MenuHandler.Selecting = this; });
 
+            if (MenuHandler.RootVisual == this)
+            {
+                MenuHandler.OnChangeSelect += (oldval, newval) =>
+                {
+                    if (oldval != null)
+                        oldval.RepaintUnselect();
+                    newval.RepaintSelect();
+                };
+            }
 
             Add(name);
             foreach(var subPage in Target.SubPages)

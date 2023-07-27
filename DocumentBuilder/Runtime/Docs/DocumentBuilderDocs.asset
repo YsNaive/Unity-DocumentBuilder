@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: DocumentBuilderDocs
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 0}
+  SubPages:
+  - {fileID: 11400000, guid: 4d5723fc8ce059843811ed4d65fe2bf2, type: 2}
+  - {fileID: 11400000, guid: dfec4562f2dc3794cb9e02c864a2f285, type: 2}
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - "\u6E2C\u8A66\u6574\u9AD4\u6F38\u5165"
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":2,"IntroAniTime":150}'
+    TextData:
+    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165"
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":2,"IntroAniTime":150}'
+    TextData:
+    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165"
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":2,"IntroAniTime":150}'
+    TextData:
+    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165\n\u9019\u6709\u591A\u822A"
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":2,"IntroAniTime":50}'
+    TextData:
+    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165\n\u9019\u6709\u591A\u822A"
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":2,"IntroAniTime":50}'
+    TextData:
+    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165\n\u9019\u6709\u591A\u822A"
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":2,"IntroAniTime":100}'
+    TextData:
+    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165\n\u9019\u6709\u591A\u822A"
+    ObjsData: []
+  IntroMode: 3
+  OuttroMode: 3
+  IntroDuration: 200
+  OuttroDuration: 200

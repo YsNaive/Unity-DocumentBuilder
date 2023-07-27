@@ -3,13 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 namespace NaiveAPI.DocumentBuilder
 {
     public class DocPageVisual : ScrollView
     {
+        SODocPage target;
+        List<DocVisual> visuals = new List<DocVisual>();
+        int index;
+        Action introCallback, outtroCallback;
         public DocPageVisual(SODocPage page) {
-            List<DocVisual> visuals = new List<DocVisual>();
+            target = page;
             foreach(var com in page.Components)
             {
                 DocVisual docVisual = (DocVisual)DocRuntime.CreateVisual(com);
@@ -23,52 +28,144 @@ namespace NaiveAPI.DocumentBuilder
                     docVisual.style.marginLeft = 40;
                     docVisual.style.marginTop = 5;
                 }
+                Add(docVisual);
                 visuals.Add(docVisual);
             }
-            int i = -1;
-            Action exe = null;
-            switch (page.AnimationMode)
+        }
+        public void PlayIntro(Action callback = null)
+        {
+            Clear();
+            introCallback = callback;
+            index = -1;
+            switch (target.IntroMode)
             {
                 case SODocPage.DocPageAniMode.None:
                     foreach (var ve in visuals)
                         Add(ve);
+                    callback();
                     break;
                 case SODocPage.DocPageAniMode.Sametime:
+                    Action<Action> last = null;
                     foreach (var ve in visuals)
                     {
+                        if (ve.IntroAnimation != null)
+                        {
+                            if (last != null)
+                                last(null);
+                            last = ve.IntroAnimation;
+                        }
                         Add(ve);
-                        ve.IntroAnimation?.Invoke(null);
                     }
+                    if (last != null) last(callback);
+                    else callback?.Invoke();
                     break;
                 case SODocPage.DocPageAniMode.OneByOne:
-                    exe = () =>
-                    {
-                        i++;
-                        if (i >= visuals.Count) return;
-                        Add(visuals[i]);
-                        if (visuals[i].IntroAnimation != null)
-                        {
-                            visuals[i].IntroAnimation(exe);
-                        }
-                        else
-                        {
-                            exe();
-                        }
-                    };
-                    exe();
+                    introOneByOne();
                     break;
                 case SODocPage.DocPageAniMode.Flow:
-                    exe = () =>
-                    {
-                        i++;
-                        if (i >= visuals.Count) return;
-                        Add(visuals[i]);
-                        visuals[i].IntroAnimation?.Invoke(null);
-                        visuals[i].schedule.Execute(exe).ExecuteLater(page.AnimationDuration);
-                    };
-                    exe();
+                    introFlow();
                     break;
             }
+        }
+        public void PlayOuttro(Action callback = null)
+        {
+            outtroCallback = callback;
+            index = -1;
+            switch (target.OuttroMode)
+            {
+                case SODocPage.DocPageAniMode.None:
+                    callback();
+                    break;
+                case SODocPage.DocPageAniMode.Sametime:
+                    Action<Action> last = null;
+                    foreach (var ve in visuals)
+                    {
+                        if(ve.OuttroAnimation != null)
+                        {
+                            if (last != null)
+                                last(null);
+                            last = ve.OuttroAnimation;
+                        }
+                    }
+                    if (last != null) last(callback);
+                    else callback?.Invoke();
+                    break;
+                case SODocPage.DocPageAniMode.OneByOne:
+                    outtroOneByOne();
+                    break;
+                case SODocPage.DocPageAniMode.Flow:
+                    outtroFlow();
+                    break;
+            }
+        }
+
+        private void introOneByOne()
+        {
+            index++;
+            if (index >= visuals.Count)
+            {
+                introCallback?.Invoke();
+                return;
+            }
+            Add(visuals[index]);
+            if (visuals[index].IntroAnimation != null)
+            {
+                visuals[index].IntroAnimation(introOneByOne);
+            }
+            else
+            {
+                introOneByOne();
+            }
+        }
+        private void outtroOneByOne()
+        {
+            index++;
+            if (index >= visuals.Count)
+            {
+                outtroCallback?.Invoke();
+                return;
+            }
+            if (visuals[index].OuttroAnimation != null)
+            {
+                visuals[index].OuttroAnimation(outtroOneByOne);
+            }
+            else
+            {
+                outtroOneByOne();
+            }
+        }
+        private void introFlow()
+        {
+            index++;
+            Add(visuals[index]);
+            if (index >= visuals.Count-1)
+            {
+                visuals[index].IntroAnimation?.Invoke(introCallback);
+                return;
+            }
+            visuals[index].IntroAnimation?.Invoke(null);
+            visuals[index].schedule.Execute(introFlow).ExecuteLater(target.IntroDuration);
+        }
+        Action<Action> outLast = null;
+        private void outtroFlow()
+        {
+            index++;
+            if (index == visuals.Count)
+            {
+                if (outLast != null)
+                    outLast(outtroCallback);
+                else
+                outtroCallback?.Invoke();
+                return;
+            }
+            int t = 0;
+            if (outLast != null)
+            {
+                t = target.OuttroDuration;
+                outLast(null);
+            }
+            outLast = visuals[index].OuttroAnimation;
+            visuals[index].schedule.Execute(outtroFlow).ExecuteLater(t);
         }
     }
 }
