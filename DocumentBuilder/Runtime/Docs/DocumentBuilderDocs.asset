@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
   m_Name: DocumentBuilderDocs
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 2800000, guid: 6e76c73f1f7c29d4ea14a1c2b9ae5fff, type: 3}
   SubPages:
   - {fileID: 11400000, guid: 4d5723fc8ce059843811ed4d65fe2bf2, type: 2}
   - {fileID: 11400000, guid: dfec4562f2dc3794cb9e02c864a2f285, type: 2}
@@ -20,12 +20,22 @@ MonoBehaviour:
   - VisualID: 1
     JsonData: 
     TextData:
-    - "\u6E2C\u8A66\u6574\u9AD4\u6F38\u5165"
+    - Document Builder
     ObjsData: []
   - VisualID: 2
-    JsonData: '{"AnimateMode":0,"IntroAniTime":250}'
+    JsonData: '{"AnimateMode":2,"IntroAniTime":80}'
     TextData:
-    - dddd
+    - asdasdasd
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":2,"IntroAniTime":55}'
+    TextData:
+    - efqqfqefqefqefqef
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":2,"IntroAniTime":45}'
+    TextData:
+    - asasdasd
     ObjsData: []
   IntroMode: 3
   OuttroMode: 3

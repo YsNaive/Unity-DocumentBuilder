@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
   m_Name: Custom DocVisual
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 2800000, guid: 3543eaffc785cee4a879a77c6b51fede, type: 3}
   SubPages: []
   Components: []
   IntroMode: 1

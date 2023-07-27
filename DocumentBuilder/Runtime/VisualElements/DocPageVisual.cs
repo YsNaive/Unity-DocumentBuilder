@@ -138,7 +138,6 @@ namespace NaiveAPI.DocumentBuilder
         private void introFlow()
         {
             index++;
-            Add(visuals[index]);
             if (index == visuals.Count)
             {
                 if (inLast != null)
@@ -153,8 +152,11 @@ namespace NaiveAPI.DocumentBuilder
                 t = target.IntroDuration;
                 inLast(null);
             }
+            Add(visuals[index]);
             inLast = visuals[index].IntroAnimation;
-            visuals[index].schedule.Execute(outtroFlow).ExecuteLater(t);
+            visuals[index].schedule.Execute(() => {
+                introFlow();
+            }).ExecuteLater(t);
         }
         Action<Action> outLast = null;
         private void outtroFlow()
