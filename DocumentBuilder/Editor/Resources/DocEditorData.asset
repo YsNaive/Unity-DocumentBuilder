@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e81aa9702d672b41af3fd22bd3d7c3d, type: 3}
   m_Name: DocEditorData
   m_EditorClassIdentifier: 
-  EditingDocPage: {fileID: 11400000, guid: 87cae223bf824af41a724825352a03ab, type: 2}
-  EditingState: 
+  EditingDocPage: {fileID: 11400000, guid: b4d768b0a8c3e3a4f9c56bd8f9815b43, type: 2}
+  DocTemplateFolder: {fileID: 102900000, guid: 4a61098f990fc2048b3ba9471f832739, type: 3}

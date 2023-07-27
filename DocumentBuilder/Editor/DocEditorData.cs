@@ -19,7 +19,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         private static DocEditorData instance;
         public SODocPage EditingDocPage;
-        public string EditingState;
+        public DefaultAsset DocTemplateFolder;
     }
 
 }

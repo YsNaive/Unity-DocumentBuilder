@@ -11,6 +11,16 @@ namespace NaiveAPI.DocumentBuilder
         public string JsonData = string.Empty;
         public List<string> TextData = new List<string>();
         public List<Object> ObjsData = new List<Object>();
+
+        public DocComponent Copy()
+        {
+            DocComponent copy = new DocComponent();
+            copy.VisualID = VisualID;
+            copy.JsonData = JsonData;
+            copy.TextData = TextData;
+            copy.ObjsData = ObjsData;
+            return copy;
+        } 
     }
 }
 

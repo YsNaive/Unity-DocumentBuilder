@@ -17,7 +17,8 @@ namespace NaiveAPI.DocumentBuilder
                 text.text = Target.TextData[0];
             text.style.SetIS_Style(DocStyle.Current.LabelText);
             Add(text);
-            IntroAnimation = () => { this.Fade(1, 500); };
+            IntroAnimation = (callBack) => { this.Fade(0,1, 500, 50, callBack); };
+            OuttroAnimation = (callBack) => { this.Fade(1,0, 500, 50, callBack); };
         }
     }
 

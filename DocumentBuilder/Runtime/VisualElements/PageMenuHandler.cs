@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -16,11 +17,13 @@ namespace NaiveAPI.DocumentBuilder
         public List<SODocPage> AddedPages = new List<SODocPage>(); 
         public List<PageMenuVisual> AddedVisual = new List<PageMenuVisual>(); 
         public PageMenuVisual RootVisual;
+        public bool LockSelect = false;
         public PageMenuVisual Selecting
         {
             get => m_selecting;
             set
             {
+                if (LockSelect) return;
                 if(value!=null)
                 {
                     OnChangeSelect?.Invoke(m_selecting, value);
@@ -30,7 +33,6 @@ namespace NaiveAPI.DocumentBuilder
         }
         private PageMenuVisual m_selecting;
         const int menuContentsChildCount = 1;
-        public void InvokeOnChangeSelect() { OnChangeSelect?.Invoke(m_selecting, m_selecting); }
         public void Repaint()
         {
             DocCache.Get().OpeningBookHierarchy = GetState();
@@ -80,10 +82,10 @@ namespace NaiveAPI.DocumentBuilder
         }
         void calStateRec(PageMenuVisual current,string path, StringBuilder buffer)
         {
-            buffer.Append(path).Append(':').Append((current.childCount > (menuContentsChildCount+2)) ?'1':'0').Append('\n');
+            buffer.Append(path).Append(':').Append(current.IsOpen ?'1':'0').Append('\n');
             int i = 0;
-            foreach (var subPage in current.SubMenuVisual)
-                calStateRec((PageMenuVisual)subPage, path + (i++).ToString(), buffer);
+            foreach (PageMenuVisual subPage in current.SubMenuVisual)
+                    calStateRec(subPage, path + (i++).ToString(), buffer);
         }
     }
 }
