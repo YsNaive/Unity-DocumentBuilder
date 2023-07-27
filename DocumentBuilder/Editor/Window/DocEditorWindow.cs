@@ -36,8 +36,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             SODocPageEditor.OnCreateEditor -= onCreateEditor;
             SODocPageEditor.OnCreateEditor += onCreateEditor;
-            if(playIntro != null) rootVisualElement.Add(playIntro);
-            if(playOuttro != null) rootVisualElement.Add(playOuttro);
+            if(rootVisualElement.childCount != 0)
+            {
+                rootVisualElement.Clear();
+                CreateGUI();
+            }
         }
         private void OnDisable()
         {
@@ -65,20 +68,21 @@ namespace NaiveAPI_Editor.DocumentBuilder
         Vector2 pos = Vector2.zero;
         Button playIntro;
         Button playOuttro;
+        IVisualElementScheduledItem update;
         private void CreateGUI()
         {
-            rootVisualElement.schedule.Execute(() =>
+
+            update = rootVisualElement.schedule.Execute(() =>
             {
                 if (viewAni) return;
-                if(BookVisual == null) return;
+                if (BookVisual == null) return;
                 if (BookVisual.MenuHandler == null) return;
-                if (BookVisual.DisplayingPage !=null)
+                if (BookVisual.DisplayingPage != null)
                     pos = BookVisual.DisplayingPage.scrollOffset;
 
                 BookVisual.MenuHandler.Repaint();
                 BookVisual.MenuHandler.Selecting = BookVisual.MenuHandler.Selecting;
             }).Every(500);
-
             playIntro = DocRuntime.NewButton("Play Intro", DocStyle.Current.HintColor, () =>
             {
                 if (!viewAni)

@@ -20,7 +20,22 @@ MonoBehaviour:
     TextData:
     - Step1
     ObjsData: []
-  IntroMode: 1
-  OuttroMode: 1
+  - VisualID: 2
+    JsonData: '{"AnimateMode":1,"IntroAniTime":250}'
+    TextData:
+    - asdasd
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":1,"IntroAniTime":250}'
+    TextData:
+    - asdasd
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":1,"IntroAniTime":250}'
+    TextData:
+    - asdasd
+    ObjsData: []
+  IntroMode: 2
+  OuttroMode: 3
   IntroDuration: 200
   OuttroDuration: 200

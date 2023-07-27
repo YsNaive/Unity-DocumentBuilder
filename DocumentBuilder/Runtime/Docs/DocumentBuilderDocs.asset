@@ -23,34 +23,9 @@ MonoBehaviour:
     - "\u6E2C\u8A66\u6574\u9AD4\u6F38\u5165"
     ObjsData: []
   - VisualID: 2
-    JsonData: '{"AnimateMode":2,"IntroAniTime":150}'
+    JsonData: '{"AnimateMode":0,"IntroAniTime":250}'
     TextData:
-    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165"
-    ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":2,"IntroAniTime":150}'
-    TextData:
-    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165"
-    ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":2,"IntroAniTime":150}'
-    TextData:
-    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165\n\u9019\u6709\u591A\u822A"
-    ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":2,"IntroAniTime":50}'
-    TextData:
-    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165\n\u9019\u6709\u591A\u822A"
-    ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":2,"IntroAniTime":50}'
-    TextData:
-    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165\n\u9019\u6709\u591A\u822A"
-    ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":2,"IntroAniTime":100}'
-    TextData:
-    - "\u7528\u65BC\u6E2C\u8A66\u6587\u5B57\u6F38\u5165\n\u9019\u6709\u591A\u822A"
+    - dddd
     ObjsData: []
   IntroMode: 3
   OuttroMode: 3

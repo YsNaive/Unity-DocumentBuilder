@@ -73,18 +73,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.style.paddingRight = 10;
             root.Add(editText);
             root.Add(DocEditor.CreateEditVisual(docComponent));
-            Button repaint = new Button();
-            repaint.text = "Repaint";
-            repaint.style.width = 80;
-            repaint.clicked += () =>
+            root.schedule.Execute(() =>
             {
                 var ve = root.Q<DocVisual>();
-                if(ve != null)
+                int i = root.IndexOf(ve);
+                if (ve != null)
                     root.Remove(ve);
-                root.Insert(4,DocRuntime.CreateVisual(docComponent));
-            };
+                root.Insert(i, DocRuntime.CreateVisual(docComponent));
+            }).Every(250);
             root.Add(viewText);
-            root.Add(repaint);
             root.Add(DocRuntime.CreateVisual(docComponent));
             root.Add(dataText);
             root.Add(new IMGUIContainer(() =>
@@ -95,7 +92,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 foreach(var str in docComponent.TextData)
                     EditorGUILayout.TextArea(str);
                 EditorGUILayout.LabelField("Json:");
+                GUI.skin.textArea.wordWrap = true;
                 EditorGUILayout.TextArea(docComponent.JsonData);
+                GUI.skin.textArea.wordWrap = false;
                 EditorGUILayout.LabelField("Objs:");
                 foreach (var obj in docComponent.ObjsData)
                 {

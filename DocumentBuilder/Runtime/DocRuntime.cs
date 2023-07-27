@@ -110,7 +110,6 @@ namespace NaiveAPI
             TextField textField = new TextField();
             textField.style.ClearPadding();
             ApplyMargin(textField);
-            textField.style.height = DocStyle.Current.LineHeight;
             textField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             textField[0].style.SetIS_Style(DocStyle.Current.MainText);
             if (!string.IsNullOrEmpty(label))

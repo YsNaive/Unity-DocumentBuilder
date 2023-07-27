@@ -8,6 +8,11 @@ namespace NaiveAPI_UI
 {
     public static class VisualElementAnimation
     {
+        public enum Mode
+        {
+            None = 0,
+            Fade = 1
+        }
         public static void Fade(this VisualElement element, float to, float ms, float step = 50, Action callback = null) {
             Fade(element, element.style.opacity.value, to, ms, step, callback);
         }

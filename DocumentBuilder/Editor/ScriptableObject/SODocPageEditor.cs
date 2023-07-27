@@ -142,6 +142,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     AssetDatabase.Refresh();
                 });
             deletePage.style.width = Length.Percent(24);
+            deletePage.style.SetIS_Style(new ISMargin(TextAnchor.UpperRight));
             addAndDeleteBar.Add(addPage);
             addAndDeleteBar.Add(deletePage);
 

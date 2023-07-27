@@ -4,6 +4,7 @@ using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -26,6 +27,7 @@ namespace NaiveAPI.DocumentBuilder
         }
         private void CreateGUI()
         {
+            rootVisualElement.Add(new SearchDropdown("", new List<string>() { "AAA","BBB","Ccc","ABC"}));
             var btn = new CheckButton();
             btn.text = "Test Check Btn";
             btn.Confirm += () =>
@@ -36,11 +38,6 @@ namespace NaiveAPI.DocumentBuilder
             };
             btn.Cancel += () =>
             {
-                Type t = typeof(DocComponent);
-                foreach(var info in t.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
-                {
-                    Debug.Log(info.Name);
-                }
             };
             rootVisualElement.Add(btn);
         }

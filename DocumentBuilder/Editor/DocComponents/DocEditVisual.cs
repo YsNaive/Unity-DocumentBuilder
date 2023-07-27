@@ -25,7 +25,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public Action<float> OnHeightChanged;
         public Action<float> OnWidthChanged;
         public DocComponent Target => m_target;
-
         private DocComponent m_target;
         public void SetTarget(DocComponent target)
         {

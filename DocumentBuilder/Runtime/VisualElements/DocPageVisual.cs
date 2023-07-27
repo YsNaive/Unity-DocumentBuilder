@@ -134,17 +134,27 @@ namespace NaiveAPI.DocumentBuilder
                 outtroOneByOne();
             }
         }
+        Action<Action> inLast = null;
         private void introFlow()
         {
             index++;
             Add(visuals[index]);
-            if (index >= visuals.Count-1)
+            if (index == visuals.Count)
             {
-                visuals[index].IntroAnimation?.Invoke(introCallback);
+                if (inLast != null)
+                    inLast(introCallback);
+                else
+                    introCallback?.Invoke();
                 return;
             }
-            visuals[index].IntroAnimation?.Invoke(null);
-            visuals[index].schedule.Execute(introFlow).ExecuteLater(target.IntroDuration);
+            int t = 0;
+            if (inLast != null)
+            {
+                t = target.IntroDuration;
+                inLast(null);
+            }
+            inLast = visuals[index].IntroAnimation;
+            visuals[index].schedule.Execute(outtroFlow).ExecuteLater(t);
         }
         Action<Action> outLast = null;
         private void outtroFlow()
