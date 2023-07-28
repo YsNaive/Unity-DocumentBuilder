@@ -56,36 +56,28 @@ namespace NaiveAPI.DocumentBuilder
             {
                 if(e.newRect.height != e.oldRect.height)
                 {
-                    float nameMargin = 0;
                     if(Target.Icon != null)
                     {
                         icon.style.height = e.newRect.height;
                         icon.style.width = e.newRect.height;
                         icon.style.position = Position.Absolute;
+                        icon.style.marginLeft = e.newRect.height;
                         name.style.marginLeft = 2 * e.newRect.height;
-                        name.style.marginLeft = e.newRect.height;
                         Add(icon);
                     }
-                    nameMargin += e.newRect.height;
                     if (Target.SubPages.Count > 0)
                     {
                         openState.style.height = e.newRect.height;
                         openState.style.width = e.newRect.height;
                         openState.style.position = Position.Absolute;
-                        openState.style.marginLeft = e.newRect.height+3;
                         openState.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontGroundColor;
                         openState.RegisterCallback<MouseDownEvent>(e => { 
                             IsOpen = !IsOpen; 
                         });
                         Add(openState);
-                        nameMargin += e.newRect.height+3;
                     }
                     style.marginLeft = e.newRect.height + 3;
-                    name.style.marginLeft = nameMargin+3;
-                    if (MenuHandler.RootVisual == this)
-                    {
-                        style.marginLeft = nameMargin - 2*e.newRect.height;
-                    }
+                    name.style.marginLeft = e.newRect.height * 2 + 3;
                 }
             });
             name.RegisterCallback<PointerDownEvent>(e => { MenuHandler.Selecting = this; });

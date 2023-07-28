@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -12,8 +11,11 @@ namespace NaiveAPI.DocumentBuilder
         SODocPage target;
         List<DocVisual> visuals = new List<DocVisual>();
         int index;
-        Action introCallback, outtroCallback;
+        Action aniCallback;
+        public bool IsPlayingAnimation = false;
+        int playingCount = 0;
         public DocPageVisual(SODocPage page) {
+            style.paddingRight = Length.Percent(3);
             target = page;
             foreach(var com in page.Components)
             {
@@ -32,32 +34,57 @@ namespace NaiveAPI.DocumentBuilder
                 visuals.Add(docVisual);
             }
         }
+        class itemCounter
+        {
+            public itemCounter(Action onClear)
+            {
+                callback = onClear;
+            }
+            public void Add()
+            {
+                i++;
+                Debug.Log("ADD");
+            }
+            public void End()
+            {
+                i--;
+            }
+            public bool Check()
+            {
+                if(i == 0)
+                {
+                    callback?.Invoke();
+                    return true;
+                }return false;
+            }
+            Action callback = null;
+            int i = 0;
+        }
         public void PlayIntro(Action callback = null)
         {
+            if (IsPlayingAnimation) return;
+            IsPlayingAnimation = true;
             Clear();
-            introCallback = callback;
+            aniCallback = callback;
             index = -1;
             switch (target.IntroMode)
             {
                 case SODocPage.DocPageAniMode.None:
                     foreach (var ve in visuals)
                         Add(ve);
-                    callback();
+                    startAniEndCheck();
                     break;
                 case SODocPage.DocPageAniMode.Sametime:
-                    Action<Action> last = null;
                     foreach (var ve in visuals)
                     {
                         if (ve.IntroAnimation != null)
                         {
-                            if (last != null)
-                                last(null);
-                            last = ve.IntroAnimation;
+                            playingCount++;
+                            ve.IntroAnimation(docPlayingEnd);
                         }
                         Add(ve);
                     }
-                    if (last != null) last(callback);
-                    else callback?.Invoke();
+                    startAniEndCheck();
                     break;
                 case SODocPage.DocPageAniMode.OneByOne:
                     introOneByOne();
@@ -69,26 +96,25 @@ namespace NaiveAPI.DocumentBuilder
         }
         public void PlayOuttro(Action callback = null)
         {
-            outtroCallback = callback;
+            if (IsPlayingAnimation) return;
+            IsPlayingAnimation = true;
+            aniCallback = callback;
             index = -1;
             switch (target.OuttroMode)
             {
                 case SODocPage.DocPageAniMode.None:
-                    callback();
+                    startAniEndCheck();
                     break;
                 case SODocPage.DocPageAniMode.Sametime:
-                    Action<Action> last = null;
                     foreach (var ve in visuals)
                     {
                         if(ve.OuttroAnimation != null)
                         {
-                            if (last != null)
-                                last(null);
-                            last = ve.OuttroAnimation;
+                            playingCount++;
+                            ve.OuttroAnimation(docPlayingEnd);
                         }
                     }
-                    if (last != null) last(callback);
-                    else callback?.Invoke();
+                    startAniEndCheck();
                     break;
                 case SODocPage.DocPageAniMode.OneByOne:
                     outtroOneByOne();
@@ -98,13 +124,12 @@ namespace NaiveAPI.DocumentBuilder
                     break;
             }
         }
-
         private void introOneByOne()
         {
             index++;
             if (index >= visuals.Count)
             {
-                introCallback?.Invoke();
+                aniCallback?.Invoke();
                 return;
             }
             Add(visuals[index]);
@@ -122,7 +147,7 @@ namespace NaiveAPI.DocumentBuilder
             index++;
             if (index >= visuals.Count)
             {
-                outtroCallback?.Invoke();
+                aniCallback?.Invoke();
                 return;
             }
             if (visuals[index].OuttroAnimation != null)
@@ -134,50 +159,57 @@ namespace NaiveAPI.DocumentBuilder
                 outtroOneByOne();
             }
         }
-        Action<Action> inLast = null;
+        
         private void introFlow()
         {
             index++;
-            if (index == visuals.Count)
+            if (index >= visuals.Count)
             {
-                if (inLast != null)
-                    inLast(introCallback);
-                else
-                    introCallback?.Invoke();
+                startAniEndCheck();
                 return;
             }
-            int t = 0;
-            if (inLast != null)
+            if (visuals[index].IntroAnimation != null)
             {
-                t = target.IntroDuration;
-                inLast(null);
+                playingCount++;
+                visuals[index].IntroAnimation(docPlayingEnd);
             }
+            var item = visuals[index].schedule.Execute(introFlow);
+            item.ExecuteLater(target.IntroDuration);
             Add(visuals[index]);
-            inLast = visuals[index].IntroAnimation;
-            visuals[index].schedule.Execute(() => {
-                introFlow();
-            }).ExecuteLater(t);
         }
-        Action<Action> outLast = null;
         private void outtroFlow()
         {
             index++;
-            if (index == visuals.Count)
+            if (index >= visuals.Count)
             {
-                if (outLast != null)
-                    outLast(outtroCallback);
-                else
-                outtroCallback?.Invoke();
+                startAniEndCheck();
                 return;
             }
-            int t = 0;
-            if (outLast != null)
+            if (visuals[index].OuttroAnimation != null)
             {
-                t = target.OuttroDuration;
-                outLast(null);
+                playingCount++;
+                visuals[index].OuttroAnimation(docPlayingEnd);
             }
-            outLast = visuals[index].OuttroAnimation;
-            visuals[index].schedule.Execute(outtroFlow).ExecuteLater(t);
+            var item = visuals[index].schedule.Execute(outtroFlow);
+            item.ExecuteLater(target.OuttroDuration);
+        }
+
+        void startAniEndCheck()
+        {
+            schedule.Execute(() => { }).Until(() =>
+            {
+                if (playingCount == 0)
+                {
+                    aniCallback?.Invoke();
+                    IsPlayingAnimation = false;
+                    return true;
+                }
+                return false;
+            }).Every(50);
+        }
+        void docPlayingEnd()
+        {
+            playingCount--;
         }
     }
 }

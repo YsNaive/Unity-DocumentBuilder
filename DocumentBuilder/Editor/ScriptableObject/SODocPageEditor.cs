@@ -43,6 +43,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root = DocRuntime.NewEmpty();
             root.style.SetIS_Style(ISPadding.Pixel(10));
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            root.RegisterCallback<GeometryChangedEvent>(e =>
+            {
+                float sum = 0;
+                foreach (var ve in root.Children()) { sum += ve.layout.height; }
+                root.style.height = sum + 800;
+            });
             header = DocRuntime.NewEmpty();
             contents = DocRuntime.NewEmpty();
             clickMask = DocRuntime.NewEmpty();

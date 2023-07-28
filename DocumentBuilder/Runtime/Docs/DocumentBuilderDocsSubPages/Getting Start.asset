@@ -12,28 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
   m_Name: Getting Start
   m_EditorClassIdentifier: 
-  Icon: {fileID: 2800000, guid: 4ce2991ad383d7c48aef8204b6b26b66, type: 3}
+  Icon: {fileID: 2800000, guid: 3543eaffc785cee4a879a77c6b51fede, type: 3}
   SubPages: []
   Components:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Step1
+    - Document Builder
     ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":1,"IntroAniTime":250}'
-    TextData:
-    - asdasd
+  - VisualID: 
+    JsonData: 
+    TextData: []
     ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":1,"IntroAniTime":250}'
-    TextData:
-    - asdasd
+  - VisualID: 
+    JsonData: 
+    TextData: []
     ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":1,"IntroAniTime":250}'
-    TextData:
-    - asdasd
+  - VisualID: 
+    JsonData: 
+    TextData: []
+    ObjsData: []
+  - VisualID: 
+    JsonData: 
+    TextData: []
     ObjsData: []
   IntroMode: 2
   OuttroMode: 3

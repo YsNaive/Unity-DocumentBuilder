@@ -15,29 +15,18 @@ MonoBehaviour:
   Icon: {fileID: 2800000, guid: 6e76c73f1f7c29d4ea14a1c2b9ae5fff, type: 3}
   SubPages:
   - {fileID: 11400000, guid: 4d5723fc8ce059843811ed4d65fe2bf2, type: 2}
-  - {fileID: 11400000, guid: dfec4562f2dc3794cb9e02c864a2f285, type: 2}
+  - {fileID: 11400000, guid: 5f627ae6418e62740ad9248393a163d8, type: 2}
   Components:
   - VisualID: 1
     JsonData: 
     TextData:
     - Document Builder
     ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":2,"IntroAniTime":80}'
-    TextData:
-    - asdasdasd
-    ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":2,"IntroAniTime":55}'
-    TextData:
-    - efqqfqefqefqefqef
-    ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":2,"IntroAniTime":45}'
-    TextData:
-    - asasdasd
+  - VisualID: 5
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/SkEJcXlsh.png","mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    TextData: []
     ObjsData: []
   IntroMode: 3
   OuttroMode: 3
-  IntroDuration: 200
+  IntroDuration: 100
   OuttroDuration: 200

@@ -50,7 +50,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 DocCache.Save();
             }
         }
-        bool viewAni = false;
         private void onCreateEditor(SODocPageEditor e)
         {
             inspector = e;
@@ -74,31 +73,31 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             update = rootVisualElement.schedule.Execute(() =>
             {
-                if (viewAni) return;
                 if (BookVisual == null) return;
                 if (BookVisual.MenuHandler == null) return;
                 if (BookVisual.DisplayingPage != null)
+                {
+                    if (BookVisual.DisplayingPage.IsPlayingAnimation) return;
                     pos = BookVisual.DisplayingPage.scrollOffset;
+                }
 
                 BookVisual.MenuHandler.Repaint();
                 BookVisual.MenuHandler.Selecting = BookVisual.MenuHandler.Selecting;
             }).Every(500);
             playIntro = DocRuntime.NewButton("Play Intro", DocStyle.Current.HintColor, () =>
             {
-                if (!viewAni)
+                if (!BookVisual.DisplayingPage.IsPlayingAnimation)
                 {
-                    viewAni = true;
                     if (BookVisual.DisplayingPage != null)
-                        BookVisual.DisplayingPage.PlayIntro(() => { viewAni = false; });
+                        BookVisual.DisplayingPage.PlayIntro(null);
                 }
             });
             playOuttro = DocRuntime.NewButton("Play Outtro", DocStyle.Current.HintColor, () =>
             {
-                if (!viewAni)
+                if (!BookVisual.DisplayingPage.IsPlayingAnimation)
                 {
-                    viewAni = true;
                     if (BookVisual.DisplayingPage != null)
-                        BookVisual.DisplayingPage.PlayOuttro(() => { viewAni = false; });
+                        BookVisual.DisplayingPage.PlayOuttro(null);
                 }
             });
             playIntro.style.position = Position.Absolute;
@@ -117,8 +116,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             pageRootSelector.RegisterValueChangedCallback(val =>
             {
                 rootVisualElement.Clear();
-                rootVisualElement.Add(playIntro);
-                rootVisualElement.Add(playOuttro);
                 rootVisualElement.Add(pageRootSelector);
                 PageRoot = val.newValue as SODocPage;
                 BookVisual = new DocBookVisual(PageRoot);
@@ -129,7 +126,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     if (BookVisual.DisplayingPage != null)
                         BookVisual.DisplayingPage.RegisterCallback<GeometryChangedEvent>(e =>
                         {
-                            BookVisual.DisplayingPage.verticalScroller.highValue = float.MaxValue;
+                            if(BookVisual.DisplayingPage.verticalScroller.highValue != float.MaxValue)
+                                BookVisual.DisplayingPage.verticalScroller.highValue = float.MaxValue;
                             BookVisual.DisplayingPage.verticalScroller.value = pos.y;
                         });
                 };
@@ -137,13 +135,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 rootVisualElement.Add(BookVisual);
                 DocEditorData.Instance.EditingDocPage = (SODocPage)pageRootSelector.value;
                 EditorUtility.SetDirty(DocEditorData.Instance);
+                rootVisualElement.Add(playIntro);
+                rootVisualElement.Add(playOuttro);
             });
             rootVisualElement.Add(pageRootSelector);
             pageRootSelector.value = DocEditorData.Instance.EditingDocPage;
 
             rootVisualElement.Add(playIntro);
             rootVisualElement.Add(playOuttro);
-            viewAni = false;
         }
     }
 }

@@ -55,6 +55,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             textInput.value = Target.TextData[0];
             textInput.multiline = true;
             textInput.style.ClearMarginPadding();
+            textInput.style.whiteSpace = WhiteSpace.Normal;
             textInput.RegisterValueChangedCallback((val) =>
             {
                 Target.TextData.Clear();
