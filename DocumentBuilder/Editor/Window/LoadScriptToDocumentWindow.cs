@@ -5,8 +5,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
+using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
@@ -29,7 +33,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             doc = DocEditFuncDisplay.LoadMethod(info);
             rootVisualElement.Add(DocRuntime.CreateVisual(doc));*/
             Type baseType = typeof(DocVisual);
-            rootVisualElement.Add(DocEditor.NewObjectField<MonoScript>("", null));
+            //rootVisualElement.Add(DocEditor.NewObjectField<MonoScript>("", null));
             /*
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
@@ -45,6 +49,18 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Debug.Log(scripts.Count);
             SearchDropdown searchDropdown = new SearchDropdown("", scripts);
             rootVisualElement.Add(searchDropdown);*/
+
+            string data = File.ReadAllText("C:/Users/howar/Desktop/Unity/Document Builder/Assets/DocumentBuilder/RunTime/DocComponents/DocFuncDisplay.cs");
+            //data = File.ReadAllText("C:\\Users\\howar\\Desktop\\Unity\\Document Builder\\Assets\\DocumentBuilder\\Editor\\ScriptableObject\\SODocPageEditor.cs");
+
+            ScrollView scrollView = new ScrollView();
+            TextElement textElement = DocRuntime.NewTextElement(DocumentBuilderParser.CSharpParser(data));
+            textElement.style.height = StyleKeyword.Auto;
+            textElement.style.whiteSpace = WhiteSpace.Normal;
+            scrollView.Add(textElement);
+
+            rootVisualElement.Add(scrollView);
         }
+
     }
 }

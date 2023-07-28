@@ -179,28 +179,29 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private VisualElement generateAnimVisual(DocFuncDisplay.Data data)
         {
             VisualElement root = new VisualElement();
-            root.style.SetIS_Style(ISFlex.Horizontal);
             root.style.paddingLeft = Length.Percent(1);
             root.style.paddingRight = Length.Percent(1);
+            VisualElement childIntro = new VisualElement();
+            childIntro.style.SetIS_Style(ISFlex.Horizontal);
 
             EnumField introField = new EnumField();
             introField.Init(DocFuncDisplay.AniMode.None);
             introField.value = data.IntroAniMode;
-            introField.style.width = Length.Percent(25);
+            introField.style.width = Length.Percent(50);
             introField.label = "Intro Mode";
-            introField[0].style.minWidth = Length.Percent(50);
+            introField[0].style.minWidth = Length.Percent(30);
             introField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             introField.style.ClearMarginPadding();
-            root.Add(introField);
+            childIntro.Add(introField);
             TextField introDurationField = new TextField();
             introDurationField.label = "IntroDuration";
             introDurationField.value = data.IntroDuration.ToString();
-            introDurationField.style.width = Length.Percent(25);
-            introDurationField[0].style.minWidth = Length.Percent(50);
+            introDurationField.style.width = Length.Percent(50);
+            introDurationField[0].style.minWidth = Length.Percent(30);
             introDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             introDurationField.visible = data.IntroAniMode != DocFuncDisplay.AniMode.None;
             introDurationField.style.ClearMarginPadding();
-            root.Add(introDurationField);
+            childIntro.Add(introDurationField);
             introField.RegisterValueChangedCallback(value =>
             {
                 data.IntroAniMode = (DocFuncDisplay.AniMode)value.newValue;
@@ -215,24 +216,26 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     Target.JsonData = JsonUtility.ToJson(data);
                 }
             });
+            VisualElement childOuttro = new VisualElement();
+            childOuttro.style.SetIS_Style(ISFlex.Horizontal);
             EnumField outtroField = new EnumField();
             outtroField.Init(DocFuncDisplay.AniMode.None);
             outtroField.label = "Outtro Mode";
             outtroField.value = data.IntroAniMode;
-            outtroField.style.width = Length.Percent(25);
-            outtroField[0].style.minWidth = Length.Percent(50);
+            outtroField.style.width = Length.Percent(50);
+            outtroField[0].style.minWidth = Length.Percent(30);
             outtroField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             outtroField.style.ClearMarginPadding();
-            root.Add(outtroField);
+            childOuttro.Add(outtroField);
             TextField outtroDurationField = new TextField();
             outtroDurationField.label = "OuttroDuration";
             outtroDurationField.value = data.OuttroDuration.ToString();
-            outtroDurationField.style.width = Length.Percent(25);
-            outtroDurationField[0].style.minWidth = Length.Percent(50);
+            outtroDurationField.style.width = Length.Percent(50);
+            outtroDurationField[0].style.minWidth = Length.Percent(30);
             outtroDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             outtroDurationField.visible = data.OuttroAniMode != DocFuncDisplay.AniMode.None;
             outtroDurationField.style.ClearMarginPadding();
-            root.Add(outtroDurationField);
+            childOuttro.Add(outtroDurationField);
             outtroField.RegisterValueChangedCallback(value =>
             {
                 data.OuttroAniMode = (DocFuncDisplay.AniMode)value.newValue;
@@ -247,6 +250,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     Target.JsonData = JsonUtility.ToJson(data);
                 }
             });
+            root.Add(childIntro);
+            root.Add(childOuttro);
 
             return root;
         }

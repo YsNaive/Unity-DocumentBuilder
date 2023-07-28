@@ -1,4 +1,5 @@
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,11 @@ namespace NaiveAPI.DocumentBuilder
         private static ISText labelTextStyle = new ISText() { Color = Current.SubFrontGroundColor, FontSize = Current.MainTextSize };
         private float tabGap = 2;
         private VisualElement veFoldOut;
+
+        public float test
+        {
+            get; set;
+        }
 
         protected override void OnCreateGUI()
         {
@@ -48,6 +54,7 @@ namespace NaiveAPI.DocumentBuilder
             foldout.text = data.Name;
             foldout.value = data.isOn;
             foldout.style.SetIS_Style(funcNameTextStyle);
+            foldout.Q<Label>().style.SetIS_Style(Current.MainText);
             foldout.Q<Toggle>().style.ClearMarginPadding();
             foldout.Q("unity-checkmark").style.position = Position.Absolute;
             foldout.Q("unity-checkmark").visible = false;
@@ -81,94 +88,6 @@ namespace NaiveAPI.DocumentBuilder
                 this.Add(veFoldOut);
         }
 
-        private string parseSyntax(string synatx)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(synatx)) return "";
-                string[] strs = synatx.Split('(');
-                strs[1] = strs[1].Substring(0, strs[1].LastIndexOf(")"));
-
-                string[] prefixs = strs[0].Split(" ");
-                StringBuilder stringBuilder = new StringBuilder();
-                string subFrontGroundColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(Current.SubFrontGroundColor)}>";
-                string prefixColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(Color.blue)}>";
-                string funcColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(Current.FuncColor)}>";
-                string typeColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(typeTextStyle.Color)}>";
-                string paramColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(paramTextStyle.Color)}>";
-                string postfixColor = "</color>";
-                foreach (string str in prefixs)
-                {
-                    if (str == prefixs[^1] && str != "void")
-                    {
-                        stringBuilder.Append(funcColor);
-                    }
-                    else if (str == prefixs[^2] && str != "void")
-                    {
-                        stringBuilder.Append(typeColor);
-                    }
-                    else
-                    {
-                        stringBuilder.Append(prefixColor);
-                    }
-                    stringBuilder.Append(str);
-                    stringBuilder.Append(postfixColor);
-                    if (str != prefixs[^1])
-                        stringBuilder.Append(" ");
-                }
-
-                stringBuilder.Append("(");
-                foreach (string str in strs[1].Split(","))
-                {
-                    if (str == "")
-                    {
-                        stringBuilder.Append("  ");
-                        break;
-                    }
-                    string[] param = str.Split(" ");
-                    int index = 0;
-                    while (param[index] == "")
-                        index++;
-                    if (param[index] == "ref" || param[index] == "out" || param[index] == "in")
-                    {
-                        stringBuilder.Append(prefixColor);
-                        stringBuilder.Append(param[index]);
-                        stringBuilder.Append(postfixColor);
-                        stringBuilder.Append(" ");
-                        index++;
-                    }
-                    stringBuilder.Append(typeColor);
-                    stringBuilder.Append(param[index++]);
-                    stringBuilder.Append(postfixColor);
-                    while (param[index] == "")
-                        index++;
-                    stringBuilder.Append(" ");
-                    stringBuilder.Append(paramColor);
-                    stringBuilder.Append(param[index++]);
-                    stringBuilder.Append(postfixColor);
-                    if (param.Length > index + 1)
-                    {
-                        stringBuilder.Append(subFrontGroundColor);
-                        while (index < param.Length)
-                        {
-                            stringBuilder.Append(" ");
-                            stringBuilder.Append(param[index++]);
-                        }
-                        stringBuilder.Append(postfixColor);
-                    }
-                    stringBuilder.Append(", ");
-                }
-                stringBuilder.Remove(stringBuilder.Length - 2, 2);
-                stringBuilder.Append(");");
-
-                return stringBuilder.ToString();
-            } catch
-            {
-                Debug.LogWarning("DocVisual : DocFuncDisplay Syntax Error");
-                return synatx;
-            }
-        }
-
         private VisualElement generateSyntaxContainer(Data data)
         {
             VisualElement root = new VisualElement();
@@ -186,7 +105,7 @@ namespace NaiveAPI.DocumentBuilder
             for (int i = 0;i < data.Syntaxs.Count; i++)
             {
                 TextElement syntaxText = new TextElement();
-                syntaxText.text = parseSyntax(data.Syntaxs[i]);
+                syntaxText.text = DocumentBuilderParser.ParseSyntax(data.Syntaxs[i]);
                 syntaxText.style.SetIS_Style(syntaxTextStyle);
                 syntaxText.style.ClearMarginPadding();
                 syntaxText.style.paddingLeft = Length.Percent(tabGap);
@@ -384,6 +303,36 @@ namespace NaiveAPI.DocumentBuilder
             None,
             Fade,
             TextFade,
+        }
+        public class Test : MonoBehaviour,IBinding, ICollection
+        {
+            public int Count => throw new NotImplementedException();
+
+            public bool IsSynchronized => throw new NotImplementedException();
+
+            public object SyncRoot => throw new NotImplementedException();
+
+            public void CopyTo(Array array, int index)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerator GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void PreUpdate()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public void Release()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public void Update() => throw new System.NotImplementedException();
         }
     }
 }
