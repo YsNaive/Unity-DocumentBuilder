@@ -14,42 +14,36 @@ namespace NaiveAPI.DocumentBuilder
         public Color FrontGroundColor;
         public Color SubFrontGroundColor;
 
-        public int MainTextSize;
-        public int LabelTextSize;
+        public int MainTextSize { get => MainText.FontSize; set => MainText.FontSize = value; }
+        public int LabelTextSize { get => LabelText.FontSize; set => LabelText.FontSize = value; }
+        public int ButtonTextSize { get => ButtonText.FontSize; set => ButtonText.FontSize = value; }
 
-        public ISText MainText;
-        public ISText LabelText;
-        public ISText ButtonText;
+        public ISText MainText = new ISText();
+        public ISText LabelText = new ISText();
+        public ISText ButtonText = new ISText();
 
         public Color FuncColor;
         public Color ArgsColor;
         public Color TypeColor;
         public Color PrefixColor;
         public Color StringColor;
+        public Color NumberColor;
         public Color ControlColor;
 
         public Color SuccessColor;
         public Color WarningColor;
         public Color DangerColor;
         public Color HintColor;
+        public Color SuccessTextColor;
+        public Color WarningTextColor;
+        public Color DangerTextColor;
+        public Color HintTextColor;
 
         public float MarginVer;
         public float MarginHor;
         public float LineHeight;
 
         public float GUIScale = 1;
-        public float TextScale
-        {
-            get { return m_textScale; }
-            set
-            {
-                m_textScale = value;
-                MainText.FontSize = (int)(MainTextSize * m_textScale);
-                LabelText.FontSize = (int)(LabelTextSize * m_textScale);
-            }
-        }
-
-        private float m_textScale = 1;
 
 
         public static DocStyle Dark = new DocStyle()
@@ -58,21 +52,24 @@ namespace NaiveAPI.DocumentBuilder
             SubBackgroundColor = new Color(0.25f, 0.25f, 0.28f),
             FrontGroundColor = new Color(0.65f, 0.65f, 0.65f),
             SubFrontGroundColor = new Color(0.55f, 0.55f, 0.55f),
-            MainTextSize = 14,
-            LabelTextSize = 20,
-            MainText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 12, Align = TextAnchor.MiddleLeft },
+            MainText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f),FontSize = 12, Align = TextAnchor.MiddleLeft },
             LabelText = new ISText() { Color = new Color(0.9f, 0.9f, 0.9f), FontSize = 18, Align = TextAnchor.MiddleLeft },
-            ButtonText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 12,Align = TextAnchor.MiddleCenter },
+            ButtonText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 12, Align = TextAnchor.MiddleCenter },
             FuncColor = new Color(1f, 0.9f, 0.35f),
             ArgsColor = new Color(0.65f, 0.85f, 0.95f),
             TypeColor = new Color(0.35f, 0.70f, 0.65f),
             SuccessColor = new Color(0.2f, 0.3f, 0.2f),
             WarningColor = new Color(0.3f, 0.3f, 0.2f),
-            DangerColor  = new Color(0.3f, 0.2f, 0.2f),
-            HintColor    = new Color(0.2f, 0.2f, 0.3f),
-            PrefixColor  = new Color(0.2f,0.4f,0.6f),
-            StringColor = new Color(0.5f,0.35f,0.2f),
-            ControlColor = new Color(0.8f,0.3f,0.6f),
+            DangerColor = new Color(0.3f, 0.2f, 0.2f),
+            HintColor = new Color(0.2f, 0.2f, 0.3f),
+            SuccessTextColor = new Color(0.7f, 0.9f, 0.7f),
+            WarningTextColor = new Color(0.9f, 0.9f, 0.7f),
+            DangerTextColor = new Color(0.9f, 0.7f, 0.7f),
+            HintTextColor = new Color(0.7f, 0.7f, 0.9f),
+            PrefixColor = new Color(0.2f, 0.4f, 0.6f),
+            StringColor = new Color(0.5f, 0.35f, 0.2f),
+            NumberColor = new Color(0.6f, 0.8f, 0.6f),
+            ControlColor = new Color(0.8f, 0.3f, 0.6f),
             MarginHor = 0,
             MarginVer = 3,
             LineHeight = 18,
@@ -96,14 +93,19 @@ namespace NaiveAPI.DocumentBuilder
             copy.ArgsColor = this.ArgsColor;
             copy.TypeColor = this.TypeColor;
             copy.SuccessColor = this.SuccessColor;
+            copy.SuccessTextColor = this.SuccessTextColor;
             copy.WarningColor = this.WarningColor;
+            copy.WarningTextColor = this.WarningTextColor;
             copy.DangerColor = this.DangerColor;
+            copy.DangerTextColor = this.DangerTextColor;
             copy.HintColor = this.HintColor;
+            copy.HintTextColor = this.HintTextColor;
             copy.MarginHor = this.MarginHor;
             copy.MarginVer = this.MarginVer;
             copy.LineHeight = this.LineHeight;
             copy.PrefixColor = this.PrefixColor;
             copy.StringColor = this.StringColor;
+            copy.NumberColor = this.NumberColor;
             copy.ControlColor = this.ControlColor;
 
             return copy;

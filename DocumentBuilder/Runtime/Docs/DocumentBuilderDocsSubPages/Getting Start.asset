@@ -28,14 +28,6 @@ MonoBehaviour:
     JsonData: 
     TextData: []
     ObjsData: []
-  - VisualID: 
-    JsonData: 
-    TextData: []
-    ObjsData: []
-  - VisualID: 
-    JsonData: 
-    TextData: []
-    ObjsData: []
   IntroMode: 2
   OuttroMode: 2
   IntroDuration: 200

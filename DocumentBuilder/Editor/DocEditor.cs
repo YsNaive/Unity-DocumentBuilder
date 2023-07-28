@@ -80,6 +80,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             DocRuntime.ApplyMargin(enumField);
             enumField[0].style.ClearMarginPadding();
             enumField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            enumField[0].style.minHeight = 18;
             if (label != "")
             {
                 enumField.label = label;

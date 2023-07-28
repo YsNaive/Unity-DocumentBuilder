@@ -35,18 +35,9 @@ MonoBehaviour:
 
       23131351'
     ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":1,"IntroAniTime":25}'
-    TextData:
-    - 'asdwd
-
-
-      QQQQ
-
-
-
-
-      23131351'
+  - VisualID: 
+    JsonData: 
+    TextData: []
     ObjsData: []
   - VisualID: 2
     JsonData: '{"AnimateMode":1,"IntroAniTime":25}'
@@ -61,20 +52,11 @@ MonoBehaviour:
 
       23131351'
     ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":1,"IntroAniTime":25}'
-    TextData:
-    - 'asdwd
-
-
-      QQQQ
-
-
-
-
-      23131351'
+  - VisualID: 
+    JsonData: 
+    TextData: []
     ObjsData: []
-  IntroMode: 2
+  IntroMode: 3
   OuttroMode: 2
   IntroDuration: 150
   OuttroDuration: 150

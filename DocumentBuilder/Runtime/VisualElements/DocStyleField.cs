@@ -61,6 +61,8 @@ namespace NaiveAPI.DocumentBuilder
             colorField.OnValueChange += val => { Target.PrefixColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.StringColor, "String", colorWidth);
             colorField.OnValueChange += val => { Target.StringColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.NumberColor, "Number", colorWidth);
+            colorField.OnValueChange += val => { Target.NumberColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.ControlColor, "Control", colorWidth);
             colorField.OnValueChange += val => { Target.ControlColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.SuccessColor, "Success", colorWidth);
@@ -71,6 +73,14 @@ namespace NaiveAPI.DocumentBuilder
             colorField.OnValueChange += val => { Target.DangerColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.HintColor, "Hint", colorWidth);
             colorField.OnValueChange += val => { Target.HintColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.SuccessTextColor, "SuccessText", colorWidth);
+            colorField.OnValueChange += val => { Target.SuccessTextColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.WarningTextColor, "WarningText", colorWidth);
+            colorField.OnValueChange += val => { Target.WarningTextColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.DangerTextColor, "DangerText", colorWidth);
+            colorField.OnValueChange += val => { Target.DangerTextColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.HintTextColor, "HintText", colorWidth);
+            colorField.OnValueChange += val => { Target.HintTextColor = val; }; scrollView.Add(colorField);
         }
         void createText(ISText text, string label)
         {

@@ -3,7 +3,6 @@ using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -115,6 +114,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             buildinIcon.index = DocEditorData.Instance.BuildinIcon.IndexOf(Target.Icon);
             buildinIcon.style.width = Length.Percent(20);
             introSetting =DocRuntime.NewEmptyHorizontal();
+            introSetting.style.height = 18;
             iconHorBar.Add(icon);
             iconHorBar.Add(buildinIcon);
             EnumField introMode = DocEditor.NewEnumField("Intro Mode", Target.IntroMode, value =>
@@ -122,13 +122,20 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.IntroMode = (DocPageAniMode)value.newValue;
             });
             introMode[0].style.minWidth = 96;
+            introMode[0].style.unityTextAlign = TextAnchor.MiddleCenter;
+            introMode.style.ClearMarginPadding();
+            introMode.style.height = 18;
             introMode.style.width = Length.Percent(49);
             introSetting.Add(introMode);
             IntegerField durField = new IntegerField();
             durField.label = "Duration";
+            durField.style.height = 18;
+            durField[1].style.height = 18;
             durField.style.ClearMarginPadding();
             durField.style.width = Length.Percent(50);
             durField[0].style.minWidth = 60;
+            durField.style.height = 18;
+            durField[0].style.unityTextAlign = TextAnchor.UpperCenter;
             durField.value = Target.IntroDuration;
             durField.RegisterValueChangedCallback((value) =>
             {
@@ -141,13 +148,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.OuttroMode = (DocPageAniMode)value.newValue;
             });
             outroMode[0].style.minWidth = 96;
+            outroMode[0].style.unityTextAlign = TextAnchor.MiddleCenter;
+            outroMode.style.height = 18;
+            outroMode.style.ClearMarginPadding();
             outroMode.style.width = Length.Percent(49);
             outtroSetting.Add(outroMode);
+            outtroSetting.style.height = 18;
             IntegerField outroDurField = new IntegerField();
             outroDurField.label = "Duration";
+            outroDurField[0].style.unityTextAlign = TextAnchor.UpperCenter;
             outroDurField.style.ClearMarginPadding();
             outroDurField.style.width = Length.Percent(50);
             outroDurField[0].style.minWidth = 60;
+            outroDurField.style.height = 18;
             outroDurField.value = Target.IntroDuration;
             outroDurField.RegisterValueChangedCallback((value) =>
             {

@@ -17,6 +17,7 @@ namespace NaiveAPI.DocumentBuilder
         float widthSpace = 15;
         public bool DontPlayAnimation = false;
         public bool IsPlayingAinmation { get; private set; }
+        private bool isChangingWidth = false;
         public DocBookVisual(SODocPage rootPage)
         {
             style.backgroundColor = DocStyle.Current.BackgroundColor;
@@ -24,6 +25,14 @@ namespace NaiveAPI.DocumentBuilder
             style.SetIS_Style(ISFlex.Horizontal);
             divLineBar.style.width = 5;
             divLineBar.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            divLineBar.RegisterCallback<PointerDownEvent>(e =>{isChangingWidth = true;});
+            divLineBar.RegisterCallback<PointerUpEvent>(e =>{isChangingWidth = true;});
+            divLineBar.RegisterCallback<PointerLeaveEvent>(e =>{isChangingWidth = false;});
+            divLineBar.RegisterCallback<PointerMoveEvent>(e =>
+            {
+                Debug.Log(e.position);
+            });
+            
 
             MenuHandler.Root = rootPage;
             menuVisual = new PageMenuVisual(rootPage, MenuHandler);
@@ -97,6 +106,10 @@ namespace NaiveAPI.DocumentBuilder
                     style.height = Screen.height;
                 }
             });
+        }
+        void setMenuWidth()
+        {
+
         }
     }
 }
