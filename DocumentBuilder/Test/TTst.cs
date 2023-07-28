@@ -1,3 +1,4 @@
+using NaiveAPI.DocumentBuilder;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,15 +9,23 @@ public class TTst : MonoBehaviour
 {
     UIDocument UIDocument;
     VisualElement root;
+    public SODocPage page;
     void Start()
     {
         UIDocument = GetComponent<UIDocument>();
         root = UIDocument.rootVisualElement;
-        IVisualElementScheduledItem item = null;
+        var visual = new DocPageVisual(page);
+        root.Add(visual);
+        visual.PlayIntro(() => {
+            visual.PlayOuttro(() =>
+            {
+                visual.Repaint();
+            }); 
+        }) ;
+        
     }
     // Update is called once per frame
     void Update()
     {
-        
     }
 }

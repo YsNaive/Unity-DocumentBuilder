@@ -23,7 +23,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             get
             {
-                m_editorInstance??= GetWindow<DocEditorWindow>("Document Editor");
+                m_editorInstance ??= GetWindow<DocEditorWindow>("Document Editor");
                 return m_editorInstance;
             }
         }
@@ -36,7 +36,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             SODocPageEditor.OnCreateEditor -= onCreateEditor;
             SODocPageEditor.OnCreateEditor += onCreateEditor;
-            if(rootVisualElement.childCount != 0)
+            if (rootVisualElement.childCount != 0)
             {
                 rootVisualElement.Clear();
                 CreateGUI();
@@ -44,7 +44,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         private void OnDisable()
         {
-            if(BookVisual != null)
+            if (BookVisual != null)
             {
                 DocCache.Get().OpeningBookHierarchy = BookVisual.MenuHandler.GetState();
                 DocCache.Save();
@@ -122,11 +122,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 BookVisual.MenuHandler.OnChangeSelect += (o, n) =>
                 {
                     inspector?.Save();
-                    if (o == null || ( o != n && BookVisual.MenuHandler.AddedVisual.Contains(o))) Selection.activeObject = n.Target;
+                    if (o == null || (o != n && BookVisual.MenuHandler.AddedVisual.Contains(o))) Selection.activeObject = n.Target;
                     if (BookVisual.DisplayingPage != null)
                         BookVisual.DisplayingPage.RegisterCallback<GeometryChangedEvent>(e =>
                         {
-                            if(BookVisual.DisplayingPage.verticalScroller.highValue != float.MaxValue)
+                            if (BookVisual.DisplayingPage.verticalScroller.highValue != float.MaxValue)
                                 BookVisual.DisplayingPage.verticalScroller.highValue = float.MaxValue;
                             BookVisual.DisplayingPage.verticalScroller.value = pos.y;
                         });

@@ -18,11 +18,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
     public class SODocPageEditor : Editor
     {
         public static event Action<SODocPageEditor> OnCreateEditor;
+        public static SODocPageEditor Current;
         private void OnEnable()
         {
             OnCreateEditor?.Invoke(this);
+            Current = this;
         }
-        SODocPage Target;
+        public SODocPage Target;
         VisualElement root;
         bool isDraging = false;
         VisualElement dragingTarget;
@@ -47,7 +49,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 float sum = 0;
                 foreach (var ve in root.Children()) { sum += ve.layout.height; }
-                root.style.height = sum + 800;
+                if(root.style.height!= sum + 800)
+                    root.style.height = sum + 800;
             });
             header = DocRuntime.NewEmpty();
             contents = DocRuntime.NewEmpty();
@@ -58,21 +61,18 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement bar = DocRuntime.NewEmptyHorizontal();
             Button editMode = DocRuntime.NewButton("Edit Layout", () =>
             {
-                Save();
                 root.Insert(1, header);
                 contents.Clear();
                 contents.Add(createEdit());
             });
             Button viewMode = DocRuntime.NewButton("View Layout", () =>
             {
-                Save();
                 if (root.Contains(header)) { root.Remove(header); }
                 contents.Clear();
                 contents.Add(createView());
             });
             Button defuMode = DocRuntime.NewButton("Inspector", () =>
             {
-                Save();
                 if (root.Contains(header)) { root.Remove(header); }
                 contents.Clear();
                 contents.Add(new IMGUIContainer(() => { DrawDefaultInspector(); }));
@@ -164,7 +164,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         u.ViewMode();
                 }
             });
-
+            root.schedule.Execute(Save).Every(250);
             contents.Add(createEdit());
             addComponent = new Button();
             addComponent.text = "Add";

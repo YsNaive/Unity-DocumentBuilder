@@ -22,11 +22,25 @@ MonoBehaviour:
     TextData:
     - Document Builder
     ObjsData: []
-  - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/SkEJcXlsh.png","mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
-    TextData: []
+  - VisualID: 2
+    JsonData: '{"AnimateMode":2,"IntroAniTime":25}'
+    TextData:
+    - 'asdwd
+
+
+      QQQQ
+
+
+
+
+      23131351'
     ObjsData: []
-  IntroMode: 3
-  OuttroMode: 3
-  IntroDuration: 100
-  OuttroDuration: 200
+  - VisualID: 5
+    JsonData: '{"scale":-1.0,"url":"","mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":300,"OuttroDuration":300}'
+    TextData: []
+    ObjsData:
+    - {fileID: 2800000, guid: 323fcf14a6a8bd1488a8e68098322f7a, type: 3}
+  IntroMode: 2
+  OuttroMode: 2
+  IntroDuration: 150
+  OuttroDuration: 150

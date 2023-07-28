@@ -8,19 +8,24 @@ namespace NaiveAPI.DocumentBuilder
 {
     public class DocPageVisual : ScrollView
     {
-        SODocPage target;
+        public SODocPage Target;
         List<DocVisual> visuals = new List<DocVisual>();
         int index;
         Action aniCallback;
         public bool IsPlayingAnimation = false;
         int playingCount = 0;
         public DocPageVisual(SODocPage page) {
-            style.paddingRight = Length.Percent(3);
-            target = page;
-            foreach(var com in page.Components)
+            this.Q("unity-content-container").style.marginRight = Length.Percent(3.5f);
+            Target = page;
+            Repaint();
+        }
+        public void Repaint()
+        {
+            Clear();
+            foreach (var com in Target.Components)
             {
                 DocVisual docVisual = (DocVisual)DocRuntime.CreateVisual(com);
-                if(docVisual.VisualID == "1")
+                if (docVisual.VisualID == "1")
                 {
                     docVisual.style.marginLeft = 20;
                     docVisual.style.marginTop = 10;
@@ -34,65 +39,47 @@ namespace NaiveAPI.DocumentBuilder
                 visuals.Add(docVisual);
             }
         }
-        class itemCounter
-        {
-            public itemCounter(Action onClear)
-            {
-                callback = onClear;
-            }
-            public void Add()
-            {
-                i++;
-                Debug.Log("ADD");
-            }
-            public void End()
-            {
-                i--;
-            }
-            public bool Check()
-            {
-                if(i == 0)
-                {
-                    callback?.Invoke();
-                    return true;
-                }return false;
-            }
-            Action callback = null;
-            int i = 0;
-        }
         public void PlayIntro(Action callback = null)
         {
             if (IsPlayingAnimation) return;
             IsPlayingAnimation = true;
             Clear();
-            aniCallback = callback;
             index = -1;
-            switch (target.IntroMode)
+            switch (Target.IntroMode)
             {
                 case SODocPage.DocPageAniMode.None:
-                    foreach (var ve in visuals)
-                        Add(ve);
-                    startAniEndCheck();
-                    break;
-                case SODocPage.DocPageAniMode.Sametime:
-                    foreach (var ve in visuals)
                     {
-                        if (ve.IntroAnimation != null)
-                        {
-                            playingCount++;
-                            ve.IntroAnimation(docPlayingEnd);
-                        }
-                        Add(ve);
+                        foreach (var ve in visuals)
+                            Add(ve);
+                        startAniEndCheck();
+                        break;
                     }
-                    startAniEndCheck();
+                case SODocPage.DocPageAniMode.Sametime:
+                    {
+                        foreach (var ve in visuals)
+                        {
+                            if (ve.IntroAnimation != null)
+                            {
+                                playingCount++;
+                                ve.IntroAnimation(docPlayingEnd);
+                            }
+                            Add(ve);
+                        }
+                        startAniEndCheck();
+                    }
                     break;
                 case SODocPage.DocPageAniMode.OneByOne:
-                    introOneByOne();
+                    {
+                        introOneByOne();
+                    }
                     break;
                 case SODocPage.DocPageAniMode.Flow:
-                    introFlow();
+                    {
+                        introFlow();
+                    }
                     break;
             }
+            aniCallback = callback;
         }
         public void PlayOuttro(Action callback = null)
         {
@@ -100,27 +87,36 @@ namespace NaiveAPI.DocumentBuilder
             IsPlayingAnimation = true;
             aniCallback = callback;
             index = -1;
-            switch (target.OuttroMode)
+            switch (Target.OuttroMode)
             {
                 case SODocPage.DocPageAniMode.None:
-                    startAniEndCheck();
+                    {
+                        startAniEndCheck();
+                    }
                     break;
                 case SODocPage.DocPageAniMode.Sametime:
-                    foreach (var ve in visuals)
                     {
-                        if(ve.OuttroAnimation != null)
                         {
-                            playingCount++;
-                            ve.OuttroAnimation(docPlayingEnd);
+                            foreach (var ve in visuals)
+                            {
+                                if (ve.OuttroAnimation != null)
+                                {
+                                    playingCount++;
+                                    ve.OuttroAnimation(docPlayingEnd);
+                                }
+                            }
                         }
                     }
-                    startAniEndCheck();
                     break;
                 case SODocPage.DocPageAniMode.OneByOne:
-                    outtroOneByOne();
+                    {
+                        outtroOneByOne();
+                    }
                     break;
                 case SODocPage.DocPageAniMode.Flow:
-                    outtroFlow();
+                    {
+                        outtroFlow();
+                    }
                     break;
             }
         }
@@ -129,17 +125,19 @@ namespace NaiveAPI.DocumentBuilder
             index++;
             if (index >= visuals.Count)
             {
-                aniCallback?.Invoke();
-                return;
-            }
-            Add(visuals[index]);
-            if (visuals[index].IntroAnimation != null)
-            {
-                visuals[index].IntroAnimation(introOneByOne);
+                startAniEndCheck();
             }
             else
             {
-                introOneByOne();
+                Add(visuals[index]);
+                if (visuals[index].IntroAnimation != null)
+                {
+                    visuals[index].IntroAnimation(introOneByOne);
+                }
+                else
+                {
+                    introOneByOne();
+                }
             }
         }
         private void outtroOneByOne()
@@ -147,19 +145,21 @@ namespace NaiveAPI.DocumentBuilder
             index++;
             if (index >= visuals.Count)
             {
-                aniCallback?.Invoke();
+                startAniEndCheck();
                 return;
-            }
-            if (visuals[index].OuttroAnimation != null)
-            {
-                visuals[index].OuttroAnimation(outtroOneByOne);
             }
             else
             {
-                outtroOneByOne();
+                if (visuals[index].OuttroAnimation != null)
+                {
+                    visuals[index].OuttroAnimation(outtroOneByOne);
+                }
+                else
+                {
+                    outtroOneByOne();
+                }
             }
         }
-        
         private void introFlow()
         {
             index++;
@@ -174,7 +174,7 @@ namespace NaiveAPI.DocumentBuilder
                 visuals[index].IntroAnimation(docPlayingEnd);
             }
             var item = visuals[index].schedule.Execute(introFlow);
-            item.ExecuteLater(target.IntroDuration);
+            item.ExecuteLater(Target.IntroDuration);
             Add(visuals[index]);
         }
         private void outtroFlow()
@@ -191,20 +191,18 @@ namespace NaiveAPI.DocumentBuilder
                 visuals[index].OuttroAnimation(docPlayingEnd);
             }
             var item = visuals[index].schedule.Execute(outtroFlow);
-            item.ExecuteLater(target.OuttroDuration);
+            item.ExecuteLater(Target.OuttroDuration);
         }
-
         void startAniEndCheck()
         {
             schedule.Execute(() => { }).Until(() =>
             {
                 if (playingCount == 0)
                 {
-                    aniCallback?.Invoke();
                     IsPlayingAnimation = false;
-                    return true;
+                    aniCallback?.Invoke();
                 }
-                return false;
+                return !IsPlayingAnimation;
             }).Every(50);
         }
         void docPlayingEnd()

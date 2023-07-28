@@ -42,8 +42,9 @@ namespace NaiveAPI.DocumentBuilder
                 url = cachePath;
             }
             URL = url;
-            this.onTextureLoaded = onTextureLoaded;
-            if (ramCache.TryGetValue(cachePath, out LoadedTexture))
+            this.onTextureLoaded = onTextureLoaded; 
+            ramCache.TryGetValue(cachePath, out LoadedTexture);
+            if (LoadedTexture != null)
             {
                 style.backgroundImage = LoadedTexture;
                 onTextureLoaded?.Invoke(LoadedTexture);
