@@ -37,6 +37,6 @@ MonoBehaviour:
     TextData: []
     ObjsData: []
   IntroMode: 2
-  OuttroMode: 3
+  OuttroMode: 2
   IntroDuration: 200
   OuttroDuration: 200

@@ -17,10 +17,10 @@ public class TTst : MonoBehaviour
         var visual = new DocPageVisual(page);
         root.Add(visual);
         visual.PlayIntro(() => {
-            visual.PlayOuttro(() =>
-            {
-                visual.Repaint();
-            }); 
+                visual.PlayOuttro(() =>
+                {
+                    visual.Repaint();
+                });
         }) ;
         
     }

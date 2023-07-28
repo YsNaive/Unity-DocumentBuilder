@@ -38,6 +38,7 @@ namespace NaiveAPI.DocumentBuilder
             createColor();
             createText(Target.MainText,"Main text");
             createText(Target.LabelText, "Label text");
+            createText(Target.ButtonText, "Button text");
         }
         void createColor()
         {
@@ -56,6 +57,10 @@ namespace NaiveAPI.DocumentBuilder
             colorField.OnValueChange += val => { Target.ArgsColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.TypeColor, "Type", colorWidth);
             colorField.OnValueChange += val => { Target.TypeColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.PrefixColor, "Prefix", colorWidth);
+            colorField.OnValueChange += val => { Target.PrefixColor = val; }; scrollView.Add(colorField);
+            colorField = new ColorField(Target.StringColor, "String", colorWidth);
+            colorField.OnValueChange += val => { Target.StringColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.SuccessColor, "Success", colorWidth);
             colorField.OnValueChange += val => { Target.SuccessColor = val; }; scrollView.Add(colorField);
             colorField = new ColorField(Target.WarningColor, "Warning", colorWidth);
@@ -68,6 +73,7 @@ namespace NaiveAPI.DocumentBuilder
         void createText(ISText text, string label)
         {
             Foldout foldout = new Foldout();
+            foldout.style.marginLeft = 5;
             foldout.Q("unity-content").style.marginLeft = 40;
             foldout.value = false;
             foldout.text = label;
@@ -81,7 +87,7 @@ namespace NaiveAPI.DocumentBuilder
                     text.FontSize = newVal;
             });
             foldout.Add(size);
-            ColorField colorField = new ColorField(text.Color,"text color");
+            ColorField colorField = new ColorField(text.Color,"text color", colorWidth);
             colorField.OnValueChange += val => { text.Color = val; };
             foldout.Add(colorField);
             scrollView.Add(foldout);

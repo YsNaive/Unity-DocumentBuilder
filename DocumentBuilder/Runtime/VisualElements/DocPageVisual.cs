@@ -200,10 +200,11 @@ namespace NaiveAPI.DocumentBuilder
                 if (playingCount == 0)
                 {
                     IsPlayingAnimation = false;
-                    aniCallback?.Invoke();
+                    if(aniCallback != null)
+                        schedule.Execute(aniCallback).ExecuteLater(0);
                 }
                 return !IsPlayingAnimation;
-            }).Every(50);
+            });
         }
         void docPlayingEnd()
         {

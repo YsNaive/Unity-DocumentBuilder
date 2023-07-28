@@ -24,6 +24,8 @@ namespace NaiveAPI.DocumentBuilder
         public Color FuncColor;
         public Color ArgsColor;
         public Color TypeColor;
+        public Color PrefixColor;
+        public Color StringColor;
 
         public Color SuccessColor;
         public Color WarningColor;
@@ -67,6 +69,8 @@ namespace NaiveAPI.DocumentBuilder
             WarningColor = new Color(0.3f, 0.3f, 0.2f),
             DangerColor  = new Color(0.3f, 0.2f, 0.2f),
             HintColor    = new Color(0.2f, 0.2f, 0.3f),
+            PrefixColor  = new Color(0.2f,0.4f,0.6f),
+            StringColor = new Color(0.5f,0.35f,0.2f),
             MarginHor = 0,
             MarginVer = 3,
             LineHeight = 18,
@@ -96,6 +100,8 @@ namespace NaiveAPI.DocumentBuilder
             copy.MarginHor = this.MarginHor;
             copy.MarginVer = this.MarginVer;
             copy.LineHeight = this.LineHeight;
+            copy.PrefixColor = this.PrefixColor;
+            copy.StringColor = this.StringColor;
 
             return copy;
         }

@@ -23,7 +23,7 @@ MonoBehaviour:
     - Document Builder
     ObjsData: []
   - VisualID: 2
-    JsonData: '{"AnimateMode":2,"IntroAniTime":25}'
+    JsonData: '{"AnimateMode":1,"IntroAniTime":25}'
     TextData:
     - 'asdwd
 
