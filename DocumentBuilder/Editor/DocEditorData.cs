@@ -21,6 +21,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public SODocPage EditingDocPage;
         public DefaultAsset DocTemplateFolder;
         public List<Texture2D> BuildinIcon;
+        public List<string> FavoriteDocVisualID;
+
+        public Texture2D WhiteStar=>whiteStar;
+        [SerializeField] Texture2D whiteStar;
     }
 
 }
