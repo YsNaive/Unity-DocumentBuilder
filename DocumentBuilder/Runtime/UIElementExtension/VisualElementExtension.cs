@@ -10,8 +10,28 @@ public static class VisualElementExtension
     {
         string colorFormat = $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>";
         str.Insert(begIndex + length,"</color>");
-        str.Insert(begIndex,"</color>");
-        return str.Length;
+        str.Insert(begIndex,colorFormat);
+        return colorFormat.Length + 8;
+    }
+    public static int UnityRTF(this StringBuilder str, int begIndex, int length, FontStyle font)
+    {
+        string format = "";
+        string endFormat = "";
+        if(font == FontStyle.Bold) { 
+            format = "<b>";
+            endFormat = "</b>";
+        }
+        if(font == FontStyle.Italic) { 
+            format = "<i>";
+            endFormat = "</i>";
+        }
+        if(font == FontStyle.BoldAndItalic) { 
+            format = "<b><i>";
+            endFormat = "</i></b>";
+        }
+        str.Insert(begIndex + length,endFormat);
+        str.Insert(begIndex,format);
+        return format.Length * 2 + 1;
     }
     public static bool IsFocusedOnPanel(this VisualElement element)
     {

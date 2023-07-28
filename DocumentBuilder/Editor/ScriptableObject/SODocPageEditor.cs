@@ -3,6 +3,7 @@ using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -23,6 +24,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             OnCreateEditor?.Invoke(this);
             Current = this;
+            foreach(var asset in DocEditorData.Instance.BuildinIcon)
+            {
+                buildinIconList.Add(asset.name);
+            }
         }
         public SODocPage Target;
         VisualElement root;
@@ -38,6 +43,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         VisualElement introSetting;
         VisualElement outtroSetting;
         ObjectField icon;
+        List<string> buildinIconList = new List<string>();
         public override VisualElement CreateInspectorGUI()
         {
             Target = target as SODocPage;
@@ -49,8 +55,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 float sum = 0;
                 foreach (var ve in root.Children()) { sum += ve.layout.height; }
-                if(root.style.height!= sum + 800)
+                if(!isDraging&&(root.style.height.value.value != sum + 400))
+                {
                     root.style.height = sum + 800;
+                }
             });
             header = DocRuntime.NewEmpty();
             contents = DocRuntime.NewEmpty();
@@ -92,15 +100,23 @@ namespace NaiveAPI_Editor.DocumentBuilder
             #endregion
 
             #region header bar
+            VisualElement iconHorBar = DocRuntime.NewEmptyHorizontal();
             icon = DocEditor.NewObjectField<Texture2D>("icon", (value) =>
             {
                 Target.Icon = (Texture2D)value.newValue;
             });
             icon.value = Target.Icon;
             icon[0].style.minWidth = 95;
-
+            icon.style.width = Length.Percent(80);
+            var buildinIcon = DocRuntime.NewDropdownField("", buildinIconList, e =>
+            {
+                icon.value = DocEditorData.Instance.BuildinIcon[buildinIconList.IndexOf(e.newValue)];
+            });
+            buildinIcon.index = DocEditorData.Instance.BuildinIcon.IndexOf(Target.Icon);
+            buildinIcon.style.width = Length.Percent(20);
             introSetting =DocRuntime.NewEmptyHorizontal();
-
+            iconHorBar.Add(icon);
+            iconHorBar.Add(buildinIcon);
             EnumField introMode = DocEditor.NewEnumField("Intro Mode", Target.IntroMode, value =>
             {
                 Target.IntroMode = (DocPageAniMode)value.newValue;
@@ -286,7 +302,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             header.Add(introSetting);
             header.Add(outtroSetting);
-            header.Add(icon);
+            header.Add(iconHorBar);
             header.Add(addAndDeleteBar);
             header.Add(new IMGUIContainer(() => {
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("SubPages"));
@@ -397,6 +413,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             unit.toolBar.Add(dragBtn(unit));
             unit.toolBar.Add(dupBtn(unit));
             unit.toolBar.Add(deleteBtn(unit));
+            unit.style.borderTopColor = DocStyle.Current.FrontGroundColor;
             unit.style.borderBottomColor = DocStyle.Current.SubBackgroundColor;
             unit.style.borderBottomWidth = 2;
             unit.toolBar.style.marginTop = 7;
@@ -476,7 +493,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 float sumHeight = 0;
                 foreach (var ve in EditRoot.Children()) { sumHeight += ve.layout.height; }
                 sumHeight += 400;
-                root.style.height = sumHeight;
                 EditRoot.style.height = sumHeight;
             });
             button.style.width = 40;
@@ -487,7 +503,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button button = DocRuntime.NewButton("Dup", () =>
             {
                 int i = EditRoot.IndexOf(unit);
-                EditRoot.Insert(i, createUnit(((DocEditField)unit[1]).Target.Copy()));
+                EditRoot.Insert(i+1, createUnit(((DocEditField)unit[1]).Target.Copy()));
             });
             button.style.width = 40;
             return button;
@@ -511,10 +527,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
         int calDragingIndex()
         {
             int i = 0;
-            float pos = dragPosition.Top.Value.Value - header.layout.yMax;
+            float pos = dragPosition.Top.Value.Value;
             foreach (var ve in EditRoot.Children())
             {
-                if (ve.layout.y > pos)
+                if (ve.layout.center.y > pos)
                     break;
                 i++;
             }
@@ -550,6 +566,5 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
             return choice;
         }
-
     }
 }

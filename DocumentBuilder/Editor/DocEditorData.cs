@@ -20,6 +20,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private static DocEditorData instance;
         public SODocPage EditingDocPage;
         public DefaultAsset DocTemplateFolder;
+        public List<Texture2D> BuildinIcon;
     }
 
 }

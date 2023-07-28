@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -32,9 +33,12 @@ namespace NaiveAPI.DocumentBuilder
             btn.text = "Test Check Btn";
             btn.Confirm += () =>
             {
-                Debug.Log("YES");
-                btn.style.opacity = 1;
-                btn.Fade(0, 1000, 50, () => { btn.Fade(1, 1000); });
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append("QQQQQQQQ");
+                int i = 0;
+                i+=stringBuilder.UnityRTF(i+2,3, Color.green);
+                i+=stringBuilder.UnityRTF(i+5,2, FontStyle.BoldAndItalic);
+                Debug.Log(stringBuilder.ToString());
             };
             btn.Cancel += () =>
             {
