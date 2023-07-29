@@ -284,7 +284,7 @@ namespace NaiveAPI.DocumentBuilder
 
             public void AddRow(int row)
             {
-                if (row < 0 || row >= this.row)
+                if (row < 0 || row > this.row)
                     return;
                 this.row++;
                 string[,] newContents = new string[this.row, this.col];
@@ -292,7 +292,7 @@ namespace NaiveAPI.DocumentBuilder
                 bool isDone = false;
                 for (int i = 0; i < this.row; i++)
                 {
-                    if (i == row + 1 && !isDone)
+                    if (i == row && !isDone)
                     {
                         i1--;
                         for (int j = 0; j < this.col; j++)
@@ -316,7 +316,7 @@ namespace NaiveAPI.DocumentBuilder
 
             public void AddCol(int col)
             {
-                if (col < 0 || col >= this.col)
+                if (col < 0 || col > this.col)
                     return;
                 this.col++;
                 string[,] newContents = new string[this.row, this.col];
@@ -327,7 +327,7 @@ namespace NaiveAPI.DocumentBuilder
                     isDone = false;
                     for (int j = 0; j < this.col; j++)
                     {
-                        if (j1 == col + 1 && !isDone)
+                        if (j1 == col && !isDone)
                         {
                             j1--;
                             newContents[i, j] = "";
@@ -353,7 +353,7 @@ namespace NaiveAPI.DocumentBuilder
                 bool isDone = false;
                 for (int i = 0; i < this.col; i++)
                 {
-                    if (i1 == col + 1 && !isDone)
+                    if (i1 == col && !isDone)
                     {
                         i1--;
                         newAnchors[i] = TextAnchor.MiddleLeft;

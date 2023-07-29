@@ -1,3 +1,4 @@
+using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static PlasticGui.LaunchDiffParameters;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
@@ -216,44 +218,41 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
             float percent = 89f / data.col;
-            for (int i = 0; i < data.col - 1; i++)
-            {
-            }
+            Button addButton;
             for (int i = 0;i < data.col; i++)
             {
-                EnumField field = new EnumField();
-                field.Init(TextAnchor.MiddleLeft);
-                field.value = data.anchors[i];
                 int i1 = i;
-                field.RegisterValueChangedCallback(value =>
-                {
-                    data.anchors[i1] = (TextAnchor) value.newValue;
-                    Target.JsonData = JsonUtility.ToJson(data);
-                });
-                field.style.SetIS_Style(ISMargin.None);
-                if (i == 0)
-                    field.style.marginLeft = Length.Percent(5 + percent / 4);
-                field.style.SetIS_Style(ISPadding.None);
-                field.style.width = Length.Percent(percent / 2);
-                root.Add(field);
-
-                if (i == data.col - 1)
-                    return root;
-
-                Button addButton = new Button();
-                addButton.clicked += () =>
+                addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
                 {
                     data.AddCol(i1);
                     Target.JsonData = JsonUtility.ToJson(data);
                     ((TextField)rowColVisual[1]).value = data.col + "";
-                };
-                addButton.style.SetIS_Style(ISMargin.None);
-
-                addButton.style.SetIS_Style(ISPadding.None);
+                });
                 addButton.style.width = Length.Percent(percent / 2);
-                addButton.style.backgroundColor = DocStyle.Current.SuccessColor;
+                if (i == 0)
+                {
+                    addButton.style.marginLeft = Length.Percent(5);
+                    addButton.style.width = Length.Percent(percent / 4);
+                }
                 root.Add(addButton);
+                EnumField field = DocEditor.NewEnumField("", data.anchors[i], (value =>
+                {
+                    data.anchors[i1] = (TextAnchor)value.newValue;
+                    Target.JsonData = JsonUtility.ToJson(data);
+                }));
+                field.style.SetIS_Style(ISPadding.None);
+                field.style.width = Length.Percent(percent / 2);
+                root.Add(field);
             }
+
+            addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
+            {
+                data.AddCol(data.col);
+                Target.JsonData = JsonUtility.ToJson(data);
+                ((TextField)rowColVisual[1]).value = data.col + "";
+            });
+            addButton.style.width = Length.Percent(percent / 4);
+            root.Add(addButton);
 
             return root;
         }
@@ -263,34 +262,21 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement root = new VisualElement();
             root.style.width = width;
             float percent = 89f / data.col;
+            Button addButton;
             for (int i = 0; i < data.row; i++)
             {
                 VisualElement child = new VisualElement();
                 child.style.SetIS_Style(ISFlex.Horizontal);
                 child.pickingMode = PickingMode.Ignore;
                 int i1 = i;
-                if (i != data.row - 1)
+                addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
                 {
-                    Button addButton = new Button();
-
-                    addButton.clicked += () =>
-                    {
-                        data.AddRow(i1);
-                        Target.JsonData = JsonUtility.ToJson(data);
-                        ((TextField)rowColVisual[0]).value = data.row + "";
-                    };
-                    addButton.style.SetIS_Style(ISMargin.None);
-                    addButton.style.SetIS_Style(ISPadding.None);
-                    addButton.style.width = Length.Percent(5);
-                    addButton.style.backgroundColor = DocStyle.Current.SuccessColor;
-                    child.Add(addButton);
-                }
-                else
-                {
-                    ISPosition position = new ISPosition();
-                    position.Left = ISStyleLength.Percent(5);
-                    child.style.SetIS_Style(position);
-                }
+                    data.AddRow(i1);
+                    Target.JsonData = JsonUtility.ToJson(data);
+                    ((TextField)rowColVisual[0]).value = data.row + "";
+                });
+                addButton.style.width = Length.Percent(5);
+                child.Add(addButton);
                 for (int j = 0; j < data.col; j++)
                 {
                     TextField textField = new TextField();
@@ -327,6 +313,16 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             VisualElement deleteColButton = new VisualElement();
             deleteColButton.style.SetIS_Style(ISFlex.Horizontal);
+
+            addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
+            {
+                data.AddRow(data.row);
+                Target.JsonData = JsonUtility.ToJson(data);
+                ((TextField)rowColVisual[0]).value = data.row + "";
+            });
+            addButton.style.width = Length.Percent(5);
+            deleteColButton.Add(addButton);
+
             for (int i = 0;i < data.col; i++)
             {
                 Button deleteButton = new Button();
@@ -338,8 +334,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     ((TextField)rowColVisual[1]).value = data.col + "";
                 };
                 deleteButton.style.SetIS_Style(ISMargin.None);
-                if (i == 0)
-                    deleteButton.style.marginLeft = Length.Percent(5);
                 deleteButton.style.SetIS_Style(ISPadding.None);
                 deleteButton.style.backgroundColor = DocStyle.Current.DangerColor;
                 deleteButton.style.width = Length.Percent(percent);
@@ -355,13 +349,17 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private void geometryChanged(GeometryChangedEvent e)
         {
             ISPosition position = new ISPosition();
-            int row = matrixVisual.childCount - 2;
+            float height;
+            int row = matrixVisual.childCount - 1;
             for (int i = 0;i < row; i++)
             {
-                float height = matrixVisual[i][1].resolvedStyle.height;
-                position.Top = ISStyleLength.Pixel(height / 2);
+                height = matrixVisual[i][1].resolvedStyle.height;
+                position.Top = ISStyleLength.Pixel(-height / 2);
                 matrixVisual[i][0].style.SetIS_Style(position);
             }
+            height = matrixVisual[row][1].resolvedStyle.height;
+            position.Top = ISStyleLength.Pixel(-height / 2);
+            matrixVisual[row][0].style.SetIS_Style(position);
             matrixVisual.UnregisterCallback<GeometryChangedEvent>(geometryChanged);
         }
     }
