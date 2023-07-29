@@ -65,7 +65,16 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - 'In 2.0 if you want to '
+    - In 2.0 you can add your own DocType, and the system will auto detect, Than
+      you can Customiz all contents you want to show. For example, item system in
+      your project, clock display... etc.
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Animation is a big improve in DocumentBuilder, after defined animation beheavior,
+      you can call it with simple API interface. Ofcourse the build-in component
+      contains the default Intro/Outtro animation.
     ObjsData: []
   IntroMode: 1
   OuttroMode: 1

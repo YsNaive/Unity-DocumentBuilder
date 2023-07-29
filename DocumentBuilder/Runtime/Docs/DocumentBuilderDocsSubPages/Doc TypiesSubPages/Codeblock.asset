@@ -27,7 +27,7 @@ MonoBehaviour:
     - Below is the sample using DocVisual
     ObjsData: []
   - VisualID: 7
-    JsonData: '{"MinWidth":-1,"MaxHeight":400,"LineHeightPercent":150}'
+    JsonData: '{"MinWidth":-1,"MaxHeight":300,"LineHeightPercent":150}'
     TextData:
     - "public abstract class DocVisual : VisualElement\r\n{\r\n    public DocVisual()\r\n   
       {\r\n        RegisterCallback<GeometryChangedEvent>(e =>\r\n        {\r\n           

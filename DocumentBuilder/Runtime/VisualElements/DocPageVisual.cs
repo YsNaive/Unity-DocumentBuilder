@@ -15,6 +15,7 @@ namespace NaiveAPI.DocumentBuilder
         public bool IsPlayingAnimation = false;
         int playingCount = 0;
         public DocPageVisual(SODocPage page) {
+            DocRuntime.ApplyStyle(this);
             this.Q("unity-content-container").style.marginRight = Length.Percent(3.5f);
             Target = page;
             Repaint();
@@ -28,16 +29,18 @@ namespace NaiveAPI.DocumentBuilder
                 if (docVisual.VisualID == "1")
                 {
                     docVisual.style.marginLeft = 20;
-                    docVisual.style.marginTop = 10;
+                    docVisual.style.marginTop = DocStyle.Current.ComponentSpace+10;
                 }
                 else
                 {
                     docVisual.style.marginLeft = 40;
-                    docVisual.style.marginTop = 5;
+                    docVisual.style.marginTop = DocStyle.Current.ComponentSpace;
                 }
                 Add(docVisual);
                 visuals.Add(docVisual);
             }
+            if(childCount!=0)
+                this[childCount - 1].style.marginBottom = 400;
         }
         public void PlayIntro(Action callback = null)
         {

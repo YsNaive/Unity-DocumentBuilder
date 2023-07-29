@@ -28,11 +28,18 @@ namespace NaiveAPI.DocumentBuilder
         }
         private void CreateGUI()
         {
-            rootVisualElement.Add(new ScrollView());
-            foreach (var method in typeof(ISMargin).GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance| BindingFlags.Static | BindingFlags.DeclaredOnly))
+            Button btn = null;
+            btn = DocRuntime.NewButton("Button", () =>
             {
-                rootVisualElement[0].Add(DocRuntime.NewTextElement(method.Name + " " + method.IsConstructedGenericMethod));
-            }
+                btn.Highlight(50);
+            });
+            rootVisualElement.Add(btn);
+            rootVisualElement.Add(DocRuntime.NewScrollView());
+            rootVisualElement[1].style.height = 300;
+            rootVisualElement[1].style.width = 300;
+            rootVisualElement[1].Add(DocRuntime.NewEmpty());
+            rootVisualElement[1][0].style.width = 900;
+            rootVisualElement[1][0].style.height = 900;
         }
     }
 }

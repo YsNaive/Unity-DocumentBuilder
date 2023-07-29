@@ -156,7 +156,65 @@ namespace NaiveAPI
             label.style.SetIS_Style(DocStyle.Current.LabelText);
             return label;
         }
+        private static void applyScrollBarStyle(Scroller bar, bool isHor = false)
+        {
+            float width = DocStyle.Current.ScrollerWidth;
+            bar.style.ClearMarginPadding();
+            bar.style.borderLeftWidth = 0;
+            bar.style.borderTopWidth = 0;
+            bar.highButton.style.width = width;
+            bar.highButton.style.height = width;
+            bar.highButton.style.backgroundImage = DocStyle.WhiteArrow;
+            bar.highButton.style.unityBackgroundImageTintColor = DocStyle.Current.SubBackgroundColor;
+            bar.highButton.style.ClearMarginPadding();
+            bar.lowButton.style.width = width;
+            bar.lowButton.style.height = width;
+            bar.lowButton.style.backgroundImage = DocStyle.WhiteArrow;
+            bar.lowButton.style.unityBackgroundImageTintColor = DocStyle.Current.SubBackgroundColor;
+            bar.lowButton.style.ClearMarginPadding();
+            foreach (var ve in bar.slider.contentContainer.Children())
+            {
+                if (isHor)
+                    ve.style.height = DocStyle.Current.ScrollerWidth;
+                else
+                    ve.style.width = DocStyle.Current.ScrollerWidth;
+                ve.style.backgroundColor = Color.clear;
+                ve.style.ClearMarginPadding();
+            }
+            var drag = bar.Q("unity-dragger");
+            drag.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            if (isHor)
+            {
+                bar.slider.style.height = DocStyle.Current.ScrollerWidth;
+                drag.style.height = Length.Percent(80);
+                drag.style.top = Length.Percent(10);
+                bar.lowButton.style.rotate = new Rotate(180);
+            }
+            else
+            {
+                bar.slider.style.width = DocStyle.Current.ScrollerWidth;
+                drag.style.width = Length.Percent(80);
+                drag.style.left = Length.Percent(10);
+                bar.highButton.style.rotate = new Rotate(90);
+                bar.lowButton.style.rotate = new Rotate(270);
+            }
 
+        }
+        public static ScrollView NewScrollView()
+        {
+            
+            ScrollView scrollView = new ScrollView();
+            ApplyStyle(scrollView);
+            return scrollView;
+        }
+
+        public static void ApplyStyle(ScrollView scrollView)
+        {
+            scrollView.style.ClearMarginPadding();
+            applyScrollBarStyle(scrollView.verticalScroller);
+            applyScrollBarStyle(scrollView.horizontalScroller, true);
+            scrollView.verticalScroller.style.width = DocStyle.Current.ScrollerWidth;
+        }
         public static void ApplyStyle(Button button, Color color)
         {
             Color org = color;

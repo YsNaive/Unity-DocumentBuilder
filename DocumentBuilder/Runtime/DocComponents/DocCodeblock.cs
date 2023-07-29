@@ -18,7 +18,7 @@ namespace NaiveAPI.DocumentBuilder
             data ??=  new Data();
             IntroAnimation = (callBack) => { this.Fade(0, 1, 200, 50, callBack); };
             OuttroAnimation = (callBack) => { this.Fade(1, 0, 200, 50, callBack); };
-            codeScrollView = new ScrollView();
+            codeScrollView =DocRuntime.NewScrollView();
             if (Target.TextData.Count == 0) Target.TextData.Add("");
             ISPadding padding = ISPadding.Pixel(DocStyle.Current.MainTextSize / 2);
             codeContents = DocRuntime.NewTextElement($"<line-height={data.LineHeightPercent}%>"+DocumentBuilderParser.CSharpParser(Target.TextData[0]));
@@ -56,7 +56,6 @@ namespace NaiveAPI.DocumentBuilder
                 }).ExecuteLater(1000);
             });
             copy.style.position = Position.Absolute;
-            copy.style.right = 15;
             copy.style.top = 5;
             codeScrollView.style.maxHeight = data.MaxHeight;
 
@@ -68,6 +67,7 @@ namespace NaiveAPI.DocumentBuilder
             RegisterCallback<GeometryChangedEvent>(e =>
             {
                 codeContents.style.marginLeft = lineNumber.layout.width;
+                copy.style.right = codeScrollView.verticalScroller.enabledInHierarchy ? 20 : 5;
             });
         }
 

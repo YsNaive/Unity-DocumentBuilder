@@ -43,7 +43,8 @@ namespace NaiveAPI.DocumentBuilder
         public float MarginVer;
         public float MarginHor;
         public float LineHeight;
-
+        public float ScrollerWidth;
+        public float ComponentSpace;
         public float GUIScale = 1;
 
 
@@ -75,6 +76,8 @@ namespace NaiveAPI.DocumentBuilder
             MarginHor = 0,
             MarginVer = 1,
             LineHeight = 18,
+            ScrollerWidth = 14,
+            ComponentSpace = 10,
         };
         
         public static DocStyle Current => DocCache.Get().CurrentStyle;
@@ -110,6 +113,8 @@ namespace NaiveAPI.DocumentBuilder
             copy.NumberColor = this.NumberColor;
             copy.ControlColor = this.ControlColor;
             copy.CodeBackgroundColor = this.CodeBackgroundColor;
+            copy.ComponentSpace = this.ComponentSpace;
+            copy.ScrollerWidth = this.ScrollerWidth;
 
             return copy;
         }

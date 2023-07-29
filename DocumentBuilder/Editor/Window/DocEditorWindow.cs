@@ -157,6 +157,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 EditorUtility.SetDirty(DocEditorData.Instance);
                 rootVisualElement.Add(playIntro);
                 rootVisualElement.Add(playOuttro);
+                rootVisualElement.Add(forceUpdateToggle);
             });
             rootVisualElement.Add(pageRootSelector);
             pageRootSelector.value = DocEditorData.Instance.EditingDocPage;

@@ -19,6 +19,7 @@ namespace NaiveAPI.DocumentBuilder
         public bool DontPlayAnimation = false;
         public bool IsPlayingAinmation { get; private set; }
         private bool isChangingWidth = false;
+        public VisualElement ChapterMenu;
         public DocBookVisual(SODocPage rootPage)
         {
             style.backgroundColor = DocStyle.Current.BackgroundColor;
@@ -62,9 +63,8 @@ namespace NaiveAPI.DocumentBuilder
                         Remove(DisplayingPage);
                     DisplayingPage = newPage;
                     Add(DisplayingPage);
-                    return;
                 }
-                if (DisplayingPage != null)
+                else if (DisplayingPage != null)
                 {
                     IsPlayingAinmation = true;
                     MenuHandler.LockSelect = true;
@@ -92,6 +92,14 @@ namespace NaiveAPI.DocumentBuilder
                         MenuHandler.LockSelect = false;
                     });
                 }
+
+                if(DisplayingPage != null)
+                {
+                    if(Contains(ChapterMenu))
+                    Remove(ChapterMenu);
+                    ChapterMenu = createChapterMenu();
+                    Add(ChapterMenu);
+                }
             };
             MenuHandler.SetState(DocCache.Get().OpeningBookHierarchy);
             menuScrollView.Add(menuVisual);
@@ -118,6 +126,49 @@ namespace NaiveAPI.DocumentBuilder
             {
                 DisplayingPage.style.width = (layout.width - widthSpace) * (1f - menuWidthPercent);
             }
+        }
+
+        VisualElement createChapterMenu()
+        {
+            var ve = new VisualElement();
+            ve.style.position = Position.Absolute;
+            ve.style.alignItems = Align.FlexStart;
+            ve.style.right = 5;
+            int displayLevel = -1;
+            int lastLevel = 0;
+            int comIndex=0;
+            foreach (var com in DisplayingPage.Target.Components)
+            {
+                if (com.VisualID == "1")
+                {
+                    if (com.TextData.Count != 0)
+                    {
+                        var text = (DocRuntime.NewTextElement("- " + com.TextData[0]));
+                        ve.Add(text);
+                        DocLabel.Data data = JsonUtility.FromJson<DocLabel.Data>(com.JsonData);
+                        data ??= new DocLabel.Data();
+
+                        if(data.Level < lastLevel)
+                        {
+                            displayLevel = 0;
+                        }
+                        else if(data.Level > lastLevel)
+                        {
+                            displayLevel++;
+                        }
+                        lastLevel = data.Level;
+                        text.style.marginLeft = displayLevel * DocStyle.Current.MainTextSize;
+                        int localI = comIndex;
+                        text.RegisterCallback<PointerDownEvent>(e =>
+                        {
+                            DisplayingPage.ScrollTo(DisplayingPage[localI]);
+                            DisplayingPage[localI].Highlight(50, DocStyle.Current.SuccessTextColor);
+                        });
+                    }
+                }
+                comIndex++;
+            }
+            return ve;
         }
     }
 }
