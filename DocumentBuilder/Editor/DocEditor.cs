@@ -104,6 +104,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             if (label != "")
             {
                 enumField.label = label;
+                enumField[0].style.SetIS_Style(DocStyle.Current.ButtonText);
                 enumField[0].style.ClearMarginPadding();
             }
             enumField.Init(initValue);

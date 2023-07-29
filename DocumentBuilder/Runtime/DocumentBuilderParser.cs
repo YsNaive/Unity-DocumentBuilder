@@ -103,9 +103,9 @@ public static class DocumentBuilderParser
         string test = "class|interface|enum|if|else|switch|case|default|do|while|for|foreach|in|break|continue|goto|return|using|using static|new";
         string controlReservedWordPattern = @"\b(?:if|else|switch|case|do|while|for|foreach|in|break|continue|goto|return|catch|try)\b";
         string funcPattern = @"\b((?:(?:public|private|protected|internal|static|readonly|override)\s*)*\s+)?(?!" + test + @"\b)(\w+\s+)(\w+\s*)\(((?:[^)])*)\)";
-        string fieldPattern = @"\b(?:((?:(?:public|private|protected|internal|static|readonly|override)\s*)*)\s+)?(?!" + test + @"\b)(\w+\s+)(\w+\s*)(?:=.*?)?(?:;|{)";
+        string fieldPattern = @"\b(?:((?:(?:public|private|protected|internal|static|readonly|override)\s*)*)\s+)?(?!" + test + @"\b)(?:(\w+)(?:<(\w+)>)?\s+)(\w+\s*)(?:=.*?)?\s*(?:;|{)";
 
-        string reservedWordPattern = @"\b(?:public|private|protected|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
+        string reservedWordPattern = @"\b(?:public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
 
         string instancePattern = @"[^.]\b([A-Za-z_]\w*)[.]";
         string methodPattern = @"\b[.](\w+)(?:<(\w+)>)?\(";
@@ -127,12 +127,14 @@ public static class DocumentBuilderParser
             if (match.Groups[1].Value != "")
                 offset += stringBuilder.UnityRTF(offset + match.Groups[1].Index, match.Groups[1].Length, DocStyle.Current.PrefixColor);
             offset += stringBuilder.UnityRTF(offset + match.Groups[2].Index, match.Groups[2].Length, DocStyle.Current.TypeColor);
-            offset += stringBuilder.UnityRTF(offset + match.Groups[3].Index, match.Groups[3].Length, DocStyle.Current.ArgsColor);
+            if (match.Groups[3].Value != "")
+                offset += stringBuilder.UnityRTF(offset + match.Groups[3].Index, match.Groups[3].Length, DocStyle.Current.TypeColor);
+            offset += stringBuilder.UnityRTF(offset + match.Groups[4].Index, match.Groups[4].Length, DocStyle.Current.ArgsColor);
         }
         matches = Regex.Matches(stringBuilder.ToString(), funcPattern);
         foreach (Match match in matches)
         {
-            string str = DocumentBuilderParser.ParseSyntax(match.Value);
+            string str = ParseSyntax(match.Value);
             stringBuilder.Replace(match.Value, str);
         }
         offset = 0;
