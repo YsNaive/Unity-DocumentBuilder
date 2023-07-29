@@ -128,9 +128,9 @@ namespace NaiveAPI.DocumentBuilder
         {
             public float scale = -1;
             public string url = "";
-            public Mode mode = Mode.Url;
-            public AniMode IntroAniMode = AniMode.None, OuttroAniMode = AniMode.None;
-            public int IntroDuration = 0, OuttroDuration = 0;
+            public Mode mode = Mode.Object;
+            public AniMode IntroAniMode = AniMode.Fade, OuttroAniMode = AniMode.Fade;
+            public int IntroDuration = 250, OuttroDuration = 250;
         }
 
         public enum Mode

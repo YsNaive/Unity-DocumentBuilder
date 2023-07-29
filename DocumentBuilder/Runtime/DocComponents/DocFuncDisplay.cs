@@ -221,8 +221,8 @@ namespace NaiveAPI.DocumentBuilder
             public List<string> ReturnTypesDescription = new List<string>();
             [System.NonSerialized]
             public List<string> ParamsDescription = new List<string>();
-            public AniMode IntroAniMode = AniMode.None, OuttroAniMode = AniMode.None;
-            public int IntroDuration = 0, OuttroDuration = 0;
+            public AniMode IntroAniMode = AniMode.Fade, OuttroAniMode = AniMode.Fade;
+            public int IntroDuration = 250, OuttroDuration = 250;
             public bool isOn;
 
             public Data()

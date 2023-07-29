@@ -98,6 +98,7 @@ public static class DocumentBuilderParser
 
     public static string CSharpParser(string data)
     {
+        string type = @"(\w+)(?:<(\w+)>)?";
         string classPattern = @"\b((?:(?:public|private|protected|internal|static|readonly|override)\s*)*\s+)?(class)\s+(\w+)\s*((?::\s*(?:\w+))(?:(?:\s*,\s*(?:\w+))*))?";
         string stringPattern = @"""([^""]*)""";
         string test = "class|interface|enum|if|else|switch|case|default|do|while|for|foreach|in|break|continue|goto|return|using|using static|new";
@@ -105,10 +106,12 @@ public static class DocumentBuilderParser
         string funcPattern = @"\b((?:(?:public|private|protected|internal|static|readonly|override)\s*)*\s+)?(?!" + test + @"\b)(\w+\s+)(\w+\s*)\(((?:[^)])*)\)";
         string fieldPattern = @"\b(?:((?:(?:public|private|protected|internal|static|readonly|override)\s*)*)\s+)?(?!" + test + @"\b)(?:(\w+)(?:<(\w+)>)?\s+)(\w+\s*)(?:=.*?)?\s*(?:;|{)";
 
+        string newPattern = @"\bnew\s+" + type + @"\(";
         string reservedWordPattern = @"\b(?:public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
 
+
         string instancePattern = @"[^.]\b([A-Za-z_]\w*)[.]";
-        string methodPattern = @"\b[.](\w+)(?:<(\w+)>)?\(";
+        string methodPattern = @"\b[.]" + type + @"\(";
         string numberPattern = @"[^""][+-]?(\d+(?:\.\d+)?[fx]?)";
 
         //string data = File.ReadAllText("C:/Users/howar/Desktop/Unity/Document Builder/Assets/DocumentBuilder/Editor/DocComponents/DocEditFuncDisplay.cs");
@@ -163,6 +166,16 @@ public static class DocumentBuilderParser
         foreach (Match match in matches)
         {
             offset += stringBuilder.UnityRTF(offset + match.Groups[1].Index, match.Groups[1].Length, DocStyle.Current.ArgsColor);
+        }
+        offset = 0;
+        matches = Regex.Matches(stringBuilder.ToString(), newPattern);
+        foreach (Match match in matches)
+        {
+            Debug.Log(match.Groups[1].Value);
+            Debug.Log(match.Groups[2].Value);
+            offset += stringBuilder.UnityRTF(offset + match.Groups[1].Index, match.Groups[1].Length, DocStyle.Current.TypeColor);
+            if (match.Groups[2].Value != "")
+                offset += stringBuilder.UnityRTF(offset + match.Groups[2].Index, match.Groups[2].Length, DocStyle.Current.TypeColor);
         }
         offset = 0;
         matches = Regex.Matches(stringBuilder.ToString(), stringPattern);

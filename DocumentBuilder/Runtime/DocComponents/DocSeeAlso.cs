@@ -90,8 +90,8 @@ namespace NaiveAPI.DocumentBuilder
             public int height = 400;
             public string url = "";
             public Mode mode = Mode.OpenPage;
-            public AniMode IntroAniMode = AniMode.None, OuttroAniMode = AniMode.None;
-            public int IntroDuration = 0, OuttroDuration = 0;
+            public AniMode IntroAniMode = AniMode.Fade, OuttroAniMode = AniMode.Fade;
+            public int IntroDuration = 250, OuttroDuration = 250;
         }
 
         public enum AniMode

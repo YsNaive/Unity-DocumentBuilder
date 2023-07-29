@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static PlasticGui.LaunchDiffParameters;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
@@ -77,24 +76,25 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
 
+            VisualElement childIntro = DocRuntime.NewEmptyHorizontal();
             EnumField introField = new EnumField();
             introField.Init(DocMatrix.AniMode.None);
             introField.value = data.IntroAniMode;
-            introField.style.width = Length.Percent(25);
+            introField.style.width = Length.Percent(50);
             introField.label = "Intro Mode";
             introField[0].style.minWidth = Length.Percent(50);
             introField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             introField.style.ClearMarginPadding();
-            root.Add(introField);
+            childIntro.Add(introField);
             TextField introDurationField = new TextField();
             introDurationField.label = "IntroDuration";
             introDurationField.value = data.IntroDuration.ToString();
-            introDurationField.style.width = Length.Percent(25);
+            introDurationField.style.width = Length.Percent(50);
             introDurationField[0].style.minWidth = Length.Percent(50);
             introDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             introDurationField.visible = data.IntroAniMode != DocMatrix.AniMode.None;
             introDurationField.style.ClearMarginPadding();
-            root.Add(introDurationField);
+            childIntro.Add(introDurationField);
             introField.RegisterValueChangedCallback(value =>
             {
                 data.IntroAniMode = (DocMatrix.AniMode)value.newValue;
@@ -108,25 +108,26 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     data.IntroDuration = duration;
                     Target.JsonData = JsonUtility.ToJson(data);
                 }
-            }); 
+            });
+            VisualElement childOuttro = DocRuntime.NewEmptyHorizontal();
             EnumField outtroField = new EnumField();
             outtroField.Init(DocMatrix.AniMode.None);
             outtroField.label = "Outtro Mode";
             outtroField.value = data.IntroAniMode;
-            outtroField.style.width = Length.Percent(25);
+            outtroField.style.width = Length.Percent(50);
             outtroField[0].style.minWidth = Length.Percent(50);
             outtroField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             outtroField.style.ClearMarginPadding();
-            root.Add(outtroField);
+            childOuttro.Add(outtroField);
             TextField outtroDurationField = new TextField();
             outtroDurationField.label = "OuttroDuration";
             outtroDurationField.value = data.OuttroDuration.ToString();
-            outtroDurationField.style.width = Length.Percent(25);
+            outtroDurationField.style.width = Length.Percent(50);
             outtroDurationField[0].style.minWidth = Length.Percent(50);
             outtroDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             outtroDurationField.visible = data.OuttroAniMode != DocMatrix.AniMode.None;
             outtroDurationField.style.ClearMarginPadding();
-            root.Add(outtroDurationField);
+            childOuttro.Add(outtroDurationField);
             outtroField.RegisterValueChangedCallback(value =>
             {
                 data.OuttroAniMode = (DocMatrix.AniMode)value.newValue;
@@ -141,6 +142,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     Target.JsonData = JsonUtility.ToJson(data);
                 }
             });
+            root.Add(childIntro);
+            root.Add(childOuttro);
 
             return root;
         }

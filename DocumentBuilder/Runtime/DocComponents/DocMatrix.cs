@@ -169,8 +169,8 @@ namespace NaiveAPI.DocumentBuilder
             public string[,] contents;
             public TextAnchor[] anchors;
             public Mode mode = Mode.FixedWidth;
-            public AniMode IntroAniMode = AniMode.None, OuttroAniMode = AniMode.None;
-            public int IntroDuration = 0, OuttroDuration = 0;
+            public AniMode IntroAniMode = AniMode.Fade, OuttroAniMode = AniMode.Fade;
+            public int IntroDuration = 250, OuttroDuration = 250;
 
             public Data()
             {
