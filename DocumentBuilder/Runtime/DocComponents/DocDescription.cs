@@ -17,7 +17,12 @@ namespace NaiveAPI.DocumentBuilder
             Add(text);
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             data ??= new Data();
-            if(data.Type != Type.None)
+            if (text.text == "")
+            {
+                text.text = "Warning ! This is a Empty Description";
+                data.Type = Type.Warning;
+            }
+            if (data.Type != Type.None)
             {
                 text.style.backgroundColor = getTypeColor(data.Type);
                 text.style.color = getTypeTextColor(data.Type);

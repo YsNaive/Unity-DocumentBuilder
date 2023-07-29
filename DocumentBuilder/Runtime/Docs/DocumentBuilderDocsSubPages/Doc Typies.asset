@@ -17,11 +17,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e58e3be222ff1c42b83dbdac42cfa00, type: 2}
   - {fileID: 11400000, guid: 2874f051a9a2e834cb7f6e9e32e62e91, type: 2}
   - {fileID: 11400000, guid: 865cec5ff39cbf0408a9ca4c8c9d9b0a, type: 2}
-  - {fileID: 11400000, guid: 9e039ac7f0c870640b6a086f1ab32aee, type: 2}
   - {fileID: 11400000, guid: 603c6156cad4797438ac52579ad05652, type: 2}
-  - {fileID: 11400000, guid: 7272e166669a7a14cbcfeb8aa779c038, type: 2}
-  - {fileID: 11400000, guid: b6a4e42c13e85c34f909956eea2635a0, type: 2}
   - {fileID: 11400000, guid: 610a40343cb0970499798ede79043e53, type: 2}
+  - {fileID: 11400000, guid: b6a4e42c13e85c34f909956eea2635a0, type: 2}
+  - {fileID: 11400000, guid: 7272e166669a7a14cbcfeb8aa779c038, type: 2}
+  - {fileID: 11400000, guid: 9e039ac7f0c870640b6a086f1ab32aee, type: 2}
   Components:
   - VisualID: 1
     JsonData: 
@@ -29,7 +29,7 @@ MonoBehaviour:
     - Intro
     ObjsData: []
   - VisualID: 2
-    JsonData: 
+    JsonData: '{"Type":0,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
     - 'Here shows all of build-in DocType in DocumentBuilder
 

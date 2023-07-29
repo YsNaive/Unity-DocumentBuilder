@@ -18,12 +18,17 @@ namespace NaiveAPI_Editor.DocumentBuilder
     {
         public List<string> scripts = new List<string>();
 
+        static LoadScriptToDocumentWindow window;
         [MenuItem("Tools/NaiveAPI/Debug/Test")]
         public static void ShowWindow()
         {
-            GetWindow<LoadScriptToDocumentWindow>("Debug DocVisual");
+            if (window != null)
+            {
+                window.Close();
+                window = null;
+            }
+            window = CreateWindow<LoadScriptToDocumentWindow>("Debug DocVisual");
         }
-
         public void CreateGUI()
         {
             /*
@@ -49,8 +54,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Debug.Log(scripts.Count);
             SearchDropdown searchDropdown = new SearchDropdown("", scripts);
             rootVisualElement.Add(searchDropdown);*/
-
-            string data = File.ReadAllText("C:/Users/howar/Desktop/Unity/Document Builder/Assets/DocumentBuilder/RunTime/DocComponents/DocFuncDisplay.cs");
+            
+            string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/RunTime/DocComponents/DocMatrix.cs");
             //data = File.ReadAllText("C:\\Users\\howar\\Desktop\\Unity\\Document Builder\\Assets\\DocumentBuilder\\Editor\\ScriptableObject\\SODocPageEditor.cs");
 
             ScrollView scrollView = new ScrollView();

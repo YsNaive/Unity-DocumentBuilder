@@ -85,8 +85,8 @@ namespace NaiveAPI.DocumentBuilder
                     float width = texture.width * data.scale;
                     if (width > newWidth || data.scale == -1)
                         width = newWidth;
-                    root.style.width = width;
-                    root.style.height = texture.height * (width / texture.width);
+                    root.style.width = width * 0.99f;
+                    root.style.height = (texture.height * (width / texture.width)) * 0.99f;
                 }
             };
 

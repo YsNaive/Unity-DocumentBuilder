@@ -35,7 +35,7 @@ namespace NaiveAPI.DocumentBuilder
                 case AniMode.TextFade:
                     break;
             }
-            ScrollView scrollView = new ScrollView();
+            ScrollView scrollView = DocRuntime.NewScrollView();
             scrollView.style.maxHeight = data.height;
             scrollView.style.overflow = Overflow.Hidden;
             scrollView.style.marginLeft = 2 * DocStyle.Current.MainTextSize;

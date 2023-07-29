@@ -21,6 +21,24 @@ namespace NaiveAPI.DocumentBuilder
             copy.ObjsData = new List<Object>(ObjsData);
             return copy;
         } 
+        public bool ContentsEqual(DocComponent other)
+        {
+            if(VisualID != other.VisualID) return false;
+            if(JsonData != other.JsonData) return false;
+            if(TextData.Count != other.TextData.Count) return false;
+            int i = 0;
+            foreach(string text in TextData) { 
+                if(text != other.TextData[i])return false;
+                i++;
+            }
+            if(ObjsData.Count != other.ObjsData.Count) return false;
+            i = 0;
+            foreach(Object obj in ObjsData) { 
+                if(obj != other.ObjsData[i])return false;
+                i++;
+            }
+            return true;
+        }
     }
 }
 

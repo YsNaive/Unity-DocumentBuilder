@@ -15,13 +15,67 @@ MonoBehaviour:
   Icon: {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
   SubPages: []
   Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Items
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - use items to show a list or feature etc.
+    ObjsData: []
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Settings
+    ObjsData: []
+  - VisualID: 5
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/BJoBgpGo3.png","mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    TextData: []
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Hmm... I think it's clear enought.
+    ObjsData: []
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Show Case
+    ObjsData: []
   - VisualID: 8
-    JsonData: '{"num":3}'
+    JsonData: '{"num":5,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData:
     - Here
-    - Has
-    - 3 Items
+    - we
+    - have
+    - five
+    - items !
     ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
   IntroMode: 1

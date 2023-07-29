@@ -32,7 +32,7 @@ MonoBehaviour:
     - is Function success
     ObjsData: []
   - VisualID: 4
-    JsonData: '{"Name":"Foo2","Syntaxs":[],"ReturnTypes":[],"Params":[],"IntroAniMode":1,"OuttroAniMode":0,"IntroDuration":250,"OuttroDuration":0,"isOn":true}'
+    JsonData: '{"Name":"Foo2","Syntaxs":[],"ReturnTypes":[],"Params":[],"IntroAniMode":1,"OuttroAniMode":0,"IntroDuration":250,"OuttroDuration":0,"isOn":false}'
     TextData:
     - you can also left other things empty
     ObjsData: []

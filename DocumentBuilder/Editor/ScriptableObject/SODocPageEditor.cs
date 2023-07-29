@@ -4,7 +4,9 @@ using NaiveAPI_UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using UnityEditor;
+using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
 using UnityEditorInternal;
 using UnityEngine;
@@ -19,6 +21,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
     {
         public static event Action<SODocPageEditor> OnCreateEditor;
         public static SODocPageEditor Current;
+        
         private void OnEnable()
         {
             OnCreateEditor?.Invoke(this);
@@ -42,6 +45,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         VisualElement introSetting;
         VisualElement outtroSetting;
         ObjectField icon;
+        DocComponent lastOpen;
         List<string> buildinIconList = new List<string>();
         public override VisualElement CreateInspectorGUI()
         {
@@ -71,6 +75,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 root.Insert(1, header);
                 contents.Clear();
                 contents.Add(createEdit());
+                contents.Add(addComponent);
             });
             Button viewMode = DocRuntime.NewButton("View Layout", () =>
             {
@@ -143,7 +148,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             introSetting.Add(durField);
             outtroSetting =DocRuntime.NewEmptyHorizontal();
-            EnumField outroMode = DocEditor.NewEnumField("Outtro Mode", Target.IntroMode, value =>
+            EnumField outroMode = DocEditor.NewEnumField("Outtro Mode", Target.OuttroMode, value =>
             {
                 Target.OuttroMode = (DocPageAniMode)value.newValue;
             });
@@ -188,8 +193,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.schedule.Execute(Save).Every(250);
             contents.Add(createEdit());
             addComponent = new Button();
-            addComponent.text = "Add";
-            addComponent.clicked += () => { EditRoot.Add(createUnit(new DocComponent())); };
+            addComponent.text = "Add Components";
+            addComponent.clicked += () => {
+                unit unit = createUnit(new DocComponent());
+                EditRoot.Add(unit);
+                unit.EditMode();
+            };
             addComponent.style.marginTop = 10;
             contents.Add(addComponent);
             root.Add(contents);
@@ -211,7 +220,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         EditRoot.Clear();
                         foreach (var com in AssetDatabase.LoadAssetAtPath<SODocComponents>(path + '/'+select.value+".asset").Components)
                         {
-                            EditRoot.Add(createUnit(com));
+                            EditRoot.Add(createUnit(com.Copy()));
                         }
                         Save();
                     }
@@ -390,12 +399,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
             public VisualElement toolBar;
             public DocEditField editView;
             public DocComponent docComponent;
+            public int Index
+            {
+                get
+                {
+                    return parent.IndexOf(this);
+                }
+            }
             public void ViewMode()
             {
                 Clear();
                 var ve = DocRuntime.CreateVisual(docComponent);
-                ve.style.opacity = 0.7f;
                 ve.style.marginTop = 7;
+                foreach(var child in ve.Children())child.SetEnabled(false);
                 Add(ve);
                 this[0].RegisterCallback<PointerDownEvent>(e => { EditMode(); });
             }
@@ -405,6 +421,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     u.ViewMode();
                 }
+                Current.lastOpen = docComponent.Copy();
                 Clear();
                 Add(toolBar);
                 Add(editView);
@@ -423,10 +440,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
             unit.toolBar.Add(copyBtn(unit));
             unit.toolBar.Add(pasteBtn(unit));
             unit.toolBar.Add(dupBtn(unit));
+            unit.toolBar.Add(resetBtn(unit));
             unit.toolBar.Add(deleteBtn(unit));
             unit.style.borderTopColor = DocStyle.Current.FrontGroundColor;
-            unit.style.borderBottomColor = DocStyle.Current.SubBackgroundColor;
-            unit.style.borderBottomWidth = 2;
             unit.toolBar.style.marginTop = 7;
             unit.style.paddingBottom = 7;
             unit.ViewMode();
@@ -475,27 +491,48 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.style.marginBottom = 7;
             header.Insert(addPageIndex,root);
         }
+
+        float btnWidth = 50;
         Button insertBtn(VisualElement unit)
         {
             Button button = DocRuntime.NewButton("> Insert", () =>
             {
                 int index = EditRoot.IndexOf(unit);
+                ((unit)EditRoot[index]).ViewMode();
                 EditRoot.Insert(index, createUnit(new DocComponent()));
+                ((unit)EditRoot[index]).EditMode();
             });
-            button.style.width = 60;
+            button.style.width = btnWidth;
+            return button;
+        }
+        Button resetBtn(unit unit)
+        {
+            Button button = DocRuntime.NewButton("Reset",DocStyle.Current.WarningColor, () =>
+            {
+                int i = unit.Index;
+                EditRoot.RemoveAt(i);
+                EditRoot.Insert(i, createUnit(lastOpen.Copy()));
+            });
+            button.style.SetIS_Style(new ISMargin(TextAnchor.MiddleRight));
+            button.style.width = btnWidth;
             return button;
         }
         CheckButton deleteBtn(VisualElement unit)
         {
-            CheckButton button = DocRuntime.NewCheckButton("Delete", () => { EditRoot.RemoveAt(EditRoot.IndexOf(unit)); });
+            CheckButton button = DocRuntime.NewCheckButton("Delete", () => {
+                int index = EditRoot.IndexOf(unit);
+                EditRoot.RemoveAt(index); 
+            });
             button.style.SetIS_Style(new ISMargin(TextAnchor.UpperRight));
-            button.MainBtn.style.width = 80;
+            button.MainBtn.style.width = btnWidth;
             return button;
         }
-        Button dragBtn(VisualElement unit)
+        Button dragBtn(unit unit)
         {
             Button button = DocRuntime.NewButton("Drag", () =>
             {
+                foreach (unit ve in EditRoot.Children())
+                    ve.ViewMode();
                 isDraging = true;
                 dragingTarget = unit;
                 EditRoot.Add(unit);
@@ -506,17 +543,17 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 sumHeight += 400;
                 EditRoot.style.height = sumHeight;
             });
-            button.style.width = 40;
+            button.style.width = btnWidth;
             return button;
         }        
-        Button dupBtn(VisualElement unit)
+        Button dupBtn(unit unit)
         {
             Button button = DocRuntime.NewButton("Dup", () =>
             {
                 int i = EditRoot.IndexOf(unit);
                 EditRoot.Insert(i+1, createUnit(((DocEditField)unit[1]).Target.Copy()));
             });
-            button.style.width = 40;
+            button.style.width = btnWidth;
             return button;
         }
         static DocComponent copyBuffer = null;
@@ -532,7 +569,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     button.text = "Copy";
                 }).ExecuteLater(1000);
             });
-            button.style.width = 60;
+            button.style.width = btnWidth;
             return button;
         }
         Button pasteBtn(unit unit)
@@ -545,7 +582,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     unit.editView.SelectVisualType.value = DocEditor.ID2Name[unit.docComponent.VisualID];
                 }
             });
-            button.style.width = 60;
+            button.style.width = btnWidth;
             return button;
         }
         void endDraging(MouseDownEvent e)
@@ -554,7 +591,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.style.height = Length.Percent(100);
             EditRoot.style.height = Length.Percent(100);
             dragingTarget.style.SetIS_Style(new ISPosition());
-            EditRoot.Insert(calDragingIndex(), dragingTarget);
+            int index = calDragingIndex();
+            EditRoot.Insert(index, dragingTarget);
             dragingTarget = null;
             for (int j = 0; j < EditRoot.childCount; j++)
             {
@@ -609,13 +647,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         void hotkey(KeyDownEvent e)
         {
-            if (e.ctrlKey && e.keyCode == KeyCode.S)
+            if (Event.current.type == EventType.ValidateCommand && Event.current.commandName == "UndoRedoPerformed")
             {
-                Save();
-                foreach (unit u in EditRoot.Children())
-                    u.ViewMode();
+                Event.current.Use();
+            }
+            if (e.ctrlKey)
+            {
+                if (e.keyCode == KeyCode.S)
+                {
+                    Save();
+                    foreach (unit u in EditRoot.Children())
+                        u.ViewMode();
+                }
             }
         }
-
     }
 }

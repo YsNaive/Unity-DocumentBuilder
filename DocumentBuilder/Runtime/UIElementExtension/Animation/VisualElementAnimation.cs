@@ -13,10 +13,10 @@ namespace NaiveAPI_UI
             None = 0,
             Fade = 1
         }
-        public static void Fade(this VisualElement element, float to, float ms, float step = 50, Action callback = null) {
+        public static void Fade(this VisualElement element, float to, float ms, float step = 20, Action callback = null) {
             Fade(element, element.style.opacity.value, to, ms, step, callback);
         }
-        public static void Fade(this VisualElement element, float from, float to, float ms, float step = 50, Action callback = null) {
+        public static void Fade(this VisualElement element, float from, float to, float ms, float step = 20, Action callback = null) {
             int curStep = 0;
             float sumVal = from;
             float stepVal = (to - sumVal)/step;

@@ -15,36 +15,66 @@ MonoBehaviour:
   Icon: {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
   SubPages: []
   Components:
-  - VisualID: 3
-    JsonData: '{"row":1,"col":3,"anchors":[3,3,3],"mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+  - VisualID: 1
+    JsonData: 
     TextData:
-    - This one
-    - will
-    - Fix text width
-    - 
-    - 
-    - 
-    - Left
-    - Mid
-    - Right
-    - 
-    - 
-    - 
+    - Matrix
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - The Matrix can show in any n*m, and can fix its contents or screen width.
+    ObjsData: []
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Settings
+    ObjsData: []
+  - VisualID: 5
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/BJHbhhzoh.png","mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    TextData: []
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Type number in row/col can change martix size directly, you can also is green/red
+      button to add/remove line. For the fixed mode, fixed text to resize matrix
+      with its contents, fixed width to current screen width. Finaly, the text anchor
+      can be change by col major.
+    ObjsData: []
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Show Case
     ObjsData: []
   - VisualID: 3
-    JsonData: '{"row":4,"col":3,"anchors":[3,4,5],"mode":1,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    JsonData: '{"row":2,"col":3,"anchors":[3,3,3],"mode":1,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
     TextData:
-    - This one
-    - will fix to
-    - text width
-    - and with
-    - different
-    - text anchor
-    - 
-    - 
-    - 
+    - Fix
+    - with
+    - text
+    - And
+    - No
+    - Anchor
+    ObjsData: []
+  - VisualID: 3
+    JsonData: '{"row":2,"col":3,"anchors":[3,4,5],"mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    TextData:
+    - Fix
+    - with
+    - width
     - Left
-    - Mid
+    - 'Mid
+
+      Also Newline'
     - Right
     ObjsData: []
   IntroMode: 1

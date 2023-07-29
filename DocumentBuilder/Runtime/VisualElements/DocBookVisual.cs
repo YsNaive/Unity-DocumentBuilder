@@ -136,32 +136,35 @@ namespace NaiveAPI.DocumentBuilder
             ve.style.alignItems = Align.FlexStart;
             ve.style.right = Length.Percent(3.5f);
             ve.style.top = Length.Percent(1f);
-            int displayLevel = -1;
-            int lastLevel = 0;
             int comIndex = 0;
             var chapInfo = DocRuntime.NewEmpty();
             var color = DocStyle.Current.CodeBackgroundColor;
             color.a = 0.7f;
             chapInfo.style.backgroundColor = color;
-            chapInfo.style.SetIS_Style(ISPadding.Percent(5));
+            chapInfo.style.SetIS_Style(ISPadding.Percent(15));
             chapInfo.style.SetIS_Style(ISRadius.Percent(10));
             bool isOpen = false;
             var btn = DocRuntime.NewTextElement("☰");
-            btn.RegisterCallback<PointerDownEvent>(e =>
+            btn.RegisterCallback<PointerEnterEvent>(e =>
             {
-                isOpen = !isOpen;
-                if (isOpen)
+                if (!isOpen)
                 {
+                    isOpen = true;
                     chapInfo.Fade(1, 500);
                     chapInfo.style.display = DisplayStyle.Flex;
                 }
-                else
+            });
+            chapInfo.RegisterCallback<PointerLeaveEvent>((e) =>
+            {
+                if (isOpen)
                 {
-                    chapInfo.Fade(0, 500, 50, () => { chapInfo.style.display = DisplayStyle.None; });
+                    isOpen = false;
+                    chapInfo.Fade(0, 300, 50, () => { chapInfo.style.display = DisplayStyle.None; });
                 }
             });
             btn.style.fontSize = btn.style.fontSize.value.value * 1.5f;
-            btn.style.SetIS_Style(new ISMargin(TextAnchor.UpperRight));
+            btn.style.position = Position.Absolute;
+            btn.style.right = 1;
             foreach (var com in DisplayingPage.Target.Components)
             {
                 if (com.VisualID == "1")
@@ -173,16 +176,7 @@ namespace NaiveAPI.DocumentBuilder
                         DocLabel.Data data = JsonUtility.FromJson<DocLabel.Data>(com.JsonData);
                         data ??= new DocLabel.Data();
 
-                        if(data.Level < lastLevel)
-                        {
-                            displayLevel = 0;
-                        }
-                        else if(data.Level > lastLevel)
-                        {
-                            displayLevel++;
-                        }
-                        lastLevel = data.Level;
-                        text.style.marginLeft = displayLevel * DocStyle.Current.MainTextSize;
+                        text.style.marginLeft = data.Level * DocStyle.Current.MainTextSize;
                         int localI = comIndex;
                         text.RegisterCallback<PointerDownEvent>(e =>
                         {

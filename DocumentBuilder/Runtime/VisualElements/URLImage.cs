@@ -23,13 +23,13 @@ namespace NaiveAPI.DocumentBuilder
         string cachePath;
         public URLImage(string url, Action<Texture2D> onTextureLoaded)
         {
+            if (string.IsNullOrEmpty(url)) return;
             style.SetIS_Style(DocStyle.Current.LabelText);
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.unityTextAlign = TextAnchor.MiddleCenter;
             string path = Application.temporaryCachePath + "/imgCache";
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-
             cachePath =url;
             foreach (char c in Path.GetInvalidPathChars())
                 cachePath = cachePath.Replace(c, '_');

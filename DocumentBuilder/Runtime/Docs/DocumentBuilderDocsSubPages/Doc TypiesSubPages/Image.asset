@@ -15,23 +15,65 @@ MonoBehaviour:
   Icon: {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
   SubPages: []
   Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Image
+    ObjsData: []
   - VisualID: 2
     JsonData: 
     TextData:
-    - Image below is from Asset/ folder
+    - Image can shown by using Texture2D in project or online URL
+    ObjsData: []
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Settings
     ObjsData: []
   - VisualID: 5
-    JsonData: '{"scale":3.0,"url":"","mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/r1tN0hfjn.png","mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    TextData: []
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'When the scale is -1, the image will auto fix on screen width, if not, the
+      width will be img width * scale.
+
+      While using URL mode, system will download
+      the image in project cache folder in releated path "/imgCache" If needed, please
+      delete your self.'
+    ObjsData: []
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Show Case
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This is image from project. and set scale to 3.
+    ObjsData: []
+  - VisualID: 5
+    JsonData: '{"scale":3.0,"url":"","mode":1,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
     TextData: []
     ObjsData:
-    - {fileID: 2800000, guid: 3543eaffc785cee4a879a77c6b51fede, type: 3}
+    - {fileID: 2800000, guid: 3b4a426ebf8f6c94cac65191a2817164, type: 3}
   - VisualID: 2
     JsonData: 
     TextData:
-    - And this is download from URL
+    - This is image from URL & fix screen width.
     ObjsData: []
   - VisualID: 5
-    JsonData: '{"scale":0.20000000298023225,"url":"https://hackmd.io/_uploads/SkEJcXlsh.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/SkEJcXlsh.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData: []
     ObjsData: []
   IntroMode: 1

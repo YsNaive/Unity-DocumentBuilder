@@ -36,6 +36,27 @@ MonoBehaviour:
     - Hint
     ObjsData:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
   - VisualID: 0
     JsonData: 
     TextData: []
@@ -46,13 +67,32 @@ MonoBehaviour:
     - Settings
     ObjsData: []
   - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/HyBfRKzo3.png","mode":1,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/S1IafqGi2.png","mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
     TextData: []
     ObjsData: []
   - VisualID: 2
     JsonData: 
     TextData:
-    - while editting, what is the value means
+    - in & out is animation type, the number after is time, below is the animation
+      you can ues on this visual.
+    ObjsData: []
+  - VisualID: 3
+    JsonData: '{"row":4,"col":3,"anchors":[3,3,3],"mode":1,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    TextData:
+    - 
+    - Usage
+    - Num means
+    - None
+    - dont play animation
+    - N/A
+    - Fade
+    - Fade in / out
+    - how long does it takes
+    - TextFade
+    - Text Fade in / out
+    - 'how long does one char apear
+
+      (total time = content length * num)'
     ObjsData: []
   - VisualID: 0
     JsonData: 
@@ -62,6 +102,31 @@ MonoBehaviour:
     JsonData: 
     TextData:
     - Show Case
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This description with no theme
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"Type":1,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
+    TextData:
+    - This is Success
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"Type":2,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
+    TextData:
+    - Something should be notice
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"Type":3,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
+    TextData:
+    - Use this carefuly
+    ObjsData: []
+  - VisualID: 2
+    JsonData: '{"Type":4,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
+    TextData:
+    - Maybe this hint can help you
     ObjsData: []
   IntroMode: 1
   OuttroMode: 1
