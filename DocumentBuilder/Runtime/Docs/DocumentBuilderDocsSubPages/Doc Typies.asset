@@ -21,6 +21,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 603c6156cad4797438ac52579ad05652, type: 2}
   - {fileID: 11400000, guid: 7272e166669a7a14cbcfeb8aa779c038, type: 2}
   - {fileID: 11400000, guid: b6a4e42c13e85c34f909956eea2635a0, type: 2}
+  - {fileID: 11400000, guid: 610a40343cb0970499798ede79043e53, type: 2}
   Components:
   - VisualID: 1
     JsonData: 
@@ -35,16 +36,19 @@ MonoBehaviour:
 '
     ObjsData: []
   - VisualID: 1
-    JsonData: 
+    JsonData: '{"Level":1}'
     TextData:
     - Build-in ID Tabel
     ObjsData: []
   - VisualID: 3
-    JsonData: '{"row":8,"col":3,"anchors":[3,4,4],"mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    JsonData: '{"row":10,"col":3,"anchors":[3,4,4],"mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData:
     - Visual Name
     - ID
     - to .md
+    - Dividline
+    - 0
+    - YES
     - Label
     - 1
     - YES
@@ -66,6 +70,9 @@ MonoBehaviour:
     - Codeblock
     - 7
     - PART
+    - Items
+    - 8
+    - YES
     ObjsData: []
   IntroMode: 3
   OuttroMode: 1

@@ -1,4 +1,4 @@
-using NaiveAPI_UI;
+﻿using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,11 +24,11 @@ namespace NaiveAPI.DocumentBuilder
         {
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             menuWidthPercent = DocCache.Get().DocMenuWidth;
-            menuWidthPercent=Mathf.Clamp(menuWidthPercent, 0.01f, 1f);
+            menuWidthPercent = Mathf.Clamp(menuWidthPercent, 0.01f, 1f);
             if (rootPage == null) return;
             style.SetIS_Style(ISFlex.Horizontal);
             divLineBar.style.width = 5;
-            divLineBar.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            divLineBar.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
             divLineBar.RegisterCallback<PointerDownEvent>(e =>{isChangingWidth = true;});
             RegisterCallback<PointerUpEvent>(e =>{isChangingWidth = false;});
             RegisterCallback<PointerLeaveEvent>(e => { isChangingWidth = false; });
@@ -63,6 +63,7 @@ namespace NaiveAPI.DocumentBuilder
                         Remove(DisplayingPage);
                     DisplayingPage = newPage;
                     Add(DisplayingPage);
+                    repaintChapter();
                 }
                 else if (DisplayingPage != null)
                 {
@@ -77,6 +78,7 @@ namespace NaiveAPI.DocumentBuilder
                         {
                             IsPlayingAinmation = false;
                             MenuHandler.LockSelect = false;
+                            repaintChapter();
                         });
                     });
                 }
@@ -90,15 +92,8 @@ namespace NaiveAPI.DocumentBuilder
                     {
                         IsPlayingAinmation = false;
                         MenuHandler.LockSelect = false;
+                        repaintChapter();
                     });
-                }
-
-                if(DisplayingPage != null)
-                {
-                    if(Contains(ChapterMenu))
-                    Remove(ChapterMenu);
-                    ChapterMenu = createChapterMenu();
-                    Add(ChapterMenu);
                 }
             };
             MenuHandler.SetState(DocCache.Get().OpeningBookHierarchy);
@@ -127,24 +122,54 @@ namespace NaiveAPI.DocumentBuilder
                 DisplayingPage.style.width = (layout.width - widthSpace) * (1f - menuWidthPercent);
             }
         }
-
+        void repaintChapter()
+        {
+            if (Contains(ChapterMenu))
+                Remove(ChapterMenu);
+            ChapterMenu = createChapterMenu();
+            Add(ChapterMenu);
+        }
         VisualElement createChapterMenu()
         {
             var ve = new VisualElement();
             ve.style.position = Position.Absolute;
             ve.style.alignItems = Align.FlexStart;
-            ve.style.right = 5;
+            ve.style.right = Length.Percent(3.5f);
+            ve.style.top = Length.Percent(1f);
             int displayLevel = -1;
             int lastLevel = 0;
-            int comIndex=0;
+            int comIndex = 0;
+            var chapInfo = DocRuntime.NewEmpty();
+            var color = DocStyle.Current.CodeBackgroundColor;
+            color.a = 0.7f;
+            chapInfo.style.backgroundColor = color;
+            chapInfo.style.SetIS_Style(ISPadding.Percent(5));
+            chapInfo.style.SetIS_Style(ISRadius.Percent(10));
+            bool isOpen = false;
+            var btn = DocRuntime.NewTextElement("☰");
+            btn.RegisterCallback<PointerDownEvent>(e =>
+            {
+                isOpen = !isOpen;
+                if (isOpen)
+                {
+                    chapInfo.Fade(1, 500);
+                    chapInfo.style.display = DisplayStyle.Flex;
+                }
+                else
+                {
+                    chapInfo.Fade(0, 500, 50, () => { chapInfo.style.display = DisplayStyle.None; });
+                }
+            });
+            btn.style.fontSize = btn.style.fontSize.value.value * 1.5f;
+            btn.style.SetIS_Style(new ISMargin(TextAnchor.UpperRight));
             foreach (var com in DisplayingPage.Target.Components)
             {
                 if (com.VisualID == "1")
                 {
                     if (com.TextData.Count != 0)
                     {
-                        var text = (DocRuntime.NewTextElement("- " + com.TextData[0]));
-                        ve.Add(text);
+                        var text = (DocRuntime.NewTextElement("·  " + com.TextData[0]));
+                        chapInfo.Add(text);
                         DocLabel.Data data = JsonUtility.FromJson<DocLabel.Data>(com.JsonData);
                         data ??= new DocLabel.Data();
 
@@ -168,6 +193,10 @@ namespace NaiveAPI.DocumentBuilder
                 }
                 comIndex++;
             }
+            if (chapInfo.childCount == 0) return ve;
+            chapInfo.style.display = DisplayStyle.None;
+            ve.Add(btn);
+            ve.Add(chapInfo);
             return ve;
         }
     }

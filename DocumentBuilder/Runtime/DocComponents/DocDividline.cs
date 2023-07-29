@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace NaiveAPI.DocumentBuilder
+{
+    public class DocDividline : DocVisual
+    {
+        public override string VisualID => "0";
+
+        protected override void OnCreateGUI()
+        {
+            style.height = DocStyle.Current.MainTextSize *0.3f;
+            style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            style.marginTop = style.height;
+            style.marginBottom = style.height;
+        }
+    }
+}

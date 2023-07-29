@@ -67,6 +67,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         Vector2 pos = Vector2.zero;
         Button playIntro;
         Button playOuttro;
+        Button repaint;
         Toggle forceUpdateToggle;
         bool forceUpdate = true;
         IVisualElementScheduledItem update;
@@ -89,6 +90,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }).Every(500);
             playIntro = DocRuntime.NewButton("Play Intro", DocStyle.Current.HintColor, () =>
             {
+                if (BookVisual.DisplayingPage == null) return;
                 if (!BookVisual.DisplayingPage.IsPlayingAnimation)
                 {
                     if (BookVisual.DisplayingPage != null)
@@ -97,18 +99,27 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             playOuttro = DocRuntime.NewButton("Play Outtro", DocStyle.Current.HintColor, () =>
             {
+                if (BookVisual.DisplayingPage == null) return;
                 if (!BookVisual.DisplayingPage.IsPlayingAnimation)
                 {
                     if (BookVisual.DisplayingPage != null)
                         BookVisual.DisplayingPage.PlayOuttro(null);
                 }
             });
+            repaint = DocRuntime.NewButton("Repaint", DocStyle.Current.HintColor, () =>
+            {
+                BookVisual.MenuHandler.Selecting = BookVisual.MenuHandler.Selecting;
+            });
+            repaint.style.position = Position.Absolute;
             playIntro.style.position = Position.Absolute;
             playOuttro.style.position = Position.Absolute;
+            repaint.style.bottom = 75;
             playIntro.style.bottom = 55;
             playOuttro.style.bottom = 35;
+            repaint.style.right = 5;
             playIntro.style.right = 5;
             playOuttro.style.right = 5;
+            repaint.style.width = 80;
             playIntro.style.width = 80;
             playOuttro.style.width = 80;
 
@@ -157,6 +168,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 EditorUtility.SetDirty(DocEditorData.Instance);
                 rootVisualElement.Add(playIntro);
                 rootVisualElement.Add(playOuttro);
+                rootVisualElement.Add(repaint);
                 rootVisualElement.Add(forceUpdateToggle);
             });
             rootVisualElement.Add(pageRootSelector);
@@ -164,6 +176,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             rootVisualElement.Add(playIntro);
             rootVisualElement.Add(playOuttro);
+            rootVisualElement.Add(repaint);
             rootVisualElement.Add(forceUpdateToggle);
         }
     }

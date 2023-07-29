@@ -158,6 +158,7 @@ namespace NaiveAPI
         }
         private static void applyScrollBarStyle(Scroller bar, bool isHor = false)
         {
+            ISBorder border = new ISBorder();
             float width = DocStyle.Current.ScrollerWidth;
             bar.style.ClearMarginPadding();
             bar.style.borderLeftWidth = 0;
@@ -167,11 +168,16 @@ namespace NaiveAPI
             bar.highButton.style.backgroundImage = DocStyle.WhiteArrow;
             bar.highButton.style.unityBackgroundImageTintColor = DocStyle.Current.SubBackgroundColor;
             bar.highButton.style.ClearMarginPadding();
+            bar.highButton.style.backgroundColor = Color.clear;
+            bar.highButton.style.SetIS_Style(border);
             bar.lowButton.style.width = width;
             bar.lowButton.style.height = width;
             bar.lowButton.style.backgroundImage = DocStyle.WhiteArrow;
             bar.lowButton.style.unityBackgroundImageTintColor = DocStyle.Current.SubBackgroundColor;
             bar.lowButton.style.ClearMarginPadding();
+            bar.lowButton.style.backgroundColor = Color.clear;
+            bar.lowButton.style.SetIS_Style(border);
+            bar.contentContainer.style.backgroundColor = Color.clear;
             foreach (var ve in bar.slider.contentContainer.Children())
             {
                 if (isHor)
@@ -181,6 +187,9 @@ namespace NaiveAPI
                 ve.style.backgroundColor = Color.clear;
                 ve.style.ClearMarginPadding();
             }
+            var dragContainer = bar.Q("unity-tracker");
+            dragContainer.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            dragContainer.style.SetIS_Style(border);
             var drag = bar.Q("unity-dragger");
             drag.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             if (isHor)
