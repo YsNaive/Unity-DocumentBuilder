@@ -73,11 +73,31 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return  objectField;
         }
         
+        public static IntegerField NewIntField(string label, EventCallback<ChangeEvent<int>> valueChange = null)
+        {
+            IntegerField integerField = new IntegerField();
+            integerField.style.ClearPadding();
+            DocRuntime.ApplyMargin(integerField);
+            integerField[0].style.ClearMarginPadding();
+            integerField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            integerField[0].style.minHeight = 18;
+            integerField.style.height = 18;
+            if (label != "")
+            {
+                integerField.label = label;
+                integerField[0].style.ClearMarginPadding();
+                integerField[0].style.minHeight = 18;
+            }
+            if (valueChange != null)
+                integerField.RegisterValueChangedCallback(valueChange);
+            return integerField;
+        }
         public static EnumField NewEnumField(string label, Enum initValue, EventCallback<ChangeEvent<Enum>> valueChange = null)
         {
             EnumField enumField = new EnumField();
             enumField.style.ClearPadding();
             DocRuntime.ApplyMargin(enumField);
+            enumField.style.ClearMarginPadding();
             enumField[0].style.ClearMarginPadding();
             enumField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             enumField[0].style.minHeight = 18;

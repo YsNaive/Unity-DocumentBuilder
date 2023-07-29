@@ -26,4 +26,5 @@ MonoBehaviour:
   FavoriteDocVisualID:
   - 1
   - 2
+  - 7
   whiteStar: {fileID: 2800000, guid: 077f59a9c993b4943a6b58f954f18e4c, type: 3}

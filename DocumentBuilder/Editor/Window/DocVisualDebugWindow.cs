@@ -50,9 +50,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             editText.style.borderBottomWidth = 2f;
             viewText = new TextElement();
             viewText.text = " View Mode";
-            viewText.style.borderBottomColor = Color.gray;
-            viewText.style.borderBottomWidth = 2f;
-            viewText.style.marginTop = 30;
             dataText = new TextElement();
             dataText.text = " Data";
             dataText.style.borderBottomColor = Color.gray;
@@ -66,6 +63,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
 
         TextElement editText, viewText, dataText;
+        bool forceUpdate = false;
         private VisualElement createView()
         {
             VisualElement root = new VisualElement();
@@ -75,13 +73,37 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.Add(DocEditor.CreateEditVisual(docComponent));
             root.schedule.Execute(() =>
             {
+                if (this.forceUpdate)
+                {
+                    var ve = root.Q<DocVisual>();
+                    int i = root.IndexOf(ve);
+                    if (ve != null)
+                        root.Remove(ve);
+                    root.Insert(i, DocRuntime.CreateVisual(docComponent));
+                }
+            }).Every(250);
+            var viewbar = DocRuntime.NewEmptyHorizontal();
+            Toggle forceUpdate = new Toggle();
+            forceUpdate.RegisterValueChangedCallback(e => { this.forceUpdate = e.newValue; });
+            viewText.style.width = Length.Percent(50);
+            forceUpdate.style.width = Length.Percent(25);
+            forceUpdate.text = "Force Update";
+            Button repaint = DocRuntime.NewButton("Repaint", () =>
+            {
                 var ve = root.Q<DocVisual>();
                 int i = root.IndexOf(ve);
                 if (ve != null)
                     root.Remove(ve);
                 root.Insert(i, DocRuntime.CreateVisual(docComponent));
-            }).Every(250);
-            root.Add(viewText);
+            });
+            repaint.style.width = Length.Percent(25);
+            viewbar.Add(viewText);
+            viewbar.Add(forceUpdate);
+            viewbar.Add(repaint);
+            viewbar.style.marginTop = 30;
+            viewbar.style.borderBottomColor = Color.gray;
+            viewbar.style.borderBottomWidth = 2f;
+            root.Add(viewbar);
             root.Add(DocRuntime.CreateVisual(docComponent));
             root.Add(dataText);
             root.Add(new IMGUIContainer(() =>

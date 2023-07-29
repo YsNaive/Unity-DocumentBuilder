@@ -88,7 +88,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     if(DocEditor.ID2Name.TryGetValue(id, out name))
                     {
                         if (name == "None") continue;
-                        Button button = DocRuntime.NewButton(name, () =>
+
+                        string displayName;
+                        int i = name.LastIndexOf('/');
+                        if(i != -1)
+                            displayName = name.Substring(i+1);
+                        else displayName = name;
+                        Button button = DocRuntime.NewButton(displayName, () =>
                         {
                             selectVisualType.value = name;
                         });

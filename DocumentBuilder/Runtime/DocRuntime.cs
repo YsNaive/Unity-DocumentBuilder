@@ -145,7 +145,7 @@ namespace NaiveAPI
             textElement.text = text;
             textElement.style.ClearPadding();
             ApplyMargin(textElement);
-            textElement.style.height = DocStyle.Current.LineHeight;
+            textElement.style.whiteSpace = WhiteSpace.Normal;
             textElement.style.SetIS_Style(DocStyle.Current.MainText);
             return textElement;
         }

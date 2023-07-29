@@ -46,8 +46,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override VisualElement CreateInspectorGUI()
         {
             Target = target as SODocPage;
-            #region mod bar
             root = DocRuntime.NewEmpty();
+            #region mod bar
             root.style.SetIS_Style(ISPadding.Pixel(10));
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             root.RegisterCallback<GeometryChangedEvent>(e =>
@@ -184,15 +184,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             header.style.marginBottom = 20;
             root.Add(header);
             #endregion
-
-            root.RegisterCallback<KeyDownEvent>(e =>
-            {
-                if (e.ctrlKey && e.keyCode == KeyCode.S) { 
-                    Save();
-                    foreach (unit u in EditRoot.Children())
-                        u.ViewMode();
-                }
-            });
             root.schedule.Execute(Save).Every(250);
             contents.Add(createEdit());
             addComponent = new Button();
@@ -321,6 +312,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("SubPages"));
             }));
             header.Add(loadAndSave);
+            root.schedule.Execute(() =>
+            {
+                root.panel.visualTree.RegisterCallback<KeyDownEvent>(hotkey, TrickleDown.TrickleDown);
+            }).ExecuteLater(500);
             return root;
         }
         private void OnDisable() { Save(); }
@@ -578,6 +573,16 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     choice.Add(temp.name);
             }
             return choice;
+        }
+
+        void hotkey(KeyDownEvent e)
+        {
+            if (e.ctrlKey && e.keyCode == KeyCode.S)
+            {
+                Save();
+                foreach (unit u in EditRoot.Children())
+                    u.ViewMode();
+            }
         }
     }
 }

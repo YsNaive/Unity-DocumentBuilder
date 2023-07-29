@@ -12,8 +12,9 @@ namespace NaiveAPI.DocumentBuilder
         PageMenuVisual menuVisual;
         public PageMenuHandler MenuHandler = new PageMenuHandler();
         VisualElement divLineBar = new VisualElement();
+        ScrollView menuScrollView = new ScrollView();
         public DocPageVisual DisplayingPage;
-        float menuWidthPercent = 0.3f;
+        float menuWidthPercent;
         float widthSpace = 15;
         public bool DontPlayAnimation = false;
         public bool IsPlayingAinmation { get; private set; }
@@ -21,16 +22,24 @@ namespace NaiveAPI.DocumentBuilder
         public DocBookVisual(SODocPage rootPage)
         {
             style.backgroundColor = DocStyle.Current.BackgroundColor;
+            menuWidthPercent = DocCache.Get().DocMenuWidth;
+            menuWidthPercent=Mathf.Clamp(menuWidthPercent, 0.01f, 1f);
             if (rootPage == null) return;
             style.SetIS_Style(ISFlex.Horizontal);
             divLineBar.style.width = 5;
             divLineBar.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             divLineBar.RegisterCallback<PointerDownEvent>(e =>{isChangingWidth = true;});
-            divLineBar.RegisterCallback<PointerUpEvent>(e =>{isChangingWidth = true;});
-            divLineBar.RegisterCallback<PointerLeaveEvent>(e =>{isChangingWidth = false;});
-            divLineBar.RegisterCallback<PointerMoveEvent>(e =>
+            RegisterCallback<PointerUpEvent>(e =>{isChangingWidth = false;});
+            RegisterCallback<PointerLeaveEvent>(e => { isChangingWidth = false; });
+            RegisterCallback<PointerMoveEvent>(e =>
             {
-                Debug.Log(e.position);
+                if (isChangingWidth)
+                {
+                    menuWidthPercent = e.position.x/ layout.width;
+                    menuWidthPercent = Mathf.Clamp(menuWidthPercent, 0.01f, 1f);
+                    DocCache.Get().DocMenuWidth = menuWidthPercent;
+                    setMenuWidth();
+                }
             });
             
 
@@ -85,7 +94,6 @@ namespace NaiveAPI.DocumentBuilder
                 }
             };
             MenuHandler.SetState(DocCache.Get().OpeningBookHierarchy);
-            ScrollView menuScrollView = new ScrollView();
             menuScrollView.Add(menuVisual);
             menuScrollView.mode = ScrollViewMode.VerticalAndHorizontal;
             Add(menuScrollView);
@@ -95,11 +103,7 @@ namespace NaiveAPI.DocumentBuilder
             {
                 if (e.oldRect.width != e.newRect.width)
                 {
-                    menuScrollView.style.width =( e.newRect.width- widthSpace) * menuWidthPercent;
-                    if (DisplayingPage != null)
-                    {
-                        DisplayingPage.style.width = (e.newRect.width - widthSpace) * (1f- menuWidthPercent);
-                    }
+                    setMenuWidth();
                 }
                 if (e.oldRect.height != e.newRect.height)
                 {
@@ -109,7 +113,11 @@ namespace NaiveAPI.DocumentBuilder
         }
         void setMenuWidth()
         {
-
+            menuScrollView.style.width = (layout.width - widthSpace) * menuWidthPercent;
+            if (DisplayingPage != null)
+            {
+                DisplayingPage.style.width = (layout.width - widthSpace) * (1f - menuWidthPercent);
+            }
         }
     }
 }

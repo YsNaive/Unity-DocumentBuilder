@@ -23,38 +23,21 @@ MonoBehaviour:
     - Document Builder
     ObjsData: []
   - VisualID: 2
-    JsonData: '{"AnimateMode":1,"IntroAniTime":25}'
+    JsonData: '{"Type":3,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
-    - 'asdwd
-
-
-      QQQQ
-
-
-
-
-      23131351'
+    - 132\\n321
     ObjsData: []
-  - VisualID: 
-    JsonData: 
-    TextData: []
-    ObjsData: []
-  - VisualID: 2
-    JsonData: '{"AnimateMode":1,"IntroAniTime":25}'
+  - VisualID: 7
+    JsonData: '{"MinWidth":-1,"MaxHeight":300,"LineHeightPercent":100}'
     TextData:
-    - 'asdwd
-
-
-      QQQQ
-
-
-
-
-      23131351'
-    ObjsData: []
-  - VisualID: 
-    JsonData: 
-    TextData: []
+    - "    public class DocComponent\r\n    {\r\n        public string VisualID =
+      string.Empty;\r\n        public string JsonData = string.Empty;\r\n       
+      public List<string> TextData = new List<string>();\r\n        public List<Object>
+      ObjsData = new List<Object>();\r\n\r\n        public DocComponent Copy()\r\n       
+      {\r\n            DocComponent copy = new DocComponent();\r\n            copy.VisualID
+      = VisualID;\r\n            copy.JsonData = JsonData;\r\n            copy.TextData
+      = TextData;\r\n            copy.ObjsData = ObjsData;\r\n            return
+      copy;\r\n        } \r\n    }\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
     ObjsData: []
   IntroMode: 3
   OuttroMode: 2

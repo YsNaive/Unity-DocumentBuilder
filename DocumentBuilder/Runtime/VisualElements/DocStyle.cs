@@ -29,6 +29,7 @@ namespace NaiveAPI.DocumentBuilder
         public Color StringColor;
         public Color NumberColor;
         public Color ControlColor;
+        public Color CodeBackgroundColor;
 
         public Color SuccessColor;
         public Color WarningColor;
@@ -61,17 +62,18 @@ namespace NaiveAPI.DocumentBuilder
             SuccessColor = new Color(0.2f, 0.3f, 0.2f),
             WarningColor = new Color(0.3f, 0.3f, 0.2f),
             DangerColor = new Color(0.3f, 0.2f, 0.2f),
-            HintColor = new Color(0.2f, 0.2f, 0.3f),
+            HintColor = new Color(0.2f, 0.25f, 0.3f),
             SuccessTextColor = new Color(0.7f, 0.9f, 0.7f),
             WarningTextColor = new Color(0.9f, 0.9f, 0.7f),
             DangerTextColor = new Color(0.9f, 0.7f, 0.7f),
-            HintTextColor = new Color(0.7f, 0.7f, 0.9f),
+            HintTextColor = new Color(0.8f, 0.9f, 1f),
             PrefixColor = new Color(0.2f, 0.4f, 0.6f),
             StringColor = new Color(0.5f, 0.35f, 0.2f),
             NumberColor = new Color(0.6f, 0.8f, 0.6f),
             ControlColor = new Color(0.8f, 0.3f, 0.6f),
+            CodeBackgroundColor = new Color(0.1f, 0.1f, 0.12f),
             MarginHor = 0,
-            MarginVer = 3,
+            MarginVer = 1,
             LineHeight = 18,
         };
         
@@ -107,6 +109,7 @@ namespace NaiveAPI.DocumentBuilder
             copy.StringColor = this.StringColor;
             copy.NumberColor = this.NumberColor;
             copy.ControlColor = this.ControlColor;
+            copy.CodeBackgroundColor = this.CodeBackgroundColor;
 
             return copy;
         }
