@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: Codeblock
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+  SubPages: []
+  Components:
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Codeblock use a simple pahser we made. Syntax highlight only fix with common
+      code, if you have any suguest, please contact us.
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Below is the sample using DocVisual
+    ObjsData: []
+  - VisualID: 7
+    JsonData: '{"MinWidth":-1,"MaxHeight":400,"LineHeightPercent":150}'
+    TextData:
+    - "public abstract class DocVisual : VisualElement\r\n{\r\n    public DocVisual()\r\n   
+      {\r\n        RegisterCallback<GeometryChangedEvent>(e =>\r\n        {\r\n           
+      if (e.oldRect.width != e.newRect.width)\r\n                OnWidthChanged?.Invoke(e.newRect.width);\r\n           
+      if (e.oldRect.height != e.newRect.height)\r\n                OnHeightChanged?.Invoke(e.newRect.height);\r\n       
+      });\r\n    }\r\n    public abstract string VisualID { get; }\r\n    public
+      Action<float> OnHeightChanged;\r\n    public Action<float> OnWidthChanged;\r\n   
+      public Action<Action> IntroAnimation;\r\n    public Action<Action> OuttroAnimation;\r\n   
+      public DocComponent Target => m_target;\r\n\r\n    private DocComponent m_target;\r\n   
+      public void SetTarget(DocComponent target)\r\n    {\r\n        m_target = target;\r\n       
+      OnCreateGUI();\r\n    }\r\n    protected abstract void OnCreateGUI();\r\n}"
+    ObjsData: []
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200

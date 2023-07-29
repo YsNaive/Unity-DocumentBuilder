@@ -184,6 +184,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             header.style.marginBottom = 20;
             root.Add(header);
             #endregion
+
             root.schedule.Execute(Save).Every(250);
             contents.Add(createEdit());
             addComponent = new Button();
@@ -314,7 +315,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             header.Add(loadAndSave);
             root.schedule.Execute(() =>
             {
-                root.panel.visualTree.RegisterCallback<KeyDownEvent>(hotkey, TrickleDown.TrickleDown);
+                root.panel.visualTree.RegisterCallback<KeyDownEvent>(hotkey);
             }).ExecuteLater(500);
             return root;
         }
@@ -387,7 +388,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         class unit : VisualElement
         {
             public VisualElement toolBar;
-            public VisualElement editView;
+            public DocEditField editView;
             public DocComponent docComponent;
             public void ViewMode()
             {
@@ -419,6 +420,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             unit.editView = DocEditor.CreateEditVisual(doc);
             unit.toolBar.Add(insertBtn(unit));
             unit.toolBar.Add(dragBtn(unit));
+            unit.toolBar.Add(copyBtn(unit));
+            unit.toolBar.Add(pasteBtn(unit));
             unit.toolBar.Add(dupBtn(unit));
             unit.toolBar.Add(deleteBtn(unit));
             unit.style.borderTopColor = DocStyle.Current.FrontGroundColor;
@@ -516,6 +519,35 @@ namespace NaiveAPI_Editor.DocumentBuilder
             button.style.width = 40;
             return button;
         }
+        static DocComponent copyBuffer = null;
+        Button copyBtn(unit unit)
+        {
+            Button button =null;
+            button = DocRuntime.NewButton("Copy", () =>
+            {
+                copyBuffer = unit.docComponent.Copy();
+                button.text = "Copied !";
+                button.schedule.Execute(() =>
+                {
+                    button.text = "Copy";
+                }).ExecuteLater(1000);
+            });
+            button.style.width = 60;
+            return button;
+        }
+        Button pasteBtn(unit unit)
+        {
+            Button button = DocRuntime.NewButton("Paste", () =>
+            {
+                if (copyBuffer != null)
+                {
+                    unit.docComponent = copyBuffer.Copy();
+                    unit.editView.SelectVisualType.value = DocEditor.ID2Name[unit.docComponent.VisualID];
+                }
+            });
+            button.style.width = 60;
+            return button;
+        }
         void endDraging(MouseDownEvent e)
         {
             isDraging = false;
@@ -584,5 +616,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     u.ViewMode();
             }
         }
+
     }
 }

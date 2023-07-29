@@ -56,6 +56,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 save();
             });
             textInput.multiline = true;
+            if (Target.TextData.Count == 0) Target.TextData.Add("");
             textInput.value = Target.TextData[0];
             Add(hor);
             Add(lineHeightInput);

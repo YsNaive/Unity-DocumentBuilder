@@ -14,14 +14,8 @@ public class TTst : MonoBehaviour
     {
         UIDocument = GetComponent<UIDocument>();
         root = UIDocument.rootVisualElement;
-        var visual = new DocPageVisual(page);
+        var visual = new DocBookVisual(page);
         root.Add(visual);
-        visual.PlayIntro(() => {
-                visual.PlayOuttro(() =>
-                {
-                    visual.Repaint();
-                });
-        }) ;
         
     }
     // Update is called once per frame

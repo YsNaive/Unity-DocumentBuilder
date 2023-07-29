@@ -54,7 +54,8 @@ namespace NaiveAPI.DocumentBuilder
             foldout.text = data.Name;
             foldout.value = data.isOn;
             foldout.style.SetIS_Style(funcNameTextStyle);
-            foldout.Q<Label>().style.SetIS_Style(Current.MainText);
+            if(foldout.Q<Label>()!= null)
+                foldout.Q<Label>().style.SetIS_Style(Current.MainText);
             foldout.Q<Toggle>().style.ClearMarginPadding();
             foldout.Q("unity-checkmark").style.position = Position.Absolute;
             foldout.Q("unity-checkmark").visible = false;

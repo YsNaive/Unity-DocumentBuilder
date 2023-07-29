@@ -67,12 +67,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
         Vector2 pos = Vector2.zero;
         Button playIntro;
         Button playOuttro;
+        Toggle forceUpdateToggle;
+        bool forceUpdate = true;
         IVisualElementScheduledItem update;
         private void CreateGUI()
         {
 
             update = rootVisualElement.schedule.Execute(() =>
             {
+                if (!forceUpdate) return;
                 if (BookVisual == null) return;
                 if (BookVisual.MenuHandler == null) return;
                 if (BookVisual.DisplayingPage != null)
@@ -102,13 +105,30 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             playIntro.style.position = Position.Absolute;
             playOuttro.style.position = Position.Absolute;
-            playIntro.style.bottom = 25;
-            playOuttro.style.bottom = 5;
+            playIntro.style.bottom = 55;
+            playOuttro.style.bottom = 35;
             playIntro.style.right = 5;
             playOuttro.style.right = 5;
             playIntro.style.width = 80;
             playOuttro.style.width = 80;
 
+            forceUpdateToggle = new Toggle();
+            forceUpdateToggle.text = "Force Update";
+            forceUpdateToggle.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            forceUpdate = true;
+            forceUpdateToggle.RegisterValueChangedCallback(e =>
+            {
+                forceUpdate = e.newValue;
+                forceUpdateToggle.style.backgroundColor = (e.newValue ?
+                DocStyle.Current.SuccessColor : DocStyle.Current.DangerColor);
+            });
+            forceUpdateToggle.value = true;
+            forceUpdateToggle.style.backgroundColor = DocStyle.Current.SuccessColor;
+            forceUpdateToggle.style.position = Position.Absolute;
+            forceUpdateToggle.style.bottom = 5;
+            forceUpdateToggle.style.right = 1;
+            forceUpdateToggle.style.SetIS_Style(ISPadding.Pixel(5));
+            playOuttro.style.position = Position.Absolute;
             SODocPageEditor.OnCreateEditor += onCreateEditor;
             rootVisualElement.Clear();
             ObjectField pageRootSelector = new ObjectField("Root");
@@ -143,6 +163,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             rootVisualElement.Add(playIntro);
             rootVisualElement.Add(playOuttro);
+            rootVisualElement.Add(forceUpdateToggle);
         }
     }
 }

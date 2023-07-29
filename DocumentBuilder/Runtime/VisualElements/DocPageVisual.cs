@@ -106,6 +106,7 @@ namespace NaiveAPI.DocumentBuilder
                                 }
                             }
                         }
+                        startAniEndCheck();
                     }
                     break;
                 case SODocPage.DocPageAniMode.OneByOne:

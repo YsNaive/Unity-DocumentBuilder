@@ -28,22 +28,11 @@ namespace NaiveAPI.DocumentBuilder
         }
         private void CreateGUI()
         {
-            rootVisualElement.Add(new SearchDropdown("", new List<string>() { "AAA","BBB","Ccc","ABC"}));
-            var btn = new CheckButton();
-            btn.text = "Test Check Btn";
-            btn.Confirm += () =>
+            rootVisualElement.Add(new ScrollView());
+            foreach (var method in typeof(ISMargin).GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance| BindingFlags.Static | BindingFlags.DeclaredOnly))
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.Append("QQQQQQQQ");
-                int i = 0;
-                i+=stringBuilder.UnityRTF(i+2,3, Color.green);
-                i+=stringBuilder.UnityRTF(i+5,2, FontStyle.BoldAndItalic);
-                Debug.Log(stringBuilder.ToString());
-            };
-            btn.Cancel += () =>
-            {
-            };
-            rootVisualElement.Add(btn);
+                rootVisualElement[0].Add(DocRuntime.NewTextElement(method.Name + " " + method.IsConstructedGenericMethod));
+            }
         }
     }
 }

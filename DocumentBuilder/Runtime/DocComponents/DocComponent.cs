@@ -17,8 +17,8 @@ namespace NaiveAPI.DocumentBuilder
             DocComponent copy = new DocComponent();
             copy.VisualID = VisualID;
             copy.JsonData = JsonData;
-            copy.TextData = TextData;
-            copy.ObjsData = ObjsData;
+            copy.TextData = new List<string>(TextData);
+            copy.ObjsData = new List<Object>(ObjsData);
             return copy;
         } 
     }

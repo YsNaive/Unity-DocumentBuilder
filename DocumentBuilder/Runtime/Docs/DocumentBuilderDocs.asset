@@ -15,6 +15,7 @@ MonoBehaviour:
   Icon: {fileID: 2800000, guid: 6e76c73f1f7c29d4ea14a1c2b9ae5fff, type: 3}
   SubPages:
   - {fileID: 11400000, guid: 4d5723fc8ce059843811ed4d65fe2bf2, type: 2}
+  - {fileID: 11400000, guid: 9aca1cf9c868d8548b780f203300edf5, type: 2}
   - {fileID: 11400000, guid: 5f627ae6418e62740ad9248393a163d8, type: 2}
   Components:
   - VisualID: 1
@@ -23,23 +24,50 @@ MonoBehaviour:
     - Document Builder
     ObjsData: []
   - VisualID: 2
-    JsonData: '{"Type":3,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
+    JsonData: 
     TextData:
-    - 132\\n321
+    - 'Document Builder is a powerful tool to make information display.
+
+      You
+      use it to make Script API, Dialog, illustrated book, and More !'
     ObjsData: []
-  - VisualID: 7
-    JsonData: '{"MinWidth":-1,"MaxHeight":300,"LineHeightPercent":100}'
+  - VisualID: 2
+    JsonData: 
     TextData:
-    - "    public class DocComponent\r\n    {\r\n        public string VisualID =
-      string.Empty;\r\n        public string JsonData = string.Empty;\r\n       
-      public List<string> TextData = new List<string>();\r\n        public List<Object>
-      ObjsData = new List<Object>();\r\n\r\n        public DocComponent Copy()\r\n       
-      {\r\n            DocComponent copy = new DocComponent();\r\n            copy.VisualID
-      = VisualID;\r\n            copy.JsonData = JsonData;\r\n            copy.TextData
-      = TextData;\r\n            copy.ObjsData = ObjsData;\r\n            return
-      copy;\r\n        } \r\n    }\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    - 'Feature:
+
+      - Friendly edit GUI in editor
+
+      - Visual is allow in
+      Runtime
+
+      - Customizable content
+
+      - Export as markdown
+
+      -
+      In/Out animation'
     ObjsData: []
-  IntroMode: 3
-  OuttroMode: 2
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - What's New in 2.0 ?
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Old DocumentBuilder is design for Editor only. In 2.0, everything become VisualElement,
+      Improved readability, expandability, and adaptability. Now you can also use
+      your docs in Runtime !  But unfortunately, it is not compatible with version
+      1.x. If you have a requirement for the older version, please download it from
+      the GitHub page.
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'In 2.0 if you want to '
+    ObjsData: []
+  IntroMode: 1
+  OuttroMode: 1
   IntroDuration: 150
   OuttroDuration: 150

@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: Doc Typies
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 3543eaffc785cee4a879a77c6b51fede, type: 3}
+  SubPages:
+  - {fileID: 11400000, guid: 3e58e3be222ff1c42b83dbdac42cfa00, type: 2}
+  - {fileID: 11400000, guid: 2874f051a9a2e834cb7f6e9e32e62e91, type: 2}
+  - {fileID: 11400000, guid: 865cec5ff39cbf0408a9ca4c8c9d9b0a, type: 2}
+  - {fileID: 11400000, guid: 9e039ac7f0c870640b6a086f1ab32aee, type: 2}
+  - {fileID: 11400000, guid: 603c6156cad4797438ac52579ad05652, type: 2}
+  - {fileID: 11400000, guid: 7272e166669a7a14cbcfeb8aa779c038, type: 2}
+  - {fileID: 11400000, guid: b6a4e42c13e85c34f909956eea2635a0, type: 2}
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Intro
+    ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'Here shows all of build-in DocType in DocumentBuilder
+
+'
+    ObjsData: []
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Build-in ID Tabel
+    ObjsData: []
+  - VisualID: 3
+    JsonData: '{"row":8,"col":3,"anchors":[3,4,4],"mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    TextData:
+    - Visual Name
+    - ID
+    - to .md
+    - Label
+    - 1
+    - YES
+    - Description
+    - 2
+    - YES
+    - Matrix
+    - 3
+    - YES
+    - Image
+    - 4
+    - YES
+    - FuncDisplay
+    - 5
+    - YES
+    - SeeAlso
+    - 6
+    - PART
+    - Codeblock
+    - 7
+    - PART
+    ObjsData: []
+  IntroMode: 3
+  OuttroMode: 1
+  IntroDuration: 50
+  OuttroDuration: 200

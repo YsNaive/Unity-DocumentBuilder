@@ -20,19 +20,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
             style.ClearMarginPadding();
             Target = docComponent;
             createDropfield();
-            repaintDocEdit();
+            Repaint();
         }
-        DropdownField selectVisualType;
+        public DropdownField SelectVisualType;
         private void createDropfield()
         {
-            selectVisualType = new DropdownField();
-            selectVisualType.choices = DocEditor.NameList;
-            selectVisualType.style.ClearMarginPadding();
+            SelectVisualType = new DropdownField();
+            SelectVisualType.choices = DocEditor.NameList;
+            SelectVisualType.style.ClearMarginPadding();
             string tName = string.Empty;
             DocEditor.ID2Name.TryGetValue(Target.VisualID, out tName);
-            selectVisualType.index = DocEditor.NameList.FindIndex(0, (str) => { return str == tName; });
-            if (selectVisualType.index == -1) selectVisualType.index = 0;
-            selectVisualType.RegisterValueChangedCallback((val) =>
+            SelectVisualType.index = DocEditor.NameList.FindIndex(0, (str) => { return str == tName; });
+            if (SelectVisualType.index == -1) SelectVisualType.index = 0;
+            SelectVisualType.RegisterValueChangedCallback((val) =>
             {
                 Target.TextData.Clear();
                 Target.JsonData = string.Empty;
@@ -42,19 +42,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     Target.VisualID = string.Empty;
                 else
                     Target.VisualID = DocEditor.Name2ID[val.newValue];
-                repaintDocEdit();
+                Repaint();
             });
-            selectVisualType.value = DocEditor.NameList[selectVisualType.index];
-            Add(selectVisualType);
+            SelectVisualType.value = DocEditor.NameList[SelectVisualType.index];
+            Add(SelectVisualType);
         }
         VisualElement editFavoriteRoot;
-        private void repaintDocEdit()
+        public void Repaint()
         {
             Type docType = null;
-            Add(selectVisualType);
+            Add(SelectVisualType);
             if (DocEditor.ID2Type.TryGetValue(Target.VisualID, out docType))
             {
-                DocEditVisual doc = (DocEditVisual)System.Activator.CreateInstance(docType);
+                DocEditVisual doc = (DocEditVisual)Activator.CreateInstance(docType);
                 doc.SetTarget(Target);
                 Add(doc);
             }
@@ -96,7 +96,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         else displayName = name;
                         Button button = DocRuntime.NewButton(displayName, () =>
                         {
-                            selectVisualType.value = name;
+                            SelectVisualType.value = name;
                         });
                         button.style.marginLeft = 5;
                         visualElement.Add(button);
@@ -143,7 +143,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     }
                     EditorUtility.SetDirty(DocEditorData.Instance);
                     Clear();
-                    repaintDocEdit();
+                    Repaint();
                 });
                 editFavoriteRoot.Add(toggle);
             }
