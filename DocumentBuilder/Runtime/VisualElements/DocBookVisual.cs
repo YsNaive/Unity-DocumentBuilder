@@ -150,7 +150,7 @@ namespace NaiveAPI.DocumentBuilder
                 if (!isOpen)
                 {
                     isOpen = true;
-                    chapInfo.Fade(1, 500);
+                    chapInfo.Fade(1, 300,10,null);
                     chapInfo.style.display = DisplayStyle.Flex;
                 }
             });
@@ -159,7 +159,7 @@ namespace NaiveAPI.DocumentBuilder
                 if (isOpen)
                 {
                     isOpen = false;
-                    chapInfo.Fade(0, 300, 50, () => { chapInfo.style.display = DisplayStyle.None; });
+                    chapInfo.Fade(0, 100, 10, () => { chapInfo.style.display = DisplayStyle.None; });
                 }
             });
             btn.style.fontSize = btn.style.fontSize.value.value * 1.5f;

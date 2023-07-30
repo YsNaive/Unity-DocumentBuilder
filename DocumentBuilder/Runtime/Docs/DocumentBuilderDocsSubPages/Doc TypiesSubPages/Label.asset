@@ -36,7 +36,7 @@ MonoBehaviour:
     - Settings
     ObjsData: []
   - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/HyBfRKzo3.png","mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/HyBfRKzo3.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData: []
     ObjsData: []
   - VisualID: 2

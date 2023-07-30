@@ -36,13 +36,15 @@ MonoBehaviour:
     - Settings
     ObjsData: []
   - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/ryUV5afi2.png","mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/ryUV5afi2.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData: []
     ObjsData: []
   - VisualID: 2
     JsonData: 
     TextData:
-    - how to edit
+    - when your code text length is too long that will out of screen, you need to
+      modify it to fit your content, now I don't have a very good solution to auto
+      detect it , if you have any idea, please let us know.
     ObjsData: []
   - VisualID: 0
     JsonData: 
@@ -53,8 +55,13 @@ MonoBehaviour:
     TextData:
     - Show Case
     ObjsData: []
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This codeblock use DocVisual src code
+    ObjsData: []
   - VisualID: 7
-    JsonData: '{"MinWidth":-1,"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MinWidth":-1,"MaxHeight":300,"LineHeightPercent":120}'
     TextData:
     - "\rpublic abstract class DocVisual : VisualElement\r\n{\r\n    public DocVisual()\r\n   
       {\r\n        RegisterCallback<GeometryChangedEvent>(e =>\r\n        {\r\n           

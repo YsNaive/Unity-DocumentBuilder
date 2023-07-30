@@ -27,8 +27,8 @@ namespace NaiveAPI.DocumentBuilder
             codeContents.style.SetIS_Style(padding);
             codeContents.style.fontSize = DocStyle.Current.MainTextSize;
             codeContents.style.width = data.MinWidth;
-            string lineNum = $"<line-height={data.LineHeightPercent}%>0";
-            int i = 1;
+            string lineNum = $"<line-height={data.LineHeightPercent}%>1";
+            int i = 2;
             foreach(var c in Target.TextData[0])
             {
                 if(c == '\n')

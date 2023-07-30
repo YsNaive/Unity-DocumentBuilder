@@ -35,13 +35,13 @@ MonoBehaviour:
     - Settings
     ObjsData: []
   - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/BJoBgpGo3.png","mode":0,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/BJoBgpGo3.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData: []
     ObjsData: []
   - VisualID: 2
     JsonData: 
     TextData:
-    - Hmm... I think it's clear enought.
+    - Hmm... I think it's clear enough.
     ObjsData: []
   - VisualID: 0
     JsonData: 
@@ -61,6 +61,11 @@ MonoBehaviour:
     - five
     - items !
     ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}

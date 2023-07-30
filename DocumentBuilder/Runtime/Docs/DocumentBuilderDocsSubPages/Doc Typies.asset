@@ -41,38 +41,48 @@ MonoBehaviour:
     - Build-in ID Tabel
     ObjsData: []
   - VisualID: 3
-    JsonData: '{"row":10,"col":3,"anchors":[3,4,4],"mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    JsonData: '{"row":10,"col":4,"anchors":[3,4,4,4],"mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData:
     - Visual Name
     - ID
     - to .md
+    - Runtime
     - Dividline
     - 0
-    - YES
+    - IN Progress
+    - "\u2714"
     - Label
     - 1
-    - YES
+    - IN Progress
+    - "\u2714"
     - Description
     - 2
-    - YES
+    - IN Progress
+    - "\u2714"
     - Matrix
     - 3
-    - YES
+    - IN Progress
+    - "\u2714"
     - Image
     - 4
-    - YES
+    - IN Progress
+    - "\u2714"
     - FuncDisplay
     - 5
-    - YES
+    - IN Progress
+    - "\u2714"
     - SeeAlso
     - 6
-    - PART
+    - IN Progress
+    - "\u2714"
     - Codeblock
     - 7
-    - PART
+    - IN Progress
+    - "\u2714"
     - Items
     - 8
-    - YES
+    - IN Progress
+    - "\u2714"
     ObjsData: []
   IntroMode: 3
   OuttroMode: 1

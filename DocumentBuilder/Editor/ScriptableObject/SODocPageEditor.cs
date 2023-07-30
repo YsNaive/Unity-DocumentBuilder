@@ -58,7 +58,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 float sum = 0;
                 foreach (var ve in root.Children()) { sum += ve.layout.height; }
-                if(!isDraging&&(root.style.height.value.value != sum + 400))
+                if(!isDraging && (root.style.height.value.value <= sum + 400))
                 {
                     root.style.height = sum + 800;
                 }

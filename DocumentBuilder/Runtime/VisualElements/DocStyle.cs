@@ -29,6 +29,7 @@ namespace NaiveAPI.DocumentBuilder
         public Color StringColor;
         public Color NumberColor;
         public Color ControlColor;
+        public Color CommentsColor;
         public Color CodeBackgroundColor;
 
         public Color SuccessColor;
@@ -54,7 +55,7 @@ namespace NaiveAPI.DocumentBuilder
             SubBackgroundColor = new Color(0.25f, 0.25f, 0.28f),
             FrontGroundColor = new Color(0.65f, 0.65f, 0.65f),
             SubFrontGroundColor = new Color(0.55f, 0.55f, 0.55f),
-            MainText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f),FontSize = 12, Align = TextAnchor.MiddleLeft },
+            MainText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 12, Align = TextAnchor.MiddleLeft },
             LabelText = new ISText() { Color = new Color(0.9f, 0.9f, 0.9f), FontSize = 18, Align = TextAnchor.MiddleLeft },
             ButtonText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 12, Align = TextAnchor.MiddleCenter },
             FuncColor = new Color(1f, 0.9f, 0.35f),
@@ -73,6 +74,7 @@ namespace NaiveAPI.DocumentBuilder
             NumberColor = new Color(0.6f, 0.8f, 0.6f),
             ControlColor = new Color(0.8f, 0.3f, 0.6f),
             CodeBackgroundColor = new Color(0.1f, 0.1f, 0.12f),
+            CommentsColor = new Color(0.4f,0.6f,0.35f),
             MarginHor = 0,
             MarginVer = 1,
             LineHeight = 18,
@@ -115,6 +117,7 @@ namespace NaiveAPI.DocumentBuilder
             copy.CodeBackgroundColor = this.CodeBackgroundColor;
             copy.ComponentSpace = this.ComponentSpace;
             copy.ScrollerWidth = this.ScrollerWidth;
+            copy.CommentsColor = this.CommentsColor;
 
             return copy;
         }

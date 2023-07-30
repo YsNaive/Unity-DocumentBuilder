@@ -79,7 +79,8 @@ namespace NaiveAPI
             button.style.paddingLeft = 4;
             button.style.paddingRight = 4;
             button.text = text;
-            if(onClick != null) button.clicked+= onClick;
+            button.style.height = DocStyle.Current.MainTextSize*1.5f;
+            if (onClick != null) button.clicked+= onClick;
             return button;
         }
         public static CheckButton NewCheckButton(string text, Action onClick = null) { return NewCheckButton(text, DocStyle.Current.SubBackgroundColor, DocStyle.Current.SuccessColor, DocStyle.Current.DangerColor, onClick); }

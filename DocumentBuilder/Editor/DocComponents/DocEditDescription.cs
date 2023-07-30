@@ -57,7 +57,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             outtroTime[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             outtroTime.RegisterValueChangedCallback(val =>
             {
-                data.IntroAniTime = val.newValue;
+                data.OutroAniTime = val.newValue;
                 save();
             });
             EnumField outtroType = new EnumField();

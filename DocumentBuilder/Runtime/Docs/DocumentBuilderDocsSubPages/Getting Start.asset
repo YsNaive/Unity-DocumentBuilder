@@ -34,7 +34,7 @@ MonoBehaviour:
 
       - Create your own DocType'
     ObjsData: []
-  IntroMode: 2
-  OuttroMode: 2
+  IntroMode: 1
+  OuttroMode: 1
   IntroDuration: 200
   OuttroDuration: 200
