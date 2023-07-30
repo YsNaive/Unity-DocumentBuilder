@@ -11,7 +11,7 @@ namespace NaiveAPI.DocumentBuilder
         public string JsonData = string.Empty;
         public List<string> TextData = new List<string>();
         public List<Object> ObjsData = new List<Object>();
-        public List<int> AniSettings = new List<int>() { 1, 1, 250, 250 }; // {intro type, intro time, outtro type, outtro time}
+        public List<int> AniSettings = new List<int>() { 1, 250, 1, 250 }; // {intro type, intro time, outtro type, outtro time}
         public DocComponent Copy()
         {
             DocComponent copy = new DocComponent();
@@ -43,8 +43,21 @@ namespace NaiveAPI.DocumentBuilder
         #region get set        
         public int IntroType
         {
-            get => AniSettings[0];
-            set => AniSettings[0] = value;
+            get {
+                if(AniSettings == null || AniSettings.Count == 0)
+                {
+                    AniSettings = new List<int> { 1, 1, 250, 250 };
+                }
+                return AniSettings[0];
+            }
+            set
+            {
+                if (AniSettings == null || AniSettings.Count == 0)
+                {
+                    AniSettings = new List<int> { 1, 1, 250, 250 };
+                }
+                AniSettings[0] = value;
+            }
         }
         public int IntroTime
         {

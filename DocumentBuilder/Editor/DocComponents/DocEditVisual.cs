@@ -31,33 +31,43 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public void SetTarget(DocComponent target)
         {
             m_target = target;
-            OnCreateAniGUI(OnSelectAniType());
+            OnCreateAniGUI(InitAniType);
             OnCreateGUI();
         }
         /// <summary>
         /// Call after Target is set
         /// </summary>
         protected abstract void OnCreateGUI();
-        protected virtual System.Enum OnSelectAniType()
-        {
-            return VisualElementAnimation.Mode.None;
-        }
-        protected virtual void OnCreateAniGUI(System.Enum initType)
+        protected virtual Enum InitAniType => VisualElementAnimation.Mode.Fade;
+        protected virtual void OnCreateAniGUI(Enum initType)
         {
             var bar = DocRuntime.NewEmptyHorizontal();
             var introType = DocEditor.NewEnumField("in", initType, (e) =>
             {
                 Target.IntroType = Convert.ToInt32(e.newValue);
-            });
+            });introType.value = (Enum)Enum.ToObject(initType.GetType(), (byte)Target.IntroType);
             introType.style.width = Length.Percent(30);
             introType[0].style.minWidth = 30;
             var introTime = DocEditor.NewIntField("", e =>
             {
                 Target.IntroTime = e.newValue;
-            });
+            }); introTime.value = Target.IntroTime;
             introTime.style.width = Length.Percent(20);
+            var outtroType = DocEditor.NewEnumField("out", initType, (e) =>
+            {
+                Target.OuttroType = Convert.ToInt32(e.newValue);
+            }); outtroType.value = (Enum)Enum.ToObject(initType.GetType(), (byte)Target.OuttroType);
+            outtroType.style.width = Length.Percent(30);
+            outtroType[0].style.minWidth = 30;
+            var outtroTime = DocEditor.NewIntField("", e =>
+            {
+                Target.OuttroTime = e.newValue;
+            }); outtroTime.value = Target.OuttroTime;
+            outtroTime.style.width = Length.Percent(20);
             bar.Add(introType);
             bar.Add(introTime);
+            bar.Add(outtroType);
+            bar.Add(outtroTime);
             Add(bar);
         }
         public virtual string ToMarkdown(string dstPath) { return string.Empty; }

@@ -1,4 +1,5 @@
 using NaiveAPI.DocumentBuilder;
+using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,9 +30,23 @@ public abstract class DocVisual : VisualElement
     {
         m_target = target;
         OnCreateGUI();
+        OnSelectIntroAni(Target.IntroType);
+        OnSelectOuttroAni(Target.OuttroTime);
     }
     /// <summary>
     /// Call after Target is set
     /// </summary>
     protected abstract void OnCreateGUI();
+    protected virtual void OnSelectIntroAni(int type)
+    {
+        if ((VisualElementAnimation.Mode)type == VisualElementAnimation.Mode.None)
+            return;
+        IntroAnimation = (callback) => { this.Fade(1, Target.IntroTime, 20, callback); };
+    }
+    protected virtual void OnSelectOuttroAni(int type)
+    {
+        if ((VisualElementAnimation.Mode)type == VisualElementAnimation.Mode.None)
+            return;
+        OuttroAnimation = (callback) => { this.Fade(0, Target.OuttroTime, 20, callback); };
+    }
 }

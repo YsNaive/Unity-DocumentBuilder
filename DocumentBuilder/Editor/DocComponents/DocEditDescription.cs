@@ -14,6 +14,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override string DisplayName => "Description";
         public override string VisualID => "2";
         DocDescription.Data data;
+        //protected override System.Enum InitAniType => DocDescription.AniMode.Fade;
         protected override void OnCreateGUI()
         {
             data = JsonUtility.FromJson<DocDescription.Data>(Target.JsonData);
