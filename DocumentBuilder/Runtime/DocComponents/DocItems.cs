@@ -84,7 +84,7 @@ namespace NaiveAPI.DocumentBuilder
 
         public class Data
         {
-            public int num;
+            public int num = 1;
             public AniMode IntroAniMode = AniMode.Fade, OuttroAniMode = AniMode.Fade;
             public int IntroDuration = 250, OuttroDuration = 250;
         }

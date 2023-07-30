@@ -79,7 +79,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             introField.value = data.IntroAniMode;
             introField.style.width = Length.Percent(50);
             introField.label = "Intro Mode";
-            introField[0].style.minWidth = Length.Percent(30);
+            introField[0].style.minWidth = Length.Percent(50);
             introField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             introField.style.ClearMarginPadding();
             childIntro.Add(introField);
@@ -87,7 +87,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             introDurationField.label = "IntroDuration";
             introDurationField.value = data.IntroDuration.ToString();
             introDurationField.style.width = Length.Percent(50);
-            introDurationField[0].style.minWidth = Length.Percent(30);
+            introDurationField[0].style.minWidth = Length.Percent(50);
             introDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             introDurationField.visible = data.IntroAniMode != DocItems.AniMode.None;
             introDurationField.style.ClearMarginPadding();
@@ -113,7 +113,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             outtroField.label = "Outtro Mode";
             outtroField.value = data.IntroAniMode;
             outtroField.style.width = Length.Percent(50);
-            outtroField[0].style.minWidth = Length.Percent(30);
+            outtroField[0].style.minWidth = Length.Percent(50);
             outtroField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             outtroField.style.ClearMarginPadding();
             childOuttro.Add(outtroField);
@@ -121,7 +121,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             outtroDurationField.label = "OuttroDuration";
             outtroDurationField.value = data.OuttroDuration.ToString();
             outtroDurationField.style.width = Length.Percent(50);
-            outtroDurationField[0].style.minWidth = Length.Percent(30);
+            outtroDurationField[0].style.minWidth = Length.Percent(50);
             outtroDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             outtroDurationField.visible = data.OuttroAniMode != DocItems.AniMode.None;
             outtroDurationField.style.ClearMarginPadding();

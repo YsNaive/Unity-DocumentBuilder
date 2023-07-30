@@ -56,10 +56,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
             rootVisualElement.Add(searchDropdown);*/
             
             string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/RunTime/DocComponents/DocMatrix.cs");
+            //string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/Editor/ScriptableObject/SODocPageEditor.cs");
+            //string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/Test/test.cs");
             //data = File.ReadAllText("C:\\Users\\howar\\Desktop\\Unity\\Document Builder\\Assets\\DocumentBuilder\\Editor\\ScriptableObject\\SODocPageEditor.cs");
 
             ScrollView scrollView = new ScrollView();
             TextElement textElement = DocRuntime.NewTextElement(DocumentBuilderParser.CSharpParser(data));
+            textElement.style.width = Length.Percent(100);
             textElement.style.height = StyleKeyword.Auto;
             textElement.style.whiteSpace = WhiteSpace.Normal;
             scrollView.Add(textElement);
