@@ -169,6 +169,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   page: {fileID: 11400000, guid: b4d768b0a8c3e3a4f9c56bd8f9815b43, type: 2}
+  doc:
+    VisualID: 5
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  doc2:
+    VisualID: 1
+    JsonData: 
+    TextData:
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
 --- !u!114 &489998791
 MonoBehaviour:
   m_ObjectHideFlags: 0

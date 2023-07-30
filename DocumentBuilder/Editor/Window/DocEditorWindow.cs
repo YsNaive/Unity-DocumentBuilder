@@ -84,7 +84,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     if (BookVisual.DisplayingPage.IsPlayingAnimation) return;
                     pos = BookVisual.DisplayingPage.scrollOffset;
                 }
-
                 BookVisual.MenuHandler.Repaint();
                 BookVisual.MenuHandler.Selecting = BookVisual.MenuHandler.Selecting;
             }).Every(500);

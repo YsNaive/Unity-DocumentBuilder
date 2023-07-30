@@ -15,17 +15,20 @@ MonoBehaviour:
   Icon: {fileID: 2800000, guid: 6e76c73f1f7c29d4ea14a1c2b9ae5fff, type: 3}
   SubPages:
   - {fileID: 11400000, guid: 4d5723fc8ce059843811ed4d65fe2bf2, type: 2}
-  - {fileID: 11400000, guid: 9aca1cf9c868d8548b780f203300edf5, type: 2}
+  - {fileID: 11400000, guid: 1aeaadc18195c9e4991d9047c415abe7, type: 2}
+  - {fileID: 11400000, guid: 0627d091661d3054f95bd5a2a33d333c, type: 2}
   Components:
   - VisualID: 1
     JsonData: 
     TextData:
     - Document Builder
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/SkEJcXlsh.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 6
     JsonData: '{"height":400,"url":"https://github.com/YsNaive/Unity-DocumentBuilder","mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData:
@@ -33,23 +36,27 @@ MonoBehaviour:
     - Git Hub Page
     ObjsData:
     - {fileID: 0}
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
-    JsonData: '{"row":2,"col":2,"anchors":[3,3],"mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    JsonData: '{"row":2,"col":2,"anchors":[3,3],"mode":1}'
     TextData:
     - e-mail
     - yi.shi.4589@gmail.com
     - discord
     - .ysnaive
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Feature
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 8
     JsonData: '{"num":5}'
     TextData:
@@ -86,15 +93,50 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - What's New in 2.0?
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
@@ -104,6 +146,7 @@ MonoBehaviour:
       1.x. If you have a requirement for the older version, please download it from
       the GitHub page.
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
@@ -111,6 +154,7 @@ MonoBehaviour:
       you can Customiz all contents you want to show. For example, item system in
       your project, clock display... etc.
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
@@ -118,7 +162,8 @@ MonoBehaviour:
       you can call it with simple API interface. Ofcourse the build-in component
       contains the default Intro/Outtro animation.
     ObjsData: []
-  IntroMode: 1
+    AniSettings: 01000000fa00000001000000fa000000
+  IntroMode: 3
   OuttroMode: 1
-  IntroDuration: 100
+  IntroDuration: 50
   OuttroDuration: 100

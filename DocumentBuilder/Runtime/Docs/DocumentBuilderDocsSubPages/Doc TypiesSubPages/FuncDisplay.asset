@@ -16,26 +16,21 @@ MonoBehaviour:
   SubPages: []
   Components:
   - VisualID: 4
-    JsonData: '{"Name":"","Syntaxs":[""],"ReturnTypes":[""],"Params":[{"ParamName":"","Type":""}],"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0,"isOn":false}'
-    TextData:
-    - 
-    - 
-    - 
-    ObjsData: []
-  - VisualID: 4
     JsonData: '{"Name":"Foo","Syntaxs":["public bool Foo()","public bool Foo(int
-      index)","public bool Foo(int index, string token)"],"ReturnTypes":["bool"],"Params":[{"ParamName":"index","Type":"int"},{"ParamName":"token","Type":"string"}],"IntroAniMode":1,"OuttroAniMode":0,"IntroDuration":250,"OuttroDuration":0,"isOn":true}'
+      index)","public bool Foo(int index, string token)"],"ReturnTypes":["bool"],"Params":[{"ParamName":"index","Type":"int"},{"ParamName":"token","Type":"string"}],"isOn":false}'
     TextData:
     - this is a Functionn sample
     - to tell function where the obj is...
     - the matck token to target...
     - is Function success
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 4
-    JsonData: '{"Name":"Foo2","Syntaxs":[],"ReturnTypes":[],"Params":[],"IntroAniMode":1,"OuttroAniMode":0,"IntroDuration":250,"OuttroDuration":0,"isOn":false}'
+    JsonData: '{"Name":"Foo2","Syntaxs":[],"ReturnTypes":[],"Params":[],"isOn":false}'
     TextData:
     - you can also left other things empty
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

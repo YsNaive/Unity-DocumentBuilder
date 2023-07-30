@@ -20,25 +20,30 @@ MonoBehaviour:
     TextData:
     - Codeblock
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - Codeblock use a simple pahser we made. Syntax highlight only fit with common
       code, if you have any suguest, please contact us.
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Settings
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/ryUV5afi2.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData: []
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
@@ -46,20 +51,24 @@ MonoBehaviour:
       modify it to fit your content, now I don't have a very good solution to auto
       detect it , if you have any idea, please let us know.
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Show Case
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - This codeblock use DocVisual src code
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 7
     JsonData: '{"MinWidth":-1,"MaxHeight":300,"LineHeightPercent":120}'
     TextData:
@@ -75,6 +84,7 @@ MonoBehaviour:
       OnCreateGUI();\r\n    }\r\n    /// <summary>\r\n    /// Call after Target is
       set\r\n    /// </summary>\r\n    protected abstract void OnCreateGUI();\r\n}"
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

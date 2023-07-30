@@ -9,10 +9,10 @@ namespace NaiveAPI.DocumentBuilder
     public class DocDescription : DocVisual
     {
         public override string VisualID => "2";
-
+        TextElement text;
         protected override void OnCreateGUI()
         {
-            TextElement text = DocRuntime.NewTextElement(Target.TextData[0]);
+            text = DocRuntime.NewTextElement(Target.TextData[0]);
             text.style.SetIS_Style(DocStyle.Current.MainText);
             Add(text);
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
@@ -28,38 +28,38 @@ namespace NaiveAPI.DocumentBuilder
                 text.style.color = getTypeTextColor(data.Type);
                 text.style.SetIS_Style(ISPadding.Percent(5));
             }
-            switch (data.IntroMode)
+        }
+        protected override void OnSelectIntroAni(int type)
+        {
+            switch ((AniMode)type)
             {
                 case AniMode.None:
                     break;
                 case AniMode.Fade:
-                    IntroAnimation = (callBack) => { this.Fade(0,1, data.IntroAniTime,50,callBack); };
+                    IntroAnimation = (callBack) => { this.Fade(0, 1, Target.IntroTime, 50, callBack); };
                     break;
                 case AniMode.TextFade:
-                    IntroAnimation = (callBack) => { text.TextFadeIn(Target.TextData[0],data.IntroAniTime,1, callBack); };
-                    break;
-            }
-            switch (data.OutroMode)
-            {
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    OuttroAnimation = (callBack) => { this.Fade(1,0, data.OutroAniTime, 50, callBack); };
-                    break;
-                case AniMode.TextFade:
-                    OuttroAnimation = (callBack) => { text.TextFadeOut(data.OutroAniTime,1, callBack); };
+                    IntroAnimation = (callBack) => { text.TextFadeIn(Target.TextData[0], Target.IntroTime, 1, callBack); };
                     break;
             }
         }
-
+        protected override void OnSelectOuttroAni(int type)
+        {
+            switch ((AniMode)type)
+            {
+                case AniMode.None:
+                    break;
+                case AniMode.Fade:
+                    OuttroAnimation = (callBack) => { this.Fade(1, 0, Target.OuttroTime, 20, callBack); };
+                    break;
+                case AniMode.TextFade:
+                    OuttroAnimation = (callBack) => { text.TextFadeOut(Target.OuttroTime, 1, callBack); };
+                    break;
+            }
+        }
         public class Data
         {
             public Type Type = Type.None;
-            public AniMode IntroMode = AniMode.Fade;
-            public AniMode OutroMode = AniMode.Fade;
-            public int IntroAniTime = 250;
-            public int OutroAniTime = 250;
-
         }
         public enum AniMode
         {

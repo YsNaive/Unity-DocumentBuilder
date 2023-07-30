@@ -31,7 +31,7 @@ public abstract class DocVisual : VisualElement
         m_target = target;
         OnCreateGUI();
         OnSelectIntroAni(Target.IntroType);
-        OnSelectOuttroAni(Target.OuttroTime);
+        OnSelectOuttroAni(Target.OuttroType);
     }
     /// <summary>
     /// Call after Target is set
@@ -41,12 +41,12 @@ public abstract class DocVisual : VisualElement
     {
         if ((VisualElementAnimation.Mode)type == VisualElementAnimation.Mode.None)
             return;
-        IntroAnimation = (callback) => { this.Fade(1, Target.IntroTime, 20, callback); };
+        IntroAnimation = (callback) => { this.Fade(0,1, Target.IntroTime, 20, callback); };
     }
     protected virtual void OnSelectOuttroAni(int type)
     {
         if ((VisualElementAnimation.Mode)type == VisualElementAnimation.Mode.None)
             return;
-        OuttroAnimation = (callback) => { this.Fade(0, Target.OuttroTime, 20, callback); };
+        OuttroAnimation = (callback) => { this.Fade(1,0, Target.OuttroTime, 20, callback); };
     }
 }

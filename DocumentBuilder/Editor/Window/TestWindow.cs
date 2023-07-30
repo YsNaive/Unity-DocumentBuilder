@@ -1,11 +1,6 @@
 using NaiveAPI_Editor.DocumentBuilder;
 using NaiveAPI_Editor.window;
 using NaiveAPI_UI;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
@@ -28,18 +23,20 @@ namespace NaiveAPI.DocumentBuilder
         }
         private void CreateGUI()
         {
-            Button btn = null;
-            btn = DocRuntime.NewButton("Button", () =>
-            {
-                btn.Highlight(50);
-            });
-            rootVisualElement.Add(btn);
+            rootVisualElement.style.SetIS_Style(ISPadding.Pixel(10));
+            rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
             rootVisualElement.Add(DocRuntime.NewScrollView());
-            rootVisualElement[1].style.height = 300;
-            rootVisualElement[1].style.width = 300;
-            rootVisualElement[1].Add(DocRuntime.NewEmpty());
-            rootVisualElement[1][0].style.width = 900;
-            rootVisualElement[1][0].style.height = 900;
+            rootVisualElement[0].Add(new DocComponentField(new DocComponent()));
+            Button button = null;
+            var curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+            button = DocRuntime.NewButton("Test", () =>
+            {
+                button.GoToPosition(new Vector2(0, 100),20,50, curve, () =>
+                {
+                    button.GoToPosition(new Vector2(0, 0), 20, 50,curve);
+                });
+            });
+            rootVisualElement.Add(button);
         }
     }
 }

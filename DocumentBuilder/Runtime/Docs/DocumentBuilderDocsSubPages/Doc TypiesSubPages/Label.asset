@@ -20,69 +20,83 @@ MonoBehaviour:
     TextData:
     - Description
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - "Main visual to desplay contents, it has 5 typies : \nNone, Sucess, Warning,
       Danger, Hint."
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Settings
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/HyBfRKzo3.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - while editting, what is the value means
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Show Case
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - 1 Label
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - 2 Label
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - 3 Label
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: '{"Level":4}'
     TextData:
     - 4 Label
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: '{"Level":5}'
     TextData:
     - 5 Label
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: '{"Level":6}'
     TextData:
     - 6 Label
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

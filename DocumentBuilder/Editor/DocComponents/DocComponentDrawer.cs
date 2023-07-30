@@ -16,12 +16,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             string name;
             DocEditor.ID2Name.TryGetValue(property.FindPropertyRelative("VisualID").stringValue, out name);
-            EditorGUI.LabelField(position, label + " " + name);
+            EditorGUI.LabelField(position, label);
             position.x = position.width - 75;
             position.width = 75;
             if (GUI.Button(position, "edit"))
             {
-                SerializedDocComponentEditWindow.Create(property);
+                SerializedDocComponentEditWindow.Create(property, label.text);
             }
         }
         public override VisualElement CreatePropertyGUI(SerializedProperty property)

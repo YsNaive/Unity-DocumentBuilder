@@ -20,24 +20,29 @@ MonoBehaviour:
     TextData:
     - Matrix
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - The Matrix can show in any n*m, and can fix its contents or screen width.
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Settings
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/BJHbhhzoh.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
@@ -46,17 +51,20 @@ MonoBehaviour:
       with its contents, fixed width to current screen width. Finaly, the text anchor
       can be change by col major.
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Show Case
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
-    JsonData: '{"row":2,"col":3,"anchors":[3,3,3],"mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    JsonData: '{"row":2,"col":3,"anchors":[3,3,3],"mode":1}'
     TextData:
     - Fix
     - with
@@ -65,8 +73,9 @@ MonoBehaviour:
     - No
     - Anchor
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
-    JsonData: '{"row":2,"col":3,"anchors":[3,4,5],"mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    JsonData: '{"row":2,"col":3,"anchors":[3,4,5],"mode":0}'
     TextData:
     - Fix
     - with
@@ -77,6 +86,7 @@ MonoBehaviour:
       Also Newline'
     - Right
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

@@ -11,6 +11,8 @@ public class TTst : MonoBehaviour
     UIDocument UIDocument;
     VisualElement root;
     public SODocPage page;
+    public DocComponent doc;
+    public DocComponent doc2;
     void Start()
     {
         UIDocument = GetComponent<UIDocument>();

@@ -1,10 +1,14 @@
+using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
@@ -17,37 +21,21 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override VisualElement CreateInspectorGUI()
         {
             Target = target as SODocComponents;
-            root = new VisualElement();
-            root.style.backgroundColor = DocStyle.Current.BackgroundColor;
-            root.style.ClearMarginPadding();
-            root.style.SetIS_Style(ISPadding.Pixel(10));
-            imgui = new IMGUIContainer(() =>
-            {
-                EditorGUI.BeginChangeCheck();
-                base.OnInspectorGUI();
-                if (EditorGUI.EndChangeCheck())
-                {
-                    repaint();
-                }
-            });
-            root.Add(imgui);
-            repaint();
+            root = new DocComponentsField(Target.Components);
             return root;
         }
-        private void repaint()
+        void save()
         {
-            root.Clear();
-            root.Add(imgui);
-            foreach(var doc in Target.Components)
-            {
-                var ve = DocEditor.CreateEditVisual(doc);
-                ve.style.marginBottom = 15;
-                root.Add(ve);
-            }
+            if (root == null) return;
+            if (root[0].childCount == 0)
+                Target.Components.Clear();
+            else
+                Target.Components = ((DocComponentsField)root).ToComponentsList();
+            EditorUtility.SetDirty(target);
         }
         private void OnDisable()
         {
-            EditorUtility.SetDirty(target);
+            save();
         }
     }
 }

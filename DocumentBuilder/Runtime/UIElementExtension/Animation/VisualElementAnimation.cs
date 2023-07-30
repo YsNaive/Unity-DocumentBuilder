@@ -13,6 +13,34 @@ namespace NaiveAPI_UI
             None = 0,
             Fade = 1
         }
+
+        public static void GoToPosition(this VisualElement ve, Vector2 targetPos, Action callback = null)
+        {
+            GoToPosition(ve, targetPos, 10, 20, AnimationCurve.EaseInOut(0, 0, 20, 1), callback); }
+        public static void GoToPosition(this VisualElement ve, Vector2 targetPos,int msPerStep,int steps, AnimationCurve curve, Action callback = null)
+        {
+            float curTime = curve[0].time;
+            float totalTime = curve[curve.length - 1].time - curTime;
+            float timePerStep = totalTime / steps;
+            int curStep = 0;
+            Vector2 originPos = ve.transform.position;
+            ve.panel.visualTree.schedule.Execute(() =>
+            {
+                curStep++;
+                curTime += timePerStep;
+                float rate = curve.Evaluate(curTime);
+                Vector2 newPos = originPos + ((targetPos - originPos) * rate);
+                ve.transform.position = newPos;
+            }).Every(msPerStep).Until(() =>
+            {
+                if(curStep > steps)
+                {
+                    callback?.Invoke();
+                    ve.transform.position = targetPos;
+                    return true;
+                }return false;
+            });
+        }
         public static void Fade(this VisualElement element, float to, float ms, float step = 20, Action callback = null) {
             Fade(element, element.style.opacity.value, to, ms, step, callback);
         }

@@ -20,12 +20,14 @@ MonoBehaviour:
     TextData:
     - Description
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - "Main visual to desplay contents, it has 5 typies : \nNone, Sucess, Warning,
       Danger, Hint."
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 8
     JsonData: '{"num":5}'
     TextData:
@@ -67,27 +69,64 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Settings
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/S1IafqGi2.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: '{"Type":0,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
     - in & out is animation type, the number after is time, below is the animation
       you can ues on this visual.
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
-    JsonData: '{"row":4,"col":3,"anchors":[3,3,3],"mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    JsonData: '{"row":4,"col":3,"anchors":[3,3,3],"mode":1}'
     TextData:
     - 
     - Usage
@@ -104,40 +143,48 @@ MonoBehaviour:
 
       (total time = content length * num)'
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Show Case
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - This description with no theme
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: '{"Type":1,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
     - This is Success
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: '{"Type":2,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
     - Something should be notice
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: '{"Type":3,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
     - Use this carefuly
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: '{"Type":4,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
     - Maybe this hint can help you
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

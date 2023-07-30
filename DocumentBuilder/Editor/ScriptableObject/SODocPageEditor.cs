@@ -397,7 +397,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         class unit : VisualElement
         {
             public VisualElement toolBar;
-            public DocEditField editView;
+            public DocComponentField editView;
             public DocComponent docComponent;
             public int Index
             {
@@ -410,8 +410,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 Clear();
                 var ve = DocRuntime.CreateVisual(docComponent);
-                ve.style.marginTop = 7;
-                foreach(var child in ve.Children())child.SetEnabled(false);
+                ve.style.borderTopWidth = 5;
+                ve.style.borderBottomWidth = 5;
+                ve.style.borderLeftWidth = 5;
+                ve.style.paddingLeft = 10;
+                ve.style.borderLeftColor = DocStyle.Current.HintColor;
+                foreach (var child in ve.Children())child.SetEnabled(false);
                 Add(ve);
                 this[0].RegisterCallback<PointerDownEvent>(e => { EditMode(); });
             }
@@ -551,7 +555,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button button = DocRuntime.NewButton("Dup", () =>
             {
                 int i = EditRoot.IndexOf(unit);
-                EditRoot.Insert(i+1, createUnit(((DocEditField)unit[1]).Target.Copy()));
+                EditRoot.Insert(i+1, createUnit(((DocComponentField)unit[1]).Target.Copy()));
             });
             button.style.width = btnWidth;
             return button;

@@ -20,40 +20,48 @@ MonoBehaviour:
     TextData:
     - See Also
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - To display a quick view to other DocPage or use as a URL link to open web,
       usually use in API docs as see also.
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Settings
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/SyZVzpfjn.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData: []
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - description is only for prefix, while click it wrong effect, height only effect
       in DocPage view mode as max height.
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Show Case
     ObjsData: []
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 6
     JsonData: '{"height":250,"url":"","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData:
@@ -61,6 +69,7 @@ MonoBehaviour:
     - Document Builder
     ObjsData:
     - {fileID: 11400000, guid: b4d768b0a8c3e3a4f9c56bd8f9815b43, type: 2}
+    AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 6
     JsonData: '{"height":400,"url":"https://github.com/YsNaive/Unity-DocumentBuilder","mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData:
@@ -68,6 +77,7 @@ MonoBehaviour:
     - Jump !
     ObjsData:
     - {fileID: 0}
+    AniSettings: 0100000001000000fa000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

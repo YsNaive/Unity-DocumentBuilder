@@ -9,41 +9,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: TestBook
+  m_Script: {fileID: 11500000, guid: a72fa17cfe08e834ead4d655c725aab5, type: 3}
+  m_Name: Components
   m_EditorClassIdentifier: 
-  Icon: {fileID: 2800000, guid: 691475c57a824010be0c6f474caeb7e1, type: 3}
-  SubPages:
-  - {fileID: 11400000, guid: 7e3917613c4e738438b842c5e4f72690, type: 2}
-  - {fileID: 11400000, guid: dac8f2a6983d47444a8cd2e7ce83823d, type: 2}
   Components:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Label
+    - MyLabel !!
     ObjsData: []
-    AniSettings: 
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 
     JsonData: 
     TextData: []
     ObjsData: []
-    AniSettings: 
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 
     JsonData: 
     TextData: []
     ObjsData: []
-    AniSettings: 
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 
     JsonData: 
     TextData: []
     ObjsData: []
-    AniSettings: 
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 
     JsonData: 
     TextData: []
     ObjsData: []
-    AniSettings: 
-  IntroMode: 1
-  OuttroMode: 1
-  IntroDuration: 1000
-  OuttroDuration: 200
+    AniSettings: 01000000fa00000001000000fa000000

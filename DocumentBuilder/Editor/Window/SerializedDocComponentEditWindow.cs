@@ -12,13 +12,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
     {
         private void OnEnable()
         {
-            maxSize = new Vector2 (300, 300);
+            minSize = new Vector2 (400, 300);
         }
-        public static SerializedDocComponentEditWindow Create(SerializedProperty property)
+        public static SerializedDocComponentEditWindow Create(SerializedProperty property, string name = "Document Component" )
         {
-            var window = CreateWindow<SerializedDocComponentEditWindow>("Document Component");
+            var window = CreateWindow<SerializedDocComponentEditWindow>(name);
             var editView = new SerializedDocEditVisual(property);
             window.rootVisualElement.Add(editView);
+            window.rootVisualElement.style.paddingRight = 10;
             window.rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
             Button save = new Button();
             save.text = "Save";
@@ -29,6 +30,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 window.Close();
                 editView.ApplyChange();
             };
+            ((DocComponentField)editView[0]).SetStatus(true);
             window.rootVisualElement.Add(save);
             return window;
         }

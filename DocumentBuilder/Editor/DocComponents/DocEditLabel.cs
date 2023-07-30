@@ -20,7 +20,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             data = JsonUtility.FromJson<DocLabel.Data>(Target.JsonData);
             data ??= new DocLabel.Data();
-            style.SetIS_Style(ISFlex.Horizontal);
+
             TextField labelInput = new TextField();
             labelInput.style.width = Length.Percent(68);
             if (Target.TextData.Count == 0)
@@ -32,12 +32,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.TextData.Add(val.newValue);
             });
             labelInput.style.SetIS_Style(ISMargin.None);
-            Add(labelInput);
             IntegerField intField = null;
             intField = DocEditor.NewIntField("", e =>
             {
                 data.Level = Mathf.Clamp(e.newValue, 1, 6);
-                if(e.newValue != data.Level)
+                if (e.newValue != data.Level)
                     intField.value = data.Level;
                 save();
             });
@@ -54,15 +53,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 intField.value -= 1;
             });
-            intField.RegisterCallback<GeometryChangedEvent>(e =>{
+            intField.RegisterCallback<GeometryChangedEvent>(e =>
+            {
                 addBtn.style.width = e.newRect.height;
                 addBtn.style.height = e.newRect.height;
                 subBtn.style.width = e.newRect.height;
                 subBtn.style.height = e.newRect.height;
             });
-            Add(intField);
-            Add(addBtn);
-            Add(subBtn);
+            var hor = DocRuntime.NewEmptyHorizontal();
+            hor.Add(labelInput);
+            hor.Add(intField);
+            hor.Add(addBtn);
+            hor.Add(subBtn);
+            Add(hor);
         }
         void save()
         {
