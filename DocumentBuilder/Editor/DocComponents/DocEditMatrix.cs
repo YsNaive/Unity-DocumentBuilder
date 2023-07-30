@@ -24,7 +24,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.style.width = -1;
             DocMatrix.Data data = setData(Target.JsonData, Target.TextData);
 
-            this.Add(generateAnimVisual(data));
             rowColVisual = generateRowCol(data);
             this.Add(rowColVisual);
             anchorVisual = generateAnchors(data);
@@ -69,83 +68,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     Target.TextData.Add(data.contents[i, j]);
                 }
             }
-        }
-
-        private VisualElement generateAnimVisual(DocMatrix.Data data)
-        {
-            VisualElement root = new VisualElement();
-            root.style.SetIS_Style(ISFlex.Horizontal);
-
-            VisualElement childIntro = DocRuntime.NewEmptyHorizontal();
-            EnumField introField = new EnumField();
-            introField.Init(DocMatrix.AniMode.None);
-            introField.value = data.IntroAniMode;
-            introField.style.width = Length.Percent(50);
-            introField.label = "Intro Mode";
-            introField[0].style.minWidth = Length.Percent(50);
-            introField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            introField.style.ClearMarginPadding();
-            childIntro.Add(introField);
-            TextField introDurationField = new TextField();
-            introDurationField.label = "IntroDuration";
-            introDurationField.value = data.IntroDuration.ToString();
-            introDurationField.style.width = Length.Percent(50);
-            introDurationField[0].style.minWidth = Length.Percent(50);
-            introDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            introDurationField.visible = data.IntroAniMode != DocMatrix.AniMode.None;
-            introDurationField.style.ClearMarginPadding();
-            childIntro.Add(introDurationField);
-            introField.RegisterValueChangedCallback(value =>
-            {
-                data.IntroAniMode = (DocMatrix.AniMode)value.newValue;
-                introDurationField.visible = data.IntroAniMode != DocMatrix.AniMode.None;
-                Target.JsonData = JsonUtility.ToJson(data);
-            });
-            introDurationField.RegisterValueChangedCallback(value =>
-            {
-                if (int.TryParse(value.newValue, out int duration))
-                {
-                    data.IntroDuration = duration;
-                    Target.JsonData = JsonUtility.ToJson(data);
-                }
-            });
-            VisualElement childOuttro = DocRuntime.NewEmptyHorizontal();
-            EnumField outtroField = new EnumField();
-            outtroField.Init(DocMatrix.AniMode.None);
-            outtroField.label = "Outtro Mode";
-            outtroField.value = data.IntroAniMode;
-            outtroField.style.width = Length.Percent(50);
-            outtroField[0].style.minWidth = Length.Percent(50);
-            outtroField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            outtroField.style.ClearMarginPadding();
-            childOuttro.Add(outtroField);
-            TextField outtroDurationField = new TextField();
-            outtroDurationField.label = "OuttroDuration";
-            outtroDurationField.value = data.OuttroDuration.ToString();
-            outtroDurationField.style.width = Length.Percent(50);
-            outtroDurationField[0].style.minWidth = Length.Percent(50);
-            outtroDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            outtroDurationField.visible = data.OuttroAniMode != DocMatrix.AniMode.None;
-            outtroDurationField.style.ClearMarginPadding();
-            childOuttro.Add(outtroDurationField);
-            outtroField.RegisterValueChangedCallback(value =>
-            {
-                data.OuttroAniMode = (DocMatrix.AniMode)value.newValue;
-                outtroDurationField.visible = data.OuttroAniMode != DocMatrix.AniMode.None;
-                Target.JsonData = JsonUtility.ToJson(data);
-            });
-            outtroDurationField.RegisterValueChangedCallback(value =>
-            {
-                if (int.TryParse(value.newValue, out int duration))
-                {
-                    data.OuttroDuration = duration;
-                    Target.JsonData = JsonUtility.ToJson(data);
-                }
-            });
-            root.Add(childIntro);
-            root.Add(childOuttro);
-
-            return root;
         }
 
         private VisualElement generateRowCol(DocMatrix.Data data)

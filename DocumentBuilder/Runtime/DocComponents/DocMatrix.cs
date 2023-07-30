@@ -35,25 +35,6 @@ namespace NaiveAPI.DocumentBuilder
         {
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;
-            switch (data.IntroAniMode)
-            {
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    IntroAnimation = (callBack) => { this.Fade(0, 1, data.IntroDuration, 50, callBack); };
-                    break;
-                case AniMode.TextFade:
-                    break;
-            }
-            switch (data.OuttroAniMode){
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    OuttroAnimation = (callBack) => { this.Fade(1, 0, data.OuttroDuration, 50, callBack); };
-                    break;
-                case AniMode.TextFade:
-                    break;
-            }
             matrixVisual = generateViewMatrixVisual(data, -1);
             matrixVisual[matrixVisual.childCount - 1].RegisterCallback<GeometryChangedEvent>(repaintMatrix);
             this.Add(matrixVisual);
@@ -186,8 +167,6 @@ namespace NaiveAPI.DocumentBuilder
             public string[,] contents;
             public TextAnchor[] anchors;
             public Mode mode = Mode.FixedWidth;
-            public AniMode IntroAniMode = AniMode.Fade, OuttroAniMode = AniMode.Fade;
-            public int IntroDuration = 250, OuttroDuration = 250;
 
             public Data()
             {
@@ -389,13 +368,6 @@ namespace NaiveAPI.DocumentBuilder
             {
                 return null;
             }
-        }
-
-        public enum AniMode
-        {
-            None,
-            Fade,
-            TextFade,
         }
 
         public enum Mode

@@ -17,23 +17,6 @@ namespace NaiveAPI.DocumentBuilder
             if (data == null)
                 data = new Data();
 
-            switch (data.IntroAniMode)
-            {
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    IntroAnimation = (callBack) => { this.Fade(0, 1, data.IntroDuration, 50, callBack); };
-                    break;
-            }
-            switch (data.OuttroAniMode)
-            {
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    OuttroAnimation = (callBack) => { this.Fade(1, 0, data.OuttroDuration, 50, callBack); };
-                    break;
-            }
-
             if (data.mode == Mode.Object)
                 this.Add(generateObjectVisual(data));
             else if (data.mode == Mode.Url)
@@ -129,19 +112,11 @@ namespace NaiveAPI.DocumentBuilder
             public float scale = -1;
             public string url = "";
             public Mode mode = Mode.Object;
-            public AniMode IntroAniMode = AniMode.Fade, OuttroAniMode = AniMode.Fade;
-            public int IntroDuration = 250, OuttroDuration = 250;
         }
 
         public enum Mode
         {
             Url, Object
-        }
-
-        public enum AniMode
-        {
-            None,
-            Fade,
         }
     }
 }

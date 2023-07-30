@@ -15,26 +15,6 @@ namespace NaiveAPI.DocumentBuilder
         {
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;
-            switch (data.IntroAniMode)
-            {
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    IntroAnimation = (callBack) => { this.Fade(0, 1, data.IntroDuration, 50, callBack); };
-                    break;
-                case AniMode.TextFade:
-                    break;
-            }
-            switch (data.OuttroAniMode)
-            {
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    OuttroAnimation = (callBack) => { this.Fade(1, 0, data.OuttroDuration, 50, callBack); };
-                    break;
-                case AniMode.TextFade:
-                    break;
-            }
             ScrollView scrollView = DocRuntime.NewScrollView();
             scrollView.style.maxHeight = data.height;
             scrollView.style.overflow = Overflow.Hidden;
@@ -90,15 +70,6 @@ namespace NaiveAPI.DocumentBuilder
             public int height = 400;
             public string url = "";
             public Mode mode = Mode.OpenPage;
-            public AniMode IntroAniMode = AniMode.Fade, OuttroAniMode = AniMode.Fade;
-            public int IntroDuration = 250, OuttroDuration = 250;
-        }
-
-        public enum AniMode
-        {
-            None,
-            Fade,
-            TextFade,
         }
 
         public enum Mode

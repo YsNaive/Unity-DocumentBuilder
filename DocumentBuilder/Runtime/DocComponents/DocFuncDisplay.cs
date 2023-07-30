@@ -30,35 +30,16 @@ namespace NaiveAPI.DocumentBuilder
         {
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;
-            switch (data.IntroAniMode)
-            {
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    IntroAnimation = (callBack) => { this.Fade(0, 1, data.IntroDuration, 50, callBack); };
-                    break;
-                case AniMode.TextFade:
-                    break;
-            }
-            switch (data.OuttroAniMode)
-            {
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    OuttroAnimation = (callBack) => { this.Fade(1, 0, data.OuttroDuration, 50, callBack); };
-                    break;
-                case AniMode.TextFade:
-                    break;
-            }
             Foldout foldout = new Foldout();
             foldout.text = data.Name;
             foldout.value = data.isOn;
             foldout.style.SetIS_Style(funcNameTextStyle);
-            if(foldout.Q<Label>()!= null)
+            if (foldout.Q<Label>() != null)
+            {
                 foldout.Q<Label>().style.SetIS_Style(Current.MainText);
+                foldout.Q<Label>().style.color = DocStyle.Current.FuncColor;
+            }
             foldout.Q<Toggle>().style.ClearMarginPadding();
-            foldout.Q("unity-checkmark").style.position = Position.Absolute;
-            foldout.Q("unity-checkmark").visible = false;
             foldout.style.paddingLeft = 5;
             foldout.RegisterValueChangedCallback(value =>
             {
@@ -221,8 +202,6 @@ namespace NaiveAPI.DocumentBuilder
             public List<string> ReturnTypesDescription = new List<string>();
             [System.NonSerialized]
             public List<string> ParamsDescription = new List<string>();
-            public AniMode IntroAniMode = AniMode.Fade, OuttroAniMode = AniMode.Fade;
-            public int IntroDuration = 250, OuttroDuration = 250;
             public bool isOn;
 
             public Data()
@@ -297,43 +276,6 @@ namespace NaiveAPI.DocumentBuilder
         {
             public string ParamName = "";
             public string Type = "";
-        }
-
-        public enum AniMode
-        {
-            None,
-            Fade,
-            TextFade,
-        }
-        public class Test : MonoBehaviour,IBinding, ICollection
-        {
-            public int Count => throw new NotImplementedException();
-
-            public bool IsSynchronized => throw new NotImplementedException();
-
-            public object SyncRoot => throw new NotImplementedException();
-
-            public void CopyTo(Array array, int index)
-            {
-                throw new NotImplementedException();
-            }
-
-            public IEnumerator GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void PreUpdate()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            public void Release()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            public void Update() => throw new System.NotImplementedException();
         }
     }
 }

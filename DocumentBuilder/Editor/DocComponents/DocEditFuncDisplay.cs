@@ -24,7 +24,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.style.backgroundColor = DocStyle.Current.BackgroundColor;
             this.style.width = -1;
             DocFuncDisplay.Data data = setData(Target.JsonData, Target.TextData);
-            this.Add(generateAnimVisual(data));
             TextField nameTextField = new TextField();
             nameTextField.label = "Name";
             nameTextField[0].style.minWidth = new Length(20, LengthUnit.Percent);
@@ -68,10 +67,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             DocComponent doc = new DocComponent();
             doc.VisualID = "4";
             DocFuncDisplay.Data data = new DocFuncDisplay.Data();
-            data.IntroAniMode = DocFuncDisplay.AniMode.Fade;
-            data.OuttroAniMode = DocFuncDisplay.AniMode.Fade;
-            data.IntroDuration = 300;
-            data.OuttroDuration = 300;
             List<string> texts = new List<string>();
             data.Name = methodInfo.Name;
             texts.Add("");
@@ -174,86 +169,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
 
             return typeName;
-        }
-
-        private VisualElement generateAnimVisual(DocFuncDisplay.Data data)
-        {
-            VisualElement root = new VisualElement();
-            root.style.paddingLeft = Length.Percent(1);
-            root.style.paddingRight = Length.Percent(1);
-            VisualElement childIntro = new VisualElement();
-            childIntro.style.SetIS_Style(ISFlex.Horizontal);
-
-            EnumField introField = new EnumField();
-            introField.Init(DocFuncDisplay.AniMode.None);
-            introField.value = data.IntroAniMode;
-            introField.style.width = Length.Percent(50);
-            introField.label = "Intro Mode";
-            introField[0].style.minWidth = Length.Percent(50);
-            introField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            introField.style.ClearMarginPadding();
-            childIntro.Add(introField);
-            TextField introDurationField = new TextField();
-            introDurationField.label = "IntroDuration";
-            introDurationField.value = data.IntroDuration.ToString();
-            introDurationField.style.width = Length.Percent(50);
-            introDurationField[0].style.minWidth = Length.Percent(50);
-            introDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            introDurationField.visible = data.IntroAniMode != DocFuncDisplay.AniMode.None;
-            introDurationField.style.ClearMarginPadding();
-            childIntro.Add(introDurationField);
-            introField.RegisterValueChangedCallback(value =>
-            {
-                data.IntroAniMode = (DocFuncDisplay.AniMode)value.newValue;
-                introDurationField.visible = data.IntroAniMode != DocFuncDisplay.AniMode.None;
-                Target.JsonData = JsonUtility.ToJson(data);
-            });
-            introDurationField.RegisterValueChangedCallback(value =>
-            {
-                if (int.TryParse(value.newValue, out int duration))
-                {
-                    data.IntroDuration = duration;
-                    Target.JsonData = JsonUtility.ToJson(data);
-                }
-            });
-            VisualElement childOuttro = new VisualElement();
-            childOuttro.style.SetIS_Style(ISFlex.Horizontal);
-            EnumField outtroField = new EnumField();
-            outtroField.Init(DocFuncDisplay.AniMode.None);
-            outtroField.label = "Outtro Mode";
-            outtroField.value = data.IntroAniMode;
-            outtroField.style.width = Length.Percent(50);
-            outtroField[0].style.minWidth = Length.Percent(50);
-            outtroField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            outtroField.style.ClearMarginPadding();
-            childOuttro.Add(outtroField);
-            TextField outtroDurationField = new TextField();
-            outtroDurationField.label = "OuttroDuration";
-            outtroDurationField.value = data.OuttroDuration.ToString();
-            outtroDurationField.style.width = Length.Percent(50);
-            outtroDurationField[0].style.minWidth = Length.Percent(50);
-            outtroDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            outtroDurationField.visible = data.OuttroAniMode != DocFuncDisplay.AniMode.None;
-            outtroDurationField.style.ClearMarginPadding();
-            childOuttro.Add(outtroDurationField);
-            outtroField.RegisterValueChangedCallback(value =>
-            {
-                data.OuttroAniMode = (DocFuncDisplay.AniMode)value.newValue;
-                outtroDurationField.visible = data.OuttroAniMode != DocFuncDisplay.AniMode.None;
-                Target.JsonData = JsonUtility.ToJson(data);
-            });
-            outtroDurationField.RegisterValueChangedCallback(value =>
-            {
-                if (int.TryParse(value.newValue, out int duration))
-                {
-                    data.OuttroDuration = duration;
-                    Target.JsonData = JsonUtility.ToJson(data);
-                }
-            });
-            root.Add(childIntro);
-            root.Add(childOuttro);
-
-            return root;
         }
 
         private DocFuncDisplay.Data setData(string jsonData, List<string> texts)

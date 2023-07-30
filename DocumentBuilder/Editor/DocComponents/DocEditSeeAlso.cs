@@ -18,7 +18,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         protected override void OnCreateGUI()
         {
             DocSeeAlso.Data data = setData(Target.JsonData, Target.TextData);
-            this.Add(generateAnimVisual(data));
             this.Add(generateTextVisual(data));
             this.Add(generateHeightModeVisual(data));
         }
@@ -37,86 +36,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
 
             return data;
-        }
-
-        private VisualElement generateAnimVisual(DocSeeAlso.Data data)
-        {
-            VisualElement root = new VisualElement();
-            root.style.paddingLeft = Length.Percent(1);
-            root.style.paddingRight = Length.Percent(1);
-            VisualElement childIntro = new VisualElement();
-            childIntro.style.SetIS_Style(ISFlex.Horizontal);
-
-            EnumField introField = new EnumField();
-            introField.Init(DocSeeAlso.AniMode.None);
-            introField.value = data.IntroAniMode;
-            introField.style.width = Length.Percent(50);
-            introField.label = "Intro Mode";
-            introField[0].style.minWidth = Length.Percent(30);
-            introField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            introField.style.ClearMarginPadding();
-            childIntro.Add(introField);
-            TextField introDurationField = new TextField();
-            introDurationField.label = "IntroDuration";
-            introDurationField.value = data.IntroDuration.ToString();
-            introDurationField.style.width = Length.Percent(50);
-            introDurationField[0].style.minWidth = Length.Percent(30);
-            introDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            introDurationField.visible = data.IntroAniMode != DocSeeAlso.AniMode.None;
-            introDurationField.style.ClearMarginPadding();
-            childIntro.Add(introDurationField);
-            introField.RegisterValueChangedCallback(value =>
-            {
-                data.IntroAniMode = (DocSeeAlso.AniMode)value.newValue;
-                introDurationField.visible = data.IntroAniMode != DocSeeAlso.AniMode.None;
-                Target.JsonData = JsonUtility.ToJson(data);
-            });
-            introDurationField.RegisterValueChangedCallback(value =>
-            {
-                if (int.TryParse(value.newValue, out int duration))
-                {
-                    data.IntroDuration = duration;
-                    Target.JsonData = JsonUtility.ToJson(data);
-                }
-            });
-            VisualElement childOuttro = new VisualElement();
-            childOuttro.style.SetIS_Style(ISFlex.Horizontal);
-            EnumField outtroField = new EnumField();
-            outtroField.Init(DocSeeAlso.AniMode.None);
-            outtroField.label = "Outtro Mode";
-            outtroField.value = data.IntroAniMode;
-            outtroField.style.width = Length.Percent(50);
-            outtroField[0].style.minWidth = Length.Percent(30);
-            outtroField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            outtroField.style.ClearMarginPadding();
-            childOuttro.Add(outtroField);
-            TextField outtroDurationField = new TextField();
-            outtroDurationField.label = "OuttroDuration";
-            outtroDurationField.value = data.OuttroDuration.ToString();
-            outtroDurationField.style.width = Length.Percent(50);
-            outtroDurationField[0].style.minWidth = Length.Percent(30);
-            outtroDurationField[1].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            outtroDurationField.visible = data.OuttroAniMode != DocSeeAlso.AniMode.None;
-            outtroDurationField.style.ClearMarginPadding();
-            childOuttro.Add(outtroDurationField);
-            outtroField.RegisterValueChangedCallback(value =>
-            {
-                data.OuttroAniMode = (DocSeeAlso.AniMode)value.newValue;
-                outtroDurationField.visible = data.OuttroAniMode != DocSeeAlso.AniMode.None;
-                Target.JsonData = JsonUtility.ToJson(data);
-            });
-            outtroDurationField.RegisterValueChangedCallback(value =>
-            {
-                if (int.TryParse(value.newValue, out int duration))
-                {
-                    data.OuttroDuration = duration;
-                    Target.JsonData = JsonUtility.ToJson(data);
-                }
-            });
-            root.Add(childIntro);
-            root.Add(childOuttro);
-
-            return root;
         }
 
         private VisualElement generateTextVisual(DocSeeAlso.Data data)

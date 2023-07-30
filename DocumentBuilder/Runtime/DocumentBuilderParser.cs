@@ -113,7 +113,7 @@ public static class DocumentBuilderParser
         string newPattern = @"\bnew\s+" + type + @"(?:;|\()";
         string reservedWordPattern = @"\b(?:public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
 
-        string instancePattern = @"[^.]\b([A-Za-z_]\w*)[.]";
+        //string instancePattern = @"[^.]\b([A-Za-z_]\w*)[.]";
         string methodPattern = @"\b" + type + @"\(";
         string numberPattern = @"[^""A-Za-z_][+-]?(\d+(?:\.\d+)?[fx]?)";
         StringBuilder args = new StringBuilder();
@@ -229,11 +229,6 @@ public static class DocumentBuilderParser
         {
             foreach (Capture capture in match.Groups[1].Captures)
             {
-                if (capture.Value == "TextElement")
-                {
-                    Debug.Log(capture.Value);
-                    Debug.Log(capture.Length);
-                }
                 MatchData matchData = new MatchData(capture.Length, capture.Value, "Type", DocStyle.Current.TypeColor);
                 checkAndAdd(table, capture.Index, matchData);
             }
