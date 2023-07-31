@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
   m_Name: DocEditVisual
   m_EditorClassIdentifier: 
-  Icon: {fileID: 2800000, guid: 77fc49cad09df0142a9bbebdffc823a5, type: 3}
+  Icon: {fileID: 0}
   SubPages: []
   Components:
   - VisualID: 

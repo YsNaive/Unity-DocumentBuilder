@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: SODocPage
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 77fc49cad09df0142a9bbebdffc823a5, type: 3}
+  SubPages: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - SODocPage
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - ScriptableObject to store page information
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - enum DocPageAniMode
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 8
+    JsonData: '{"num":4}'
+    TextData:
+    - None
+    - SameTime
+    - OneByOne
+    - Flow
+    ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":0}'
+    TextData:
+    - 'Sametime\t invoke all animation at sametime
+
+      OneByOne\t invoke next
+      after last one is done
+
+      Flow\t\t invoke next animation after duration'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Members
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 3
+    JsonData: '{"row":8,"col":5,"anchors":[3,3,4,4,3],"mode":1}'
+    TextData:
+    - Type
+    - Name
+    - get
+    - set
+    - Usage
+    - Texture2D
+    - Icon
+    - "\u25A0"
+    - "\u25A0"
+    - use to display on menu
+    - List<SODocPage>
+    - SubPages
+    - "\u25A0"
+    - "\u25A0"
+    - it's sub pages
+    - List<DocComponents>
+    - Components
+    - "\u25A0"
+    - "\u25A0"
+    - document contents
+    - Enum
+    - IntroMode
+    - "\u25A0"
+    - "\u25A0"
+    - see datail above
+    - Enum
+    - IntroDuration
+    - "\u25A0"
+    - "\u25A0"
+    - 
+    - Enum
+    - OuttruMode
+    - "\u25A0"
+    - "\u25A0"
+    - 
+    - Enum
+    - OuttroDuration
+    - "\u25A0"
+    - "\u25A0"
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200

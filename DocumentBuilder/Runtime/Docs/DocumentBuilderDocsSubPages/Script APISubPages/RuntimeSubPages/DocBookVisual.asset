@@ -10,15 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: Runtime
+  m_Name: DocBookVisual
   m_EditorClassIdentifier: 
-  Icon: {fileID: 2800000, guid: 323fcf14a6a8bd1488a8e68098322f7a, type: 3}
-  SubPages:
-  - {fileID: 11400000, guid: 0212d1433ee63cd47b0db92c25917069, type: 2}
-  - {fileID: 11400000, guid: 035e8cb4d2fa0e545b268d02aa387935, type: 2}
-  - {fileID: 11400000, guid: bc6631fc1b798d241aca52174ebc0be9, type: 2}
-  - {fileID: 11400000, guid: 6c65fda3d2c00a846aef3b2237dc5012, type: 2}
-  - {fileID: 11400000, guid: f9e26cfd6e9555c429e900160b18317e, type: 2}
+  Icon: {fileID: 2800000, guid: 77fc49cad09df0142a9bbebdffc823a5, type: 3}
+  SubPages: []
   Components: []
   IntroMode: 1
   OuttroMode: 1

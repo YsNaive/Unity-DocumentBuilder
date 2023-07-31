@@ -27,13 +27,6 @@ namespace NaiveAPI.DocumentBuilder
             codeContents.style.SetIS_Style(padding);
             codeContents.style.fontSize = DocStyle.Current.MainTextSize;
             //codeContents.style.width = data.MinWidth;
-            codeContents.RegisterCallback<GeometryChangedEvent>(e =>
-            {
-                if(e.newRect.width != e.oldRect.width)
-                {
-                    codeContents.style.width = e.newRect.width;
-                }
-            });
             string lineNum = $"<line-height={data.LineHeightPercent}%>1";
             int i = 2;
             foreach(var c in Target.TextData[0])
@@ -43,14 +36,15 @@ namespace NaiveAPI.DocumentBuilder
                     lineNum += $"\n{i++}";
                 }
             }
+            ScrollView numScrollView = DocRuntime.NewScrollView();
             TextElement lineNumber = DocRuntime.NewTextElement(lineNum);
             lineNumber.style.SetIS_Style(padding);
             lineNumber.style.fontSize = DocStyle.Current.MainTextSize;
             lineNumber.style.color = DocStyle.Current.SubFrontGroundColor;
-            lineNumber.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
-            lineNumber.style.borderRightWidth = 6;
-            lineNumber.style.borderRightColor = DocStyle.Current.SubBackgroundColor;
-            lineNumber.style.position = Position.Absolute;
+            numScrollView.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
+            numScrollView.style.borderRightWidth = 6;
+            numScrollView.style.borderRightColor = DocStyle.Current.SubBackgroundColor;
+            numScrollView.style.position = Position.Absolute;
             lineNumber.style.unityTextAlign = TextAnchor.MiddleRight;
             Button copy = null;
             copy = DocRuntime.NewButton("Copy", () =>
@@ -62,19 +56,33 @@ namespace NaiveAPI.DocumentBuilder
                     copy.text = "Copy";
                 }).ExecuteLater(1000);
             });
+            codeContents.RegisterCallback<GeometryChangedEvent>(e =>
+            {
+                if(e.newRect.width != e.oldRect.width)
+                {
+                    codeContents.style.width = e.newRect.width;
+                }
+            });
             copy.style.position = Position.Absolute;
             copy.style.top = 5;
             codeScrollView.style.maxHeight = data.MaxHeight;
-
+            numScrollView.style.maxHeight = data.MaxHeight;
+            numScrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
+            numScrollView.verticalScroller.valueChanged += v => { codeScrollView.verticalScroller.value = v; };
+            codeScrollView.verticalScroller.valueChanged += v => { numScrollView.verticalScroller.value = v; };
             codeScrollView.Add(codeContents);
+            codeScrollView.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
+            numScrollView.Add(lineNumber);
             Add(codeScrollView);
-            Add(lineNumber);
+            Add(numScrollView);
             Add(copy);
 
             RegisterCallback<GeometryChangedEvent>(e =>
             {
+                codeScrollView.style.width = e.newRect.width;
                 codeContents.style.marginLeft = lineNumber.layout.width;
-                copy.style.right = codeScrollView.verticalScroller.enabledInHierarchy ? 20 : 5;
+                codeScrollView.style.marginLeft = 6;
+                copy.style.right = codeScrollView.verticalScroller.enabledInHierarchy ? (DocStyle.Current.ScrollerWidth) : 0;
             });
         }
 

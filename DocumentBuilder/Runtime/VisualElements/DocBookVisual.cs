@@ -2,6 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
+using UnityEditor.Hardware;
+using UnityEditor.IMGUI.Controls;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -20,6 +24,10 @@ namespace NaiveAPI.DocumentBuilder
         public bool IsPlayingAinmation { get; private set; }
         private bool isChangingWidth = false;
         public VisualElement ChapterMenu;
+        public TextField SearchField;
+        VisualElement leftSide = DocRuntime.NewEmpty();
+        VisualElement searchView = DocRuntime.NewEmpty();
+        private List<PageMenuVisual> searchBuffer = new List<PageMenuVisual>();
         public DocBookVisual(SODocPage rootPage)
         {
             menuScrollView = DocRuntime.NewScrollView();
@@ -98,9 +106,93 @@ namespace NaiveAPI.DocumentBuilder
                 }
             };
             MenuHandler.SetState(DocCache.Get().OpeningBookHierarchy);
+
+            SearchField = DocRuntime.NewTextField("",e =>
+            {
+                if(e.newValue == "")
+                {
+                    menuScrollView.style.display = DisplayStyle.Flex;
+                    searchView.style.display = DisplayStyle.None;
+                    return;
+                }
+                searchBuffer.Clear();
+                List<PageMenuVisual> searched = new List<PageMenuVisual>();
+                Queue<PageMenuVisual> inQueue = new Queue<PageMenuVisual>();
+                inQueue.Enqueue(menuVisual);
+                while (inQueue.Count != 0)
+                {
+                    var cur = inQueue.Dequeue();
+                    foreach (PageMenuVisual sub in cur.SubMenuVisual)
+                    {
+                        if(!searched.Contains(sub))
+                            inQueue.Enqueue(sub);
+                    }
+                    if (cur.Target.name.Contains(e.newValue))
+                    {
+                        searchBuffer.Add(cur);
+                    }
+                    else
+                    {
+                        bool isFound = false;
+                        foreach(var com in cur.Target.Components)
+                        {
+                            foreach (var str in com.TextData)
+                            {
+                                if (str.Contains(e.newValue))
+                                {
+                                    searchBuffer.Add(cur);
+                                    isFound = true;
+                                    break;
+                                }
+                            }
+                            if (isFound) break;
+                        }
+                    }
+                    searched.Add(cur);
+                }
+                menuScrollView.style.display = DisplayStyle.None;
+                searchView.style.display = DisplayStyle.Flex;
+                searchView.style.marginTop = DocStyle.Current.MainTextSize;
+                searchView.Clear();
+                foreach(var page in searchBuffer)
+                {
+                    var button = DocRuntime.NewTextElement(page.Target.name);
+                    button.style.marginLeft = DocStyle.Current.LabelTextSize;
+                    button.RegisterCallback<PointerDownEvent>(e =>
+                    {
+                        MenuHandler.Selecting = page;
+                    });
+                    button.RegisterCallback<PointerEnterEvent>(e =>
+                    {
+                        button.style.backgroundColor = DocStyle.Current.HintColor;
+                    });
+                    button.RegisterCallback<PointerLeaveEvent>(e =>
+                    {
+                        button.style.backgroundColor = Color.clear;
+                    });
+                    var icon = DocRuntime.NewEmpty();
+                    icon.style.backgroundImage = page.Target.Icon;
+                    icon.style.width = DocStyle.Current.MainTextSize;
+                    icon.style.height = DocStyle.Current.MainTextSize;
+                    button.style.height = DocStyle.Current.MainTextSize;
+                    icon.style.position = Position.Absolute;
+                    icon.style.left = -DocStyle.Current.MainTextSize*1.5f;
+                    button.style.marginLeft = DocStyle.Current.MainTextSize*3;
+                    button.Add(icon);
+                    searchView.Add(button);
+                }
+            });
+            SearchField.style.marginLeft = DocStyle.Current.MainTextSize/2;
+            SearchField.style.marginTop = DocStyle.Current.MainTextSize/2;
+            SearchField.style.marginRight = DocStyle.Current.MainTextSize/2;
+            SearchField.style.height = DocStyle.Current.MainTextSize*1.5f;
             menuScrollView.Add(menuVisual);
             menuScrollView.mode = ScrollViewMode.VerticalAndHorizontal;
-            Add(menuScrollView);
+            var leftSide = DocRuntime.NewEmpty();
+            leftSide.Add(SearchField);
+            leftSide.Add(searchView);
+            leftSide.Add(menuScrollView);
+            Add(leftSide);
             Add(divLineBar);
 
             RegisterCallback<GeometryChangedEvent>(e =>
@@ -117,6 +209,8 @@ namespace NaiveAPI.DocumentBuilder
         }
         void setMenuWidth()
         {
+            //leftSide.style.width = (layout.width - widthSpace) * menuWidthPercent;
+            searchView.style.width = (layout.width - widthSpace) * menuWidthPercent;
             menuScrollView.style.width = (layout.width - widthSpace) * menuWidthPercent;
             if (DisplayingPage != null)
             {

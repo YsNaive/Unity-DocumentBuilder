@@ -216,11 +216,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     if (select.value != null)
                     {
-                        EditRoot.Clear();
-                        foreach (var com in AssetDatabase.LoadAssetAtPath<SODocComponents>(path + '/'+select.value+".asset").Components)
-                        {
-                            EditRoot.Add(new DocComponentField(com.Copy()));
-                        }
+                        EditRoot.Repaint(AssetDatabase.LoadAssetAtPath<SODocComponents>(path + '/' + select.value + ".asset").Components);
                         Save();
                     }
                     header.Remove(hor);

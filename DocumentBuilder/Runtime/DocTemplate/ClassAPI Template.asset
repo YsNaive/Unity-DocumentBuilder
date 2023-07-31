@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72fa17cfe08e834ead4d655c725aab5, type: 3}
+  m_Name: ClassAPI Template
+  m_EditorClassIdentifier: 
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - ClassName
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - what this class do
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Members
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 3
+    JsonData: '{"row":2,"col":5,"anchors":[3,3,4,4,3],"mode":1}'
+    TextData:
+    - Type
+    - Name
+    - get
+    - set
+    - Usage
+    - int
+    - i
+    - "\u25A0"
+    - "\u25A1"
+    - index
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Methods
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 4
+    JsonData: '{"Name":"Foo","Syntaxs":[""],"ReturnTypes":[""],"Params":[{"ParamName":"","Type":""}],"isOn":false}'
+    TextData:
+    - 
+    - 
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Static Methods
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 4
+    JsonData: '{"Name":"Foo2","Syntaxs":[""],"ReturnTypes":[""],"Params":[{"ParamName":"","Type":""}],"isOn":false}'
+    TextData:
+    - 
+    - 
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000

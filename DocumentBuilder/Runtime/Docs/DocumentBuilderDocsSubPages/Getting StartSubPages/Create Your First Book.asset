@@ -14,7 +14,217 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 116bd5b02a236df4d9e4d81f16c51c48, type: 3}
   SubPages: []
-  Components: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Intro
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - To start your journey in DocumentBuilder, first you need to know the data structure
+      in this package, here are some importent Type you needs to know.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 6
+    JsonData: '{"height":400,"url":"","mode":0}'
+    TextData:
+    - Data Class
+    - DocComponent
+    ObjsData:
+    - {fileID: 11400000, guid: 0212d1433ee63cd47b0db92c25917069, type: 2}
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This is the basic class to store the document data, all of DocType can encode/decode
+      from this type
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 6
+    JsonData: '{"height":400,"url":"","mode":0}'
+    TextData:
+    - Data Class
+    - SODocPage
+    ObjsData:
+    - {fileID: 11400000, guid: 035e8cb4d2fa0e545b268d02aa387935, type: 2}
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This is a ScriptableObject to store information for a page, also can be a BookRoot
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - Create Book Root
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - In DocumentBuilder, expressing a book is done in the same way as using SODocPage.
+      You simply choose one as the root page, and its SubPages will represent the
+      contents of the book.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'To create a SODocPage, use:
+
+      Create / Naive API / DocumentBuilder /
+      Doc Page'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - Edit Contents
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - After create your book root, you can start editing you contents, you should
+      see the GUI like below image.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 5
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/BJwjUIHjh.png","mode":0}'
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":3}'
+    TextData:
+    - Top tool bar
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'Edit Layout \tdefault layout to edit page
+
+      View Layout \tpreview your
+      contents
+
+      Inspector\t\tdefault layout for debug'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":3}'
+    TextData:
+    - Add New Page
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'It will auto create a new SODocPage asset and save in:
+
+      current dir
+      / this.name SunPages / newPage.asset'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":3}'
+    TextData:
+    - Delete Page
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":3}'
+    TextData:
+    - It will delete ths page asset, BUT NOT SubPages
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":3}'
+    TextData:
+    - Sub Page List
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - You can add/remove sub page as you want, The order will affect its position
+      on the menu.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":3}'
+    TextData:
+    - Load/Save Template
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'The templat asset will save in:
+
+      DocumentBuilder/Runtime/DocTemplate'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Display
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'To display a DocBook, you can create a DocBookVisual,
+
+      if you only want
+      to display a page, use DocPageVisual.'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 6
+    JsonData: '{"height":400,"url":"","mode":0}'
+    TextData:
+    - See Also
+    - DocPageVisual
+    ObjsData:
+    - {fileID: 11400000, guid: 6c65fda3d2c00a846aef3b2237dc5012, type: 2}
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 6
+    JsonData: '{"height":400,"url":"","mode":0}'
+    TextData:
+    - See Also
+    - DocBookVisual
+    ObjsData:
+    - {fileID: 11400000, guid: f9e26cfd6e9555c429e900160b18317e, type: 2}
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

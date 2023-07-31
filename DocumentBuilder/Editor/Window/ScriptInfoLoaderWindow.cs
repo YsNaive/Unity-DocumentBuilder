@@ -1,29 +1,21 @@
 using NaiveAPI_Editor.DocumentBuilder;
-using NaiveAPI_Editor.window;
-using NaiveAPI_UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class TestWindow : EditorWindow
+    public class ScriptInfoLoaderWindow : EditorWindow
     {
-        static TestWindow window;
-        [MenuItem("Tools/NaiveAPI/Test Window")]
+        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Script DocLoader")]
         public static void ShowWindow()
         {
-            if (window != null)
-            {
-                window.Close();
-                window = null;
-            }
-            window = CreateWindow<TestWindow>("Test Window");
+            GetWindow<ScriptInfoLoaderWindow>("Script DocLoader");
         }
 
         ScrollView show;
@@ -63,10 +55,10 @@ namespace NaiveAPI.DocumentBuilder
         void recalFlag(ChangeEvent<bool> e)
         {
             flag = BindingFlags.DeclaredOnly;
-            if(isPublic.value) flag |= BindingFlags.Public;
-            if(isPrivate.value) flag |= BindingFlags.NonPublic;
-            if(isInstance.value) flag |= BindingFlags.Instance;
-            if(isStatic.value) flag |= BindingFlags.Static;
+            if (isPublic.value) flag |= BindingFlags.Public;
+            if (isPrivate.value) flag |= BindingFlags.NonPublic;
+            if (isInstance.value) flag |= BindingFlags.Instance;
+            if (isStatic.value) flag |= BindingFlags.Static;
             repaint();
         }
         void repaint()
@@ -74,21 +66,21 @@ namespace NaiveAPI.DocumentBuilder
             if (selectScript.value == null) return;
             show.Clear();
             Type targetType = ((MonoScript)selectScript.value).GetClass();
-            if(selectType.value == "Constructor")
+            if (selectType.value == "Constructor")
             {
                 foreach (var cons in targetType.GetConstructors(flag))
                 {
                     show.Add(DocRuntime.NewTextElement("Cons: " + cons.Name));
                 }
             }
-            if(selectType.value == "Methods")
+            if (selectType.value == "Methods")
             {
                 foreach (var mods in targetType.GetMethods(flag))
                 {
                     show.Add(DocEditor.CreateComponentField(DocEditFuncDisplay.LoadMethod(mods)));
                 }
             }
-            if(selectType.value == "Members")
+            if (selectType.value == "Members")
             {
                 foreach (var mems in targetType.GetMembers(flag))
                 {
