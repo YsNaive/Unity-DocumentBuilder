@@ -13,43 +13,83 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public class DocComponentsField : VisualElement
     {
+        public VisualElement ComponentsVisualRoot;
+        public bool IsDraging
+        {
+            get
+            {
+                foreach(DocComponentField doc in ComponentsVisualRoot.Children())
+                {
+                    if(doc.IsDraging)return true;
+                }return false;
+            }
+        }
         public DocComponentsField(List<DocComponent> initComponents)
         {
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.SetIS_Style(ISPadding.Pixel(5));
-            var components = DocRuntime.NewEmpty();
+            ComponentsVisualRoot = DocRuntime.NewEmpty();
             foreach (var component in initComponents)
             {
-                components.Add(new DocComponentField(component));
+                ComponentsVisualRoot.Add(new DocComponentField(component));
             }
-            components.style.marginBottom = 15;
-            Add(components);
+            ComponentsVisualRoot.style.marginBottom = 15;
+            Add(ComponentsVisualRoot);
             Add(DocRuntime.NewButton("Add Component", () =>
             {
-                this[0].Add(new DocComponentField(new DocComponent()));
+                ComponentsVisualRoot.Add(new DocComponentField(new DocComponent()));
+                ((DocComponentField)ComponentsVisualRoot[ComponentsVisualRoot.childCount - 1]).SetStatus(true);
             }));
-            EventCallback<GeometryChangedEvent> exe = null;
-            exe = e =>
+            bool added = false;
+            schedule.Execute(() =>
             {
-                panel.visualTree.RegisterCallback<KeyDownEvent>(e =>
-                {
-                    if (e.ctrlKey)
+                if (panel != null)
+                    if (panel.visualTree != null)
                     {
-                        if (e.keyCode == KeyCode.S)
+                        panel.visualTree.RegisterCallback<KeyDownEvent>(hotkey);
+                        added = true;
+                    }
+            }).Until(() => { return added; });
+        }
+        void hotkey(KeyDownEvent e)
+        {
+            if (e.ctrlKey)
+            {
+                if (e.keyCode == KeyCode.S)
+                {
+                    foreach (DocComponentField doc in ComponentsVisualRoot.Children())
+                        doc.SetStatus(false);
+                }
+                else if(e.keyCode == KeyCode.UpArrow)
+                {
+                    for(int i = 0; i < ComponentsVisualRoot.childCount; i++)
+                    {
+                        if (((DocComponentField)ComponentsVisualRoot[i]).IsEditing)
                         {
-                            foreach (DocComponentField doc in this[0].Children())
-                                doc.SetStatus(false);
+                            if (i != 0)
+                                ComponentsVisualRoot.Insert(i - 1, ComponentsVisualRoot[i]);
+                            break;
                         }
                     }
-                });
-                UnregisterCallback(exe);
-            };
-            RegisterCallback(exe);
+                }
+                else if (e.keyCode == KeyCode.DownArrow)
+                {
+                    for (int i = 0; i < ComponentsVisualRoot.childCount; i++)
+                    {
+                        if (((DocComponentField)ComponentsVisualRoot[i]).IsEditing)
+                        {
+                            if (i != ComponentsVisualRoot.childCount - 1)
+                                ComponentsVisualRoot.Insert(i+1, ComponentsVisualRoot[i]);
+                            break;
+                        }
+                    }
+                }
+            }
         }
         public List<DocComponent> ToComponentsList()
         {
             var output = new List<DocComponent>();
-            foreach (DocComponentField ve in this[0].Children())
+            foreach (DocComponentField ve in ComponentsVisualRoot.Children())
             {
                 output.Add(ve.Target);
             }
@@ -59,7 +99,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
     public class DocComponentField : VisualElement
     {
         public event Action<Type> OnDocTypeChange;
-        //public event Action<DocEditVisual> OnContentsChanged;
+        public event Action<DocComponentField> OnContentsChange;
         public DocComponent Target;
         public DropdownField SelectVisualType;
         public VisualElement ToolBar;
@@ -74,18 +114,33 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         public bool IsEditing = false;
         public bool IsDraging = false;
-        public bool SingleMode;
+        public bool SingleMode { get { return m_singleMode; } }
+        private bool m_singleMode;
+        public static List<DocComponent> HistoryBuffer = new List<DocComponent>();
         private static DocComponent copyBuffer;
+        private DocComponent startEditingStatus;
+        public static void ClearHistory() { HistoryBuffer.Clear(); }
         public void SetStatus(bool isEditing)
         {
             if (IsEditing == isEditing) return;
             IsEditing = isEditing;
             if (IsEditing)
+            {
                 closeOther();
+                startEditingStatus = Target.Copy();
+            }
+            else
+            {
+                if (!startEditingStatus.ContentsEqual(Target))
+                {
+                    OnContentsChange?.Invoke(this);
+                }
+            }
             Repaint();
         }
         VisualElement createPreview()
         {
+            style.borderLeftColor = DocStyle.Current.HintColor;
             RegisterCallback<PointerDownEvent>(enableEditMode);
             VisualElement ve = DocRuntime.CreateVisual(Target);
             foreach (var child in ve.Children())
@@ -94,19 +149,21 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         VisualElement createEdit()
         {
+            style.borderLeftColor = DocStyle.Current.SuccessColor;
             UnregisterCallback<PointerDownEvent>(enableEditMode);
             EditView = DocRuntime.NewEmpty();
             ToolBar = DocRuntime.NewEmptyHorizontal();
-            if(! SingleMode)
+            if(! m_singleMode)
                 ToolBar.Add(insertBtn());
             createDropfield();
             ToolBar.Add(SelectVisualType);
             ToolBar.Add(copyBtn());
             ToolBar.Add(pasetBtn());
-            if (!SingleMode)
+            if (!m_singleMode)
             {
                 ToolBar.Add(duplicateBtn());
                 ToolBar.Add(dragBtn());
+                ToolBar.Add(deleteBtn());
             }
             EditView.Add(ToolBar);
             Type docType = null;
@@ -168,7 +225,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         public DocComponentField(DocComponent docComponent, bool singleMode = false)
         {
-            SingleMode = singleMode;
+            m_singleMode = singleMode;
             style.borderTopWidth = 6;
             style.borderLeftWidth = 6;
             style.borderBottomWidth = 6;
@@ -185,12 +242,16 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 transform.position = toPos;
                 this.GoToPosition(Vector2.zero);
             });
+            Color highlight = DocStyle.Current.HintColor;
+            highlight *= 1.3f;
             RegisterCallback<PointerEnterEvent>(e =>
             {
-                style.borderLeftColor = DocStyle.Current.SuccessColor;
+                if (IsDraging || IsEditing) return;
+                style.borderLeftColor = highlight;
             });
             RegisterCallback<PointerLeaveEvent>(e =>
             {
+                if (IsDraging || IsEditing) return;
                 style.borderLeftColor = DocStyle.Current.HintColor;
             });
             Repaint();
@@ -365,6 +426,20 @@ namespace NaiveAPI_Editor.DocumentBuilder
             button.style.marginLeft = 5;
             return button;
         }
+        Button deleteBtn()
+        {
+            Button button = null;
+            button = DocRuntime.NewButton("", () =>
+            {
+                parent.Remove(this);
+            });
+            button.style.backgroundImage = DocEditor.Icon.Delete;
+            button.style.height = 20;
+            button.style.width = 20;
+            button.style.marginLeft = 5;
+            button.style.unityBackgroundImageTintColor = DocStyle.Current.DangerTextColor;
+            return button;
+        }
         void closeOther()
         {
             foreach (DocComponentField ve in parent.Children())
@@ -395,5 +470,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             SetStatus(true);
         }
+
     }
 }

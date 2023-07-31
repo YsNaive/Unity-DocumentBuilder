@@ -22,6 +22,28 @@ MonoBehaviour:
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - QQQ cc
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - type some thing...
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

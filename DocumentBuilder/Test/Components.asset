@@ -13,12 +13,6 @@ MonoBehaviour:
   m_Name: Components
   m_EditorClassIdentifier: 
   Components:
-  - VisualID: 1
-    JsonData: 
-    TextData:
-    - MyLabel !!
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 
     JsonData: 
     TextData: []
@@ -27,7 +21,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - 
+    - awdwad
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
@@ -36,14 +30,16 @@ MonoBehaviour:
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 
+  - VisualID: 1
     JsonData: 
-    TextData: []
+    TextData:
+    - MyLabel !!
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 
+  - VisualID: 2
     JsonData: 
-    TextData: []
+    TextData:
+    - qqqqqq
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 

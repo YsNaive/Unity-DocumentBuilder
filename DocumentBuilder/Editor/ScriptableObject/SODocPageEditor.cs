@@ -38,7 +38,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         ISPosition dragPosition;
         VisualElement contents;
         VisualElement header;
-        Button addComponent;
         VisualElement addAndDeleteBar;
         Button addPage;
         CheckButton deletePage;
@@ -75,7 +74,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 root.Insert(1, header);
                 contents.Clear();
                 contents.Add(createEdit());
-                contents.Add(addComponent);
             });
             Button viewMode = DocRuntime.NewButton("View Layout", () =>
             {
@@ -192,15 +190,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             root.schedule.Execute(Save).Every(250);
             contents.Add(createEdit());
-            addComponent = new Button();
-            addComponent.text = "Add Components";
-            addComponent.clicked += () => {
-                unit unit = createUnit(new DocComponent());
-                EditRoot.Add(unit);
-                unit.EditMode();
-            };
-            addComponent.style.marginTop = 10;
-            contents.Add(addComponent);
             root.Add(contents);
 
             VisualElement loadAndSave = DocRuntime.NewEmptyHorizontal();
@@ -220,7 +209,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         EditRoot.Clear();
                         foreach (var com in AssetDatabase.LoadAssetAtPath<SODocComponents>(path + '/'+select.value+".asset").Components)
                         {
-                            EditRoot.Add(createUnit(com.Copy()));
+                            EditRoot.Add(new DocComponentField(com.Copy()));
                         }
                         Save();
                     }
@@ -322,45 +311,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("SubPages"));
             }));
             header.Add(loadAndSave);
-            root.schedule.Execute(() =>
-            {
-                root.panel.visualTree.RegisterCallback<KeyDownEvent>(hotkey);
-            }).ExecuteLater(500);
             return root;
         }
         private void OnDisable() { Save(); }
 
-        public VisualElement EditRoot;
+        public DocComponentsField EditRoot;
         VisualElement clickMask;
         VisualElement createEdit()
         {
-
-            dragPosition = new ISPosition() { Left = ISStyleLength.Pixel(0), Top = ISStyleLength.Pixel(0) };
-            dragPosition.Position = Position.Absolute;
-            EditRoot = new VisualElement();
-            EditRoot.style.backgroundColor = DocStyle.Current.BackgroundColor;
-            EditRoot.style.height = Length.Percent(100);
-            foreach (var doc in Target.Components)
-            {
-                EditRoot.Add(createUnit(doc));
-            }
-            clickMask.RegisterCallback<MouseMoveEvent>((e) =>
-            {
-                if (isDraging)
-                {
-                    int i = calDragingIndex();
-                    for (int j = 0; j < EditRoot.childCount; j++)
-                    {
-                        if (i == j)
-                            EditRoot[j].style.borderTopWidth = 5;
-                        else
-                            EditRoot[j].style.borderTopWidth = 0;
-                    }
-                    dragPosition.Top.Value.Value = e.localMousePosition.y + 1 - header.layout.yMax;
-                    dragPosition.Left.Value.Value = e.localMousePosition.x + 1;
-                    dragingTarget.style.SetIS_Style(dragPosition);
-                }
-            });
+            EditRoot = new DocComponentsField(Target.Components);
             return EditRoot;
         }
         VisualElement createView()
@@ -370,8 +329,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         public void Save()
         {
-            if (Target == null) return;
-
+            if (Target == null ) return;
+            if (EditRoot == null) return;
+            if (EditRoot.IsDraging) return;
             if (Target.SubPages != null)
             {
                 for (int i = 0; i < Target.SubPages.Count; i++)
@@ -383,13 +343,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     }
                 }
             }
-            List<DocComponent> newComponents = new List<DocComponent>();
-            if (EditRoot == null) return;
-            foreach (unit v in EditRoot.Children())
-            {
-                newComponents.Add(v.docComponent);
-            }
-            Target.Components = newComponents;
+            Target.Components = EditRoot.ToComponentsList();
             EditorUtility.SetDirty(target);
             serializedObject.ApplyModifiedProperties();
         }
@@ -430,27 +384,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Add(toolBar);
                 Add(editView);
             }
-        }
-        unit createUnit(DocComponent doc)
-        {
-            unit unit = new unit();
-            unit.docComponent = doc;
-            unit.style.ClearMarginPadding();
-            unit.toolBar = DocRuntime.NewEmptyHorizontal();
-            VisualElement view = DocRuntime.CreateVisual(doc);
-            unit.editView = DocEditor.CreateEditVisual(doc);
-            unit.toolBar.Add(insertBtn(unit));
-            unit.toolBar.Add(dragBtn(unit));
-            unit.toolBar.Add(copyBtn(unit));
-            unit.toolBar.Add(pasteBtn(unit));
-            unit.toolBar.Add(dupBtn(unit));
-            unit.toolBar.Add(resetBtn(unit));
-            unit.toolBar.Add(deleteBtn(unit));
-            unit.style.borderTopColor = DocStyle.Current.FrontGroundColor;
-            unit.toolBar.style.marginTop = 7;
-            unit.style.paddingBottom = 7;
-            unit.ViewMode();
-            return unit;
         }
         void newPageBtn()
         {
@@ -495,130 +428,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.style.marginBottom = 7;
             header.Insert(addPageIndex,root);
         }
-
-        float btnWidth = 50;
-        Button insertBtn(VisualElement unit)
-        {
-            Button button = DocRuntime.NewButton("> Insert", () =>
-            {
-                int index = EditRoot.IndexOf(unit);
-                ((unit)EditRoot[index]).ViewMode();
-                EditRoot.Insert(index, createUnit(new DocComponent()));
-                ((unit)EditRoot[index]).EditMode();
-            });
-            button.style.width = btnWidth;
-            return button;
-        }
-        Button resetBtn(unit unit)
-        {
-            Button button = DocRuntime.NewButton("Reset",DocStyle.Current.WarningColor, () =>
-            {
-                int i = unit.Index;
-                EditRoot.RemoveAt(i);
-                EditRoot.Insert(i, createUnit(lastOpen.Copy()));
-            });
-            button.style.SetIS_Style(new ISMargin(TextAnchor.MiddleRight));
-            button.style.width = btnWidth;
-            return button;
-        }
-        CheckButton deleteBtn(VisualElement unit)
-        {
-            CheckButton button = DocRuntime.NewCheckButton("Delete", () => {
-                int index = EditRoot.IndexOf(unit);
-                EditRoot.RemoveAt(index); 
-            });
-            button.style.SetIS_Style(new ISMargin(TextAnchor.UpperRight));
-            button.MainBtn.style.width = btnWidth;
-            return button;
-        }
-        Button dragBtn(unit unit)
-        {
-            Button button = DocRuntime.NewButton("Drag", () =>
-            {
-                foreach (unit ve in EditRoot.Children())
-                    ve.ViewMode();
-                isDraging = true;
-                dragingTarget = unit;
-                EditRoot.Add(unit);
-                root.Add(clickMask);
-                clickMask.RegisterCallback<MouseDownEvent>(endDraging);
-                float sumHeight = 0;
-                foreach (var ve in EditRoot.Children()) { sumHeight += ve.layout.height; }
-                sumHeight += 400;
-                EditRoot.style.height = sumHeight;
-            });
-            button.style.width = btnWidth;
-            return button;
-        }        
-        Button dupBtn(unit unit)
-        {
-            Button button = DocRuntime.NewButton("Dup", () =>
-            {
-                int i = EditRoot.IndexOf(unit);
-                EditRoot.Insert(i+1, createUnit(((DocComponentField)unit[1]).Target.Copy()));
-            });
-            button.style.width = btnWidth;
-            return button;
-        }
-        static DocComponent copyBuffer = null;
-        Button copyBtn(unit unit)
-        {
-            Button button =null;
-            button = DocRuntime.NewButton("Copy", () =>
-            {
-                copyBuffer = unit.docComponent.Copy();
-                button.text = "Copied !";
-                button.schedule.Execute(() =>
-                {
-                    button.text = "Copy";
-                }).ExecuteLater(1000);
-            });
-            button.style.width = btnWidth;
-            return button;
-        }
-        Button pasteBtn(unit unit)
-        {
-            Button button = DocRuntime.NewButton("Paste", () =>
-            {
-                if (copyBuffer != null)
-                {
-                    unit.docComponent = copyBuffer.Copy();
-                    unit.editView.SelectVisualType.value = DocEditor.ID2Name[unit.docComponent.VisualID];
-                }
-            });
-            button.style.width = btnWidth;
-            return button;
-        }
-        void endDraging(MouseDownEvent e)
-        {
-            isDraging = false;
-            root.style.height = Length.Percent(100);
-            EditRoot.style.height = Length.Percent(100);
-            dragingTarget.style.SetIS_Style(new ISPosition());
-            int index = calDragingIndex();
-            EditRoot.Insert(index, dragingTarget);
-            dragingTarget = null;
-            for (int j = 0; j < EditRoot.childCount; j++)
-            {
-                EditRoot[j].style.borderTopWidth = 0;
-            }
-            root.Remove(clickMask);
-            clickMask.UnregisterCallback<MouseDownEvent>(endDraging);
-            Save();
-        }
-        int calDragingIndex()
-        {
-            int i = 0;
-            float pos = dragPosition.Top.Value.Value;
-            foreach (var ve in EditRoot.Children())
-            {
-                if (ve.layout.center.y > pos)
-                    break;
-                i++;
-            }
-            return i;
-        }
-
         List<string> findAllTemplateName()
         {
             List<string> choice = new List<string>();
@@ -647,23 +456,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     choice.Add(temp.name);
             }
             return choice;
-        }
-
-        void hotkey(KeyDownEvent e)
-        {
-            if (Event.current.type == EventType.ValidateCommand && Event.current.commandName == "UndoRedoPerformed")
-            {
-                Event.current.Use();
-            }
-            if (e.ctrlKey)
-            {
-                if (e.keyCode == KeyCode.S)
-                {
-                    Save();
-                    foreach (unit u in EditRoot.Children())
-                        u.ViewMode();
-                }
-            }
         }
     }
 }

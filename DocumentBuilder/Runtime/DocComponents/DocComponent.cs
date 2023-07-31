@@ -27,6 +27,11 @@ namespace NaiveAPI.DocumentBuilder
             if(JsonData != other.JsonData) return false;
             if(TextData.Count != other.TextData.Count) return false;
             int i = 0;
+            foreach(int val in AniSettings) { 
+                if(val != other.AniSettings[i])return false;
+                i++;
+            }
+            i = 0;
             foreach(string text in TextData) { 
                 if(text != other.TextData[i])return false;
                 i++;
