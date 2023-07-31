@@ -82,6 +82,7 @@ namespace NaiveAPI.DocumentBuilder
         }
         void calStateRec(PageMenuVisual current,string path, StringBuilder buffer)
         {
+            if (current == null) return;
             buffer.Append(path).Append(':').Append(current.IsOpen ?'1':'0').Append('\n');
             int i = 0;
             foreach (PageMenuVisual subPage in current.SubMenuVisual)

@@ -16,7 +16,9 @@ MonoBehaviour:
   SubPages:
   - {fileID: 11400000, guid: 4d5723fc8ce059843811ed4d65fe2bf2, type: 2}
   - {fileID: 11400000, guid: 1aeaadc18195c9e4991d9047c415abe7, type: 2}
+  - {fileID: 11400000, guid: 60222d52b2a432b4f8dc35c5d246fd27, type: 2}
   - {fileID: 11400000, guid: 0627d091661d3054f95bd5a2a33d333c, type: 2}
+  - {fileID: 11400000, guid: 0d148262349f444438d080ba64b51cab, type: 2}
   Components:
   - VisualID: 1
     JsonData: 
@@ -42,7 +44,7 @@ MonoBehaviour:
     TextData:
     - e-mail
     - yi.shi.4589@gmail.com
-    - discord
+    - Discord
     - .ysnaive
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
@@ -140,30 +142,35 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - Old DocumentBuilder is design for Editor only. In 2.0, everything become VisualElement,
-      Improved readability, expandability, and adaptability. Now you can also use
-      your docs in Runtime !  But unfortunately, it is not compatible with version
-      1.x. If you have a requirement for the older version, please download it from
-      the GitHub page.
+    - The previous DocumentBuilder was designed exclusively for the Editor. However,
+      in version 2.0, everything has been transformed into VisualElement, resulting
+      in improved readability, expandability, and adaptability. Additionally, you
+      can now utilize your docs at Runtime as well. However, please note that version
+      2.0 is not compatible with the older 1.x version. If you have a specific requirement
+      for the older version, you can download it from the GitHub page.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - In 2.0 you can add your own DocType, and the system will auto detect, Than
-      you can Customiz all contents you want to show. For example, item system in
-      your project, clock display... etc.
+    - "In version 2.0, you have the flexibility to add your own DocType, and the
+      system will automatically detect it. This allows you to customize all the contents
+      you want to display. For example, you can implement an item system in your
+      project or create a clock display with your desired specifications. The new
+      version empowers you to tailor the documentation to your specific needs and
+      requirements, enhancing the overall user experience.\r"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - Animation is a big improve in DocumentBuilder, after defined animation beheavior,
-      you can call it with simple API interface. Ofcourse the build-in component
-      contains the default Intro/Outtro animation.
+    - Animation is a significant improvement in DocumentBuilder. Once you define
+      the animation behavior, you can easily call it using a simple API interface.
+      The built-in components also come with default Intro and Outtro animations,
+      making it easy to add dynamic and engaging visual effects to your documents.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 3
-  OuttroMode: 1
+  OuttroMode: 3
   IntroDuration: 50
-  OuttroDuration: 100
+  OuttroDuration: 20

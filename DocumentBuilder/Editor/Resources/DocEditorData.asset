@@ -23,9 +23,5 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 6e76c73f1f7c29d4ea14a1c2b9ae5fff, type: 3}
   - {fileID: 2800000, guid: 479e8c5e2df92aa4dad3d68348ffdb93, type: 3}
   - {fileID: 2800000, guid: 4ce2991ad383d7c48aef8204b6b26b66, type: 3}
-  FavoriteDocVisualID:
-  - 1
-  - 2
+  DocumentBuilderDocsRoot: {fileID: 11400000, guid: b4d768b0a8c3e3a4f9c56bd8f9815b43, type: 2}
   whiteStar: {fileID: 2800000, guid: 077f59a9c993b4943a6b58f954f18e4c, type: 3}
-  PageIcon: {fileID: 0}
-  ComponentsIcon: {fileID: 0}

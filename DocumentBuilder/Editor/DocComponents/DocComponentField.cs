@@ -223,7 +223,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 editFavorite.style.width = 18;
                 editFavorite.style.height = 18;
                 visualElement.Add(editFavorite);
-                foreach (var id in DocEditorData.Instance.FavoriteDocVisualID)
+                foreach (var id in DocCache.Get().FavoriteDocVisualID)
                 {
                     string name;
                     if (DocEditor.ID2Name.TryGetValue(id, out name))
@@ -327,7 +327,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 toggle.style.marginLeft = 10;
                 toggle.text = name;
                 toggle.value = false;
-                foreach (var id in DocEditorData.Instance.FavoriteDocVisualID)
+                foreach (var id in DocCache.Get().FavoriteDocVisualID)
                 {
                     string tName;
                     if (DocEditor.ID2Name.TryGetValue(id, out tName))
@@ -342,12 +342,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     if (e.newValue)
                     {
                         if (DocEditor.Name2ID.TryGetValue(name, out t))
-                            DocEditorData.Instance.FavoriteDocVisualID.Add(t);
+                        {
+                            DocCache.Get().FavoriteDocVisualID.Add(t);
+                            DocCache.Save();
+                        }
                     }
                     else
                     {
                         if (DocEditor.Name2ID.TryGetValue(name, out t))
-                            DocEditorData.Instance.FavoriteDocVisualID.Remove(t);
+                        {
+
+                            DocCache.Get().FavoriteDocVisualID.Remove(t);
+                            DocCache.Save();
+                        }
                     }
                     EditorUtility.SetDirty(DocEditorData.Instance);
                     Clear();

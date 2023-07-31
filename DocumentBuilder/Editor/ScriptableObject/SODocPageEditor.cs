@@ -58,8 +58,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override VisualElement CreateInspectorGUI()
         {
             Target = target as SODocPage;
-            root = DocRuntime.NewEmpty();
-            root.Add(new IMGUIContainer(OnInspectorGUI));
+            root = new IMGUIContainer(OnInspectorGUI);
+            //root.Add();
             #region mod bar
             root.style.SetIS_Style(ISPadding.Pixel(10));
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;

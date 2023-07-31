@@ -16,7 +16,7 @@ namespace NaiveAPI.DocumentBuilder
         [SerializeField] public DocStyle CurrentStyle = new DocStyle();
         [SerializeField] public string OpeningBookHierarchy = "";
         [SerializeField] public float DocMenuWidth = 0.25f;
-
+        [SerializeField] public List<string> FavoriteDocVisualID = new List<string>();
         public static DocCache Get() { return Get(Application.temporaryCachePath + "/DocumentBuilderSettings.json"); }
         public static DocCache Get(string path)
         {
