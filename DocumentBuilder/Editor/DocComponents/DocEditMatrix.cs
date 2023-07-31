@@ -192,7 +192,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 VisualElement child = new VisualElement();
                 child.style.SetIS_Style(ISFlex.Horizontal);
-                child.pickingMode = PickingMode.Ignore;
                 int i1 = i;
                 addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
                 {

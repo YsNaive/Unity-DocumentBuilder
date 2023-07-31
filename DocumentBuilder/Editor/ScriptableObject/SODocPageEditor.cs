@@ -31,6 +31,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 buildinIconList.Add(asset.name);
             }
         }
+        public override void OnInspectorGUI()
+        {
+            if(Event.current.type == EventType.KeyDown)
+            {
+                if (Event.current.control)
+                    EditRoot.CtrlHotKeyAction(Event.current.keyCode);
+            }
+        }
         public SODocPage Target;
         VisualElement root;
         bool isDraging = false;
@@ -45,11 +53,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
         VisualElement outtroSetting;
         ObjectField icon;
         DocComponent lastOpen;
-        List<string> buildinIconList = new List<string>();
+        List<string> buildinIconList = new List<string>(); 
+        [SerializeField] private List<DocComponent> undoBuffer;
         public override VisualElement CreateInspectorGUI()
         {
             Target = target as SODocPage;
             root = DocRuntime.NewEmpty();
+            root.Add(new IMGUIContainer(OnInspectorGUI));
             #region mod bar
             root.style.SetIS_Style(ISPadding.Pixel(10));
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
@@ -67,7 +77,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             clickMask = DocRuntime.NewEmpty();
             clickMask.style.SetIS_Style(ISSize.Percent(100, 100));
             clickMask.style.position = Position.Absolute;
-
+            
             VisualElement bar = DocRuntime.NewEmptyHorizontal();
             Button editMode = DocRuntime.NewButton("Edit Layout", () =>
             {
@@ -320,6 +330,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
         VisualElement createEdit()
         {
             EditRoot = new DocComponentsField(Target.Components);
+            Undo.IncrementCurrentGroup();
+            undoBuffer = EditRoot.ToComponentsList();
+            Undo.RegisterCompleteObjectUndo(this, "DocComponentsFieldBeging");
+            EditRoot.OnModify += (doc) => {
+                Undo.IncrementCurrentGroup();
+                Undo.RegisterCompleteObjectUndo(this, "DocComponentsField");
+                undoBuffer = EditRoot.ToComponentsList();
+            };
+            Undo.undoRedoPerformed += () => { EditRoot.Repaint(undoBuffer); };
             return EditRoot;
         }
         VisualElement createView()
@@ -346,44 +365,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Target.Components = EditRoot.ToComponentsList();
             EditorUtility.SetDirty(target);
             serializedObject.ApplyModifiedProperties();
-        }
-
-        class unit : VisualElement
-        {
-            public VisualElement toolBar;
-            public DocComponentField editView;
-            public DocComponent docComponent;
-            public int Index
-            {
-                get
-                {
-                    return parent.IndexOf(this);
-                }
-            }
-            public void ViewMode()
-            {
-                Clear();
-                var ve = DocRuntime.CreateVisual(docComponent);
-                ve.style.borderTopWidth = 5;
-                ve.style.borderBottomWidth = 5;
-                ve.style.borderLeftWidth = 5;
-                ve.style.paddingLeft = 10;
-                ve.style.borderLeftColor = DocStyle.Current.HintColor;
-                foreach (var child in ve.Children())child.SetEnabled(false);
-                Add(ve);
-                this[0].RegisterCallback<PointerDownEvent>(e => { EditMode(); });
-            }
-            public void EditMode()
-            {
-                foreach (unit u in parent.Children())
-                {
-                    u.ViewMode();
-                }
-                Current.lastOpen = docComponent.Copy();
-                Clear();
-                Add(toolBar);
-                Add(editView);
-            }
         }
         void newPageBtn()
         {

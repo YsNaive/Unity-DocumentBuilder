@@ -14,6 +14,24 @@ namespace NaiveAPI_Editor.DocumentBuilder
     public class DocComponentsField : VisualElement
     {
         public VisualElement ComponentsVisualRoot;
+        private event Action<DocComponentField> m_onModify;
+        public event Action<DocComponentField> OnModify
+        {
+            add
+            {
+                m_onModify += value;
+                if (ComponentsVisualRoot != null)
+                    foreach (DocComponentField doc in ComponentsVisualRoot.Children())
+                        doc.OnModify += value;
+            }
+            remove
+            {
+                m_onModify -= value;
+                if (ComponentsVisualRoot != null)
+                    foreach (DocComponentField doc in ComponentsVisualRoot.Children())
+                        doc.OnModify -= value;
+            }
+        }
         public bool IsDraging
         {
             get
@@ -29,59 +47,68 @@ namespace NaiveAPI_Editor.DocumentBuilder
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.SetIS_Style(ISPadding.Pixel(5));
             ComponentsVisualRoot = DocRuntime.NewEmpty();
-            foreach (var component in initComponents)
-            {
-                ComponentsVisualRoot.Add(new DocComponentField(component));
-            }
             ComponentsVisualRoot.style.marginBottom = 15;
+            Repaint(initComponents);
             Add(ComponentsVisualRoot);
             Add(DocRuntime.NewButton("Add Component", () =>
             {
-                ComponentsVisualRoot.Add(new DocComponentField(new DocComponent()));
-                ((DocComponentField)ComponentsVisualRoot[ComponentsVisualRoot.childCount - 1]).SetStatus(true);
+                var doc = new DocComponentField(new DocComponent());
+                ComponentsVisualRoot.Add(doc);
+                doc.SetStatus(true);
+                doc.OnModify += m_onModify;
+                m_onModify?.Invoke(doc);
             }));
-            bool added = false;
-            schedule.Execute(() =>
-            {
-                if (panel != null)
-                    if (panel.visualTree != null)
-                    {
-                        panel.visualTree.RegisterCallback<KeyDownEvent>(hotkey);
-                        added = true;
-                    }
-            }).Until(() => { return added; });
         }
-        void hotkey(KeyDownEvent e)
+        public void Repaint(List<DocComponent> components)
         {
-            if (e.ctrlKey)
+            ComponentsVisualRoot.Clear();
+            if (components != null)
             {
-                if (e.keyCode == KeyCode.S)
+                if(components.Count != 0)
                 {
-                    foreach (DocComponentField doc in ComponentsVisualRoot.Children())
-                        doc.SetStatus(false);
-                }
-                else if(e.keyCode == KeyCode.UpArrow)
-                {
-                    for(int i = 0; i < ComponentsVisualRoot.childCount; i++)
+                    foreach (var component in components)
                     {
-                        if (((DocComponentField)ComponentsVisualRoot[i]).IsEditing)
-                        {
-                            if (i != 0)
-                                ComponentsVisualRoot.Insert(i - 1, ComponentsVisualRoot[i]);
-                            break;
-                        }
+                        var doc = new DocComponentField(component);
+                        ComponentsVisualRoot.Add(doc);
+                        doc.OnModify += m_onModify;
                     }
                 }
-                else if (e.keyCode == KeyCode.DownArrow)
+            }
+        }
+        public void CtrlHotKeyAction(KeyCode keycode)
+        {
+            if (keycode == KeyCode.S)
+            {
+                foreach (DocComponentField doc in ComponentsVisualRoot.Children())
+                    doc.SetStatus(false);
+            }
+            else if(keycode == KeyCode.UpArrow)
+            {
+                for(int i = 0; i < ComponentsVisualRoot.childCount; i++)
                 {
-                    for (int i = 0; i < ComponentsVisualRoot.childCount; i++)
+                    if (((DocComponentField)ComponentsVisualRoot[i]).IsEditing)
                     {
-                        if (((DocComponentField)ComponentsVisualRoot[i]).IsEditing)
+                        if (i != 0)
                         {
-                            if (i != ComponentsVisualRoot.childCount - 1)
-                                ComponentsVisualRoot.Insert(i+1, ComponentsVisualRoot[i]);
-                            break;
+                            ComponentsVisualRoot.Insert(i - 1, ComponentsVisualRoot[i]);
+                            m_onModify?.Invoke((DocComponentField)ComponentsVisualRoot[i-1]);
                         }
+                        break;
+                    }
+                }
+            }
+            else if (keycode == KeyCode.DownArrow)
+            {
+                for (int i = 0; i < ComponentsVisualRoot.childCount; i++)
+                {
+                    if (((DocComponentField)ComponentsVisualRoot[i]).IsEditing)
+                    {
+                        if (i != ComponentsVisualRoot.childCount - 1)
+                        {
+                            ComponentsVisualRoot.Insert(i + 1, ComponentsVisualRoot[i]);
+                            m_onModify?.Invoke((DocComponentField)ComponentsVisualRoot[i + 1]);
+                        }
+                        break;
                     }
                 }
             }
@@ -98,8 +125,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
     }
     public class DocComponentField : VisualElement
     {
-        public event Action<Type> OnDocTypeChange;
-        public event Action<DocComponentField> OnContentsChange;
+        public event Action<DocComponentField> OnModify;
         public DocComponent Target;
         public DropdownField SelectVisualType;
         public VisualElement ToolBar;
@@ -133,7 +159,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 if (!startEditingStatus.ContentsEqual(Target))
                 {
-                    OnContentsChange?.Invoke(this);
+                    OnModify?.Invoke(this);
                 }
             }
             Repaint();
@@ -153,7 +179,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             UnregisterCallback<PointerDownEvent>(enableEditMode);
             EditView = DocRuntime.NewEmpty();
             ToolBar = DocRuntime.NewEmptyHorizontal();
-            if(! m_singleMode)
+            if (!m_singleMode)
                 ToolBar.Add(insertBtn());
             createDropfield();
             ToolBar.Add(SelectVisualType);
@@ -260,7 +286,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             SelectVisualType = DocRuntime.NewDropdownField("", null, null);
             SelectVisualType.choices = DocEditor.NameList;
-            SelectVisualType.style.ClearMarginPadding();
             string tName = string.Empty;
             DocEditor.ID2Name.TryGetValue(Target.VisualID, out tName);
             SelectVisualType.index = DocEditor.NameList.FindIndex(0, (str) => { return str == tName; });
@@ -275,6 +300,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     Target.VisualID = string.Empty;
                 else
                     Target.VisualID = DocEditor.Name2ID[val.newValue];
+                OnModify?.Invoke(this);
                 Repaint();
             });
             SelectVisualType.value = DocEditor.NameList[SelectVisualType.index];
@@ -336,8 +362,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button button = null;
             button = DocRuntime.NewButton("Insert", () =>
             {
-                parent.Insert(Index, new DocComponentField(new DocComponent()));
-                ((DocComponentField)parent[Index - 1]).SetStatus(true);
+                DocComponentField doc = new DocComponentField(new DocComponent());
+                parent.Insert(Index, doc);
+                doc.SetStatus(true);
+                doc.OnModify += this.OnModify;
             });
             button.style.height = 20;
             return button;
@@ -404,6 +432,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     style.borderLeftColor = DocStyle.Current.HintColor;
                     IsDraging = false;
                     SetStatus(true);
+                    OnModify?.Invoke(this);
                 });
                 parent.Add(dragMask);
             });
@@ -417,8 +446,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button button = null;
             button = DocRuntime.NewButton("", () =>
             {
-                parent.Insert(Index + 1, new DocComponentField(Target.Copy()));
-                ((DocComponentField)parent[Index + 1]).SetStatus(true);
+                DocComponentField doc = new DocComponentField(Target.Copy());
+                parent.Insert(Index + 1, doc);
+                doc.SetStatus(true);
+                doc.OnModify += this.OnModify;
             });
             button.style.backgroundImage = DocEditor.Icon.Duplicate;
             button.style.height = 20;
@@ -431,6 +462,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button button = null;
             button = DocRuntime.NewButton("", () =>
             {
+                OnModify?.Invoke(this);
                 parent.Remove(this);
             });
             button.style.backgroundImage = DocEditor.Icon.Delete;

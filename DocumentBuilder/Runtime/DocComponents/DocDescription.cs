@@ -12,6 +12,7 @@ namespace NaiveAPI.DocumentBuilder
         TextElement text;
         protected override void OnCreateGUI()
         {
+            if(Target.TextData.Count == 0)Target.TextData.Add("");
             text = DocRuntime.NewTextElement(Target.TextData[0]);
             text.style.SetIS_Style(DocStyle.Current.MainText);
             Add(text);

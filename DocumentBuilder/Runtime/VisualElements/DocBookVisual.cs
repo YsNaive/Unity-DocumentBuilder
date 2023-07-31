@@ -12,7 +12,7 @@ namespace NaiveAPI.DocumentBuilder
         PageMenuVisual menuVisual;
         public PageMenuHandler MenuHandler = new PageMenuHandler();
         VisualElement divLineBar = new VisualElement();
-        ScrollView menuScrollView = new ScrollView();
+        ScrollView menuScrollView;
         public DocPageVisual DisplayingPage;
         float menuWidthPercent;
         float widthSpace = 15;
@@ -22,6 +22,7 @@ namespace NaiveAPI.DocumentBuilder
         public VisualElement ChapterMenu;
         public DocBookVisual(SODocPage rootPage)
         {
+            menuScrollView = DocRuntime.NewScrollView();
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             menuWidthPercent = DocCache.Get().DocMenuWidth;
             menuWidthPercent = Mathf.Clamp(menuWidthPercent, 0.01f, 1f);
@@ -124,10 +125,29 @@ namespace NaiveAPI.DocumentBuilder
         }
         void repaintChapter()
         {
-            if (Contains(ChapterMenu))
+            var newChapter = createChapterMenu();
+
+            if (newChapter == null && ChapterMenu == null) return;
+            if(ChapterMenu != null && newChapter != null)
+            {
                 Remove(ChapterMenu);
-            ChapterMenu = createChapterMenu();
-            Add(ChapterMenu);
+                ChapterMenu = newChapter;
+                Add(ChapterMenu);
+            }
+            else if(ChapterMenu == null)
+            {
+                ChapterMenu = newChapter;
+                ChapterMenu.Fade(0, 1, 250, 20, null);
+                Add(ChapterMenu);
+            }
+            else
+            {
+                ChapterMenu.Fade(1,0, 250, 20, () =>
+                {
+                    Remove(ChapterMenu);
+                    ChapterMenu = null;
+                });
+            }
         }
         VisualElement createChapterMenu()
         {
@@ -138,6 +158,29 @@ namespace NaiveAPI.DocumentBuilder
             ve.style.top = Length.Percent(1f);
             int comIndex = 0;
             var chapInfo = DocRuntime.NewEmpty();
+            foreach (var com in DisplayingPage.Target.Components)
+            {
+                if (com.VisualID == "1")
+                {
+                    if (com.TextData.Count != 0)
+                    {
+                        var text = (DocRuntime.NewTextElement("·  " + com.TextData[0]));
+                        chapInfo.Add(text);
+                        DocLabel.Data data = JsonUtility.FromJson<DocLabel.Data>(com.JsonData);
+                        data ??= new DocLabel.Data();
+
+                        text.style.marginLeft = data.Level * DocStyle.Current.MainTextSize;
+                        int localI = comIndex;
+                        text.RegisterCallback<PointerDownEvent>(e =>
+                        {
+                            DisplayingPage.ScrollTo(DisplayingPage[localI]);
+                            DisplayingPage[localI].Highlight(50, DocStyle.Current.SuccessTextColor);
+                        });
+                    }
+                }
+                comIndex++;
+            }
+            if (chapInfo.childCount == 0) return null;
             var color = DocStyle.Current.CodeBackgroundColor;
             color.a = 0.7f;
             chapInfo.style.backgroundColor = color;
@@ -164,30 +207,8 @@ namespace NaiveAPI.DocumentBuilder
             });
             btn.style.fontSize = btn.style.fontSize.value.value * 1.5f;
             btn.style.position = Position.Absolute;
-            btn.style.right = 1;
-            foreach (var com in DisplayingPage.Target.Components)
-            {
-                if (com.VisualID == "1")
-                {
-                    if (com.TextData.Count != 0)
-                    {
-                        var text = (DocRuntime.NewTextElement("·  " + com.TextData[0]));
-                        chapInfo.Add(text);
-                        DocLabel.Data data = JsonUtility.FromJson<DocLabel.Data>(com.JsonData);
-                        data ??= new DocLabel.Data();
-
-                        text.style.marginLeft = data.Level * DocStyle.Current.MainTextSize;
-                        int localI = comIndex;
-                        text.RegisterCallback<PointerDownEvent>(e =>
-                        {
-                            DisplayingPage.ScrollTo(DisplayingPage[localI]);
-                            DisplayingPage[localI].Highlight(50, DocStyle.Current.SuccessTextColor);
-                        });
-                    }
-                }
-                comIndex++;
-            }
-            if (chapInfo.childCount == 0) return ve;
+            btn.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontGroundColor;
+            btn.style.right = 10;
             chapInfo.style.display = DisplayStyle.None;
             ve.Add(btn);
             ve.Add(chapInfo);

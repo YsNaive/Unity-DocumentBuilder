@@ -14,7 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 116bd5b02a236df4d9e4d81f16c51c48, type: 3}
   SubPages: []
-  Components: []
+  Components:
+  - VisualID: 
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

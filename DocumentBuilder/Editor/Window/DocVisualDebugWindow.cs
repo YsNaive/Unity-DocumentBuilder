@@ -70,7 +70,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.style.paddingLeft = 10;
             root.style.paddingRight = 10;
             root.Add(editText);
-            root.Add(DocEditor.CreateEditVisual(docComponent));
+            root.Add(DocEditor.CreateComponentField(docComponent));
             root.schedule.Execute(() =>
             {
                 if (this.forceUpdate)

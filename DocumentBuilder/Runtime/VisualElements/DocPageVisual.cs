@@ -16,6 +16,7 @@ namespace NaiveAPI.DocumentBuilder
         int playingCount = 0;
         public DocPageVisual(SODocPage page) {
             DocRuntime.ApplyStyle(this);
+            verticalScrollerVisibility = ScrollerVisibility.AlwaysVisible;
             this.Q("unity-content-container").style.marginRight = Length.Percent(3.5f);
             Target = page;
             Repaint();
@@ -40,7 +41,7 @@ namespace NaiveAPI.DocumentBuilder
                 visuals.Add(docVisual);
             }
             if(childCount!=0)
-                this[childCount - 1].style.marginBottom = 400;
+                this[childCount - 1].style.marginBottom = 200;
         }
         public void PlayIntro(Action callback = null)
         {

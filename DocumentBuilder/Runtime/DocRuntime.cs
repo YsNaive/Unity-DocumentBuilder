@@ -126,6 +126,7 @@ namespace NaiveAPI
         {
             DropdownField dropField = new DropdownField();
             dropField.style.ClearPadding();
+            dropField.focusable = false;
             ApplyMargin(dropField);
             dropField.style.height = DocStyle.Current.LineHeight;
             dropField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
@@ -161,23 +162,13 @@ namespace NaiveAPI
         {
             ISBorder border = new ISBorder();
             float width = DocStyle.Current.ScrollerWidth;
+            bar.slider.style.marginTop = 0;
+            bar.slider.style.marginBottom = 0;
             bar.style.ClearMarginPadding();
             bar.style.borderLeftWidth = 0;
             bar.style.borderTopWidth = 0;
-            bar.highButton.style.width = width;
-            bar.highButton.style.height = width;
-            bar.highButton.style.backgroundImage = DocStyle.WhiteArrow;
-            bar.highButton.style.unityBackgroundImageTintColor = DocStyle.Current.SubBackgroundColor;
-            bar.highButton.style.ClearMarginPadding();
-            bar.highButton.style.backgroundColor = Color.clear;
-            bar.highButton.style.SetIS_Style(border);
-            bar.lowButton.style.width = width;
-            bar.lowButton.style.height = width;
-            bar.lowButton.style.backgroundImage = DocStyle.WhiteArrow;
-            bar.lowButton.style.unityBackgroundImageTintColor = DocStyle.Current.SubBackgroundColor;
-            bar.lowButton.style.ClearMarginPadding();
-            bar.lowButton.style.backgroundColor = Color.clear;
-            bar.lowButton.style.SetIS_Style(border);
+            bar.highButton.style.display = DisplayStyle.None;
+            bar.lowButton.style.display = DisplayStyle.None;
             bar.contentContainer.style.backgroundColor = Color.clear;
             foreach (var ve in bar.slider.contentContainer.Children())
             {
@@ -189,7 +180,7 @@ namespace NaiveAPI
                 ve.style.ClearMarginPadding();
             }
             var dragContainer = bar.Q("unity-tracker");
-            dragContainer.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            dragContainer.style.backgroundColor = new Color(0,0,0,0.1f);
             dragContainer.style.SetIS_Style(border);
             var drag = bar.Q("unity-dragger");
             drag.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
@@ -198,15 +189,12 @@ namespace NaiveAPI
                 bar.slider.style.height = DocStyle.Current.ScrollerWidth;
                 drag.style.height = Length.Percent(80);
                 drag.style.top = Length.Percent(10);
-                bar.lowButton.style.rotate = new Rotate(180);
             }
             else
             {
                 bar.slider.style.width = DocStyle.Current.ScrollerWidth;
                 drag.style.width = Length.Percent(80);
                 drag.style.left = Length.Percent(10);
-                bar.highButton.style.rotate = new Rotate(90);
-                bar.lowButton.style.rotate = new Rotate(270);
             }
 
         }

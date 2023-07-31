@@ -47,7 +47,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 }
             }
         }
-        public static DocComponentField CreateEditVisual(DocComponent docComponent, bool singleMode = false)
+        public static DocComponentField CreateComponentField(DocComponent docComponent, bool singleMode = false)
         {
             return new DocComponentField(docComponent, singleMode);
         }

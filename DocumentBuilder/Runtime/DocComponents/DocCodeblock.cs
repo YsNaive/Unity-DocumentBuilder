@@ -26,7 +26,14 @@ namespace NaiveAPI.DocumentBuilder
             codeContents.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
             codeContents.style.SetIS_Style(padding);
             codeContents.style.fontSize = DocStyle.Current.MainTextSize;
-            codeContents.style.width = data.MinWidth;
+            //codeContents.style.width = data.MinWidth;
+            codeContents.RegisterCallback<GeometryChangedEvent>(e =>
+            {
+                if(e.newRect.width != e.oldRect.width)
+                {
+                    codeContents.style.width = e.newRect.width;
+                }
+            });
             string lineNum = $"<line-height={data.LineHeightPercent}%>1";
             int i = 2;
             foreach(var c in Target.TextData[0])
@@ -60,8 +67,8 @@ namespace NaiveAPI.DocumentBuilder
             codeScrollView.style.maxHeight = data.MaxHeight;
 
             codeScrollView.Add(codeContents);
-            codeScrollView.Add(lineNumber);
             Add(codeScrollView);
+            Add(lineNumber);
             Add(copy);
 
             RegisterCallback<GeometryChangedEvent>(e =>
@@ -73,7 +80,6 @@ namespace NaiveAPI.DocumentBuilder
 
         public class Data
         {
-            public int MinWidth = -1;
             public int MaxHeight = 300;
             public int LineHeightPercent = 150;
         }

@@ -1,7 +1,9 @@
 using NaiveAPI_Editor.DocumentBuilder;
 using NaiveAPI_Editor.window;
 using NaiveAPI_UI;
-using System.Text;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -23,20 +25,23 @@ namespace NaiveAPI.DocumentBuilder
         }
         private void CreateGUI()
         {
-            rootVisualElement.style.SetIS_Style(ISPadding.Pixel(10));
-            rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
-            rootVisualElement.Add(DocRuntime.NewScrollView());
-            rootVisualElement[0].Add(new DocComponentField(new DocComponent()));
-            Button button = null;
-            var curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-            button = DocRuntime.NewButton("Test", () =>
+            var root = rootVisualElement;
+            root.Add(DocRuntime.NewScrollView());
+            root = root[0];
+            Type targetType = typeof(DocVisual);
+            root.Add(DocRuntime.NewTextElement("Type: " + targetType.Name));
+            foreach (var cons in targetType.GetConstructors())
             {
-                button.GoToPosition(new Vector2(0, 100),20,50, curve, () =>
-                {
-                    button.GoToPosition(new Vector2(0, 0), 20, 50,curve);
-                });
-            });
-            rootVisualElement.Add(button);
+                root.Add(DocRuntime.NewTextElement("Cons: " + cons.Name));
+            }
+            foreach (var mods in targetType.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                root.Add(DocRuntime.NewTextElement("Mods: " + mods.Name));
+            }
+            foreach (var mems in targetType.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+            {
+                root.Add(DocRuntime.NewTextElement("Mems: " + mems.Name));
+            }
         }
     }
 }

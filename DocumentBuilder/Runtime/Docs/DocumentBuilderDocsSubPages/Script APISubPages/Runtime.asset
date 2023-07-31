@@ -15,7 +15,29 @@ MonoBehaviour:
   Icon: {fileID: 2800000, guid: 323fcf14a6a8bd1488a8e68098322f7a, type: 3}
   SubPages:
   - {fileID: 11400000, guid: bc6631fc1b798d241aca52174ebc0be9, type: 2}
-  Components: []
+  Components:
+  - VisualID: 
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

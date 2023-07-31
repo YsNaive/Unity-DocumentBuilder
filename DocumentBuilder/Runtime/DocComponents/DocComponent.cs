@@ -25,7 +25,9 @@ namespace NaiveAPI.DocumentBuilder
         {
             if(VisualID != other.VisualID) return false;
             if(JsonData != other.JsonData) return false;
+            if(AniSettings.Count != other.AniSettings.Count) return false;
             if(TextData.Count != other.TextData.Count) return false;
+            if (ObjsData.Count != other.ObjsData.Count) return false;
             int i = 0;
             foreach(int val in AniSettings) { 
                 if(val != other.AniSettings[i])return false;
@@ -36,7 +38,6 @@ namespace NaiveAPI.DocumentBuilder
                 if(text != other.TextData[i])return false;
                 i++;
             }
-            if(ObjsData.Count != other.ObjsData.Count) return false;
             i = 0;
             foreach(Object obj in ObjsData) { 
                 if(obj != other.ObjsData[i])return false;

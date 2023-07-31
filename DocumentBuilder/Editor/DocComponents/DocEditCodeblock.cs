@@ -23,15 +23,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             data = JsonUtility.FromJson<DocCodeblock.Data>(Target.JsonData);
             data ??= new DocCodeblock.Data();
             var hor = DocRuntime.NewEmptyHorizontal();
-            IntegerField minWidthInput = DocEditor.NewIntField(" Min width", e =>
-            {
-                data.MinWidth = e.newValue;
-                save();
-            });
-            minWidthInput.value = data.MinWidth;
-            minWidthInput.style.width = Length.Percent(50);
-            minWidthInput[0].style.minWidth = 75;
-            hor.Add(minWidthInput);
             IntegerField maxHeightInput = DocEditor.NewIntField(" Max height", e =>
             {
                 data.MaxHeight = e.newValue;
@@ -48,7 +39,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 save();
             });
             lineHeightInput.value = data.LineHeightPercent;
-
+            lineHeightInput.style.width = Length.Percent(50);
+            lineHeightInput[0].style.minWidth = 100;
+            hor.Add(lineHeightInput);
             textInput = DocRuntime.NewTextField("", e =>
             {
                 if (Target.TextData.Count == 0) Target.TextData.Add(e.newValue);
@@ -59,7 +52,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             if (Target.TextData.Count == 0) Target.TextData.Add("");
             textInput.value = Target.TextData[0];
             Add(hor);
-            Add(lineHeightInput);
             Add(textInput);
         }
 
