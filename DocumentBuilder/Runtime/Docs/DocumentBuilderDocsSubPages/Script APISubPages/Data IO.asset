@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: DocVisual Debugger
+  m_Name: Data IO
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 6e76c73f1f7c29d4ea14a1c2b9ae5fff, type: 3}
   SubPages: []
@@ -18,23 +18,13 @@ MonoBehaviour:
   - VisualID: 1
     JsonData: 
     TextData:
-    - DocVisual Debugger
+    - Intro
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - Tools / Naive API / Document Builder / DocVisual Debugger
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 0
-    JsonData: 
-    TextData: []
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/rJMwkLUjn.png","mode":0}'
-    TextData: []
+    - In DocumentBuilder, data is saved in below typies
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -43,64 +33,40 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
-    JsonData: '{"Level":2}'
+    JsonData: '{"Level":3}'
     TextData:
-    - Edit Mode
+    - DocCache
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - 'Here show up a single mode DocComponentField.
-
-      Use this to check your
-      DocEditVisual Display'
+    - Data in this type will save in temp folder, settings will be different in different
+      computer, for example OpeningBookHierarchy etc.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
-    JsonData: '{"Level":2}'
+    JsonData: '{"Level":3}'
     TextData:
-    - View Mode
+    - DocEditorData
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - 'Here will show the DocVisual from content in EditMode.
-
-      You can enable
-      ForceUpdate to auto repaint.'
+    - data that only use in editor like pre-set Icons.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
-    JsonData: '{"Level":2}'
+    JsonData: '{"Level":3}'
     TextData:
-    - Data
+    - DocRuntimeData
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - 'The origin DocComponent data save from EditMode.
-
-      If you are not sure
-      wheather the data is saved, check here.'
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 0
-    JsonData: 
-    TextData: []
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 2
-    JsonData: 
-    TextData:
-    - For example, DocLabel look like below
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/HyXoxUUjh.png","mode":0}'
-    TextData: []
+    - data that need to use in Runtime like Current DocStyle.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1

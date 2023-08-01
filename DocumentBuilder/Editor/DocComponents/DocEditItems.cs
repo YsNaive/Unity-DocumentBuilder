@@ -76,10 +76,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = DocRuntime.NewEmptyHorizontal();
 
-            Button addButton = DocRuntime.NewButton("+", DocStyle.Current.SuccessColor);
+            Button addButton = DocRuntime.NewButton("+", SODocStyle.Current.SuccessColor);
             addButton.style.width = Length.Percent(50);
 
-            Button deleteButton = DocRuntime.NewButton("-", DocStyle.Current.DangerColor);
+            Button deleteButton = DocRuntime.NewButton("-", SODocStyle.Current.DangerColor);
             deleteButton.style.width = Length.Percent(50);
 
             root.Add(addButton);

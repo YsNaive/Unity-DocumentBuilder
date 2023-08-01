@@ -56,7 +56,7 @@ namespace NaiveAPI.DocumentBuilder
             root.style.height = height;
             position.Left = ISStyleLength.Percent(35);
             position.Top = ISStyleLength.Percent(40);
-            label.style.SetIS_Style(DocStyle.Current.LabelText);
+            label.style.SetIS_Style(SODocStyle.Current.LabelText);
             label.style.unityTextAlign = TextAnchor.MiddleCenter;
             label.style.SetIS_Style(position);
             root.Add(label);

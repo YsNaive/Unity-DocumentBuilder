@@ -26,29 +26,37 @@ namespace NaiveAPI.DocumentBuilder
         {
             show = DocRuntime.NewScrollView();
             var root = rootVisualElement;
-            selectType = DocRuntime.NewDropdownField("get", new List<string> { "Constructor", "Methods", "Members" });
+            root.style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            selectType = DocRuntime.NewDropdownField("Info to get", new List<string> { "Constructor", "Methods", "Fields" });
+            selectType.RegisterValueChangedCallback(e => { repaint(); });
             selectType.index = 1;
+            selectType[0].style.minWidth = 50;
             isPrivate = new Toggle("Private");
+            isPrivate.value = false;
+            isPrivate[0].style.minWidth = 50;
             isPrivate.RegisterValueChangedCallback(recalFlag);
             isPublic = new Toggle("Public");
             isPublic.value = true;
+            isPublic[0].style.minWidth = 50;
             isPublic.RegisterValueChangedCallback(recalFlag);
             isInstance = new Toggle("Instance");
             isInstance.value = true;
+            isInstance[0].style.minWidth = 50;
             isInstance.RegisterValueChangedCallback(recalFlag);
             isStatic = new Toggle("Static");
+            isStatic.value = false;
+            isStatic[0].style.minWidth = 50;
             isStatic.RegisterValueChangedCallback(recalFlag);
             selectScript = DocEditor.NewObjectField<MonoScript>("Target", (e) =>
             {
                 if (e.newValue == null) return;
                 repaint();
             });
+            selectScript[0].style.minWidth = 50;
             root.Add(selectScript);
             root.Add(selectType);
-            root.Add(isPrivate);
-            root.Add(isPublic);
-            root.Add(isInstance);
-            root.Add(isStatic);
+            root.Add(DocRuntime.NewHorizontalBar(isPrivate, isPublic));
+            root.Add(DocRuntime.NewHorizontalBar(isInstance, isStatic));
             root.Add(show);
         }
         BindingFlags flag = BindingFlags.DeclaredOnly;
@@ -77,15 +85,95 @@ namespace NaiveAPI.DocumentBuilder
             {
                 foreach (var mods in targetType.GetMethods(flag))
                 {
+                    if (mods.Name.IndexOf("<") == 0) continue;
+                    if (mods.Name.IndexOf("get_") == 0) continue;
+                    if (mods.Name.IndexOf("set_") == 0) continue;
+                    if (mods.Name.IndexOf("add_") == 0) continue;
+                    if (mods.Name.IndexOf("remove_") == 0) continue;
                     show.Add(DocEditor.CreateComponentField(DocEditFuncDisplay.LoadMethod(mods)));
                 }
             }
-            if (selectType.value == "Members")
+            if (selectType.value == "Fields")
             {
-                foreach (var mems in targetType.GetMembers(flag))
+                DocComponent com = new DocComponent();
+                com.VisualID = new DocMatrix().VisualID;
+                DocMatrix.Data data = new DocMatrix.Data();
+                var fields = targetType.GetFields(flag);
+                data.row = fields.Length; 
+                data.col = 5;
+                List<TextAnchor> list = new List<TextAnchor>();
+                for (int i = 0; i < 100; i++)
+                    list.Add(TextAnchor.MiddleCenter);
+                list[0] = TextAnchor.MiddleLeft;
+                list[1] = TextAnchor.MiddleLeft;
+                list[4] = TextAnchor.MiddleLeft;
+                data.anchors = list.ToArray();
+                data.mode = DocMatrix.Mode.FixedText;
+                com.JsonData = JsonUtility.ToJson(data);
+                for (int i = 0; i < 200; i++)
+                    com.TextData.Add("");
+
+                com.TextData[0] = "Type";
+                com.TextData[1] = "Name";
+                com.TextData[2] = "Get";
+                com.TextData[3] = "Set";
+                com.TextData[4] = "Usage";
+
+                int n = 5;
+                var func = targetType.GetMethods(flag);
+                foreach(var fun in func)
                 {
-                    show.Add(DocRuntime.NewTextElement("Mems: " + mems.Name));
+                    if (fun.Name.IndexOf("get_") != -1)
+                    {
+                        data.row++;
+                        string str = fun.Name.Substring(4);
+                        int i = com.TextData.IndexOf(str);
+                        if (i == -1)
+                        {
+                            com.TextData[n] = fun.ReturnType.Name;
+                            com.TextData[n + 1] = str;
+                            com.TextData[n + 2] = "―";
+                            com.TextData[n + 3] = "ー";
+                            n += 5;
+                        }
+                        else
+                        {
+                            com.TextData[i + 2] = "―";
+                        }
+                    }
+                    else if (fun.Name.IndexOf("set_") != -1)
+                    {
+                        data.row++;
+                        string str = fun.Name.Substring(4);
+                        int i = com.TextData.IndexOf(str);
+                        if (i == -1)
+                        {
+                            com.TextData[n] = fun.ReturnType.Name;
+                            com.TextData[n + 1] = str;
+                            com.TextData[n + 2] = "ー";
+                            com.TextData[n + 3] = "―";
+                            n += 5;
+                        }
+                        else
+                        {
+                            com.TextData[i + 3] = "―";
+                        }
+                    }
                 }
+
+                foreach (var mems in fields)
+                {
+                    com.TextData[n] = mems.FieldType.Name;
+                    com.TextData[n + 1] = mems.Name;
+                    com.TextData[n + 2] = mems.IsPublic ? "―" : "ー";
+                    com.TextData[n + 3] = mems.IsPublic ? "―" : "ー";
+                    n +=5;
+                }
+                
+                var container = DocRuntime.NewEmpty();
+                if(com.TextData.Count !=0)
+                    container.Add(DocEditor.CreateComponentField(com));
+                show.Add(container);
             }
         }
     }

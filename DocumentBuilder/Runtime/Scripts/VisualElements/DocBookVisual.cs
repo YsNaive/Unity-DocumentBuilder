@@ -31,13 +31,14 @@ namespace NaiveAPI.DocumentBuilder
         public DocBookVisual(SODocPage rootPage)
         {
             menuScrollView = DocRuntime.NewScrollView();
-            style.backgroundColor = DocStyle.Current.BackgroundColor;
+            style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            Debug.Log(SODocStyle.Current.BackgroundColor);
             menuWidthPercent = DocCache.Get().DocMenuWidth;
             menuWidthPercent = Mathf.Clamp(menuWidthPercent, 0.01f, 1f);
             if (rootPage == null) return;
             style.SetIS_Style(ISFlex.Horizontal);
             divLineBar.style.width = 5;
-            divLineBar.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
+            divLineBar.style.backgroundColor = SODocStyle.Current.CodeBackgroundColor;
             divLineBar.RegisterCallback<PointerDownEvent>(e =>{isChangingWidth = true;});
             RegisterCallback<PointerUpEvent>(e =>{isChangingWidth = false;});
             RegisterCallback<PointerLeaveEvent>(e => { isChangingWidth = false; });
@@ -152,19 +153,19 @@ namespace NaiveAPI.DocumentBuilder
                 }
                 menuScrollView.style.display = DisplayStyle.None;
                 searchView.style.display = DisplayStyle.Flex;
-                searchView.style.marginTop = DocStyle.Current.MainTextSize;
+                searchView.style.marginTop = SODocStyle.Current.MainTextSize;
                 searchView.Clear();
                 foreach(var page in searchBuffer)
                 {
                     var button = DocRuntime.NewTextElement(page.Target.name);
-                    button.style.marginLeft = DocStyle.Current.LabelTextSize;
+                    button.style.marginLeft = SODocStyle.Current.LabelTextSize;
                     button.RegisterCallback<PointerDownEvent>(e =>
                     {
                         MenuHandler.Selecting = page;
                     });
                     button.RegisterCallback<PointerEnterEvent>(e =>
                     {
-                        button.style.backgroundColor = DocStyle.Current.HintColor;
+                        button.style.backgroundColor = SODocStyle.Current.HintColor;
                     });
                     button.RegisterCallback<PointerLeaveEvent>(e =>
                     {
@@ -172,20 +173,20 @@ namespace NaiveAPI.DocumentBuilder
                     });
                     var icon = DocRuntime.NewEmpty();
                     icon.style.backgroundImage = page.Target.Icon;
-                    icon.style.width = DocStyle.Current.MainTextSize;
-                    icon.style.height = DocStyle.Current.MainTextSize;
-                    button.style.height = DocStyle.Current.MainTextSize;
+                    icon.style.width = SODocStyle.Current.MainTextSize;
+                    icon.style.height = SODocStyle.Current.MainTextSize;
+                    button.style.height = SODocStyle.Current.MainTextSize;
                     icon.style.position = Position.Absolute;
-                    icon.style.left = -DocStyle.Current.MainTextSize*1.5f;
-                    button.style.marginLeft = DocStyle.Current.MainTextSize*3;
+                    icon.style.left = -SODocStyle.Current.MainTextSize*1.5f;
+                    button.style.marginLeft = SODocStyle.Current.MainTextSize*3;
                     button.Add(icon);
                     searchView.Add(button);
                 }
             });
-            SearchField.style.marginLeft = DocStyle.Current.MainTextSize/2;
-            SearchField.style.marginTop = DocStyle.Current.MainTextSize/2;
-            SearchField.style.marginRight = DocStyle.Current.MainTextSize/2;
-            SearchField.style.height = DocStyle.Current.MainTextSize*1.5f;
+            SearchField.style.marginLeft = SODocStyle.Current.MainTextSize/2;
+            SearchField.style.marginTop = SODocStyle.Current.MainTextSize/2;
+            SearchField.style.marginRight = SODocStyle.Current.MainTextSize/2;
+            SearchField.style.height = SODocStyle.Current.MainTextSize*1.5f;
             menuScrollView.Add(menuVisual);
             menuScrollView.mode = ScrollViewMode.VerticalAndHorizontal;
             var leftSide = DocRuntime.NewEmpty();
@@ -263,20 +264,20 @@ namespace NaiveAPI.DocumentBuilder
                         DocLabel.Data data = JsonUtility.FromJson<DocLabel.Data>(com.JsonData);
                         data ??= new DocLabel.Data();
 
-                        text.style.marginLeft = data.Level * DocStyle.Current.MainTextSize;
+                        text.style.marginLeft = data.Level * SODocStyle.Current.MainTextSize;
                         int localI = comIndex;
                         text.RegisterCallback<PointerDownEvent>(e =>
                         {
                             DisplayingPage.ScrollTo(DisplayingPage[localI]);
-                            DisplayingPage[localI].Highlight(50, DocStyle.Current.SuccessTextColor);
+                            DisplayingPage[localI].Highlight(50, SODocStyle.Current.SuccessTextColor);
                         });
                     }
                 }
                 comIndex++;
             }
             if (chapInfo.childCount == 0) return null;
-            var color = DocStyle.Current.CodeBackgroundColor;
-            color.a = 0.7f;
+            var color = SODocStyle.Current.BackgroundColor * 0.75f;
+            color.a = 0.85f;
             chapInfo.style.backgroundColor = color;
             chapInfo.style.SetIS_Style(ISPadding.Percent(15));
             chapInfo.style.SetIS_Style(ISRadius.Percent(10));
@@ -301,7 +302,7 @@ namespace NaiveAPI.DocumentBuilder
             });
             btn.style.fontSize = btn.style.fontSize.value.value * 1.5f;
             btn.style.position = Position.Absolute;
-            btn.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontGroundColor;
+            btn.style.unityBackgroundImageTintColor = SODocStyle.Current.SubFrontgroundColor;
             btn.style.right = 10;
             chapInfo.style.display = DisplayStyle.None;
             ve.Add(btn);

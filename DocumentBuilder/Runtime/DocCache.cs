@@ -12,8 +12,6 @@ namespace NaiveAPI.DocumentBuilder
     {
         private static DocCache instance;
 
-        [SerializeField] public List<string> LanguageList = new List<string>();
-        [SerializeField] public DocStyle CurrentStyle = new DocStyle();
         [SerializeField] public string OpeningBookHierarchy = "";
         [SerializeField] public float DocMenuWidth = 0.25f;
         [SerializeField] public List<string> FavoriteDocVisualID = new List<string>();
@@ -27,7 +25,6 @@ namespace NaiveAPI.DocumentBuilder
                 else
                 {
                     instance = new DocCache();
-                    instance.CurrentStyle = DocStyle.Dark;
                     Save(path);
                 }
             }

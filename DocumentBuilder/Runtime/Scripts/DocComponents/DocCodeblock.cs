@@ -21,12 +21,13 @@ namespace NaiveAPI.DocumentBuilder
             OuttroAnimation = (callBack) => { this.Fade(1, 0, 200, 50, callBack); };
             codeScrollView =DocRuntime.NewScrollView();
             if (Target.TextData.Count == 0) Target.TextData.Add("");
-            ISPadding padding = ISPadding.Pixel(DocStyle.Current.MainTextSize / 2);
+            ISPadding padding = ISPadding.Pixel(SODocStyle.Current.MainTextSize / 2);
             codeContents = DocRuntime.NewTextElement($"<line-height={data.LineHeightPercent}%>"+DocumentBuilderParser.CSharpParser(Target.TextData[0]));
             codeContents.style.whiteSpace = WhiteSpace.NoWrap;
-            codeContents.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
+            codeContents.style.color = new Color(.85f, .85f, .85f);
+            codeContents.style.backgroundColor = SODocStyle.Current.CodeBackgroundColor;
             codeContents.style.SetIS_Style(padding);
-            codeContents.style.fontSize = DocStyle.Current.MainTextSize;
+            codeContents.style.fontSize = SODocStyle.Current.MainTextSize;
             //codeContents.style.width = data.MinWidth;
             string lineNum = $"<line-height={data.LineHeightPercent}%>1";
             int i = 2;
@@ -40,11 +41,12 @@ namespace NaiveAPI.DocumentBuilder
             ScrollView numScrollView = DocRuntime.NewScrollView();
             TextElement lineNumber = DocRuntime.NewTextElement(lineNum);
             lineNumber.style.SetIS_Style(padding);
-            lineNumber.style.fontSize = DocStyle.Current.MainTextSize;
-            lineNumber.style.color = DocStyle.Current.SubFrontGroundColor;
-            numScrollView.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
+            lineNumber.style.fontSize = SODocStyle.Current.MainTextSize;
+            lineNumber.style.color = SODocStyle.Current.SubFrontgroundColor;
+            lineNumber.style.color = new Color(.6f, .6f, .6f);
+            numScrollView.style.backgroundColor = SODocStyle.Current.CodeBackgroundColor;
             numScrollView.style.borderRightWidth = 6;
-            numScrollView.style.borderRightColor = DocStyle.Current.SubBackgroundColor;
+            numScrollView.style.borderRightColor = SODocStyle.Current.SubBackgroundColor;
             numScrollView.style.position = Position.Absolute;
             lineNumber.style.unityTextAlign = TextAnchor.MiddleRight;
             Button copy = null;
@@ -69,12 +71,12 @@ namespace NaiveAPI.DocumentBuilder
             copy.style.position = Position.Absolute;
             copy.style.top = 5;
             codeScrollView.style.maxHeight = data.MaxHeight;
-            numScrollView.style.maxHeight = data.MaxHeight;
+            numScrollView.style.maxHeight = data.MaxHeight ;
             numScrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
             numScrollView.verticalScroller.valueChanged += v => { codeScrollView.verticalScroller.value = v; };
             codeScrollView.verticalScroller.valueChanged += v => { numScrollView.verticalScroller.value = v; };
             codeScrollView.Add(codeContents);
-            codeScrollView.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
+            codeScrollView.style.backgroundColor = SODocStyle.Current.CodeBackgroundColor;
             numScrollView.Add(lineNumber);
             Add(codeScrollView);
             Add(numScrollView);
@@ -86,7 +88,7 @@ namespace NaiveAPI.DocumentBuilder
                 codeScrollView.style.width = e.newRect.width;
                 codeContents.style.paddingLeft = lineNumber.layout.width*1.5f;
                 codeScrollView.style.marginLeft = 6;
-                copy.style.right = codeScrollView.verticalScroller.enabledInHierarchy ? (DocStyle.Current.ScrollerWidth) : 0;
+                copy.style.right = codeScrollView.verticalScroller.enabledInHierarchy ? (SODocStyle.Current.ScrollerWidth) : 0;
             });
         }
 

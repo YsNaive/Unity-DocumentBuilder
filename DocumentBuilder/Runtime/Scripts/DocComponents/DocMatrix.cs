@@ -36,6 +36,7 @@ namespace NaiveAPI.DocumentBuilder
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;
             matrixVisual = generateViewMatrixVisual(data, -1);
+            if(matrixVisual.childCount !=0)
             matrixVisual[matrixVisual.childCount - 1].RegisterCallback<GeometryChangedEvent>(repaintMatrix);
             this.Add(matrixVisual);
         }
@@ -43,9 +44,9 @@ namespace NaiveAPI.DocumentBuilder
         private VisualElement generateViewMatrixVisual(Data data, float width)
         {
             VisualElement root = new VisualElement();
-            root.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            root.style.backgroundColor = SODocStyle.Current.BackgroundColor;
             root.style.width = width;
-            root.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            root.style.backgroundColor = SODocStyle.Current.BackgroundColor;
             List<string> texts = Target.TextData;
             for (int i = 0; i < data.row; i++)
             {
@@ -54,27 +55,27 @@ namespace NaiveAPI.DocumentBuilder
                 for (int j = 0; j < data.col; j++)
                 {
                     TextElement label = new TextElement();
-                    label.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+                    label.style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
                     label.text = texts[i * data.col + j];
                     label.style.borderLeftWidth = 1;
-                    label.style.borderLeftColor = DocStyle.Current.SubFrontGroundColor;
+                    label.style.borderLeftColor = SODocStyle.Current.SubFrontgroundColor;
                     label.style.borderTopWidth = 1;
-                    label.style.borderTopColor = DocStyle.Current.SubFrontGroundColor;
+                    label.style.borderTopColor = SODocStyle.Current.SubFrontgroundColor;
                     if (i == data.row - 1)
                     {
                         label.style.borderBottomWidth = 1;
-                        label.style.borderBottomColor = DocStyle.Current.SubFrontGroundColor;
+                        label.style.borderBottomColor = SODocStyle.Current.SubFrontgroundColor;
                     }
                     if (j == data.col - 1)
                     {
                         label.style.borderRightWidth = 1;
-                        label.style.borderRightColor = DocStyle.Current.SubFrontGroundColor;
+                        label.style.borderRightColor = SODocStyle.Current.SubFrontgroundColor;
                     }
                     label.style.SetIS_Style(margin);
                     label.style.SetIS_Style(padding);
                     label.style.paddingLeft = 5;
                     label.style.paddingRight = 5;
-                    label.style.SetIS_Style(DocStyle.Current.MainText);
+                    label.style.SetIS_Style(SODocStyle.Current.MainText);
                     label.style.unityTextAlign = data.anchors[j];
                     child.Add(label);
                 }

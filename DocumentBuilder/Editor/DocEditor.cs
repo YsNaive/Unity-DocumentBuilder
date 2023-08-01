@@ -61,15 +61,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
             objectField.objectType = typeof(T);
             if(valueChange != null)
                 objectField.RegisterValueChangedCallback(valueChange);
-            objectField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            objectField[0].style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             objectField[0].style.ClearMarginPadding();
             if(label != "")
             {
                 objectField.label = label;
-                objectField[0].style.SetIS_Style(DocStyle.Current.MainText);
+                objectField[0].style.SetIS_Style(SODocStyle.Current.MainText);
                 objectField[0].style.ClearMarginPadding();
             }
-            objectField.style.height = DocStyle.Current.LineHeight;
+            objectField.style.height = SODocStyle.Current.LineHeight;
             return  objectField;
         }
         
@@ -79,7 +79,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             integerField.style.ClearPadding();
             DocRuntime.ApplyMargin(integerField);
             integerField[0].style.ClearMarginPadding();
-            integerField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            integerField[0].style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             integerField[0].style.minHeight = 18;
             integerField.style.height = 18;
             if (label != "")
@@ -99,12 +99,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
             DocRuntime.ApplyMargin(enumField);
             enumField.style.ClearMarginPadding();
             enumField[0].style.ClearMarginPadding();
-            enumField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            enumField[0].style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             enumField[0].style.minHeight = 18;
             if (label != "")
             {
                 enumField.label = label;
-                enumField[0].style.SetIS_Style(DocStyle.Current.ButtonText);
+                enumField[0].style.SetIS_Style(SODocStyle.Current.ButtonText);
                 enumField[0].style.ClearMarginPadding();
             }
             enumField.Init(initValue);

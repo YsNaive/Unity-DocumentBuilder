@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static NaiveAPI.DocumentBuilder.DocStyle;
+using static NaiveAPI.DocumentBuilder.SODocStyle;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -17,7 +17,7 @@ namespace NaiveAPI.DocumentBuilder
         private static ISText syntaxTextStyle = new ISText() { Color = Current.ArgsColor, FontSize = Current.MainTextSize };
         private static ISText paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = Current.ArgsColor, FontSize = Current.MainTextSize };
         private static ISText typeTextStyle = new ISText() { Color = Current.TypeColor, FontSize = Current.MainTextSize };
-        private static ISText labelTextStyle = new ISText() { Color = Current.SubFrontGroundColor, FontSize = Current.MainTextSize };
+        private static ISText labelTextStyle = new ISText() { Color = Current.SubFrontgroundColor, FontSize = Current.MainTextSize };
         private float tabGap = 2;
         private VisualElement veFoldOut;
 
@@ -37,7 +37,7 @@ namespace NaiveAPI.DocumentBuilder
             if (foldout.Q<Label>() != null)
             {
                 foldout.Q<Label>().style.SetIS_Style(Current.MainText);
-                foldout.Q<Label>().style.color = DocStyle.Current.FuncColor;
+                foldout.Q<Label>().style.color = SODocStyle.Current.FuncColor;
             }
             foldout.Q<Toggle>().style.ClearMarginPadding();
             foldout.style.paddingLeft = 5;
@@ -58,7 +58,7 @@ namespace NaiveAPI.DocumentBuilder
             {
                 TextElement descriptionText = new TextElement();
                 descriptionText.text = Target.TextData[0];
-                descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
+                descriptionText.style.SetIS_Style(SODocStyle.Current.MainText);
                 descriptionText.style.ClearMarginPadding();
                 descriptionText.style.paddingLeft = 1f * Current.MainTextSize;
                 this.Add(descriptionText);
@@ -108,7 +108,7 @@ namespace NaiveAPI.DocumentBuilder
             paramNameText.style.paddingLeft = Length.Percent(tabGap);
             root.Add(paramNameText);
             TextElement paramTypeText = new TextElement();
-            paramTypeText.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.MainText.Color)}>Type: </color>" + data.Type;
+            paramTypeText.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.MainText.Color)}>Type: </color>" + data.Type;
             paramTypeText.style.SetIS_Style(typeTextStyle);
             paramTypeText.style.ClearMarginPadding();
             paramTypeText.style.paddingLeft = Length.Percent(2 * tabGap);
@@ -117,7 +117,7 @@ namespace NaiveAPI.DocumentBuilder
             {
                 TextElement descriptionText = new TextElement();
                 descriptionText.text = description;
-                descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
+                descriptionText.style.SetIS_Style(SODocStyle.Current.MainText);
                 descriptionText.style.ClearMarginPadding();
                 descriptionText.style.paddingLeft = Length.Percent(2 * tabGap);
                 root.Add(descriptionText);
@@ -152,7 +152,7 @@ namespace NaiveAPI.DocumentBuilder
         {
             VisualElement root = new VisualElement();
             TextElement returnTypeText = new TextElement();
-            returnTypeText.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.MainText.Color)}>Type: </color>" + returnType;
+            returnTypeText.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.MainText.Color)}>Type: </color>" + returnType;
             returnTypeText.style.SetIS_Style(typeTextStyle); 
             returnTypeText.style.ClearMarginPadding();
             returnTypeText.style.paddingLeft = Length.Percent(tabGap);
@@ -161,7 +161,7 @@ namespace NaiveAPI.DocumentBuilder
             {
                 TextElement descriptionText = new TextElement();
                 descriptionText.text = description;
-                descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
+                descriptionText.style.SetIS_Style(SODocStyle.Current.MainText);
                 descriptionText.style.ClearMarginPadding();
                 descriptionText.style.paddingLeft = Length.Percent(tabGap);
                 root.Add(descriptionText);

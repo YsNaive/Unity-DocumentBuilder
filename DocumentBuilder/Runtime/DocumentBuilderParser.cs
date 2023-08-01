@@ -19,11 +19,11 @@ public static class DocumentBuilderParser
 
             string[] prefixs = strs[0].Split(" ");
             StringBuilder stringBuilder = new StringBuilder();
-            string subFrontGroundColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.SubFrontGroundColor)}>";
-            string prefixColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.PrefixColor)}>";
-            string funcColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.FuncColor)}>";
-            string typeColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.TypeColor)}>";
-            string paramColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.ArgsColor)}>";
+            string subFrontGroundColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.SubFrontgroundColor)}>";
+            string prefixColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.PrefixColor)}>";
+            string funcColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.FuncColor)}>";
+            string typeColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>";
+            string paramColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.ArgsColor)}>";
             string postfixColor = "</color>";
             foreach (string str in prefixs)
             {
@@ -124,13 +124,13 @@ public static class DocumentBuilderParser
         int offset = 0; 
         foreach (Match match in matches)
         {
-            MatchData matchData = new MatchData(match.Length, match.Value, "Comment", DocStyle.Current.CommentsColor);
+            MatchData matchData = new MatchData(match.Length, match.Value, "Comment", SODocStyle.Current.CommentsColor);
             checkAndAdd(table, match.Index, matchData);
         }
         matches = Regex.Matches(stringBuilder.ToString(), stringPattern);
         foreach (Match match in matches)
         {
-            MatchData matchData = new MatchData(match.Length, match.Value, "String", DocStyle.Current.StringColor);
+            MatchData matchData = new MatchData(match.Length, match.Value, "String", SODocStyle.Current.StringColor);
             checkAndAdd(table, match.Index, matchData);
         }
         matches = Regex.Matches(stringBuilder.ToString(), fieldPattern);
@@ -139,15 +139,15 @@ public static class DocumentBuilderParser
             MatchData matchData;
             foreach (Capture capture in match.Groups[1].Captures)
             {
-                matchData = new MatchData(capture.Length, capture.Value, "Prefix", DocStyle.Current.PrefixColor);
+                matchData = new MatchData(capture.Length, capture.Value, "Prefix", SODocStyle.Current.PrefixColor);
                 checkAndAdd(table, capture.Index, matchData);
             }
             foreach (Capture capture in match.Groups[2].Captures)
             {
-                matchData = new MatchData(capture.Length, capture.Value, "Type", DocStyle.Current.TypeColor);
+                matchData = new MatchData(capture.Length, capture.Value, "Type", SODocStyle.Current.TypeColor);
                 checkAndAdd(table, capture.Index, matchData);
             }
-            matchData = new MatchData(match.Groups[3].Length, match.Groups[3].Value, "Arg", DocStyle.Current.ArgsColor);
+            matchData = new MatchData(match.Groups[3].Length, match.Groups[3].Value, "Arg", SODocStyle.Current.ArgsColor);
             checkAndAdd(table, match.Groups[3].Index, matchData);
             args.Append(matchData.Value);
             args.Append("|");
@@ -155,13 +155,13 @@ public static class DocumentBuilderParser
         matches = Regex.Matches(stringBuilder.ToString(), reservedWordPattern);
         foreach (Match match in matches)
         {
-            MatchData matchData = new MatchData(match.Length, match.Value, "ReserveWord", DocStyle.Current.PrefixColor);
+            MatchData matchData = new MatchData(match.Length, match.Value, "ReserveWord", SODocStyle.Current.PrefixColor);
             checkAndAdd(table, match.Index, matchData);
         }
         matches = Regex.Matches(stringBuilder.ToString(), numberPattern);
         foreach (Match match in matches)
         {
-            MatchData matchData = new MatchData(match.Groups[1].Length, match.Groups[1].Value, "Number", DocStyle.Current.NumberColor);
+            MatchData matchData = new MatchData(match.Groups[1].Length, match.Groups[1].Value, "Number", SODocStyle.Current.NumberColor);
             checkAndAdd(table, match.Groups[1].Index, matchData);
         }
         matches = Regex.Matches(stringBuilder.ToString(), funcPattern);
@@ -170,15 +170,15 @@ public static class DocumentBuilderParser
             MatchData matchData;
             foreach (Capture capture in match.Groups[1].Captures)
             {
-                matchData = new MatchData(capture.Length, capture.Value, "Prefix", DocStyle.Current.PrefixColor);
+                matchData = new MatchData(capture.Length, capture.Value, "Prefix", SODocStyle.Current.PrefixColor);
                 checkAndAdd(table, capture.Index, matchData);
             }
             foreach (Capture capture in match.Groups[2].Captures)
             {
-                matchData = new MatchData(capture.Length, capture.Value, "Type", DocStyle.Current.TypeColor);
+                matchData = new MatchData(capture.Length, capture.Value, "Type", SODocStyle.Current.TypeColor);
                 checkAndAdd(table, capture.Index, matchData);
             }
-            matchData = new MatchData(match.Groups[3].Length, match.Groups[3].Value, "Func", DocStyle.Current.FuncColor);
+            matchData = new MatchData(match.Groups[3].Length, match.Groups[3].Value, "Func", SODocStyle.Current.FuncColor);
             checkAndAdd(table, match.Groups[3].Index, matchData);
             CaptureCollection typeCaptures = match.Groups[5].Captures;
             CaptureCollection argsCaptures = match.Groups[6].Captures;
@@ -189,11 +189,11 @@ public static class DocumentBuilderParser
                 int argsIndex = argsCaptures[i].Index;
                 while (j < typeCaptures.Count && typeCaptures[j].Index < argsIndex)
                 {
-                    matchData = new MatchData(typeCaptures[j].Length, typeCaptures[j].Value, "Type", DocStyle.Current.TypeColor);
+                    matchData = new MatchData(typeCaptures[j].Length, typeCaptures[j].Value, "Type", SODocStyle.Current.TypeColor);
                     checkAndAdd(table, typeCaptures[j].Index, matchData);
                     j++;
                 }
-                matchData = new MatchData(argsCaptures[i].Length, argsCaptures[i].Value, "Arg", DocStyle.Current.ArgsColor);
+                matchData = new MatchData(argsCaptures[i].Length, argsCaptures[i].Value, "Arg", SODocStyle.Current.ArgsColor);
                 checkAndAdd(table, argsCaptures[i].Index, matchData);
                 args.Append(matchData.Value);
                 args.Append("|");
@@ -205,23 +205,23 @@ public static class DocumentBuilderParser
             MatchData matchData;
             foreach (Capture capture in match.Groups[1].Captures)
             {
-                matchData = new MatchData(capture.Length, capture.Value, "Prefix", DocStyle.Current.PrefixColor);
+                matchData = new MatchData(capture.Length, capture.Value, "Prefix", SODocStyle.Current.PrefixColor);
                 checkAndAdd(table, capture.Index, matchData);
             }
-            matchData = new MatchData(match.Groups[2].Length, match.Groups[2].Value, "Prefix", DocStyle.Current.PrefixColor);
+            matchData = new MatchData(match.Groups[2].Length, match.Groups[2].Value, "Prefix", SODocStyle.Current.PrefixColor);
             checkAndAdd(table, match.Groups[2].Index, matchData);
-            matchData = new MatchData(match.Groups[3].Length, match.Groups[3].Value, "Type", DocStyle.Current.TypeColor);
+            matchData = new MatchData(match.Groups[3].Length, match.Groups[3].Value, "Type", SODocStyle.Current.TypeColor);
             checkAndAdd(table, match.Groups[3].Index, matchData);
             if (match.Groups[4].Value != "")
             {
-                matchData = new MatchData(match.Groups[4].Length, match.Groups[4].Value, "Type", DocStyle.Current.TypeColor);
+                matchData = new MatchData(match.Groups[4].Length, match.Groups[4].Value, "Type", SODocStyle.Current.TypeColor);
                 checkAndAdd(table, match.Groups[4].Index, matchData);
             }
         }
         matches = Regex.Matches(stringBuilder.ToString(), controlReservedWordPattern);
         foreach (Match match in matches)
         {
-            MatchData matchData = new MatchData(match.Length, match.Value, "Control", DocStyle.Current.ControlColor);
+            MatchData matchData = new MatchData(match.Length, match.Value, "Control", SODocStyle.Current.ControlColor);
             checkAndAdd(table, match.Index, matchData);
         }
         matches = Regex.Matches(stringBuilder.ToString(), newPattern);
@@ -229,7 +229,7 @@ public static class DocumentBuilderParser
         {
             foreach (Capture capture in match.Groups[1].Captures)
             {
-                MatchData matchData = new MatchData(capture.Length, capture.Value, "Type", DocStyle.Current.TypeColor);
+                MatchData matchData = new MatchData(capture.Length, capture.Value, "Type", SODocStyle.Current.TypeColor);
                 checkAndAdd(table, capture.Index, matchData);
             }
         }
@@ -237,11 +237,11 @@ public static class DocumentBuilderParser
         foreach (Match match in matches)
         {
             CaptureCollection captures = match.Groups[1].Captures;
-            MatchData matchData = new MatchData(captures[0].Length, captures[0].Value, "Func", DocStyle.Current.FuncColor);
+            MatchData matchData = new MatchData(captures[0].Length, captures[0].Value, "Func", SODocStyle.Current.FuncColor);
             checkAndAdd(table, captures[0].Index, matchData);
             for (int i = 1; i < captures.Count; i++)
             {
-                matchData = new MatchData(captures[i].Length, captures[i].Value, "Type", DocStyle.Current.TypeColor);
+                matchData = new MatchData(captures[i].Length, captures[i].Value, "Type", SODocStyle.Current.TypeColor);
                 checkAndAdd(table, captures[i].Index, matchData);
             }
         }/*
@@ -256,7 +256,7 @@ public static class DocumentBuilderParser
         {
             if (match.Value != "")
             {
-                MatchData matchData = new MatchData(match.Length, match.Value, "Arg", DocStyle.Current.ArgsColor);
+                MatchData matchData = new MatchData(match.Length, match.Value, "Arg", SODocStyle.Current.ArgsColor);
                 checkAndAdd(table, match.Index, matchData);
             }
         }

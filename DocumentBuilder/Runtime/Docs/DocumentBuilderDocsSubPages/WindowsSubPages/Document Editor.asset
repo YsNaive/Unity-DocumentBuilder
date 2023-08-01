@@ -27,6 +27,11 @@ MonoBehaviour:
     - Tools / Naive API / Document Builder / Document Editor
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:

@@ -20,7 +20,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         protected override void OnCreateGUI()
         {
-            this.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            this.style.backgroundColor = SODocStyle.Current.BackgroundColor;
             this.style.width = -1;
             DocMatrix.Data data = setData(Target.JsonData, Target.TextData);
 
@@ -79,8 +79,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             rowTextField.label = "row";
             rowTextField[0].style.minWidth = new Length(20, LengthUnit.Percent);
             rowTextField.value = data.row + "";
-            rowTextField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            rowTextField.style.SetIS_Style(DocStyle.Current.MainText);
+            rowTextField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
+            rowTextField.style.SetIS_Style(SODocStyle.Current.MainText);
             rowTextField.style.SetIS_Style(ISMargin.None);
             rowTextField.style.SetIS_Style(ISPadding.Percent(5));
             rowTextField.style.width = Length.Percent(percent);
@@ -102,8 +102,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             colTextField.label = "col";
             colTextField[0].style.minWidth = new Length(20, LengthUnit.Percent);
             colTextField.value = data.col + "";
-            colTextField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            colTextField.style.SetIS_Style(DocStyle.Current.MainText);
+            colTextField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
+            colTextField.style.SetIS_Style(SODocStyle.Current.MainText);
             colTextField.style.SetIS_Style(ISMargin.None);
             colTextField.style.SetIS_Style(ISPadding.Percent(5));
             colTextField.style.width = Length.Percent(percent);
@@ -147,7 +147,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             for (int i = 0;i < data.col; i++)
             {
                 int i1 = i;
-                addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
+                addButton = DocRuntime.NewButton("", SODocStyle.Current.SuccessColor, () =>
                 {
                     data.AddCol(i1);
                     Target.JsonData = JsonUtility.ToJson(data);
@@ -170,7 +170,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 root.Add(field);
             }
 
-            addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
+            addButton = DocRuntime.NewButton("", SODocStyle.Current.SuccessColor, () =>
             {
                 data.AddCol(data.col);
                 Target.JsonData = JsonUtility.ToJson(data);
@@ -193,7 +193,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 VisualElement child = new VisualElement();
                 child.style.SetIS_Style(ISFlex.Horizontal);
                 int i1 = i;
-                addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
+                addButton = DocRuntime.NewButton("", SODocStyle.Current.SuccessColor, () =>
                 {
                     data.AddRow(i1);
                     Target.JsonData = JsonUtility.ToJson(data);
@@ -204,14 +204,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 for (int j = 0; j < data.col; j++)
                 {
                     TextField textField = new TextField();
-                    textField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+                    textField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
                     textField.label = "";
                     textField.multiline = true;
                     textField.value = data.contents[i, j];
                     textField.style.width = Length.Percent(percent);
                     textField.style.SetIS_Style(ISMargin.None);
                     textField.style.SetIS_Style(ISPadding.None);
-                    textField.style.SetIS_Style(DocStyle.Current.MainText);
+                    textField.style.SetIS_Style(SODocStyle.Current.MainText);
                     int j1 = j;
                     textField.RegisterValueChangedCallback(value =>
                     {
@@ -223,7 +223,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Button deleteButton = new Button();
                 deleteButton.style.SetIS_Style(ISMargin.None);
                 deleteButton.style.SetIS_Style(ISPadding.None);
-                deleteButton.style.backgroundColor = DocStyle.Current.DangerColor;
+                deleteButton.style.backgroundColor = SODocStyle.Current.DangerColor;
                 deleteButton.style.width = Length.Percent(5);
                 deleteButton.clicked += () =>
                 {
@@ -238,7 +238,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement deleteColButton = new VisualElement();
             deleteColButton.style.SetIS_Style(ISFlex.Horizontal);
 
-            addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
+            addButton = DocRuntime.NewButton("", SODocStyle.Current.SuccessColor, () =>
             {
                 data.AddRow(data.row);
                 Target.JsonData = JsonUtility.ToJson(data);
@@ -259,7 +259,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 };
                 deleteButton.style.SetIS_Style(ISMargin.None);
                 deleteButton.style.SetIS_Style(ISPadding.None);
-                deleteButton.style.backgroundColor = DocStyle.Current.DangerColor;
+                deleteButton.style.backgroundColor = SODocStyle.Current.DangerColor;
                 deleteButton.style.width = Length.Percent(percent);
                 deleteColButton.Add(deleteButton);
             }

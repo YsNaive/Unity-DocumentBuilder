@@ -67,7 +67,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private VisualElement createView()
         {
             VisualElement root = new VisualElement();
-            root.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            root.style.backgroundColor = SODocStyle.Current.BackgroundColor;
             root.style.paddingLeft = 10;
             root.style.paddingRight = 10;
             root.Add(editText);

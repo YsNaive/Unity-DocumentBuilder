@@ -11,8 +11,8 @@ namespace NaiveAPI.DocumentBuilder
 
         protected override void OnCreateGUI()
         {
-            style.height = DocStyle.Current.MainTextSize *0.3f;
-            style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            style.height = SODocStyle.Current.MainTextSize *0.3f;
+            style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             style.marginTop = style.height;
             style.marginBottom = style.height;
         }

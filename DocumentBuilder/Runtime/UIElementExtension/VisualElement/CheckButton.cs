@@ -11,8 +11,8 @@ namespace NaiveAPI_UI
     {
         public string ConfirmText = "YES";
         public string CancelText = "NO";
-        public Color ConfirmColor = DocStyle.Current.SuccessColor;
-        public Color CancelColor = DocStyle.Current.DangerColor;
+        public Color ConfirmColor = SODocStyle.Current.SuccessColor;
+        public Color CancelColor = SODocStyle.Current.DangerColor;
         public event Action Confirm;
         public event Action Cancel;
         public Button MainBtn;

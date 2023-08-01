@@ -87,7 +87,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 BookVisual.MenuHandler.Repaint();
                 BookVisual.MenuHandler.Selecting = BookVisual.MenuHandler.Selecting;
             }).Every(500);
-            playIntro = DocRuntime.NewButton("Play Intro", DocStyle.Current.HintColor, () =>
+            playIntro = DocRuntime.NewButton("Play Intro", SODocStyle.Current.HintColor, () =>
             {
                 if (BookVisual.DisplayingPage == null) return;
                 if (!BookVisual.DisplayingPage.IsPlayingAnimation)
@@ -96,7 +96,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         BookVisual.DisplayingPage.PlayIntro(null);
                 }
             });
-            playOuttro = DocRuntime.NewButton("Play Outtro", DocStyle.Current.HintColor, () =>
+            playOuttro = DocRuntime.NewButton("Play Outtro", SODocStyle.Current.HintColor, () =>
             {
                 if (BookVisual.DisplayingPage == null) return;
                 if (!BookVisual.DisplayingPage.IsPlayingAnimation)
@@ -105,7 +105,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         BookVisual.DisplayingPage.PlayOuttro(null);
                 }
             });
-            repaint = DocRuntime.NewButton("Repaint", DocStyle.Current.HintColor, () =>
+            repaint = DocRuntime.NewButton("Repaint", SODocStyle.Current.HintColor, () =>
             {
                 BookVisual.MenuHandler.Selecting = BookVisual.MenuHandler.Selecting;
             });
@@ -124,16 +124,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             forceUpdateToggle = new Toggle();
             forceUpdateToggle.text = "Force Update";
-            forceUpdateToggle.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            forceUpdateToggle.style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             forceUpdate = true;
             forceUpdateToggle.RegisterValueChangedCallback(e =>
             {
                 forceUpdate = e.newValue;
                 forceUpdateToggle.style.backgroundColor = (e.newValue ?
-                DocStyle.Current.SuccessColor : DocStyle.Current.DangerColor);
+                SODocStyle.Current.SuccessColor : SODocStyle.Current.DangerColor);
+                forceUpdateToggle.style.color = (e.newValue ?
+                SODocStyle.Current.SuccessTextColor : SODocStyle.Current.DangerTextColor);
             });
             forceUpdateToggle.value = true;
-            forceUpdateToggle.style.backgroundColor = DocStyle.Current.SuccessColor;
+            forceUpdateToggle.style.backgroundColor = SODocStyle.Current.SuccessColor;
+            forceUpdateToggle.style.color = SODocStyle.Current.SuccessTextColor;
             forceUpdateToggle.style.position = Position.Absolute;
             forceUpdateToggle.style.bottom = 5;
             forceUpdateToggle.style.right = 1;
