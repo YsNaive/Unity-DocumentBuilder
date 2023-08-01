@@ -8,12 +8,6 @@ namespace NaiveAPI_UI
 {
     public static class VisualElementAnimation
     {
-        public enum Mode
-        {
-            None = 0,
-            Fade = 1
-        }
-
         public static void GoToPosition(this VisualElement ve, Vector2 targetPos, Action callback = null)
         {
             GoToPosition(ve, targetPos, 10, 20, AnimationCurve.EaseInOut(0, 0, 20, 1), callback); }

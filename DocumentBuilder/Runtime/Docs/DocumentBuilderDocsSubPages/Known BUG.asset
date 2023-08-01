@@ -22,13 +22,6 @@ MonoBehaviour:
       The unity may crash, remember to Ctrl^S to save before press "Play".
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 2
-    JsonData: '{"Type":2}'
-    TextData:
-    - In Editor Window, ScrollView pos may out of range, need switch to other page
-      than scroll to top.
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

@@ -17,6 +17,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cbd4581e18c805743a9ac308806c05ad, type: 2}
   - {fileID: 11400000, guid: ead7e0d41dae78145be55b7051d9c832, type: 2}
   - {fileID: 11400000, guid: 72d4bc09e5fa38840825d9c4ac8a180a, type: 2}
+  - {fileID: 11400000, guid: 82f49398804aed447b4be30090972fe2, type: 2}
   Components:
   - VisualID: 1
     JsonData: 

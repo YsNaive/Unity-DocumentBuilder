@@ -55,6 +55,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
         DocComponent lastOpen;
         List<string> buildinIconList = new List<string>(); 
         [SerializeField] private List<DocComponent> undoBuffer;
+        void reCalHeigth()
+        {
+            float sum = 0;
+            foreach (var ve in root.Children()) { sum += ve.layout.height; }
+            if (!isDraging && (root.style.height.value.value <= sum + 500))
+            {
+                root.style.height = sum + 800;
+            }
+        }
         public override VisualElement CreateInspectorGUI()
         {
             Target = target as SODocPage;
@@ -63,15 +72,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             #region mod bar
             root.style.SetIS_Style(ISPadding.Pixel(10));
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
-            root.RegisterCallback<GeometryChangedEvent>(e =>
-            {
-                float sum = 0;
-                foreach (var ve in root.Children()) { sum += ve.layout.height; }
-                if(!isDraging && (root.style.height.value.value <= sum + 400))
-                {
-                    root.style.height = sum + 800;
-                }
-            });
             header = DocRuntime.NewEmpty();
             contents = DocRuntime.NewEmpty();
             clickMask = DocRuntime.NewEmpty();
@@ -333,6 +333,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Undo.IncrementCurrentGroup();
                 Undo.RegisterCompleteObjectUndo(this, "DocComponentsField");
                 undoBuffer = EditRoot.ToComponentsList();
+                reCalHeigth();
             };
             Undo.undoRedoPerformed += () => { EditRoot.Repaint(undoBuffer); };
             return EditRoot;

@@ -53,7 +53,8 @@ MonoBehaviour:
     JsonData: 
     TextData:
     - After you create these two script, go back to component Edit GUI, you will
-      find the DocType you create !
+      find the DocType you create ! If you need a more concreate example, you can
+      check the source code of DocLabel / DocEditLabel
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -72,6 +73,7 @@ MonoBehaviour:
     TextData:
     - 'While deving new DocType, you may want to check preview, or the actual save
       data, you can use DocVisual Debugger at:
+
 
       Tools / NaiveAPI / DocumentBuilder
       / DocVisual Debugger'

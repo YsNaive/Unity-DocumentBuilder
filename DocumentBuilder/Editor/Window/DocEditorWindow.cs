@@ -156,8 +156,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     if (BookVisual.DisplayingPage != null)
                         BookVisual.DisplayingPage.RegisterCallback<GeometryChangedEvent>(e =>
                         {
-                            if (BookVisual.DisplayingPage.verticalScroller.highValue != float.MaxValue)
-                                BookVisual.DisplayingPage.verticalScroller.highValue = float.MaxValue;
+                            float sum = 0;
+                            foreach (var ve in BookVisual.DisplayingPage.Children()) { sum += ve.localBound.height; }
+                            if ((BookVisual.DisplayingPage.parent.style.height != sum))
+                                BookVisual.DisplayingPage.parent.style.height = sum;
                             BookVisual.DisplayingPage.verticalScroller.value = pos.y;
                         });
                 };

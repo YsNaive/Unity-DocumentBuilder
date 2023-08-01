@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: Full Sample Code
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 3543eaffc785cee4a879a77c6b51fede, type: 3}
+  SubPages: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - DocSample
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":2000,"LineHeightPercent":150}'
+    TextData:
+    - "public class DocSample : DocVisual\r\n{\r\n    public enum MyAniMode\r\n   
+      {\r\n        None = 0,\r\n        Fade = 1,\r\n        MyAnimation = 101,\r\n       
+      MyAnimation2 = 102,\r\n    }\r\n    public override string VisualID => \"Sample\";\r\n   
+      \r\n    // this will invoke after the DocVisual's value set-up\r\n    protected
+      override void OnCreateGUI()\r\n    {\r\n        // Add some visual you want\r\n   
+      }\r\n    protected override void OnSelectIntroAni(int type)\r\n    {\r\n       
+      // Apply default animation first\r\n        base.OnSelectIntroAni(type);\r\n       
+      \r\n        // If not using defaul, Apply extends\r\n        if(IntroAnimation
+      == null)\r\n        {\r\n            if((MyAniMode)type == MyAniMode.MyAnimation)\r\n           
+      {\r\n                IntroAnimation = (callback) =>\r\n                {\r\n                   
+      // MyAnimation 1\r\n\r\n                    // Invoke callback when animation
+      is done\r\n                    callback?.Invoke();\r\n                };\r\n           
+      }\r\n            else if ((MyAniMode)type == MyAniMode.MyAnimation2)\r\n           
+      {\r\n                IntroAnimation = (callback) =>\r\n                {\r\n                   
+      // MyAnimation 2 ...\r\n                };\r\n            }\r\n        }\r\n   
+      }\r\n    protected override void OnSelectOuttroAni(int type)\r\n    {\r\n       
+      // Same as SelectIntro ...\r\n    }\r\n}"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - DocEditSample
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    TextData:
+    - "\rpublic class DocEditSample : DocEditVisual\r\n{\r\n    public override string
+      DisplayName => \"Sample\";\r\n    // same ID as in DocVisual\n    public override
+      string VisualID => \"Your Visual ID\"; \n    protected override Enum InitAniType\r\n           
+      => DocSample.MyAniMode.None;\r\n\r\n    protected override void OnCreateGUI()\r\n   
+      {\r\n        // Add some visual to modify contents\r\n    }\r\n}"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200

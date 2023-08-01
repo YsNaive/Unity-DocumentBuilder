@@ -457,6 +457,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 parent.Insert(Index + 1, doc);
                 doc.SetStatus(true);
                 doc.OnModify += this.OnModify;
+                OnModify?.Invoke(this);
             });
             button.style.backgroundImage = DocEditor.Icon.Duplicate;
             button.style.height = 20;

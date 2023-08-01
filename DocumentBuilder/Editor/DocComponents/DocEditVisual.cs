@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static DocVisual;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
@@ -38,7 +39,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         /// Call after Target is set
         /// </summary>
         protected abstract void OnCreateGUI();
-        protected virtual Enum InitAniType => VisualElementAnimation.Mode.Fade;
+        protected virtual Enum InitAniType => AniMode.Fade;
         protected virtual void OnCreateAniGUI(Enum initType)
         {
             var bar = DocRuntime.NewEmptyHorizontal();

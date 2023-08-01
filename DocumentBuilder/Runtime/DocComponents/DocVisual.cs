@@ -8,6 +8,11 @@ using UnityEngine.UIElements;
 
 public abstract class DocVisual : VisualElement
 {
+    public enum AniMode
+    {
+        None = 0,
+        Fade = 1,
+    }
     public DocVisual()
     {
         RegisterCallback<GeometryChangedEvent>(e =>
@@ -39,14 +44,16 @@ public abstract class DocVisual : VisualElement
     protected abstract void OnCreateGUI();
     protected virtual void OnSelectIntroAni(int type)
     {
-        if ((VisualElementAnimation.Mode)type == VisualElementAnimation.Mode.None)
+        if ((AniMode)type == AniMode.None)
             return;
-        IntroAnimation = (callback) => { this.Fade(0,1, Target.IntroTime, 20, callback); };
+        else if((AniMode)type == AniMode.Fade)
+            IntroAnimation = (callback) => { this.Fade(0,1, Target.IntroTime, 20, callback); };
     }
     protected virtual void OnSelectOuttroAni(int type)
     {
-        if ((VisualElementAnimation.Mode)type == VisualElementAnimation.Mode.None)
+        if ((AniMode)type == AniMode.None)
             return;
-        OuttroAnimation = (callback) => { this.Fade(1,0, Target.OuttroTime, 20, callback); };
+        else if ((AniMode)type == AniMode.Fade)
+            OuttroAnimation = (callback) => { this.Fade(1,0, Target.OuttroTime, 20, callback); };
     }
 }

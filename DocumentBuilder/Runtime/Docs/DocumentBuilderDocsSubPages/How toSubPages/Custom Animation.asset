@@ -1,0 +1,187 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: Custom Animation
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 116bd5b02a236df4d9e4d81f16c51c48, type: 3}
+  SubPages: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Intro
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - You have already created you DocType ! You may notice that it contains some
+      default animation, if you want to add more or add some extra animate yourself,
+      follow the steps below.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - 1. Create Enum
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - First, you need to create an enum to define your animation types. The default
+      enum is DocVisual.AniMode. It is recommended to add a new one to your DocVisual.
+      If you still want the default choice, add them to your enum.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This is default animation enum
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    TextData:
+    - "public enum AniMode\r\n{\r\n    None = 0,\r\n    Fade = 1,\r\n}"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Create your own enum
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    TextData:
+    - "    public enum MyAniMode\r\n    {\r\n        None = 0,\r\n        Fade =
+      1,\r\n        MyAnimation = 101,\r\n        MyAnimation2 = 102,\r\n    }"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":4}'
+    TextData:
+    - 'it''s better to set up your enum values starting from 100 to avoid conflicts
+      if more default animations are added in the future. '
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - 2. Override InitAniType
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'This getter should override in DocEditVisual.
+
+      This is use to tell system
+      which enum are using, return the enum you create. After that, you should found
+      the enum dropdown is changed.'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    TextData:
+    - "protected override Enum InitAniType\r\n        => DocSample.MyAniMode.None;"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 5
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/SJiN5PIs2.png","mode":0}'
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":3}'
+    TextData:
+    - 2.1 change layout
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - If you don't want to use default animation selector, you can override OnCreateAniGUI(),
+      this is call before OnCreateGUI() to add Animation Selector.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - 3. Apply Animation
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Part in DocEditVisual are done, now we move into DocVisual, there are two function
+      needs to override
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'First is OnSelectIntroAni(int type) this is call when apply animation on IntroAnimation
+      Action in DocVisual, below sample code is still use default animation and 2
+      more custom animate.
+
+
+      The second one is OnSelectOuttroAni(int type),
+      same as func above, but select OuttroAnimation.'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":1000,"LineHeightPercent":150}'
+    TextData:
+    - "protected override void OnSelectIntroAni(int type)\r\n{\r\n    // Apply default
+      animation first\r\n    base.OnSelectIntroAni(type);\r\n        \r\n    // If
+      not using defaul, Apply extends\r\n    if(IntroAnimation == null)\r\n    {\r\n       
+      if((MyAniMode)type == MyAniMode.MyAnimation)\r\n        {\r\n            IntroAnimation
+      = (callback) =>\r\n            {\r\n                // MyAnimation_1\r\n\r\n               
+      // Invoke callback when animation is done\r\n                callback?.Invoke();\r\n           
+      };\r\n        }\r\n        else if ((MyAniMode)type == MyAniMode.MyAnimation2)\r\n       
+      {\r\n            IntroAnimation = (callback) =>\r\n            {\r\n               
+      // MyAnimation_2 ...\n            };\r\n        }\r\n    }\r\n}"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":4}'
+    TextData:
+    - Congratulations ! your custom animation is done, you can test it in the DocumentEditor
+      now.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200
