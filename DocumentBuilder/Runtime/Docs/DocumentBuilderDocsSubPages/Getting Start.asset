@@ -22,23 +22,26 @@ MonoBehaviour:
   - VisualID: 1
     JsonData: 
     TextData:
-    - QuickView
+    - Intro
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - 'Here will show you how to ...
-
-      - Create your own book
-
-      - Edit
-      book page
-
-      - Create Visual while runtime
-
-      - Create your own DocType'
+    - 'In this Chapter, you can learn:'
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 8
+    JsonData: '{"num":5}'
+    TextData:
+    - Create a book
+    - GUI to edit Document
+    - Create Doc VisualElement
+    - Use DocAnimation in Runtime
+    - Build-in DocType
+    ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1

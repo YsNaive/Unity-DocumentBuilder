@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -168,18 +168,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a07e155a7ac5c4092e53d0b75a7222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  page: {fileID: 11400000, guid: b4d768b0a8c3e3a4f9c56bd8f9815b43, type: 2}
-  doc:
-    VisualID: 5
-    JsonData: 
-    TextData: []
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  doc2:
+  UIDocument: {fileID: 489998791}
+  component:
     VisualID: 1
     JsonData: 
     TextData:
-    - 
+    - Hello World !
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
 --- !u!114 &489998791

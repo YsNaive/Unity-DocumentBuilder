@@ -22,7 +22,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b6a4e42c13e85c34f909956eea2635a0, type: 2}
   - {fileID: 11400000, guid: 7272e166669a7a14cbcfeb8aa779c038, type: 2}
   - {fileID: 11400000, guid: 9e039ac7f0c870640b6a086f1ab32aee, type: 2}
-  Components: []
+  Components:
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Here shows the build-in DocType
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 3
   OuttroMode: 1
   IntroDuration: 50

@@ -80,7 +80,7 @@ namespace NaiveAPI.DocumentBuilder
             RegisterCallback<GeometryChangedEvent>(e =>
             {
                 codeScrollView.style.width = e.newRect.width;
-                codeContents.style.marginLeft = lineNumber.layout.width;
+                codeContents.style.paddingLeft = lineNumber.layout.width*1.5f;
                 codeScrollView.style.marginLeft = 6;
                 copy.style.right = codeScrollView.verticalScroller.enabledInHierarchy ? (DocStyle.Current.ScrollerWidth) : 0;
             });

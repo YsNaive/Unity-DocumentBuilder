@@ -14,7 +14,156 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 116bd5b02a236df4d9e4d81f16c51c48, type: 3}
   SubPages: []
-  Components: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Intro
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Here are some VisualElements used to generate visuals at runtime, including
+      single DocComponent, DocPage, and DocBook.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - DocVisual
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This is the basic class for all DocType, When you want to display a single
+      DocComponent use DocRuntime.CreateVisual() to generate, it will auto find its
+      type and return you a Instance, or you can do it by yourself.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    TextData:
+    - '// Create DocVisual by DocRuntime
+
+      DocVisual visual = DocRuntime.CreateVisual(new
+      DocComponent());'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":2}'
+    TextData:
+    - If you create specific type yourself, you need to ensure that the contents
+      in component is for that DocType.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    TextData:
+    - '// Creaate from specific DocType
+
+      DocVisual visual = new DocDescription();
+
+      visual.SetTarget(new
+      DocComponent());'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - DocPageVisual
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This is for display a SODocPage
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    TextData:
+    - DocPageVisual visual = new DocPageVisual(pageAsset);
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - DocBookVisual
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This is for display a SODocPage and it's all sub pages
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    TextData:
+    - 'DocBookVisual visual = new DocBookVisual(pageAsset);
+
+
+      // if you don''t
+      want to play animation on this book
+
+      visual.DontPlayAnimation = true;'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - About Animation
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - In DocumentBuilder, animation beheavior is save in a Action, below sample code
+      is a MonoBeheavior that pop up a title and close it after 2 sec.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":4}'
+    TextData:
+    - For DocPage, use DocPage.PlayIntro() and DocPage.PlayOuttro() instead.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":500,"LineHeightPercent":150}'
+    TextData:
+    - "    // UID pre-set in inspector\r\n    [SerializeField] UIDocument UIDocument;\r\n\r\n   
+      // document pre-set in inspector\r\n    [SerializeField] private DocComponent
+      component;\r\n\r\n    void Start()\r\n    {\r\n        var visual = DocRuntime.CreateVisual(component);\r\n       
+      UIDocument.rootVisualElement.Add(visual);\r\n        visual.IntroAnimation(()
+      =>\r\n        { // after intro animation is done\r\n            visual.schedule.Execute(()
+      =>\r\n            { // wait 2 sec\r\n                visual.OuttroAnimation(()
+      =>\r\n                { // after outtro animation is done\r\n                   
+      UIDocument.rootVisualElement.Remove(visual);\r\n                });\r\n           
+      }).ExecuteLater(2000); \r\n        });\r\n    }"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

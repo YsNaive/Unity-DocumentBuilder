@@ -93,22 +93,6 @@ MonoBehaviour:
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 2
-    JsonData: '{"Type":2}'
-    TextData:
-    - When Define VisualID, it cannot have a collision. If your are createing a extension
-      of DocumentBuilder, it should be YourExtension.XX. Welcome to let us know the
-      DocType you have added, so that we can help you add the ID and links to the
-      Build-in list
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 2
-    JsonData: '{"Type":4}'
-    TextData:
-    - TextData will be use in Serach and Translate(IN Progress). So, don't put the
-      data type contents in TextData, use JsonData instead.
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []

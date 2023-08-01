@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: Create DocVisual
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 116bd5b02a236df4d9e4d81f16c51c48, type: 3}
+  SubPages: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Intro
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - The first step is create DocVisual Script, in our named rule, if your component
+      is represent like Label, than it named DocLabel
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Now let create a script and extend DocVisual to tell system it's a DocType.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    TextData:
+    - "public class DocSample : DocVisual\r\n{\r\n    public override string VisualID
+      => \"Your Visual ID\";\r\n\r\n    // this will invoke after the DocVisual's
+      value set-up\r\n    protected override void OnCreateGUI()\r\n    {\r\n       
+      // Add some visual you want\r\n    }\r\n}\r"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":2}'
+    TextData:
+    - When Define VisualID, it cannot have a collision. If your are createing a extension
+      of DocumentBuilder, it should be YourExtension.XX. Welcome to let us know the
+      DocType you have added, so that we can help you add the ID and links to the
+      Build-in list
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":4}'
+    TextData:
+    - TextData will be use in Serach and Translate(IN Progress). So, don't put the
+      data type contents in TextData, use JsonData instead.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - It's that simple! You have already completed the implementation of the DocType
+      display part! Next, let's create DocEditVisual.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200

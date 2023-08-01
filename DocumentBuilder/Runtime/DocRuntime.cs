@@ -42,7 +42,7 @@ namespace NaiveAPI
             ve.style.marginRight = DocStyle.Current.MarginHor;
             ve.style.marginBottom = DocStyle.Current.MarginVer;
         }
-        public static VisualElement CreateVisual(DocComponent docComponent)
+        public static DocVisual CreateVisual(DocComponent docComponent)
         {
             Type t;
             if (!VisualID_Dict.TryGetValue(docComponent.VisualID, out t))

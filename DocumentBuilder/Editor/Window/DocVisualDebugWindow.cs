@@ -11,10 +11,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public class DocVisualDebugWindow : EditorWindow
     {
-        [MenuItem("Tools/NaiveAPI/Debug/DocVisual")]
+        [MenuItem("Tools/NaiveAPI/DocumentBuilder/DocVisual Debugger")]
         public static void ShowWindow()
         {
-            GetWindow<DocVisualDebugWindow>("Debug DocVisual");
+            GetWindow<DocVisualDebugWindow>("DocVisual Debugger");
         }
         private float previousWidth;
         private void OnEnable()
@@ -67,10 +67,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private VisualElement createView()
         {
             VisualElement root = new VisualElement();
+            root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             root.style.paddingLeft = 10;
             root.style.paddingRight = 10;
             root.Add(editText);
-            root.Add(DocEditor.CreateComponentField(docComponent));
+            var comField = DocRuntime.NewEmpty();
+            comField.Add(DocEditor.CreateComponentField(docComponent,true));
+            root.Add(comField);
             root.schedule.Execute(() =>
             {
                 if (this.forceUpdate)

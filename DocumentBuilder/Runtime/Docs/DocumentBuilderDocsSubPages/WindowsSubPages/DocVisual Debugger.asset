@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: DocVisual Debugger
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 6e76c73f1f7c29d4ea14a1c2b9ae5fff, type: 3}
+  SubPages: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - DocVisual Debugger
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 5
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/rJMwkLUjn.png","mode":0}'
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - Edit Mode
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'Here show up a single mode DocComponentField.
+
+      Use this to check your
+      DocEditVisual Display'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - View Mode
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'Here will show the DocVisual from content in EditMode.
+
+      You can enable
+      ForceUpdate to auto repaint.'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - Data
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'The origin DocComponent data save from EditMode.
+
+      If you are not sure
+      wheather the data is saved, check here.'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - For example, DocLabel look like below
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 5
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/HyXoxUUjh.png","mode":0}'
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200
