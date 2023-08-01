@@ -27,6 +27,7 @@ namespace NaiveAPI.DocumentBuilder
             VisualElement root = DocRuntime.NewEmptyHorizontal();
 
             VisualElement icon = DocRuntime.NewEmpty();
+            if (Target.ObjsData[0] is Texture2D)
             texture = (Texture2D)Target.ObjsData[0];
             icon.style.backgroundImage = texture;
             icon.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontGroundColor;

@@ -50,7 +50,7 @@ namespace NaiveAPI.DocumentBuilder
 
 
         public static DocStyle Dark = new DocStyle()
-        {
+        { 
             BackgroundColor = new Color(0.15f, 0.15f, 0.16f),
             SubBackgroundColor = new Color(0.25f, 0.25f, 0.28f),
             FrontGroundColor = new Color(0.65f, 0.65f, 0.65f),
@@ -58,7 +58,7 @@ namespace NaiveAPI.DocumentBuilder
             MainText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 12, Align = TextAnchor.MiddleLeft },
             LabelText = new ISText() { Color = new Color(0.9f, 0.9f, 0.9f), FontSize = 18, Align = TextAnchor.MiddleLeft },
             ButtonText = new ISText() { Color = new Color(0.85f, 0.85f, 0.85f), FontSize = 12, Align = TextAnchor.MiddleCenter },
-            FuncColor = new Color(1f, 0.9f, 0.35f),
+            FuncColor = new Color(0.89f, 0.79f, 0.35f),
             ArgsColor = new Color(0.65f, 0.85f, 0.95f),
             TypeColor = new Color(0.35f, 0.70f, 0.65f),
             SuccessColor = new Color(0.2f, 0.3f, 0.2f),
@@ -69,10 +69,10 @@ namespace NaiveAPI.DocumentBuilder
             WarningTextColor = new Color(0.9f, 0.9f, 0.7f),
             DangerTextColor = new Color(0.9f, 0.7f, 0.7f),
             HintTextColor = new Color(0.8f, 0.9f, 1f),
-            PrefixColor = new Color(0.2f, 0.4f, 0.6f),
-            StringColor = new Color(0.5f, 0.35f, 0.2f),
+            PrefixColor = new Color(0.4f, 0.56f, 0.82f),
+            StringColor = new Color(0.84f, 0.55f, 0.29f),
             NumberColor = new Color(0.6f, 0.8f, 0.6f),
-            ControlColor = new Color(0.8f, 0.3f, 0.6f),
+            ControlColor = new Color(0.84f, 0.45f, 0.61f),
             CodeBackgroundColor = new Color(0.1f, 0.1f, 0.12f),
             CommentsColor = new Color(0.4f,0.6f,0.35f),
             MarginHor = 0,

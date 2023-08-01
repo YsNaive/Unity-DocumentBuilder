@@ -1,4 +1,5 @@
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,13 +57,15 @@ namespace NaiveAPI.DocumentBuilder
                     copy.text = "Copy";
                 }).ExecuteLater(1000);
             });
-            codeContents.RegisterCallback<GeometryChangedEvent>(e =>
+            codeContents.style.position = Position.Absolute;
+            EventCallback<GeometryChangedEvent> exe = null;
+            exe = (e) =>
             {
-                if(e.newRect.width != e.oldRect.width)
-                {
-                    codeContents.style.width = e.newRect.width;
-                }
-            });
+                codeContents.style.minWidth = e.newRect.width  + lineNumber.layout.width * 1.5f;
+                codeContents.style.position = Position.Relative;
+                codeContents.UnregisterCallback(exe);
+            };
+            codeContents.RegisterCallback(exe);
             copy.style.position = Position.Absolute;
             copy.style.top = 5;
             codeScrollView.style.maxHeight = data.MaxHeight;
@@ -79,6 +82,7 @@ namespace NaiveAPI.DocumentBuilder
 
             RegisterCallback<GeometryChangedEvent>(e =>
             {
+                if (e.oldRect.width == e.newRect.width) return;
                 codeScrollView.style.width = e.newRect.width;
                 codeContents.style.paddingLeft = lineNumber.layout.width*1.5f;
                 codeScrollView.style.marginLeft = 6;
