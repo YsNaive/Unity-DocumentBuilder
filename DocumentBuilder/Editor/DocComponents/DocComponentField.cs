@@ -143,10 +143,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public bool IsDraging = false;
         public bool SingleMode { get { return m_singleMode; } }
         private bool m_singleMode;
-        public static List<DocComponent> HistoryBuffer = new List<DocComponent>();
         private static DocComponent copyBuffer;
         private DocComponent startEditingStatus;
-        public static void ClearHistory() { HistoryBuffer.Clear(); }
         public void SetStatus(bool isEditing)
         {
             if (IsEditing == isEditing) return;
@@ -184,8 +182,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 ToolBar.Add(insertBtn());
             createDropfield();
             ToolBar.Add(SelectVisualType);
-            ToolBar.Add(copyBtn());
-            ToolBar.Add(pasetBtn());
+            ToolBar.Add(CopyBtn());
+            ToolBar.Add(PasetBtn());
             if (!m_singleMode)
             {
                 ToolBar.Add(duplicateBtn());
@@ -378,7 +376,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             button.style.height = 20;
             return button;
         }
-        Button copyBtn()
+        public Button CopyBtn()
         {
             Button button = null;
             button = DocRuntime.NewButton("", () =>
@@ -396,7 +394,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             button.style.marginLeft = 5;
             return button;
         }
-        Button pasetBtn()
+        public Button PasetBtn()
         {
             Button button = null;
             button = DocRuntime.NewButton("", () =>

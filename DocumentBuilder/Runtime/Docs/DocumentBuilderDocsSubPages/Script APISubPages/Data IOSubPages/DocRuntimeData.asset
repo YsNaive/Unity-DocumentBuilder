@@ -29,27 +29,44 @@ MonoBehaviour:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Members
+    - Static Properties
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
-    JsonData: '{"row":3,"col":5,"anchors":[3,3,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],"mode":1}'
+    JsonData: '{"row":2,"col":5,"anchors":[3,3,4,4,3],"mode":1}'
     TextData:
     - Type
     - Name
-    - Get
-    - Set
+    - get
+    - set
     - Usage
     - DocRuntimeData
     - Instance
     - "\u25A0"
     - "\u25A1"
-    - get current data instance
+    - current data
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Fields
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 3
+    JsonData: '{"row":2,"col":3,"anchors":[3,3,3],"mode":1}'
+    TextData:
+    - Type
+    - Name
+    - Usage
     - SODocStyle
     - CurrentStyle
-    - "\u25A0"
-    - "\u25A0"
-    - current using style
+    - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1

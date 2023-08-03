@@ -33,7 +33,7 @@ MonoBehaviour:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Members
+    - Properties
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
@@ -59,16 +59,35 @@ MonoBehaviour:
   - VisualID: 1
     JsonData: 
     TextData:
+    - Fields
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 3
+    JsonData: '{"row":1,"col":3,"anchors":[3,3,3],"mode":1}'
+    TextData:
+    - Type
+    - Name
+    - Usage
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
     - Methods
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"Foo","Syntaxs":[""],"ReturnTypes":[""],"Params":[{"ParamName":"","Type":""}],"isOn":false}'
+  - VisualID: 8
+    JsonData: '{"num":1}'
     TextData:
     - 
-    - 
-    - 
-    ObjsData: []
+    ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
@@ -81,11 +100,10 @@ MonoBehaviour:
     - Static Methods
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"Foo2","Syntaxs":[""],"ReturnTypes":[""],"Params":[{"ParamName":"","Type":""}],"isOn":false}'
+  - VisualID: 8
+    JsonData: '{"num":1}'
     TextData:
     - 
-    - 
-    - 
-    ObjsData: []
+    ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     AniSettings: 01000000fa00000001000000fa000000

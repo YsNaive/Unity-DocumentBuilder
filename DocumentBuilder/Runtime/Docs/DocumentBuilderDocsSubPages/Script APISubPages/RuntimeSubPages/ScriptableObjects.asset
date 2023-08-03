@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: Runtime
+  m_Name: ScriptableObjects
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 323fcf14a6a8bd1488a8e68098322f7a, type: 3}
   SubPages:
-  - {fileID: 11400000, guid: 1fc317de1e989d244823f0740fcfb9b5, type: 2}
-  - {fileID: 11400000, guid: 57a09a2d2d0bac4448d871c1cc6ab871, type: 2}
-  - {fileID: 11400000, guid: 3446af2de5fb6454bb1d157001c3ec5e, type: 2}
-  - {fileID: 11400000, guid: 0212d1433ee63cd47b0db92c25917069, type: 2}
+  - {fileID: 11400000, guid: 035e8cb4d2fa0e545b268d02aa387935, type: 2}
+  - {fileID: 11400000, guid: e9fd5df5d4f29c441aca714861b0b014, type: 2}
   Components: []
   IntroMode: 1
   OuttroMode: 1

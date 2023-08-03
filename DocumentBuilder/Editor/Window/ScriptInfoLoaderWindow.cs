@@ -13,10 +13,10 @@ namespace NaiveAPI.DocumentBuilder
 {
     public class ScriptInfoLoaderWindow : EditorWindow
     {
-        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Script DocLoader")]
+        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Script Components Loader")]
         public static void ShowWindow()
         {
-            GetWindow<ScriptInfoLoaderWindow>("Script DocLoader");
+            GetWindow<ScriptInfoLoaderWindow>("Script Components Loader");
         }
 
         ScrollView show;
@@ -82,11 +82,45 @@ namespace NaiveAPI.DocumentBuilder
             }
             for (int i = 0; i < 100; i++)
                 com.TextData.Add("");
+
             foreach (var data in datas)
             {
                 com = com.Copy();
                 com.JsonData = JsonUtility.ToJson(data);
-                show.Add(DocEditor.CreateComponentField(com));
+                var visual = DocEditor.CreateComponentField(com);
+                var container = DocRuntime.NewEmpty();
+                var btn = visual.CopyBtn();
+                btn.style.position = Position.Absolute;
+                btn.style.top = 4;
+                visual.style.marginLeft = 28;
+                visual.SetEnabled(false);
+                container.Add(visual);
+                container.Add(btn);
+                show.Add(container);
+            }
+            if(datas.Count != 0)
+            {
+                com = new DocComponent();
+                com.VisualID = new DocItems().VisualID;
+                var itemData = new DocItems.Data();
+                itemData.num = datas.Count;
+                com.JsonData = JsonUtility.ToJson(itemData);
+                com.ObjsData.Add(DocEditorData.Instance.BuildinIcon.Find((match) =>
+                {
+                    return match.name == "ItemElement";
+                }));
+                foreach (var data in datas)
+                    com.TextData.Add(data.Name);
+                var visual = DocEditor.CreateComponentField(com);
+                var container = DocRuntime.NewEmpty();
+                var btn = visual.CopyBtn();
+                btn.style.position = Position.Absolute;
+                btn.style.top = 4;
+                visual.style.marginLeft = 28;
+                visual.SetEnabled(false);
+                container.Add(visual);
+                container.Add(btn);
+                show.Add(container);
             }
             #endregion
             #region get set
@@ -113,7 +147,18 @@ namespace NaiveAPI.DocumentBuilder
             }
             com.JsonData = JsonUtility.ToJson(matrixData);
             if(matrixData.row > 1)
-                show.Add(DocEditor.CreateComponentField(com));
+            {
+                var visual = DocEditor.CreateComponentField(com);
+                var container = DocRuntime.NewEmpty();
+                var btn = visual.CopyBtn();
+                btn.style.position = Position.Absolute;
+                btn.style.top = 4;
+                visual.style.marginLeft = 28;
+                visual.SetEnabled(false);
+                container.Add(visual);
+                container.Add(btn);
+                show.Add(container);
+            }
 
             #endregion
 
@@ -137,7 +182,18 @@ namespace NaiveAPI.DocumentBuilder
             }
             com.JsonData = JsonUtility.ToJson(matrixData);
             if (matrixData.row > 1)
-                show.Add(DocEditor.CreateComponentField(com));
+            {
+                var visual = DocEditor.CreateComponentField(com);
+                var container = DocRuntime.NewEmpty();
+                var btn = visual.CopyBtn();
+                btn.style.position = Position.Absolute;
+                btn.style.top = 4;
+                visual.style.marginLeft = 28;
+                visual.SetEnabled(false);
+                container.Add(visual);
+                container.Add(btn);
+                show.Add(container);
+            }
             #endregion
         }
 
