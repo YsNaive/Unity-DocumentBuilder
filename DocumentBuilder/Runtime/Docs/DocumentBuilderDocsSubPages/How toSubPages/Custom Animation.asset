@@ -55,7 +55,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - "public enum AniMode\r\n{\r\n    None = 0,\r\n    Fade = 1,\r\n}"
     ObjsData: []
@@ -67,7 +67,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - "    public enum MyAniMode\r\n    {\r\n        None = 0,\r\n        Fade =
       1,\r\n        MyAnimation = 101,\r\n        MyAnimation2 = 102,\r\n    }"
@@ -102,7 +102,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - "protected override Enum InitAniType\r\n        => DocSample.MyAniMode.None;"
     ObjsData: []
@@ -156,7 +156,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":1000,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":1000,"LineHeightPercent":125}'
     TextData:
     - "protected override void OnSelectIntroAni(int type)\r\n{\r\n    // Apply default
       animation first\r\n    base.OnSelectIntroAni(type);\r\n        \r\n    // If

@@ -35,7 +35,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - "public class DocSample : DocVisual\r\n{\r\n    public override string VisualID
       => \"Your Visual ID\";\r\n\r\n    // this will invoke after the DocVisual's
@@ -46,7 +46,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: '{"Type":2}'
     TextData:
-    - When Define VisualID, it cannot have a collision. If your are createing a extension
+    - When Define VisualID, it cannot have a collision. If you are creating a extension
       of DocumentBuilder, it should be YourExtension.XX. Welcome to let us know the
       DocType you have added, so that we can help you add the ID and links to the
       Build-in list

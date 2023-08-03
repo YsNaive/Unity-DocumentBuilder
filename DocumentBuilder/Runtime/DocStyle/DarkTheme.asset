@@ -31,13 +31,13 @@ MonoBehaviour:
     FontStyle: 0
     FontSize: 12
     Color: {r: 0.8509804, g: 0.8509804, b: 0.8509804, a: 1}
-    Align: 3
+    Align: 4
     Wrap: 0
   BackgroundColor: {r: 0.15, g: 0.15, b: 0.16, a: 1}
   SubBackgroundColor: {r: 0.22075471, g: 0.22075471, b: 0.24528301, a: 1}
   FrontgroundColor: {r: 0.54339623, g: 0.55532765, b: 0.6037736, a: 1}
   SubFrontgroundColor: {r: 0.68636525, g: 0.7129465, b: 0.754717, a: 1}
-  FuncColor: {r: 0.89, g: 0.79, b: 0.35, a: 1}
+  FuncColor: {r: 0.8679245, g: 0.7821526, b: 0.41267353, a: 1}
   ArgsColor: {r: 0.65, g: 0.85, b: 0.95, a: 1}
   TypeColor: {r: 0.35, g: 0.7, b: 0.65, a: 1}
   PrefixColor: {r: 0.4, g: 0.56, b: 0.82, a: 1}

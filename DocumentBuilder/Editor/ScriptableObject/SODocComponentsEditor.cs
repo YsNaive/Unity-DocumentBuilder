@@ -28,6 +28,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override VisualElement CreateInspectorGUI()
         {
             VisualElement root = DocRuntime.NewEmpty();
+            Target = target as SODocComponents;
             if(Target.Components == null) Target.Components = new List<DocComponent>();
             editField = new DocComponentsField(Target.Components);
 

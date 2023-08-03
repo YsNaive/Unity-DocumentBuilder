@@ -49,6 +49,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             descriptionTextField.style.paddingRight = Length.Percent(1);
             descriptionTextField.RegisterValueChangedCallback(value =>
             {
+                if(data.ParamsDescription.Count != 0)
                 data.ParamsDescription[0] = value.newValue;
                 Target.TextData[0] = value.newValue;
             });

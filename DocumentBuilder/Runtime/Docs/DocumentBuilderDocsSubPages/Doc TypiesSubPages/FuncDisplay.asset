@@ -15,22 +15,55 @@ MonoBehaviour:
   Icon: {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
   SubPages: []
   Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - FuncDisplay
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - use to write Methods API
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Settings
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 5
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/H14sejvj2.png","mode":0}'
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Show Case
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
     JsonData: '{"Name":"Foo","Syntaxs":["public bool Foo()","public bool Foo(int
-      index)","public bool Foo(int index, string token)"],"ReturnTypes":["bool"],"Params":[{"ParamName":"index","Type":"int"},{"ParamName":"token","Type":"string"}],"isOn":false}'
+      index)","public bool Foo(int index, string token)"],"ReturnTypes":["bool"],"Params":[{"ParamName":"index","Type":"int"},{"ParamName":"token","Type":"string"}],"isOn":true}'
     TextData:
     - this is a Functionn sample
     - to tell function where the obj is...
     - the matck token to target...
     - is Function success
     ObjsData: []
-    AniSettings: 0100000001000000fa000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"Foo2","Syntaxs":[],"ReturnTypes":[],"Params":[],"isOn":false}'
-    TextData:
-    - you can also left other things empty
-    ObjsData: []
-    AniSettings: 0100000001000000fa000000fa000000
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

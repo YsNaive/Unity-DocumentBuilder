@@ -36,9 +36,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             get
             {
-                foreach(DocComponentField doc in ComponentsVisualRoot.Children())
+                foreach(var doc in ComponentsVisualRoot.Children())
                 {
-                    if(doc.IsDraging)return true;
+                    if(doc is DocComponentField)
+                    if(((DocComponentField)doc).IsDraging)return true;
                 }return false;
             }
         }
@@ -482,8 +483,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         void closeOther()
         {
-            foreach (DocComponentField ve in parent.Children())
-                if(ve != this)ve.SetStatus(false);
+            foreach (var ve in parent.Children())
+            {
+                if(ve is DocComponentField)
+                {
+                    if (ve != this) ((DocComponentField)ve).SetStatus(false);
+                }
+                    
+            }
+                
         }
 
         void whileDraging(PointerMoveEvent e)
