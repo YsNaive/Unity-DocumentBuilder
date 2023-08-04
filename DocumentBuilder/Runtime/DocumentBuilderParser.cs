@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using static DocumentBuilderParser;
 
 public static class DocumentBuilderParser
 {
@@ -15,7 +16,7 @@ public static class DocumentBuilderParser
     public const string stringPattern = @"""([^""]*)""";
     public const string test = "class|interface|enum|if|else|switch|case|default|do|while|for|foreach|break|continue|goto|return|using|using static|new";
     public const string controlReservedWordPattern = @"\b(?:if|else|switch|case|do|while|for|foreach|break|continue|goto|return|catch|try)\b";
-    public const string funcPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+(\w+)\s*\((?:,?\s*(params|this|in|out|ref)?\s*(" + type + @")\s+(\w+))*\)";
+    public const string funcPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+" + type + @"\s*\((?:,?\s*(params|this|in|out|ref)?\s*(" + type + @")\s+(\w+))*\)";
     public const string fieldPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+(\w+)\s*(?:=.*?)?\s*(?:;|,|{)";
     public const string commentPattern = @"//.*[\n]|/\*[\s\S]*?\*/";
     public const string newPattern = @"\bnew\s+" + type + @"(?:;|\()";
@@ -23,7 +24,7 @@ public static class DocumentBuilderParser
     public const string methodPattern = @"\b" + type + @"\(";
     public const string numberPattern = @"[^""A-Za-z_][+-]?(\d+(?:\.\d+)?[fx]?)";
     public const string functype = @"((?:(?:[<,]\s*)?\b(\w+)(?:\[.*?\])?[>]*)+)";
-    public const string functionPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + functype + @"\s+(\w+)\s*\((?:,?\s*(params|this|in|out|ref)?\s*(" + functype + @")\s+(\w+))*\)";
+    public const string functionPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + functype + @"\s+" + type + @"\s*\((?:,?\s*(params|this|in|out|ref)?\s*(" + functype + @")\s+(\w+))*\)";
 
     public static string CalGenericTypeName(Type type)
     {
@@ -56,6 +57,8 @@ public static class DocumentBuilderParser
                 return "string";
             case "Single":
                 return "float";
+            case "Boolean":
+                return "bool";
         }
 
         return typeName;
@@ -162,7 +165,12 @@ public static class DocumentBuilderParser
                 offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, SODocStyle.Current.PrefixColor);
             foreach (Capture capture in match.Groups[2].Captures)
                 offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, SODocStyle.Current.TypeColor);
-            offset += stringBuilder.UnityRTF(offset + match.Groups[3].Index, match.Groups[3].Length, SODocStyle.Current.FuncColor);
+            CaptureCollection funcCaptures = match.Groups[3].Captures;
+            offset += stringBuilder.UnityRTF(offset + funcCaptures[0].Index, funcCaptures[0].Length, SODocStyle.Current.FuncColor);
+            for (int i = 1; i < funcCaptures.Count; i++)
+            {
+            offset += stringBuilder.UnityRTF(offset + funcCaptures[i].Index, funcCaptures[i].Length, SODocStyle.Current.TypeColor);
+            }
             CaptureCollection prefixCaptures = match.Groups[4].Captures;
             CaptureCollection typeCaptures = match.Groups[6].Captures;
             CaptureCollection argsCaptures = match.Groups[7].Captures;
@@ -251,8 +259,14 @@ public static class DocumentBuilderParser
                 matchData = new MatchData(capture.Length, capture.Value, "Type", SODocStyle.Current.TypeColor);
                 checkAndAdd(table, capture.Index, matchData);
             }
-            matchData = new MatchData(match.Groups[3].Length, match.Groups[3].Value, "Func", SODocStyle.Current.FuncColor);
-            checkAndAdd(table, match.Groups[3].Index, matchData);
+            CaptureCollection funcCaptures = match.Groups[3].Captures;
+            matchData = new MatchData(funcCaptures[0].Length, funcCaptures[0].Value, "Func", SODocStyle.Current.FuncColor);
+            checkAndAdd(table, funcCaptures[0].Index, matchData);
+            for (int i = 1; i < funcCaptures.Count; i++)
+            {
+                matchData = new MatchData(funcCaptures[i].Length, funcCaptures[i].Value, "Func", SODocStyle.Current.TypeColor);
+                checkAndAdd(table, funcCaptures[i].Index, matchData);
+            }
             CaptureCollection typeCaptures = match.Groups[6].Captures;
             CaptureCollection argsCaptures = match.Groups[7].Captures;
             int count = argsCaptures.Count;
@@ -317,13 +331,7 @@ public static class DocumentBuilderParser
                 matchData = new MatchData(captures[i].Length, captures[i].Value, "Type", SODocStyle.Current.TypeColor);
                 checkAndAdd(table, captures[i].Index, matchData);
             }
-        }/*
-        matches = Regex.Matches(stringBuilder.ToString(), instancePattern);
-        foreach (Match match in matches)
-        {
-            MatchData matchData = new MatchData(match.Groups[1].Length, match.Groups[1].Value, "Arg", DocStyle.Current.ArgsColor);
-            checkAndAdd(table, match.Groups[1].Index, matchData);
-        }*/
+        }
         matches = Regex.Matches(stringBuilder.ToString(), @"\b(?:" + args.ToString() + @")\b");
         foreach (Match match in matches)
         {
@@ -390,7 +398,7 @@ public static class DocumentBuilderParser
             foreach (Match match in matches)
             {
                 ReturnType = match.Groups[2].Value;
-                Name = match.Groups[4].Value;
+                Name = match.Groups[4].Captures[0].Value;
                 CaptureCollection typeCaptures = match.Groups[7].Captures;
                 CaptureCollection argsCaptures = match.Groups[9].Captures;
                 int count = argsCaptures.Count;
