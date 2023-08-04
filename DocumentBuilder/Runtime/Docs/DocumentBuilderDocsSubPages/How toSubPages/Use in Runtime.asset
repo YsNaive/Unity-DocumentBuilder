@@ -48,7 +48,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - '// Create DocVisual by DocRuntime
 
@@ -64,7 +64,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - '// Creaate from specific DocType
 
@@ -92,7 +92,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - DocPageVisual visual = new DocPageVisual(pageAsset);
     ObjsData: []
@@ -115,7 +115,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - 'DocBookVisual visual = new DocBookVisual(pageAsset);
 
@@ -151,7 +151,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":500,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":500,"LineHeightPercent":125}'
     TextData:
     - "    // UID pre-set in inspector\r\n    [SerializeField] UIDocument UIDocument;\r\n\r\n   
       // document pre-set in inspector\r\n    [SerializeField] private DocComponent

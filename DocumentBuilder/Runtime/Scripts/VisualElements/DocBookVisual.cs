@@ -32,7 +32,6 @@ namespace NaiveAPI.DocumentBuilder
         {
             menuScrollView = DocRuntime.NewScrollView();
             style.backgroundColor = SODocStyle.Current.BackgroundColor;
-            Debug.Log(SODocStyle.Current.BackgroundColor);
             menuWidthPercent = DocCache.Get().DocMenuWidth;
             menuWidthPercent = Mathf.Clamp(menuWidthPercent, 0.01f, 1f);
             if (rootPage == null) return;

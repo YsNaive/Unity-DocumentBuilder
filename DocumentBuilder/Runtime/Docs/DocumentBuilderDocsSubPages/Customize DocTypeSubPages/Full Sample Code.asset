@@ -22,7 +22,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":2000,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":2000,"LineHeightPercent":125}'
     TextData:
     - "public class DocSample : DocVisual\r\n{\r\n    public enum MyAniMode\r\n   
       {\r\n        None = 0,\r\n        Fade = 1,\r\n        MyAnimation = 101,\r\n       
@@ -55,7 +55,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - "\rpublic class DocEditSample : DocEditVisual\r\n{\r\n    public override string
       DisplayName => \"Sample\";\r\n    // same ID as in DocVisual\n    public override

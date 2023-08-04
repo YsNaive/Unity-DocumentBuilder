@@ -32,6 +32,12 @@ namespace NaiveAPI.DocumentBuilder
             {
                 Debug.Log(DocRuntimeData.Instance);
             }));
+            Button b1 = DocRuntime.NewButton("btn1");
+            Button b2 = DocRuntime.NewButton("btn2");
+            Button b3 = DocRuntime.NewButton("btn3");
+            Button b4 = DocRuntime.NewButton("btn4");
+            rootVisualElement.Add(DocRuntime.NewHorizontalBar(b1, b2));
+            rootVisualElement.Add(DocRuntime.NewHorizontalBar(b3, null, null, b4));
         }
     }
 }

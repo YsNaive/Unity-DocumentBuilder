@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: DocCache
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 77fc49cad09df0142a9bbebdffc823a5, type: 3}
+  SubPages: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - DocCache
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - to Save/Load data in user temp folder
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Members
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 3
+    JsonData: '{"row":4,"col":5,"anchors":[3,3,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],"mode":1}'
+    TextData:
+    - Type
+    - Name
+    - Get
+    - Set
+    - Usage
+    - string
+    - OpeningBookHierarchy
+    - "\u25A0"
+    - "\u25A0"
+    - 
+    - float
+    - DocMenuWidth
+    - "\u25A0"
+    - "\u25A0"
+    - 
+    - List<string>
+    - FavoriteDocVisualID
+    - "\u25A0"
+    - "\u25A0"
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Static Methods
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 4
+    JsonData: '{"Name":"Get","Syntaxs":["public static DocCache Get()","public static
+      DocCache Get(string path)"],"ReturnTypes":["DocCache"],"Params":[],"isOn":false}'
+    TextData:
+    - get current data instance
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 4
+    JsonData: '{"Name":"Save","Syntaxs":["public static void Save()","public static
+      void Save(string path)"],"ReturnTypes":[],"Params":[],"isOn":false}'
+    TextData:
+    - save current data to temp folder
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 4
+    JsonData: '{"Name":"Load","Syntaxs":["public static void Load()","public static
+      void Load(string path)"],"ReturnTypes":[],"Params":[],"isOn":false}'
+    TextData:
+    - load json data in temp folder
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200

@@ -29,7 +29,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":150}'
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - "public class DocEditSample : DocEditVisual\r\n{\r\n    public override string
       DisplayName => \"Name to show\";\r\n\r\n    public override string VisualID

@@ -70,6 +70,30 @@ namespace NaiveAPI
             visualElement.style.flexDirection = FlexDirection.Row;
             return visualElement;
         }
+        public static VisualElement NewHorizontalBar(params VisualElement[] elements) { return NewHorizontalBar(0.0f, elements); }
+        public static VisualElement NewHorizontalBar(float space, params VisualElement[] elements)
+        {
+            VisualElement bar = NewEmptyHorizontal();
+            float width = (99.9f - space* elements.Length) / elements.Length;
+            VisualElement last = null;
+            foreach (var ve in elements)
+            {
+                if(ve != null)
+                {
+                    ve.style.width = Length.Percent(width);
+                    ve.style.marginRight = Length.Percent(space/2f);
+                    ve.style.marginLeft = Length.Percent(space/2f);
+                    last = ve;
+                    bar.Add(ve);
+                }
+                else
+                {
+                    if (last == null) continue;
+                    last.style.width = Length.Percent(last.style.width.value.value + width);
+                }
+            }
+            return bar;
+        }
         public static Button NewButton(Action onClick = null) { return NewButton("", SODocStyle.Current.SubBackgroundColor, onClick); }
         public static Button NewButton(string text, Action onClick = null) { return NewButton(text, SODocStyle.Current.SubBackgroundColor, onClick); }
         public static Button NewButton(Color color, Action onClick = null) { return NewButton("",color, onClick); }
@@ -206,17 +230,6 @@ namespace NaiveAPI
             ScrollView scrollView = new ScrollView();
             ApplyStyle(scrollView);
             return scrollView;
-        }
-        public static VisualElement NewHorizontalBar(params VisualElement[] elements)
-        {
-            VisualElement bar = NewEmptyHorizontal();
-            float width = 99.9f/elements.Length;
-            foreach(var ve in elements)
-            {
-                ve.style.width = Length.Percent(width);
-                bar.Add(ve);
-            }
-            return bar;
         }
         public static void ApplyStyle(ScrollView scrollView)
         {

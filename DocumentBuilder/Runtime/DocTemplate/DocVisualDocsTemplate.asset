@@ -18,35 +18,43 @@ MonoBehaviour:
     TextData:
     - Name
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - usage
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Settings
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"","mode":1,"IntroAniMode":0,"OuttroAniMode":0,"IntroDuration":0,"OuttroDuration":0}'
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
     - how to edit
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
     JsonData: 
     TextData:
     - Show Case
     ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000

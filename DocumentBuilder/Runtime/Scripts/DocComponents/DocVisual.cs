@@ -34,6 +34,7 @@ public abstract class DocVisual : VisualElement
     public void SetTarget(DocComponent target)
     {
         m_target = target;
+        Clear();
         OnCreateGUI();
         OnSelectIntroAni(Target.IntroType);
         OnSelectOuttroAni(Target.OuttroType);

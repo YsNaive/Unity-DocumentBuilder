@@ -40,7 +40,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
   - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/SyZVzpfjn.png","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/Sycxbjvjn.png","mode":0}'
     TextData: []
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000

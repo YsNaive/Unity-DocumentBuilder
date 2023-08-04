@@ -41,9 +41,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         public SODocPage Target;
         VisualElement root;
-        bool isDraging = false;
-        VisualElement dragingTarget;
-        ISPosition dragPosition;
         VisualElement contents;
         VisualElement header;
         VisualElement addAndDeleteBar;
@@ -51,15 +48,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
         CheckButton deletePage;
         VisualElement introSetting;
         VisualElement outtroSetting;
-        ObjectField icon,style;
-        DocComponent lastOpen;
+        ObjectField icon;
         List<string> buildinIconList = new List<string>(); 
         [SerializeField] private List<DocComponent> undoBuffer;
         void reCalHeigth()
         {
             float sum = 0;
             foreach (var ve in root.Children()) { sum += ve.layout.height; }
-            if (!isDraging && (root.style.height.value.value <= sum + 500))
+            if ((root.style.height.value.value <= sum + 500))
             {
                 root.style.height = sum + 800;
             }
@@ -68,7 +64,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             Target = target as SODocPage;
             root = new IMGUIContainer(OnInspectorGUI);
-            //root.Add();
             #region mod bar
             root.style.SetIS_Style(ISPadding.Pixel(10));
             root.style.backgroundColor = SODocStyle.Current.BackgroundColor;
@@ -78,7 +73,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             clickMask.style.SetIS_Style(ISSize.Percent(100, 100));
             clickMask.style.position = Position.Absolute;
             
-            VisualElement bar = DocRuntime.NewEmptyHorizontal();
             Button editMode = DocRuntime.NewButton("Edit Layout", () =>
             {
                 root.Insert(1, header);
@@ -99,21 +93,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             Button saveBtn = DocRuntime.NewButton("Save", SODocStyle.Current.SuccessColor, Save);
             saveBtn.style.SetIS_Style(new ISMargin(TextAnchor.MiddleRight));
-            viewMode.style.marginLeft = 7;
-            defuMode.style.marginLeft = 7;
-            style = DocEditor.NewObjectField<SODocStyle>("", e =>
+            ObjectField curSOStyle = DocEditor.NewObjectField<SODocStyle>("", e =>
             {
                 DocRuntimeData.Instance.CurrentStyle = (SODocStyle)e.newValue;
             });
-            style.style.marginLeft = 7;
-            bar.style.marginBottom = 10;
-            bar.Add(editMode);
-            bar.Add(viewMode);
-            bar.Add(defuMode);
-            bar.Add(style);
-            bar.Add(saveBtn);
-            bar.style.height = 20;
-            root.Add(bar);
+            curSOStyle.value = SODocStyle.Current;
+            root.Add(DocRuntime.NewHorizontalBar(1f,editMode,viewMode,defuMode,curSOStyle,null,saveBtn));
 
             #endregion
 
@@ -209,7 +194,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.Add(contents);
 
             VisualElement loadAndSave = DocRuntime.NewEmptyHorizontal();
-            Button loadFromTemplate = DocRuntime.NewButton("Load SO DocComponents", () =>
+            Button loadFromTemplate = DocRuntime.NewButton("Load Template", () =>
             {
                 header.Remove(loadAndSave);
                 if (DocEditorData.Instance.DocTemplateFolder == null) return;
@@ -222,7 +207,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     if (select.value != null)
                     {
-                        EditRoot.Repaint(AssetDatabase.LoadAssetAtPath<SODocComponents>(path + '/' + select.value + ".asset").Components);
+                        List<DocComponent> copied = new List<DocComponent>(); ;
+                        foreach (var c in AssetDatabase.LoadAssetAtPath<SODocComponents>(path + '/' + select.value + ".asset").Components)
+                            copied.Add(c.Copy());  
+                        EditRoot.Repaint(copied);
                         Save();
                     }
                     header.Remove(hor);

@@ -95,7 +95,7 @@ namespace NaiveAPI.DocumentBuilder
         public class Data
         {
             public int MaxHeight = 300;
-            public int LineHeightPercent = 150;
+            public int LineHeightPercent = 125;
         }
     }
 }
