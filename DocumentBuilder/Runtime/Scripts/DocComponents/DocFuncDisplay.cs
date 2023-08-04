@@ -13,7 +13,7 @@ namespace NaiveAPI.DocumentBuilder
     {
         public override string VisualID => "4";
 
-        private static ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = new Color(0.85f, 0.85f, 0.85f), FontSize = Current.MainTextSize };
+        private static ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = Current.FuncColor, FontSize = Current.MainTextSize };
         private static ISText paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = Current.ArgsColor, FontSize = Current.MainTextSize };
         private static ISText typeTextStyle = new ISText() { Color = Current.TypeColor, FontSize = Current.MainTextSize };
         private static ISText labelTextStyle = new ISText() { Color = Current.SubFrontgroundColor, FontSize = Current.MainTextSize };
@@ -30,6 +30,7 @@ namespace NaiveAPI.DocumentBuilder
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;
             TextElement nameText = DocRuntime.NewTextElement(data.Name);
+            nameText.style.SetIS_Style(funcNameTextStyle);
             veFoldOut = new VisualElement();
             veFoldOut.style.ClearMarginPadding();
             veFoldOut.style.paddingLeft = 5;
@@ -76,17 +77,11 @@ namespace NaiveAPI.DocumentBuilder
             VisualElement root = new VisualElement();
 
             TextElement paramNameText = new TextElement();
-            paramNameText.text = data.ParamName;
+            paramNameText.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>{data.Type + " "}</color>" + data.ParamName;
             paramNameText.style.SetIS_Style(paramTextStyle);
             paramNameText.style.ClearMarginPadding();
             paramNameText.style.paddingLeft = Length.Percent(tabGap);
             root.Add(paramNameText);
-            TextElement paramTypeText = new TextElement();
-            paramTypeText.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.MainText.Color)}>Type: </color>" + data.Type;
-            paramTypeText.style.SetIS_Style(typeTextStyle);
-            paramTypeText.style.ClearMarginPadding();
-            paramTypeText.style.paddingLeft = Length.Percent(2 * tabGap);
-            root.Add(paramTypeText);
             if (description != "")
             {
                 TextElement descriptionText = new TextElement();

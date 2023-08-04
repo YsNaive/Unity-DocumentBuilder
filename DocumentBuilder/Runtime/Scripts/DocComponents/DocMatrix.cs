@@ -21,7 +21,7 @@ namespace NaiveAPI.DocumentBuilder
         /// <param name="list"></param>
         /// <param name="a"></param>
         /// <returns></returns>
-        public List<List<List<string>>> testing(in Dictionary<List<string>, DocMatrix> list, params int[] a)
+        public List<List<List<string>>> testing(ref Dictionary<List<string>, DocMatrix> list, params int[] a)
         {
             return null;
         }

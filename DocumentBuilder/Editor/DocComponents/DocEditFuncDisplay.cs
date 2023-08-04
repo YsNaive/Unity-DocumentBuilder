@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Unity.Plastic.Newtonsoft.Json.Linq;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -17,6 +19,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override string VisualID => "4";
 
         private VisualElement syntaxContainer, paramsContainer, returnTypeContainer;
+        private TextField nameTextField;
         private List<DocumentBuilderParser.FuncData> funcDatas = new List<DocumentBuilderParser.FuncData>();
 
         protected override void OnCreateGUI()
@@ -24,7 +27,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.style.backgroundColor = SODocStyle.Current.BackgroundColor;
             this.style.width = -1;
             DocFuncDisplay.Data data = setData(Target.JsonData, Target.TextData);
-            TextField nameTextField = new TextField();
+            nameTextField = new TextField();
             nameTextField.label = "Name";
             nameTextField[0].style.minWidth = new Length(20, LengthUnit.Percent);
             nameTextField.value = data.Name + "";
@@ -40,6 +43,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             TextField descriptionTextField = new TextField();
             descriptionTextField.label = "Description";
+            descriptionTextField.multiline = true;
             descriptionTextField[0].style.minWidth = new Length(20, LengthUnit.Percent);
             descriptionTextField.value = Target.TextData[0] + "";
             descriptionTextField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
@@ -70,10 +74,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             data.Name = methodInfo.Name;
             texts.Add("");
             data.Syntaxs[0] = GetSignature(methodInfo);
-            string typeName = GetTypeName(methodInfo.ReturnType.Name);
+            string typeName = DocumentBuilderParser.GetTypeName(methodInfo.ReturnType.Name);
             if (typeName != "void")
             {
-                data.ReturnTypes[0] = GetTypeName(methodInfo.ReturnType.Name);
+                data.ReturnTypes.Add(DocumentBuilderParser.GetTypeName(methodInfo.ReturnType.Name));
                 texts.Add("");
             }
             else
@@ -87,7 +91,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 DocFuncDisplay.ParamData param = new DocFuncDisplay.ParamData();
                 param.ParamName = parameters[i].Name;
-                param.Type = GetTypeName(parameters[i].ParameterType.Name);
+                param.Type = DocumentBuilderParser.GetTypeName(parameters[i].ParameterType.Name);
                 data.Params.Add(param);
                 texts.Add("");
             }
@@ -106,7 +110,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             if (methodInfo.IsStatic)
                 stringBuilder.Append(" static");
             stringBuilder.Append(" ");
-            stringBuilder.Append(CalGenericTypeName(methodInfo.ReturnType));
+            stringBuilder.Append(DocumentBuilderParser.CalGenericTypeName(methodInfo.ReturnType));
             stringBuilder.Append(" ");
             stringBuilder.Append(methodInfo.Name);
             stringBuilder.Append('(');
@@ -114,7 +118,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             ParameterInfo[] parameters = methodInfo.GetParameters();
             for (int i = 0; i < parameters.Length; i++)
             {
-                stringBuilder.Append(CalGenericTypeName(parameters[i].ParameterType));
+                stringBuilder.Append(DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType));
                 stringBuilder.Append(" ");
                 stringBuilder.Append(parameters[i].Name);
                 if (i != parameters.Length - 1)
@@ -155,42 +159,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return "";
         }
 
-        public static string CalGenericTypeName(Type type)
-        {
-            string name = type.Name;
-            int i = name.IndexOf('`');
-            if (i != -1)
-                name = name.Substring(0, i);
-            else
-                return name;
-            i = 0;
-            name += "<";
-            foreach (var arg in type.GenericTypeArguments)
-            {
-                name += ((i != 0) ? ", " : "") + GetTypeName(CalGenericTypeName(arg));
-                i++;
-            }
-            name += ">";
-            return name;
-        }
-
-        public static string GetTypeName(string typeName)
-        {
-            switch (typeName)
-            {
-                case "Void":
-                    return "void";
-                case "Int32":
-                    return "int";
-                case "String":
-                    return "string";
-                case "Single":
-                    return "float";
-            }
-
-            return typeName;
-        }
-
         private DocFuncDisplay.Data setData(string jsonData, List<string> texts)
         {
             DocFuncDisplay.Data data = JsonUtility.FromJson<DocFuncDisplay.Data>(jsonData);
@@ -225,6 +193,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Target.TextData.Add(description);
             data.Params.Clear();
             data.ReturnTypes.Clear();
+            if (funcDatas.Count > 0)
+            {
+                data.Name = funcDatas[0].Name;
+                nameTextField.value = funcDatas[0].Name;
+            }
             for (int i = 0; i < funcDatas.Count; i++)
             {
                 DocFuncDisplay.ParamData paramData;
@@ -307,7 +280,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             TextField syntaxField = new TextField();
             syntaxField[0].style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
-            syntaxField.value = data.Syntaxs[index];
             syntaxField.RegisterValueChangedCallback(value =>
             {
                 data.Syntaxs[index] = value.newValue;
@@ -324,6 +296,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 this.Add(returnTypeContainer);
                 Target.JsonData = JsonUtility.ToJson(data);
             });
+            syntaxField.value = data.Syntaxs[index];
+            DocumentBuilderParser.FuncData funcData = new DocumentBuilderParser.FuncData(data.Syntaxs[index]);
+            funcDatas[index] = funcData;
             syntaxField.style.SetIS_Style(SODocStyle.Current.MainText);
             syntaxField.style.ClearMarginPadding();
             syntaxField.style.paddingLeft = Length.Percent(1);
@@ -341,6 +316,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 VisualElement syntaxField = generateSyntaxVisual(data, i);
                 root.Add(syntaxField);
             }
+
+            setFuncData(data);
 
             return root;
         }
@@ -399,7 +376,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             typeField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             typeField.style.SetIS_Style(SODocStyle.Current.MainText);
             typeField.style.ClearMarginPadding();
-            typeField.focusable = false;
+            typeField.SetEnabled(false);
             typeField.style.paddingLeft = Length.Percent(1);
             typeField.RegisterValueChangedCallback(value =>
             {
@@ -414,7 +391,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             nameField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             nameField.style.SetIS_Style(SODocStyle.Current.MainText);
             nameField.style.ClearMarginPadding();
-            nameField.focusable = false;
+            nameField.SetEnabled(false);
             nameField.style.paddingLeft = Length.Percent(1);
             nameField.style.paddingRight = Length.Percent(1);
             nameField.RegisterValueChangedCallback(value =>
@@ -510,7 +487,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             typeField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             typeField.style.SetIS_Style(SODocStyle.Current.MainText);
             typeField.style.ClearMarginPadding();
-            typeField.focusable = false;
+            typeField.SetEnabled(false);
             typeField.style.paddingLeft = Length.Percent(1);
             typeField.style.paddingRight = Length.Percent(1);
             typeField.RegisterValueChangedCallback(value =>

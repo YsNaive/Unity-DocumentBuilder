@@ -15,15 +15,51 @@ public static class DocumentBuilderParser
     public const string stringPattern = @"""([^""]*)""";
     public const string test = "class|interface|enum|if|else|switch|case|default|do|while|for|foreach|break|continue|goto|return|using|using static|new";
     public const string controlReservedWordPattern = @"\b(?:if|else|switch|case|do|while|for|foreach|break|continue|goto|return|catch|try)\b";
-    public const string funcPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+(\w+)\s*\((?:,?\s*(" + type + @")\s+(\w+))*\)";
+    public const string funcPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+(\w+)\s*\((?:,?\s*(params|this|in|out|ref)?\s*(" + type + @")\s+(\w+))*\)";
     public const string fieldPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+(\w+)\s*(?:=.*?)?\s*(?:;|,|{)";
     public const string commentPattern = @"//.*[\n]|/\*[\s\S]*?\*/";
     public const string newPattern = @"\bnew\s+" + type + @"(?:;|\()";
-    public const string reservedWordPattern = @"\b(?:get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
+    public const string reservedWordPattern = @"\b(?:in|get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
     public const string methodPattern = @"\b" + type + @"\(";
     public const string numberPattern = @"[^""A-Za-z_][+-]?(\d+(?:\.\d+)?[fx]?)";
     public const string functype = @"((?:(?:[<,]\s*)?\b(\w+)(?:\[.*?\])?[>]*)+)";
-    public const string functionPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + functype + @"\s+(\w+)\s*\((?:,?\s*(" + functype + @")\s+(\w+))*\)";
+    public const string functionPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + functype + @"\s+(\w+)\s*\((?:,?\s*(params|this|in|out|ref)?\s*(" + functype + @")\s+(\w+))*\)";
+
+    public static string CalGenericTypeName(Type type)
+    {
+        string name = type.Name;
+        int i = name.IndexOf('`');
+        if (i != -1)
+            name = name.Substring(0, i);
+        else
+            return GetTypeName(name);
+        i = 0;
+        name += "<";
+        foreach (var arg in type.GenericTypeArguments)
+        {
+            name += ((i != 0) ? ", " : "") + CalGenericTypeName(arg);
+            i++;
+        }
+        name += ">";
+        return name;
+    }
+
+    public static string GetTypeName(string typeName)
+    {
+        switch (typeName)
+        {
+            case "Void":
+                return "void";
+            case "Int32":
+                return "int";
+            case "String":
+                return "string";
+            case "Single":
+                return "float";
+        }
+
+        return typeName;
+    }
 
     public static string ParseSyntax(string synatx)
     {
@@ -118,8 +154,8 @@ public static class DocumentBuilderParser
     {
         StringBuilder stringBuilder = new StringBuilder(func);
 
-        MatchCollection matches = Regex.Matches(stringBuilder.ToString(), funcPattern);
         int offset = 0;
+        MatchCollection matches = Regex.Matches(stringBuilder.ToString(), funcPattern);
         foreach (Match match in matches)
         {
             foreach (Capture capture in match.Groups[1].Captures)
@@ -127,12 +163,15 @@ public static class DocumentBuilderParser
             foreach (Capture capture in match.Groups[2].Captures)
                 offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, SODocStyle.Current.TypeColor);
             offset += stringBuilder.UnityRTF(offset + match.Groups[3].Index, match.Groups[3].Length, SODocStyle.Current.FuncColor);
-            CaptureCollection typeCaptures = match.Groups[5].Captures;
-            CaptureCollection argsCaptures = match.Groups[6].Captures;
+            CaptureCollection prefixCaptures = match.Groups[4].Captures;
+            CaptureCollection typeCaptures = match.Groups[6].Captures;
+            CaptureCollection argsCaptures = match.Groups[7].Captures;
             int count = argsCaptures.Count;
             int j = 0;
             for (int i = 0; i < count; i++)
             {
+                if (prefixCaptures[i].Value != "")
+                    offset += stringBuilder.UnityRTF(offset + prefixCaptures[i].Index, prefixCaptures[i].Length, SODocStyle.Current.PrefixColor);
                 int argsIndex = argsCaptures[i].Index;
                 while (j < typeCaptures.Count && typeCaptures[j].Index < argsIndex)
                 {
@@ -214,8 +253,8 @@ public static class DocumentBuilderParser
             }
             matchData = new MatchData(match.Groups[3].Length, match.Groups[3].Value, "Func", SODocStyle.Current.FuncColor);
             checkAndAdd(table, match.Groups[3].Index, matchData);
-            CaptureCollection typeCaptures = match.Groups[5].Captures;
-            CaptureCollection argsCaptures = match.Groups[6].Captures;
+            CaptureCollection typeCaptures = match.Groups[6].Captures;
+            CaptureCollection argsCaptures = match.Groups[7].Captures;
             int count = argsCaptures.Count;
             int j = 0;
             for (int i = 0; i < count; i++)
@@ -333,7 +372,7 @@ public static class DocumentBuilderParser
 
     public class FuncData
     {
-        public string ReturnType = "";
+        public string ReturnType = "", Name = "";
         public List<string> paramsType = new List<string>();
         public List<string> paramsName = new List<string>();
 
@@ -351,8 +390,9 @@ public static class DocumentBuilderParser
             foreach (Match match in matches)
             {
                 ReturnType = match.Groups[2].Value;
-                CaptureCollection typeCaptures = match.Groups[6].Captures;
-                CaptureCollection argsCaptures = match.Groups[8].Captures;
+                Name = match.Groups[4].Value;
+                CaptureCollection typeCaptures = match.Groups[7].Captures;
+                CaptureCollection argsCaptures = match.Groups[9].Captures;
                 int count = argsCaptures.Count;
                 for (int i = 0; i < count; i++)
                 {
