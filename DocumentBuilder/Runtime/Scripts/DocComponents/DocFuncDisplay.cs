@@ -6,6 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static NaiveAPI.DocumentBuilder.SODocStyle;
+using static UnityEngine.GraphicsBuffer;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -111,6 +112,7 @@ namespace NaiveAPI.DocumentBuilder
 
             for (int i = 0;i < data.Params.Count; i++)
             {
+                while (Target.TextData.Count < (2 + i)) Target.TextData.Add("");
                 root.Add(generateParamVisual(data.Params[i], Target.TextData[1 + i]));
             }
 

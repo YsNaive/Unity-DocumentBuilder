@@ -25,6 +25,7 @@ namespace NaiveAPI.DocumentBuilder
         private void CreateGUI()
         {
             show = DocRuntime.NewScrollView();
+            show.style.marginTop = 20;
             var root = rootVisualElement;
             root.style.backgroundColor = SODocStyle.Current.BackgroundColor;
             root.style.SetIS_Style(ISPadding.Pixel(10));
@@ -69,15 +70,34 @@ namespace NaiveAPI.DocumentBuilder
                 if (method.Name.IndexOf("add_") == 0) continue;
                 if (method.Name.IndexOf("remove_") == 0) continue;
                 com = DocEditFuncDisplay.LoadMethod(method);
+                com.TextData.Add("");
                 var data = JsonUtility.FromJson<DocFuncDisplay.Data>(com.JsonData);
                 int index = datas.FindIndex(0, m => { return m.Name == data.Name; });
                 if (index != -1)
                 {
                     datas[index].Syntaxs.Add(data.Syntaxs[0]);
+                    foreach(var param in data.Params)
+                    {
+                        if (datas[index].Params.FindIndex(0, m => { return (m.ParamName == param.ParamName && m.Type == param.Type); }) == -1)
+                        {
+                            datas[index].Params.Add(param);
+                            com.TextData.Add("");
+                        }
+                    }
+                    foreach(var ret in data.ReturnTypes)
+                    {
+                        if (!datas[index].ReturnTypes.Contains(ret))
+                        {
+                            datas[index].ReturnTypes.Add(ret);
+                            com.TextData.Add("");
+                        }
+                    }
                 }
                 else
                 {
                     datas.Add(data);
+                    for(int i=0;i<(data.Params.Count+data.ReturnTypes.Count);i++)
+                        com.TextData.Add("");
                 }
             }
             for (int i = 0; i < 100; i++)
@@ -139,7 +159,7 @@ namespace NaiveAPI.DocumentBuilder
             foreach (var prop in targetType.GetProperties(flag))
             {
                 matrixData.row++;
-                com.TextData.Add(prop.PropertyType.Name);
+                com.TextData.Add(DocumentBuilderParser.CalGenericTypeName(prop.PropertyType));
                 com.TextData.Add(prop.Name);
                 com.TextData.Add(prop.CanRead? "―" : "ー");
                 com.TextData.Add(prop.CanWrite ? "―" : "ー");
@@ -176,7 +196,7 @@ namespace NaiveAPI.DocumentBuilder
             foreach (var field in targetType.GetFields(flag))
             {
                 matrixData.row++;
-                com.TextData.Add(field.FieldType.Name);
+                com.TextData.Add(DocumentBuilderParser.CalGenericTypeName(field.FieldType));
                 com.TextData.Add(field.Name);
                 com.TextData.Add("");
             }

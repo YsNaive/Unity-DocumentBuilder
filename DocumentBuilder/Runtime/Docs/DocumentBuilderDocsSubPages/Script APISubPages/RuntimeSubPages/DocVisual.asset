@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: DocVisual
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 77fc49cad09df0142a9bbebdffc823a5, type: 3}
-  SubPages: []
+  SubPages:
+  - {fileID: 11400000, guid: 516045f24ed77854f89d01b3bdfe5f56, type: 2}
   Components:
   - VisualID: 1
     JsonData: 
@@ -24,7 +25,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - base class of all Document Visual
+    - base class of all DocType
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -35,18 +36,18 @@ MonoBehaviour:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Members
+    - Properties
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
-    JsonData: '{"row":7,"col":5,"anchors":[3,3,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],"mode":1}'
+    JsonData: '{"row":3,"col":5,"anchors":[3,3,4,4,3],"mode":1}'
     TextData:
     - Type
     - Name
-    - Get
-    - Set
+    - get
+    - set
     - Usage
-    - string
+    - String
     - VisualID
     - "\u25A0"
     - "\u25A1"
@@ -55,30 +56,37 @@ MonoBehaviour:
     - Target
     - "\u25A0"
     - "\u25A1"
-    - display DocComponent
+    - displaying component
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Fields
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 3
+    JsonData: '{"row":5,"col":3,"anchors":[3,3,3],"mode":1}'
+    TextData:
+    - Type
+    - Name
+    - Usage
     - Action<float>
     - OnHeightChanged
-    - "\u25A0"
-    - "\u25A0"
-    - 'invoke when
-
-      layout height change'
+    - 
     - Action<float>
     - OnWidthChanged
-    - "\u25A0"
-    - "\u25A0"
-    - 'invoke when
-
-      layout width change'
+    - 
     - Action<Action>
     - IntroAnimation
-    - "\u25A0"
-    - "\u25A0"
     - 
     - Action<Action>
     - OuttroAnimation
-    - "\u25A0"
-    - "\u25A0"
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
@@ -93,12 +101,17 @@ MonoBehaviour:
     - Methods
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"SetTarget","Syntaxs":["public void SetTarget(DocComponent
-      target)"],"ReturnTypes":[],"Params":[{"ParamName":"target","Type":"DocComponent"}],"isOn":false}'
+  - VisualID: 8
+    JsonData: '{"num":1}'
     TextData:
-    - this function will repaint this visual
-    - 
+    - SetTarget
+    ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
@@ -107,27 +120,15 @@ MonoBehaviour:
     - Protect Methods
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"OnCreateGUI","Syntaxs":["protected void OnCreateGUI()"],"ReturnTypes":[],"Params":[],"isOn":false}'
+  - VisualID: 8
+    JsonData: '{"num":3}'
     TextData:
-    - will call after SetTarget
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"OnSelectIntroAni","Syntaxs":["protected void OnSelectIntroAni(int
-      type)"],"ReturnTypes":[],"Params":[{"ParamName":"type","Type":"int"}],"isOn":false}'
-    TextData:
-    - will call after OnCreateGUI
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"OnSelectOuttroAni","Syntaxs":["protected void OnSelectOuttroAni(int
-      type)"],"ReturnTypes":[],"Params":[{"ParamName":"type","Type":"int"}],"isOn":false}'
-    TextData:
-    - will call after OnCreateGUI
-    - 
-    ObjsData: []
+    - OnCreateGUI
+    - OnSelectIntroAni
+    - OnSelectOuttroAni
+    ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1

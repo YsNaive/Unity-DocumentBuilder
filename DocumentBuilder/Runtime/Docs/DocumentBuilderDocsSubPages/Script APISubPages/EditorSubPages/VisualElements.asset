@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: Script API
+  m_Name: VisualElements
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 323fcf14a6a8bd1488a8e68098322f7a, type: 3}
   SubPages:
-  - {fileID: 11400000, guid: d30a593ffd5c34347a4ddf8211b854e6, type: 2}
-  - {fileID: 11400000, guid: 50d562cc75c6c434d86c7b7c36ee6349, type: 2}
-  - {fileID: 11400000, guid: 8a99fb15887a33645a6141ce1ffd8a41, type: 2}
+  - {fileID: 11400000, guid: 09ad46e248e06f84f9e5aae47997b45d, type: 2}
+  - {fileID: 11400000, guid: 81427977ed5d3f84ca8e9efd2a002e17, type: 2}
   Components: []
   IntroMode: 1
   OuttroMode: 1
