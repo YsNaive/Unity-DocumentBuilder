@@ -169,9 +169,10 @@ public static class DocumentBuilderParser
             int count = argsCaptures.Count;
             int j = 0;
             for (int i = 0; i < count; i++)
-            {
-                if (prefixCaptures[i].Value != "")
-                    offset += stringBuilder.UnityRTF(offset + prefixCaptures[i].Index, prefixCaptures[i].Length, SODocStyle.Current.PrefixColor);
+            { 
+                if(prefixCaptures.Count !=0)
+                    if (prefixCaptures[i].Value != "")
+                        offset += stringBuilder.UnityRTF(offset + prefixCaptures[i].Index, prefixCaptures[i].Length, SODocStyle.Current.PrefixColor);
                 int argsIndex = argsCaptures[i].Index;
                 while (j < typeCaptures.Count && typeCaptures[j].Index < argsIndex)
                 {

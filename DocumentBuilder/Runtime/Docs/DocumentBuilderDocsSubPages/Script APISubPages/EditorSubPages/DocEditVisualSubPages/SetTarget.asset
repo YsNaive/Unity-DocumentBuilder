@@ -10,30 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: IN Progress
+  m_Name: SetTarget
   m_EditorClassIdentifier: 
-  Icon: {fileID: 2800000, guid: 3543eaffc785cee4a879a77c6b51fede, type: 3}
+  Icon: {fileID: 2800000, guid: 116bd5b02a236df4d9e4d81f16c51c48, type: 3}
   SubPages: []
   Components:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Lan Translate
+    - API
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 1
+  - VisualID: 2
     JsonData: 
     TextData:
-    - To Markdown
+    - 'Set display target to this DocEditVisual
+
+      after target is set, func
+      below will be invoke.
+
+
+      -> OnCreateAniGUI
+
+      -> OnCreateGUI'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
-    JsonData: '{"Name":"onCreateEditor","Syntaxs":["private void onCreateEditor(
-      SODocPageEditor e, float bcb)","private void onCreateEditor( SODocPageEditor
-      e, int c)"],"ReturnTypes":["void"],"Params":[{"ParamName":"e","Type":"SODocPageEditor"},{"ParamName":"bcb","Type":"float"},{"ParamName":"c","Type":"int"}],"isOn":false}'
+    JsonData: '{"Name":"SetTarget","Syntaxs":["public void SetTarget(DocComponent
+      target)"],"ReturnTypes":[],"Params":[{"ParamName":"target","Type":"DocComponent"}],"isOn":false}'
     TextData:
-    - 23131
-    - 
     - 
     - 
     - 

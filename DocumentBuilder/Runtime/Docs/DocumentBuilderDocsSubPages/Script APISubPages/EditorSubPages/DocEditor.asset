@@ -10,24 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: DocPageVisual
+  m_Name: DocEditor
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 77fc49cad09df0142a9bbebdffc823a5, type: 3}
   SubPages:
-  - {fileID: 11400000, guid: de6dbf54b42fe1c43babdb910253defc, type: 2}
-  - {fileID: 11400000, guid: e84146b9451049147a8a3c3c412d5407, type: 2}
-  - {fileID: 11400000, guid: 350ebcc78dc7c8e4688b23174ab0574e, type: 2}
+  - {fileID: 11400000, guid: 820a86727ec28184283153fbee5b9660, type: 2}
+  - {fileID: 11400000, guid: 8d7de9936c54a3f43866b37b7c5f7134, type: 2}
+  - {fileID: 11400000, guid: 3f35d3be81dddda46b2e33d07f4e6c4b, type: 2}
+  - {fileID: 11400000, guid: d3b9d732771adeb4592c60fc1357521a, type: 2}
+  - {fileID: 11400000, guid: 9cd728f97a418ba40979775c7210eb58, type: 2}
   Components:
   - VisualID: 1
     JsonData: 
     TextData:
-    - DocPageVisual
+    - DocEditor
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - to display a SODocPage
+    - run utils in DocumentBuilder while EditorOnly
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -38,20 +40,26 @@ MonoBehaviour:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Fields
+    - Static Fields
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
-    JsonData: '{"row":3,"col":3,"anchors":[3,3,3],"mode":1}'
+    JsonData: '{"row":5,"col":3,"anchors":[3,3,3],"mode":1}'
     TextData:
     - Type
     - Name
     - Usage
-    - SODocPage
-    - Target
-    - displaying SODocPage
-    - Boolean
-    - IsPlayingAnimation
+    - List<string>
+    - NameList
+    - all DocType name
+    - Dictionary<string, string>
+    - Name2ID
+    - name to VisualID
+    - Dictionary<string, Type>
+    - ID2Name
+    - 
+    - Dictionary<Type, string>
+    - ID2Type
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
@@ -63,15 +71,17 @@ MonoBehaviour:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Methods
+    - Static Methods
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 8
-    JsonData: '{"num":3}'
+    JsonData: '{"num":5}'
     TextData:
-    - Repaint
-    - PlayIntro
-    - PlayOuttro
+    - Reload
+    - CreateComponentField
+    - NewObjectField
+    - NewIntField
+    - NewEnumField
     ObjsData:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}

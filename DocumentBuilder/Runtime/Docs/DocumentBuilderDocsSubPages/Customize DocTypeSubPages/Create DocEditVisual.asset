@@ -34,7 +34,8 @@ MonoBehaviour:
     - "public class DocEditSample : DocEditVisual\r\n{\r\n    public override string
       DisplayName => \"Name to show\";\r\n\r\n    public override string VisualID
       => // same ID as in DocVisual\r\n\r\n    protected override void OnCreateGUI()\r\n   
-      {\r\n        // Add some visual to modify contents\r\n    }\n}"
+      {\r\n        // Add some visual to modify contents\r\n        // To recive
+      contents, also use Target\n    }\n}"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2

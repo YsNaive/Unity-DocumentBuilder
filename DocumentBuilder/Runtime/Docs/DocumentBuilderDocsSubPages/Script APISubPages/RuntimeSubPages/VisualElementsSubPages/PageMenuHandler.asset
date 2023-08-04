@@ -10,22 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: DocEditVisual
+  m_Name: PageMenuHandler
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 77fc49cad09df0142a9bbebdffc823a5, type: 3}
   SubPages:
-  - {fileID: 11400000, guid: 48b6a01aab319bb4db5df3543b2d138e, type: 2}
+  - {fileID: 11400000, guid: 28d76cd0eb4fc6347bb9d8c323ce9c77, type: 2}
+  - {fileID: 11400000, guid: e160a6eb67ada614e9a32685ce5ed3e7, type: 2}
+  - {fileID: 11400000, guid: 56e4c2c3970e7874e80f3de9c22f8f8d, type: 2}
   Components:
   - VisualID: 1
     JsonData: 
     TextData:
-    - DocEditVisual
+    - PageMenuHandler
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - base class of all DocType edit mode
+    - Handle beheavior of PageMenu, a Handler will control multiple PageMenuVisual.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -40,42 +42,6 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
-    JsonData: '{"row":4,"col":5,"anchors":[3,3,4,4,3],"mode":1}'
-    TextData:
-    - Type
-    - Name
-    - get
-    - set
-    - Usage
-    - String
-    - DisplayName
-    - "\u25A0"
-    - "\u25A1"
-    - 
-    - String
-    - VisualID
-    - "\u25A0"
-    - "\u25A1"
-    - 
-    - DocComponent
-    - Target
-    - "\u25A0"
-    - "\u25A1"
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 0
-    JsonData: 
-    TextData: []
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 1
-    JsonData: 
-    TextData:
-    - Protect Properties
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 3
     JsonData: '{"row":2,"col":5,"anchors":[3,3,4,4,3],"mode":1}'
     TextData:
     - Type
@@ -83,11 +49,11 @@ MonoBehaviour:
     - get
     - set
     - Usage
-    - Enum
-    - InitAniType
+    - PageMenuVisual
+    - Selecting
     - "\u25A0"
-    - "\u25A1"
-    - define AniType enum
+    - "\u25A0"
+    - selecting menu
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -102,17 +68,26 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
-    JsonData: '{"row":3,"col":3,"anchors":[3,3,3],"mode":1}'
+    JsonData: '{"row":6,"col":3,"anchors":[3,3,3],"mode":1}'
     TextData:
     - Type
     - Name
     - Usage
-    - Action<float>
-    - OnHeightChanged
-    - 
-    - Action<float>
-    - OnWidthChanged
-    - 
+    - SODocPage
+    - Root
+    - root page
+    - PageMenuVisual
+    - RootVisual
+    - root menu
+    - List<SODocPage>
+    - AddedPages
+    - all page in this menu
+    - List<PageMenuVisual>
+    - AddedVisual
+    - all menu visual
+    - Boolean
+    - LockSelect
+    - disable Selecting setter
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -127,30 +102,11 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 8
-    JsonData: '{"num":2}'
+    JsonData: '{"num":3}'
     TextData:
-    - SetTarget
-    - ToMarkdown
-    ObjsData:
-    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
-    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 0
-    JsonData: 
-    TextData: []
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 1
-    JsonData: 
-    TextData:
-    - Protect Methods
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 8
-    JsonData: '{"num":2}'
-    TextData:
-    - OnCreateGUI
-    - OnCreateAniGUI
+    - Repaint
+    - GetState
+    - SetState
     ObjsData:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}

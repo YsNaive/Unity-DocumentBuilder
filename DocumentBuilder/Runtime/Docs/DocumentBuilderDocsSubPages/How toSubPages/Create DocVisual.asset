@@ -40,7 +40,8 @@ MonoBehaviour:
     - "public class DocSample : DocVisual\r\n{\r\n    public override string VisualID
       => \"Your Visual ID\";\r\n\r\n    // this will invoke after the DocVisual's
       value set-up\r\n    protected override void OnCreateGUI()\r\n    {\r\n       
-      // Add some visual you want\r\n    }\r\n}\r"
+      // Add some visual you want\r\n        // Recive data from pass in Target\n       
+      string text = Target.TextData[0];\n    }\r\n}\r"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
