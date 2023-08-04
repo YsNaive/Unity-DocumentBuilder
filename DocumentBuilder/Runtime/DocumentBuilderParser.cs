@@ -2,13 +2,29 @@ using NaiveAPI.DocumentBuilder;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using static DocumentBuilderParser;
 
 public static class DocumentBuilderParser
 {
+    public const string type = @"(?:(?:[<,]\s*)?\b(\w+)(?:\[.*?\])?[>]*)+";
+    public const string prefix = @"(?:(?:(public|private|protected|internal|static|readonly|override)\s*)*\s+)?";
+    public const string classPattern = @"\b" + prefix + @"(class|enum|interface)\s+(\w+)\s*((?::\s*(?:\w+))(?:(?:\s*,\s*(?:\w+))*))?";
+    public const string stringPattern = @"""([^""]*)""";
+    public const string test = "class|interface|enum|if|else|switch|case|default|do|while|for|foreach|break|continue|goto|return|using|using static|new";
+    public const string controlReservedWordPattern = @"\b(?:if|else|switch|case|do|while|for|foreach|break|continue|goto|return|catch|try)\b";
+    public const string funcPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+(\w+)\s*\((?:,?\s*(" + type + @")\s+(\w+))*\)";
+    public const string fieldPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+(\w+)\s*(?:=.*?)?\s*(?:;|,|{)";
+    public const string commentPattern = @"//.*[\n]|/\*[\s\S]*?\*/";
+    public const string newPattern = @"\bnew\s+" + type + @"(?:;|\()";
+    public const string reservedWordPattern = @"\b(?:get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
+    public const string methodPattern = @"\b" + type + @"\(";
+    public const string numberPattern = @"[^""A-Za-z_][+-]?(\d+(?:\.\d+)?[fx]?)";
+    public const string functype = @"((?:(?:[<,]\s*)?\b(\w+)(?:\[.*?\])?[>]*)+)";
+    public const string functionPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + functype + @"\s+(\w+)\s*\((?:,?\s*(" + functype + @")\s+(\w+))*\)";
+
     public static string ParseSyntax(string synatx)
     {
         try
@@ -98,24 +114,42 @@ public static class DocumentBuilderParser
         }
     }
 
+    public static string FunctionParser(string func)
+    {
+        StringBuilder stringBuilder = new StringBuilder(func);
+
+        MatchCollection matches = Regex.Matches(stringBuilder.ToString(), funcPattern);
+        int offset = 0;
+        foreach (Match match in matches)
+        {
+            foreach (Capture capture in match.Groups[1].Captures)
+                offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, SODocStyle.Current.PrefixColor);
+            foreach (Capture capture in match.Groups[2].Captures)
+                offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, SODocStyle.Current.TypeColor);
+            offset += stringBuilder.UnityRTF(offset + match.Groups[3].Index, match.Groups[3].Length, SODocStyle.Current.FuncColor);
+            CaptureCollection typeCaptures = match.Groups[5].Captures;
+            CaptureCollection argsCaptures = match.Groups[6].Captures;
+            int count = argsCaptures.Count;
+            int j = 0;
+            for (int i = 0; i < count; i++)
+            {
+                int argsIndex = argsCaptures[i].Index;
+                while (j < typeCaptures.Count && typeCaptures[j].Index < argsIndex)
+                {
+                    offset += stringBuilder.UnityRTF(offset + typeCaptures[j].Index, typeCaptures[j].Length, SODocStyle.Current.TypeColor);
+                    j++;
+                }
+                offset += stringBuilder.UnityRTF(offset + argsCaptures[i].Index, argsCaptures[i].Length, SODocStyle.Current.ArgsColor);
+            }
+        }
+
+        return stringBuilder.ToString();
+    }
+
     public static string CSharpParser(string data)
     {
         SortedDictionary<int, MatchData> table = new SortedDictionary<int, MatchData>();
-        string type = @"(?:(?:[<,]\s*)?\b(\w+)(?:\[.*?\])?[>]*)+";
-        string prefix = @"(?:(?:(public|private|protected|internal|static|readonly|override)\s*)*\s+)?";
-        string classPattern = @"\b"+ prefix + @"(class|enum|interface)\s+(\w+)\s*((?::\s*(?:\w+))(?:(?:\s*,\s*(?:\w+))*))?";
-        string stringPattern = @"""([^""]*)""";
-        string test = "class|interface|enum|if|else|switch|case|default|do|while|for|foreach|break|continue|goto|return|using|using static|new";
-        string controlReservedWordPattern = @"\b(?:if|else|switch|case|do|while|for|foreach|break|continue|goto|return|catch|try)\b";
-        string funcPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+(\w+)\s*\((?:,?\s*(" + type + @")\s+(\w+))*\)";
-        string fieldPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+(\w+)\s*(?:=.*?)?\s*(?:;|,|{)";
-        string commentPattern = @"//.*[\n]|/\*[\s\S]*?\*/";
-        string newPattern = @"\bnew\s+" + type + @"(?:;|\()";
-        string reservedWordPattern = @"\b(?:public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
 
-        //string instancePattern = @"[^.]\b([A-Za-z_]\w*)[.]";
-        string methodPattern = @"\b" + type + @"\(";
-        string numberPattern = @"[^""A-Za-z_][+-]?(\d+(?:\.\d+)?[fx]?)";
         StringBuilder args = new StringBuilder();
         MatchCollection matches;
         StringBuilder stringBuilder = new StringBuilder(data);
@@ -294,6 +328,38 @@ public static class DocumentBuilderParser
         else
         {
             table.Add(index, matchData);
+        }
+    }
+
+    public class FuncData
+    {
+        public string ReturnType = "";
+        public List<string> paramsType = new List<string>();
+        public List<string> paramsName = new List<string>();
+
+        public FuncData()
+        {
+
+        }
+
+        public FuncData(string syntax)
+        {
+            ReturnType = "";
+            paramsType.Clear();
+            paramsName.Clear();
+            MatchCollection matches = Regex.Matches(syntax, functionPattern);
+            foreach (Match match in matches)
+            {
+                ReturnType = match.Groups[2].Value;
+                CaptureCollection typeCaptures = match.Groups[6].Captures;
+                CaptureCollection argsCaptures = match.Groups[8].Captures;
+                int count = argsCaptures.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    paramsType.Add(typeCaptures[i].Value);
+                    paramsName.Add(argsCaptures[i].Value);
+                }
+            }
         }
     }
 

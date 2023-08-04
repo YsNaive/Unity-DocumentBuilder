@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,6 +17,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override string VisualID => "4";
 
         private VisualElement syntaxContainer, paramsContainer, returnTypeContainer;
+        private List<DocumentBuilderParser.FuncData> funcDatas = new List<DocumentBuilderParser.FuncData>();
 
         protected override void OnCreateGUI()
         {
@@ -49,7 +49,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             descriptionTextField.style.paddingRight = Length.Percent(1);
             descriptionTextField.RegisterValueChangedCallback(value =>
             {
-                data.ParamsDescription[0] = value.newValue;
                 Target.TextData[0] = value.newValue;
             });
             this.Add(nameTextField);
@@ -71,10 +70,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             data.Name = methodInfo.Name;
             texts.Add("");
             data.Syntaxs[0] = GetSignature(methodInfo);
-            string typeName = getTypeName(methodInfo.ReturnType.Name);
+            string typeName = GetTypeName(methodInfo.ReturnType.Name);
             if (typeName != "void")
             {
-                data.ReturnTypes[0] = getTypeName(methodInfo.ReturnType.Name);
+                data.ReturnTypes[0] = GetTypeName(methodInfo.ReturnType.Name);
                 texts.Add("");
             }
             else
@@ -88,7 +87,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 DocFuncDisplay.ParamData param = new DocFuncDisplay.ParamData();
                 param.ParamName = parameters[i].Name;
-                param.Type = getTypeName(parameters[i].ParameterType.Name);
+                param.Type = GetTypeName(parameters[i].ParameterType.Name);
                 data.Params.Add(param);
                 texts.Add("");
             }
@@ -107,7 +106,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             if (methodInfo.IsStatic)
                 stringBuilder.Append(" static");
             stringBuilder.Append(" ");
-            stringBuilder.Append(getTypeName(methodInfo.ReturnType.Name));
+            stringBuilder.Append(CalGenericTypeName(methodInfo.ReturnType));
             stringBuilder.Append(" ");
             stringBuilder.Append(methodInfo.Name);
             stringBuilder.Append('(');
@@ -115,7 +114,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             ParameterInfo[] parameters = methodInfo.GetParameters();
             for (int i = 0; i < parameters.Length; i++)
             {
-                stringBuilder.Append(getTypeName(parameters[i].ParameterType.Name));
+                stringBuilder.Append(CalGenericTypeName(parameters[i].ParameterType));
                 stringBuilder.Append(" ");
                 stringBuilder.Append(parameters[i].Name);
                 if (i != parameters.Length - 1)
@@ -156,7 +155,26 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return "";
         }
 
-        private static string getTypeName(string typeName)
+        public static string CalGenericTypeName(Type type)
+        {
+            string name = type.Name;
+            int i = name.IndexOf('`');
+            if (i != -1)
+                name = name.Substring(0, i);
+            else
+                return name;
+            i = 0;
+            name += "<";
+            foreach (var arg in type.GenericTypeArguments)
+            {
+                name += ((i != 0) ? ", " : "") + GetTypeName(CalGenericTypeName(arg));
+                i++;
+            }
+            name += ">";
+            return name;
+        }
+
+        public static string GetTypeName(string typeName)
         {
             switch (typeName)
             {
@@ -166,6 +184,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     return "int";
                 case "String":
                     return "string";
+                case "Single":
+                    return "float";
             }
 
             return typeName;
@@ -186,8 +206,72 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 data.SetParamsDescription(texts, 1, data.Params.Count + 1);
                 data.SetReturnTypesDescription(texts, 1 + data.Params.Count, 1 + data.Params.Count + data.ReturnTypes.Count);
             }
+            for (int i = 0; i < data.Syntaxs.Count; i++)
+                funcDatas.Add(new DocumentBuilderParser.FuncData());
             Target.JsonData = JsonUtility.ToJson(data);
             return data;
+        }
+
+        private void setFuncData(DocFuncDisplay.Data data)
+        {
+            List<string> paramNames = new List<string>();
+            List<string> returnNames = new List<string>();
+            for (int i = 0; i < data.Params.Count; i++)
+                paramNames.Add(data.Params[i].ParamName);
+            for (int i = 0; i < data.ReturnTypes.Count; i++)
+                returnNames.Add(data.ReturnTypes[i]);
+            string description = Target.TextData[0];
+            Target.TextData.Clear();
+            Target.TextData.Add(description);
+            data.Params.Clear();
+            data.ReturnTypes.Clear();
+            for (int i = 0; i < funcDatas.Count; i++)
+            {
+                DocFuncDisplay.ParamData paramData;
+                for (int j = 0; j < funcDatas[i].paramsName.Count; j++)
+                {
+                    paramData = new DocFuncDisplay.ParamData(funcDatas[i].paramsName[j], funcDatas[i].paramsType[j]);
+                    if (data.Params.Contains(paramData))
+                    {
+                        continue;
+                    }
+                    if (paramNames.Contains(paramData.ParamName))
+                    {
+                        data.Params.Add(paramData);
+                        Target.TextData.Add(data.ParamsDescription[paramNames.IndexOf(paramData.ParamName)]);
+                    }
+                    else
+                    {
+                        data.Params.Add(paramData);
+                        Target.TextData.Add("");
+                    }
+                }
+            }
+            for (int i = 0; i < funcDatas.Count; i++)
+            {
+                if (funcDatas[i].ReturnType == "" || data.ReturnTypes.Contains(funcDatas[i].ReturnType))
+                    continue;
+                if (returnNames.Contains(funcDatas[i].ReturnType))
+                {
+                    data.ReturnTypes.Add(funcDatas[i].ReturnType);
+                    Target.TextData.Add(data.ReturnTypesDescription[returnNames.IndexOf(funcDatas[i].ReturnType)]);
+                }
+                else
+                {
+                    data.ReturnTypes.Add(funcDatas[i].ReturnType);
+                    Target.TextData.Add("");
+                }
+            }
+            data.ParamsDescription.Clear();
+            for (int i = 0; i < data.Params.Count; i++)
+            {
+                data.ParamsDescription.Add(Target.TextData[1 + i]);
+            }
+            data.ReturnTypesDescription.Clear();
+            for (int i = 0; i < data.ReturnTypes.Count; i++)
+            {
+                data.ReturnTypesDescription.Add(Target.TextData[1 + data.Params.Count + i]);
+            }
         }
 
         private VisualElement generateAddDeleteButton()
@@ -220,13 +304,24 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
 
         private VisualElement generateSyntaxVisual(DocFuncDisplay.Data data, int index)
-        { 
+        {
             TextField syntaxField = new TextField();
             syntaxField[0].style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             syntaxField.value = data.Syntaxs[index];
             syntaxField.RegisterValueChangedCallback(value =>
             {
                 data.Syntaxs[index] = value.newValue;
+                DocumentBuilderParser.FuncData funcData = new DocumentBuilderParser.FuncData(value.newValue);
+                funcDatas[index] = funcData;
+                setFuncData(data);
+                if (this.Contains(paramsContainer))
+                    this.Remove(paramsContainer);
+                if (this.Contains(returnTypeContainer))
+                    this.Remove(returnTypeContainer);
+                paramsContainer = generateParamsContainer(data);
+                this.Add(paramsContainer);
+                returnTypeContainer = generateReturnTypeContainer(data);
+                this.Add(returnTypeContainer);
                 Target.JsonData = JsonUtility.ToJson(data);
             });
             syntaxField.style.SetIS_Style(SODocStyle.Current.MainText);
@@ -268,6 +363,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             ((Button)veAddDelete[0]).clicked += () =>
             {
                 data.Syntaxs.Add("");
+                funcDatas.Add(new DocumentBuilderParser.FuncData());
                 VisualElement ve = generateSyntaxVisual(data, data.Syntaxs.Count - 1);
                 veSyntax.Add(ve);
                 Target.JsonData = JsonUtility.ToJson(data);
@@ -303,6 +399,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             typeField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             typeField.style.SetIS_Style(SODocStyle.Current.MainText);
             typeField.style.ClearMarginPadding();
+            typeField.focusable = false;
             typeField.style.paddingLeft = Length.Percent(1);
             typeField.RegisterValueChangedCallback(value =>
             {
@@ -317,6 +414,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             nameField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             nameField.style.SetIS_Style(SODocStyle.Current.MainText);
             nameField.style.ClearMarginPadding();
+            nameField.focusable = false;
             nameField.style.paddingLeft = Length.Percent(1);
             nameField.style.paddingRight = Length.Percent(1);
             nameField.RegisterValueChangedCallback(value =>
@@ -362,6 +460,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = new VisualElement();
 
+            if (data.Params.Count == 0)
+                return root;
+
             VisualElement veParams = generateParams(data);
 
             Label label = new Label();
@@ -371,7 +472,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
             root.Add(label);
-
+            /*
             VisualElement veAddDelete = generateAddDeleteButton();
 
             ((Button)veAddDelete[0]).clicked += () =>
@@ -390,10 +491,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 veParams.RemoveAt(veParams.childCount - 1);
                 data.RemoveLastParams();
                 Target.JsonData = JsonUtility.ToJson(data);
-            };
+            };*/
 
             root.Add(veParams);
-            root.Add(veAddDelete);
+            //root.Add(veAddDelete);
 
             return root;
         }
@@ -409,6 +510,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             typeField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
             typeField.style.SetIS_Style(SODocStyle.Current.MainText);
             typeField.style.ClearMarginPadding();
+            typeField.focusable = false;
             typeField.style.paddingLeft = Length.Percent(1);
             typeField.style.paddingRight = Length.Percent(1);
             typeField.RegisterValueChangedCallback(value =>
@@ -453,6 +555,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = new VisualElement();
 
+            if (data.ReturnTypes.Count == 0)
+                return root;
             Label label = new Label();
             label.text = "ReturnTypes";
             label.style.SetIS_Style(SODocStyle.Current.MainText);
@@ -462,7 +566,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.Add(label);
 
             VisualElement veReturnTypes = generateReturnType(data);
-
+            /*
             VisualElement veAddDelete = generateAddDeleteButton();
 
             ((Button)veAddDelete[0]).clicked += () =>
@@ -481,10 +585,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 veReturnTypes.RemoveAt(veReturnTypes.childCount - 1);
                 data.RemoveLastReturnType();
                 Target.JsonData = JsonUtility.ToJson(data);
-            };
+            };*/
 
             root.Add(veReturnTypes);
-            root.Add(veAddDelete);
+            //root.Add(veAddDelete);
 
             return root;
         }

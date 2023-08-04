@@ -55,7 +55,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             SearchDropdown searchDropdown = new SearchDropdown("", scripts);
             rootVisualElement.Add(searchDropdown);*/
             
-            string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/RunTime/DocComponents/DocMatrix.cs");
+            string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/RunTime/Scripts/DocComponents/DocMatrix.cs");
             //string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/Editor/ScriptableObject/SODocPageEditor.cs");
             //string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/Test/test.cs");
             //data = File.ReadAllText("C:\\Users\\howar\\Desktop\\Unity\\Document Builder\\Assets\\DocumentBuilder\\Editor\\ScriptableObject\\SODocPageEditor.cs");

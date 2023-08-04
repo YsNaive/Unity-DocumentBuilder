@@ -14,7 +14,6 @@ namespace NaiveAPI.DocumentBuilder
         public override string VisualID => "4";
 
         private static ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = new Color(0.85f, 0.85f, 0.85f), FontSize = Current.MainTextSize };
-        private static ISText syntaxTextStyle = new ISText() { Color = Current.ArgsColor, FontSize = Current.MainTextSize };
         private static ISText paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = Current.ArgsColor, FontSize = Current.MainTextSize };
         private static ISText typeTextStyle = new ISText() { Color = Current.TypeColor, FontSize = Current.MainTextSize };
         private static ISText labelTextStyle = new ISText() { Color = Current.SubFrontgroundColor, FontSize = Current.MainTextSize };
@@ -30,44 +29,20 @@ namespace NaiveAPI.DocumentBuilder
         {
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;
-            Foldout foldout = new Foldout();
-            foldout.text = data.Name;
-            foldout.value = data.isOn;
-            foldout.style.SetIS_Style(funcNameTextStyle);
-            if (foldout.Q<Label>() != null)
-            {
-                foldout.Q<Label>().style.SetIS_Style(Current.MainText);
-                foldout.Q<Label>().style.color = SODocStyle.Current.FuncColor;
-            }
-            foldout.Q<Toggle>().style.ClearMarginPadding();
-            foldout.style.paddingLeft = 5;
-            foldout.RegisterValueChangedCallback(value =>
-            {
-                if (value.newValue)
-                    this.Add(veFoldOut);
-                else
-                    this.Remove(veFoldOut);
-                data.isOn = value.newValue;
-                Target.JsonData = JsonUtility.ToJson(data);
-            });
-            this.Add(foldout);
+            TextElement nameText = DocRuntime.NewTextElement(data.Name);
             veFoldOut = new VisualElement();
             veFoldOut.style.ClearMarginPadding();
             veFoldOut.style.paddingLeft = 5;
+            this.Add(nameText);
             if (Target.TextData[0] != "")
             {
-                TextElement descriptionText = new TextElement();
-                descriptionText.text = Target.TextData[0];
-                descriptionText.style.SetIS_Style(SODocStyle.Current.MainText);
-                descriptionText.style.ClearMarginPadding();
-                descriptionText.style.paddingLeft = 1f * Current.MainTextSize;
+                TextElement descriptionText = DocRuntime.NewTextElement(Target.TextData[0]);
                 this.Add(descriptionText);
             }
             veFoldOut.Add(generateSyntaxContainer(data));
             veFoldOut.Add(generateParamContainer(data));
             veFoldOut.Add(generateReturnTypeContainer(data));
-            if (data.isOn)
-                this.Add(veFoldOut);
+            this.Add(veFoldOut);
         }
 
         private VisualElement generateSyntaxContainer(Data data)
@@ -87,8 +62,7 @@ namespace NaiveAPI.DocumentBuilder
             for (int i = 0;i < data.Syntaxs.Count; i++)
             {
                 TextElement syntaxText = new TextElement();
-                syntaxText.text = DocumentBuilderParser.ParseSyntax(data.Syntaxs[i]);
-                syntaxText.style.SetIS_Style(syntaxTextStyle);
+                syntaxText.text = DocumentBuilderParser.FunctionParser(data.Syntaxs[i]);
                 syntaxText.style.ClearMarginPadding();
                 syntaxText.style.paddingLeft = Length.Percent(tabGap);
                 root.Add(syntaxText);
@@ -207,10 +181,6 @@ namespace NaiveAPI.DocumentBuilder
             public Data()
             {
                 Syntaxs.Add("");
-                ReturnTypes.Add("");
-                Params.Add(new ParamData());
-                ReturnTypesDescription.Add("");
-                ParamsDescription.Add("");
             }
 
             public void SetParamsDescription(List<string> descriptions, int start, int end)
@@ -237,6 +207,12 @@ namespace NaiveAPI.DocumentBuilder
                 ParamsDescription.Add("");
             }
 
+            public void AddNewParams(ParamData paramData)
+            {
+                Params.Add(paramData);
+                ParamsDescription.Add("");
+            }
+
             public void RemoveLastParams()
             {
                 Params.RemoveAt(Params.Count - 1);
@@ -252,6 +228,12 @@ namespace NaiveAPI.DocumentBuilder
             public void AddNewReturnType()
             {
                 ReturnTypes.Add("");
+                ReturnTypesDescription.Add("");
+            }
+
+            public void AddNewReturnType(string returnType)
+            {
+                ReturnTypes.Add(returnType);
                 ReturnTypesDescription.Add("");
             }
 
@@ -276,6 +258,20 @@ namespace NaiveAPI.DocumentBuilder
         {
             public string ParamName = "";
             public string Type = "";
+
+            public ParamData() { }
+
+            public ParamData(string paramName, string type) 
+            { 
+                this.ParamName = paramName;
+                this.Type = type;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return this.ParamName == ((ParamData)obj).ParamName &&
+                       this.Type == ((ParamData)obj).Type;
+            }
         }
     }
 }
