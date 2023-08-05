@@ -22,6 +22,12 @@ MonoBehaviour:
       The unity may crash, remember to Ctrl^S to save before press "Play".
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - "\u6E2C\u8A66\u5100\u4E0B\u4E2D\u6587"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

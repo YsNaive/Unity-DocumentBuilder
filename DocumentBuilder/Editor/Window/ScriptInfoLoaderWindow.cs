@@ -81,7 +81,6 @@ namespace NaiveAPI.DocumentBuilder
                         if (datas[index].Params.FindIndex(0, m => { return (m.ParamName == param.ParamName && m.Type == param.Type); }) == -1)
                         {
                             datas[index].Params.Add(param);
-                            com.TextData.Add("");
                         }
                     }
                     foreach(var ret in data.ReturnTypes)
@@ -89,23 +88,24 @@ namespace NaiveAPI.DocumentBuilder
                         if (!datas[index].ReturnTypes.Contains(ret))
                         {
                             datas[index].ReturnTypes.Add(ret);
-                            com.TextData.Add("");
                         }
                     }
                 }
                 else
                 {
                     datas.Add(data);
-                    for(int i=0;i<(data.Params.Count+data.ReturnTypes.Count);i++)
-                        com.TextData.Add("");
                 }
             }
-            for (int i = 0; i < 100; i++)
-                com.TextData.Add("");
 
             foreach (var data in datas)
             {
                 com = com.Copy();
+                com.TextData.Clear();
+                com.TextData.Add("");
+                foreach (var param in data.Params)
+                    com.TextData.Add("");
+                foreach (var param in data.ReturnTypes)
+                    com.TextData.Add("");
                 com.JsonData = JsonUtility.ToJson(data);
                 var visual = DocEditor.CreateComponentField(com);
                 var container = DocRuntime.NewEmpty();

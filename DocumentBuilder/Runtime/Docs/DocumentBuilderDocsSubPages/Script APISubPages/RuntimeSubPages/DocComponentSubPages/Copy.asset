@@ -39,9 +39,8 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
-    JsonData: '{"Name":"Copy","Syntaxs":[""],"ReturnTypes":[""],"Params":[{"ParamName":"","Type":""}],"isOn":false}'
+    JsonData: '{"Name":"Copy","Syntaxs":["public DocComponent Copy()"],"ReturnTypes":["DocComponent"],"Params":[],"isOn":false}'
     TextData:
-    - 
     - 
     - 
     ObjsData: []

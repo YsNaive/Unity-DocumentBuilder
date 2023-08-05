@@ -76,24 +76,29 @@ MonoBehaviour:
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
     JsonData: '{"Name":"Get","Syntaxs":["public static DocCache Get()","public static
-      DocCache Get(string path)"],"ReturnTypes":["DocCache"],"Params":[],"isOn":false}'
+      DocCache Get(string path)"],"ReturnTypes":["DocCache"],"Params":[{"ParamName":"path","Type":"string"}],"isOn":false}'
     TextData:
     - get current data instance
+    - 
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
     JsonData: '{"Name":"Save","Syntaxs":["public static void Save()","public static
-      void Save(string path)"],"ReturnTypes":[],"Params":[],"isOn":false}'
+      void Save(string path)"],"ReturnTypes":["void"],"Params":[{"ParamName":"path","Type":"string"}],"isOn":false}'
     TextData:
     - save current data to temp folder
+    - 
+    - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
     JsonData: '{"Name":"Load","Syntaxs":["public static void Load()","public static
-      void Load(string path)"],"ReturnTypes":[],"Params":[],"isOn":false}'
+      void Load(string path)"],"ReturnTypes":["void"],"Params":[{"ParamName":"path","Type":"string"}],"isOn":false}'
     TextData:
     - load json data in temp folder
+    - 
+    - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
