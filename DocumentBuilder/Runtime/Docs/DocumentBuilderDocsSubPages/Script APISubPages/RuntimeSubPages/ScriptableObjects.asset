@@ -16,7 +16,42 @@ MonoBehaviour:
   SubPages:
   - {fileID: 11400000, guid: 035e8cb4d2fa0e545b268d02aa387935, type: 2}
   - {fileID: 11400000, guid: e9fd5df5d4f29c441aca714861b0b014, type: 2}
-  Components: []
+  - {fileID: 11400000, guid: 1dfa570151d9f1e40abc4b32012c08a7, type: 2}
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - SODocComponents
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - to save multi DocComponent data, for example DocTemplate
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Fields
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 3
+    JsonData: '{"row":2,"col":3,"anchors":[3,3,3],"mode":1}'
+    TextData:
+    - Type
+    - Name
+    - Usage
+    - List<DocComponent>
+    - Components
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

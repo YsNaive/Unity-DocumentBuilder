@@ -22,7 +22,7 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
-    JsonData: '{"Name":"RepaintUnselect","Syntaxs":["public Void RepaintUnselect()"],"ReturnTypes":[],"Params":[],"isOn":false}'
+    JsonData: '{"Name":"RepaintUnselect","Syntaxs":["public void RepaintUnselect()"],"ReturnTypes":["void"],"Params":[],"isOn":false}'
     TextData:
     - 
     - 

@@ -50,8 +50,8 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
-    JsonData: '{"Name":"SetTarget","Syntaxs":["public Void SetTarget(DocComponent
-      target)"],"ReturnTypes":[],"Params":[{"ParamName":"target","Type":"DocComponent"}],"isOn":false}'
+    JsonData: '{"Name":"SetTarget","Syntaxs":["public void SetTarget(DocComponent
+      target)"],"ReturnTypes":["void"],"Params":[{"ParamName":"target","Type":"DocComponent"}],"isOn":false}'
     TextData:
     - 
     - 

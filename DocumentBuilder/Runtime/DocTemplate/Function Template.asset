@@ -37,10 +37,8 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
-    JsonData: '{"Name":"Foo","Syntaxs":[""],"ReturnTypes":[""],"Params":[{"ParamName":"","Type":""}],"isOn":false}'
+    JsonData: '{"Name":"","Syntaxs":[""],"ReturnTypes":[],"Params":[],"isOn":false}'
     TextData:
-    - 
-    - 
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
