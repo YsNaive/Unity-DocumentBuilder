@@ -3,6 +3,7 @@ using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -31,6 +32,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.Add(numField);
             itemsVisual = generateItemsVisual(data);
             this.Add(itemsVisual);
+        }
+
+        public override string ToMarkdown(string dstPath)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (string str in Target.TextData)
+                stringBuilder.Append("- " + str);
+            return stringBuilder.ToString();
         }
 
         private DocItems.Data setData(string jsonData, List<string> texts)

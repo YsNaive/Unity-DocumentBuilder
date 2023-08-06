@@ -3,6 +3,7 @@ using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -20,6 +21,26 @@ namespace NaiveAPI_Editor.DocumentBuilder
             DocSeeAlso.Data data = setData(Target.JsonData, Target.TextData);
             this.Add(generateTextVisual(data));
             this.Add(generateHeightModeVisual(data));
+        }
+
+        public override string ToMarkdown(string dstPath)
+        {
+            DocSeeAlso.Data data = JsonUtility.FromJson<DocSeeAlso.Data>(Target.JsonData);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(Target.TextData[0]);
+            stringBuilder.Append("\t");
+            switch (data.mode)
+            {
+                case DocSeeAlso.Mode.OpenPage:
+                    string strLink = $"[{Target.ObjsData[0].name}]({data.url})";
+                    stringBuilder.AppendLine(strLink);
+                    break;
+                case DocSeeAlso.Mode.OpenUrl:
+                    stringBuilder.AppendLine(Target.TextData[1]);
+                    break;
+            }
+
+            return stringBuilder.ToString();
         }
 
         private DocSeeAlso.Data setData(string jsonData, List<string> texts)

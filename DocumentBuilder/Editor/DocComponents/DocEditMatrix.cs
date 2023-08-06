@@ -4,6 +4,7 @@ using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -30,6 +31,43 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.Add(anchorVisual);
             matrixVisual = generateEditMatrixVisual(data, -1);
             this.Add(matrixVisual);
+        }
+
+        public override string ToMarkdown(string dstPath)
+        {
+            DocMatrix.Data data = JsonUtility.FromJson<DocMatrix.Data>(Target.JsonData);
+            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder align = new StringBuilder();
+            align.Append("|");
+            for (int i = 0;i < data.col; i++)
+            { 
+                if (data.anchors[i] == TextAnchor.UpperLeft ||
+                    data.anchors[i] == TextAnchor.MiddleLeft ||
+                    data.anchors[i] == TextAnchor.LowerLeft)
+                    align.Append(":-");
+                else if (data.anchors[i] == TextAnchor.UpperCenter ||
+                    data.anchors[i] == TextAnchor.MiddleCenter ||
+                    data.anchors[i] == TextAnchor.LowerCenter)
+                    align.Append(":-:");
+                else
+                    align.Append("-:");
+                align.Append("|");
+            }
+            align.Append("\n");
+            for (int i = 0;i < data.row; i++)
+            {
+                if (i == 1)
+                    stringBuilder.Append(align.ToString());
+                stringBuilder.Append("|");
+                for (int j = 0;j < data.col; j++)
+                {
+                    int index = i * data.col + j;
+                    stringBuilder.Append(Target.TextData[index]);
+                    stringBuilder.Append('|');
+                }
+                stringBuilder.Append("\n");
+            }
+            return base.ToMarkdown(dstPath);
         }
 
         private DocMatrix.Data setData(string jsonData, List<string> texts)

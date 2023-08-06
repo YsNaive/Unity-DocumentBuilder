@@ -225,7 +225,6 @@ public static class DocumentBuilderParser
             addTable(table, match, 1, SODocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
             addTable(table, match, 2, SODocStyle.Current.TypeColor, ParseType.Capture, "Type");
             addTable(table, match, 3, SODocStyle.Current.ArgsColor, ParseType.Single, "Args");
-            Debug.Log(match.Value);
             args.Append(match.Groups[3].Value);
             args.Append("|");
         }

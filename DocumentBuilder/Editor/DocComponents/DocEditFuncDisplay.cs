@@ -63,6 +63,38 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.Add(returnTypeContainer);
         }
 
+        public override string ToMarkdown(string dstPath)
+        {
+            DocFuncDisplay.Data data = JsonUtility.FromJson<DocFuncDisplay.Data>(Target.JsonData);
+            StringBuilder stringBuilder = new StringBuilder();
+            string strName = $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.FuncColor)}>{data.Name}</font>";
+            stringBuilder.AppendLine(strName);
+            stringBuilder.AppendLine(Target.TextData[0]);
+            stringBuilder.AppendLine("Syntaxs");
+            foreach (string str in data.Syntaxs)
+                stringBuilder.AppendLine(str);
+            if (data.Params.Count > 0)
+                stringBuilder.AppendLine("Parameters");
+            for (int i = 0;i < data.Params.Count; i++)
+            {
+                string strParam = $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>{data.Params[i].Type + " "}</font>" + 
+                    data.Params[i].ParamName;
+                stringBuilder.AppendLine(strParam);
+                stringBuilder.AppendLine(Target.TextData[1 + i]);
+            }
+            if (data.ReturnTypes.Count > 0)
+                stringBuilder.AppendLine("Return Values");
+            for (int i = 0; i < data.ReturnTypes.Count; i++)
+            {
+                string strReturnType = $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>{data.ReturnTypes[i]}</font>";
+                stringBuilder.Append("Type : ");
+                stringBuilder.AppendLine(strReturnType);
+                stringBuilder.AppendLine(Target.TextData[1 + data.Params.Count + i]);
+            }
+
+            return stringBuilder.ToString();
+        }
+
         public static DocComponent LoadMethod(MethodInfo methodInfo)
         {
             DocComponent doc = new DocComponent();

@@ -3,6 +3,7 @@ using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -52,6 +53,22 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.Add(enumField);
             this.Add(root);
             urlObjDisplay(data.mode);
+        }
+
+        public override string ToMarkdown(string dstPath)
+        {
+            DocImage.Data data = JsonUtility.FromJson<DocImage.Data>(Target.JsonData);
+            StringBuilder stringBuilder = new StringBuilder();
+            switch (data.mode)
+            {
+                case DocImage.Mode.Url:
+                    string strLink = $"![]({data.url})";
+                    stringBuilder.AppendLine(strLink);
+                    break;
+                case DocImage.Mode.Object:
+                    break;
+            }
+            return base.ToMarkdown(dstPath);
         }
 
         private void urlObjDisplay(DocImage.Mode mode)

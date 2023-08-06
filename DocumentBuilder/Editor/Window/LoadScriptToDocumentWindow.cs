@@ -1,4 +1,4 @@
-using NaiveAPI;
+﻿using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System;
@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UIElements;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
@@ -28,30 +29,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         public void CreateGUI()
         {
-            /*
-            DocComponent doc;
-            Type type = typeof(DocEditFuncDisplay);
-            MethodInfo info = type.GetMethod("LoadMethod", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-            doc = DocEditFuncDisplay.LoadMethod(info);
-            rootVisualElement.Add(DocRuntime.CreateVisual(doc));*/
-            Type baseType = typeof(DocVisual);
-            //rootVisualElement.Add(DocEditor.NewObjectField<MonoScript>("", null));
-            /*
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var assembly in assemblies)
-            {
-                scripts.Add(assembly.FullName);
-                /*
-                Type[] types = assembly.GetTypes();
-                foreach (var type in types)
-                {
-                    scripts.Add(type.Name);
-                }*//*
-            }
-            Debug.Log(scripts.Count);
-            SearchDropdown searchDropdown = new SearchDropdown("", scripts);
-            rootVisualElement.Add(searchDropdown);*/
-            
             string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/RunTime/Scripts/DocComponents/DocMatrix.cs");
             //string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/Editor/ScriptableObject/SODocPageEditor.cs");
             //string data = File.ReadAllText($"{Application.dataPath}/DocumentBuilder/Test/test.cs");
