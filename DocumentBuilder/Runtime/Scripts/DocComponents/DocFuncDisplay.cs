@@ -6,7 +6,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static NaiveAPI.DocumentBuilder.SODocStyle;
-using static UnityEngine.GraphicsBuffer;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -67,6 +66,7 @@ namespace NaiveAPI.DocumentBuilder
                 syntaxText.text = DocumentBuilderParser.FunctionParser(data.Syntaxs[i]);
                 syntaxText.style.ClearMarginPadding();
                 syntaxText.style.paddingLeft = Length.Percent(tabGap);
+                syntaxText.style.SetIS_Style(SODocStyle.Current.MainText);
                 root.Add(syntaxText);
             }
 
@@ -154,7 +154,6 @@ namespace NaiveAPI.DocumentBuilder
             returnText.style.ClearMarginPadding();
             returnText.style.marginTop = Current.MainTextSize / 2f;
             root.Add(returnText);
-
             for (int i = 0; i < data.ReturnTypes.Count; i++)
             {
                 root.Add(generateReturnTypeVisual(data.ReturnTypes[i], Target.TextData[1 + data.Params.Count + i]));
@@ -268,6 +267,16 @@ namespace NaiveAPI.DocumentBuilder
             {
                 return this.ParamName == ((ParamData)obj).ParamName &&
                        this.Type == ((ParamData)obj).Type;
+            }
+
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
+
+            public override string ToString()
+            {
+                return base.ToString();
             }
         }
     }

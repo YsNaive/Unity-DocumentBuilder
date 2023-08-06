@@ -5,8 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Unity.Plastic.Newtonsoft.Json.Linq;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -74,10 +72,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             data.Name = methodInfo.Name;
             texts.Add("");
             data.Syntaxs[0] = GetSignature(methodInfo);
-            string typeName = DocumentBuilderParser.GetTypeName(methodInfo.ReturnType.Name);
+            string typeName = DocumentBuilderParser.CalGenericTypeName(methodInfo.ReturnType);
             if (typeName != "void")
             {
-                data.ReturnTypes.Add(DocumentBuilderParser.GetTypeName(methodInfo.ReturnType.Name));
+                data.ReturnTypes.Add(DocumentBuilderParser.CalGenericTypeName(methodInfo.ReturnType));
                 texts.Add("");
             }
             else
@@ -91,7 +89,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 DocFuncDisplay.ParamData param = new DocFuncDisplay.ParamData();
                 param.ParamName = parameters[i].Name;
-                param.Type = DocumentBuilderParser.GetTypeName(parameters[i].ParameterType.Name);
+                param.Type = DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType);
                 data.Params.Add(param);
                 texts.Add("");
             }
@@ -222,7 +220,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
             for (int i = 0; i < funcDatas.Count; i++)
             {
-                if (funcDatas[i].ReturnType == "" || data.ReturnTypes.Contains(funcDatas[i].ReturnType))
+                if (funcDatas[i].ReturnType == "" || funcDatas[i].ReturnType == "void" || 
+                    data.ReturnTypes.Contains(funcDatas[i].ReturnType))
                     continue;
                 if (returnNames.Contains(funcDatas[i].ReturnType))
                 {
