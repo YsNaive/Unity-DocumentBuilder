@@ -32,11 +32,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
             switch (data.mode)
             {
                 case DocSeeAlso.Mode.OpenPage:
-                    string strLink = $"[{Target.ObjsData[0].name}]({data.url})";
-                    stringBuilder.AppendLine(strLink);
+                    stringBuilder.Append("See Also : ");
+                    stringBuilder.Append(Target.ObjsData[0].name);
                     break;
                 case DocSeeAlso.Mode.OpenUrl:
-                    stringBuilder.AppendLine(Target.TextData[1]);
+                    string strLink = $"[{Target.TextData[1]}]({data.url})";
+                    stringBuilder.Append(strLink);
                     break;
             }
 

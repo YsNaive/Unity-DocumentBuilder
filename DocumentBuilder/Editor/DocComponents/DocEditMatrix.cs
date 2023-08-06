@@ -65,7 +65,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     stringBuilder.Append(Target.TextData[index]);
                     stringBuilder.Append('|');
                 }
-                stringBuilder.Append("\n");
+                if (i == data.row - 1)
+                    stringBuilder.Append("\n");
             }
             return base.ToMarkdown(dstPath);
         }

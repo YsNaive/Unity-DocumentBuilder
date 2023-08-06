@@ -63,7 +63,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 case DocImage.Mode.Url:
                     string strLink = $"![]({data.url})";
-                    stringBuilder.AppendLine(strLink);
+                    stringBuilder.Append(strLink);
                     break;
                 case DocImage.Mode.Object:
                     break;

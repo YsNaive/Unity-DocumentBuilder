@@ -89,7 +89,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 string strReturnType = $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>{data.ReturnTypes[i]}</font>";
                 stringBuilder.Append("Type : ");
                 stringBuilder.AppendLine(strReturnType);
-                stringBuilder.AppendLine(Target.TextData[1 + data.Params.Count + i]);
+                if (i == data.ReturnTypes.Count - 1)
+                    stringBuilder.Append(Target.TextData[1 + data.Params.Count + i]);
             }
 
             return stringBuilder.ToString();

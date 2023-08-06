@@ -38,7 +38,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             StringBuilder stringBuilder = new StringBuilder();
             foreach (string str in Target.TextData)
-                stringBuilder.Append("- " + str);
+            {
+                if (str == Target.TextData[^1])
+                    stringBuilder.Append("- " + str);
+                else
+                    stringBuilder.AppendLine("- " + str);
+            }
             return stringBuilder.ToString();
         }
 
