@@ -131,6 +131,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public DropdownField SelectVisualType;
         public VisualElement ToolBar;
         public VisualElement EditView;
+        public DocEditVisual DocEditVisual;
         public int Index
         {
             get
@@ -194,9 +195,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Type docType = null;
             if (DocEditor.ID2Type.TryGetValue(Target.VisualID, out docType))
             {
-                DocEditVisual doc = (DocEditVisual)Activator.CreateInstance(docType);
-                doc.SetTarget(Target);
-                EditView.Add(doc);
+                DocEditVisual = (DocEditVisual)Activator.CreateInstance(docType);
+                DocEditVisual.SetTarget(Target);
+                EditView.Add(DocEditVisual);
             }
             else
             {
@@ -481,6 +482,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         void closeOther()
         {
+            if (parent == null) return;
             foreach (var ve in parent.Children())
             {
                 if(ve is DocComponentField)
@@ -489,7 +491,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 }
                     
             }
-                
         }
 
         void whileDraging(PointerMoveEvent e)

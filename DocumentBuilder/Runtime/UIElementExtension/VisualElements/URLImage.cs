@@ -13,6 +13,12 @@ namespace NaiveAPI.DocumentBuilder
 {
     public class URLImage : TextElement
     {
+        static URLImage()
+        {
+            string path = Application.temporaryCachePath + "/imgCache";
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+        }
         public Texture2D LoadedTexture;
         public string URL;
         private UnityWebRequest request;
@@ -28,8 +34,6 @@ namespace NaiveAPI.DocumentBuilder
             style.backgroundColor = SODocStyle.Current.BackgroundColor;
             style.unityTextAlign = TextAnchor.MiddleCenter;
             string path = Application.temporaryCachePath + "/imgCache";
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
             cachePath =url;
             foreach (char c in Path.GetInvalidPathChars())
                 cachePath = cachePath.Replace(c, '_');
@@ -41,6 +45,7 @@ namespace NaiveAPI.DocumentBuilder
                 IsLoadFromCache = true;
                 url = cachePath;
             }
+
             URL = url;
             this.onTextureLoaded = onTextureLoaded; 
             ramCache.TryGetValue(cachePath, out LoadedTexture);
@@ -53,6 +58,7 @@ namespace NaiveAPI.DocumentBuilder
             {
                 request = UnityWebRequestTexture.GetTexture(url);
                 asyncOperation = request.SendWebRequest();
+                text = "Loading Img...";
                 loadTexture();
             }
         }
@@ -71,6 +77,7 @@ namespace NaiveAPI.DocumentBuilder
                     text = "Image Not Found";
                 else
                 {
+                    text = "";
                     style.backgroundImage = LoadedTexture;
                     onTextureLoaded?.Invoke(LoadedTexture);
                     if (!IsLoadFromCache)

@@ -24,33 +24,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - utils used in runtime
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 0
-    JsonData: 
-    TextData: []
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 1
-    JsonData: 
-    TextData:
-    - Static Fields
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 3
-    JsonData: '{"row":2,"col":5,"anchors":[3,3,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],"mode":1}'
-    TextData:
-    - Type
-    - Name
-    - Get
-    - Set
-    - Usage
-    - Dictionary<string, Type>
-    - VisualID_Dict
-    - "\u25A0"
-    - "\u25A0"
-    - id 2 type
+    - utils in Runtime
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -64,125 +38,26 @@ MonoBehaviour:
     - Static Methods
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"Reload","Syntaxs":["public static void Reload()"],"ReturnTypes":[],"Params":[],"isOn":false}'
+  - VisualID: 8
+    JsonData: '{"num":14}'
     TextData:
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"CreateVisual","Syntaxs":["public static DocVisual CreateVisual(DocComponent
-      docComponent)"],"ReturnTypes":["DocVisual"],"Params":[{"ParamName":"docComponent","Type":"DocComponent"}],"isOn":false}'
-    TextData:
-    - Create a DocVisual from a DocComponent
-    - source DocComponent
-    - created visual
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"ApplyMargin","Syntaxs":["public static void ApplyMargin(VisualElement
-      ve)"],"ReturnTypes":[],"Params":[{"ParamName":"ve","Type":"VisualElement"}],"isOn":false}'
-    TextData:
-    - apply current DocStyle on a visual element
-    - target element
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"ApplyStyle","Syntaxs":["public static void ApplyStyle(ScrollView
-      scrollView)","public static void ApplyStyle(Button button, Color color)"],"ReturnTypes":[],"Params":[],"isOn":false}'
-    TextData:
-    - Apply current DocStyle on visual element.
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"NewEmpty","Syntaxs":["public static VisualElement NewEmpty()"],"ReturnTypes":["VisualElement"],"Params":[],"isOn":false}'
-    TextData:
-    - return a empty VisualElement
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"NewEmptyHorizontal","Syntaxs":["public static VisualElement
-      NewEmptyHorizontal()"],"ReturnTypes":["VisualElement"],"Params":[],"isOn":false}'
-    TextData:
-    - return a empty Flex row VisualElement
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"NewHorizontalBar","Syntaxs":["public static VisualElement
-      NewHorizontalBar(params VisualElement  elements)"],"ReturnTypes":["VisualElement"],"Params":[{"ParamName":"elements","Type":"VisualElement[]"}],"isOn":false}'
-    TextData:
-    - return a Flex row VisualElement with input
-    - 'your can use null to change layout percent
-
-      for example:
-
-      NewHorizontalBar(
-      A, null, null, B, null)
-
-      return you A with 60%, B with 40%'
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"NewButton","Syntaxs":["public static Button NewButton(string
-      text, Color color, Action onClick)","public static Button NewButton(Color color,
-      Action onClick)","public static Button NewButton(string text, Action onClick)","public
-      static Button NewButton(Action onClick)"],"ReturnTypes":["Button"],"Params":[{"ParamName":"text","Type":"string"},{"ParamName":"color","Type":"Color"},{"ParamName":"onClick","Type":"Action"}],"isOn":false}'
-    TextData:
-    - 
-    - text on the button
-    - button color
-    - this will add to onclicked
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"NewLabel","Syntaxs":["public static Label NewLabel(string
-      text)"],"ReturnTypes":["Label"],"Params":[{"ParamName":"text","Type":"string"}],"isOn":false}'
-    TextData:
-    - 
-    - 
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"NewTextField","Syntaxs":["public static TextField NewTextField(string
-      label, EventCallback`1 eventCallback)"],"ReturnTypes":["TextField"],"Params":[{"ParamName":"label","Type":"string"},{"ParamName":"eventCallback","Type":"EventCallback`1"}],"isOn":false}'
-    TextData:
-    - 
-    - 
-    - 
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"NewTextElement","Syntaxs":["public static TextElement NewTextElement(string
-      text)"],"ReturnTypes":["TextElement"],"Params":[{"ParamName":"text","Type":"string"}],"isOn":false}'
-    TextData:
-    - 
-    - 
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"NewDropdownField","Syntaxs":["public static DropdownField
-      NewDropdownField(string text, List`1 choice, EventCallback`1 eventCallback)"],"ReturnTypes":["DropdownField"],"Params":[{"ParamName":"text","Type":"string"},{"ParamName":"choice","Type":"List`1"},{"ParamName":"eventCallback","Type":"EventCallback`1"}],"isOn":false}'
-    TextData:
-    - 
-    - 
-    - 
-    - 
-    - 
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 4
-    JsonData: '{"Name":"NewScrollView","Syntaxs":["public static ScrollView NewScrollView()"],"ReturnTypes":["ScrollView"],"Params":[],"isOn":false}'
-    TextData:
-    - 
-    - 
-    ObjsData: []
+    - Reload
+    - ApplyMargin
+    - CreateVisual
+    - NewEmpty
+    - NewEmptyHorizontal
+    - NewHorizontalBar
+    - NewButton
+    - NewCheckButton
+    - NewTextField
+    - NewDropdownField
+    - NewTextElement
+    - NewLabel
+    - NewScrollView
+    - ApplyStyle
+    ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1

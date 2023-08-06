@@ -45,5 +45,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             Target.JsonData = JsonUtility.ToJson(data);
         }
+
+        public override string ToMarkdown(string dstPath)
+        {
+            return Target.TextData[0];
+        }
     }
 }

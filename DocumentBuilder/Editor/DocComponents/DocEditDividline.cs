@@ -12,5 +12,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         protected override void OnCreateGUI()
         {}
+
+        public override string ToMarkdown(string dstPath)
+        {
+            return "\n---";
+        }
     }
 }
