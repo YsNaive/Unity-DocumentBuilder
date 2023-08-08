@@ -29,7 +29,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - If the build-in typies is not fit your needed, you can add components yourself,
+    - If the build-in typs is not fit your needed, you can add components yourself,
       it can be automatically merge into the system.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
@@ -71,7 +71,7 @@ MonoBehaviour:
     JsonData: 
     TextData:
     - When the program start, there are two script might init the value (depends
-      on weather your are in the editor). DocEditor and DocRuntime, the will search
+      on whether your are in the editor). DocEditor and DocRuntime, the will search
       all DocType and its ID to build up dictionary for ID and Type.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000

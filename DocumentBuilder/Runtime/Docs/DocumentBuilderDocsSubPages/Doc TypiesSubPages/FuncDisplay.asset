@@ -58,9 +58,9 @@ MonoBehaviour:
     JsonData: '{"Name":"Foo","Syntaxs":["public bool Foo()","public bool Foo(int
       index)","public bool Foo(int index, string token)"],"ReturnTypes":["bool"],"Params":[{"ParamName":"index","Type":"int"},{"ParamName":"token","Type":"string"}],"isOn":true}'
     TextData:
-    - this is a Functionn sample
+    - this is a Function sample
     - to tell function where the obj is...
-    - the matck token to target...
+    - the match token to target...
     - is Function success
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000

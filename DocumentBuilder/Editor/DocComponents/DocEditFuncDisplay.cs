@@ -68,29 +68,30 @@ namespace NaiveAPI_Editor.DocumentBuilder
             DocFuncDisplay.Data data = JsonUtility.FromJson<DocFuncDisplay.Data>(Target.JsonData);
             StringBuilder stringBuilder = new StringBuilder();
             string strName = $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.FuncColor)}>{data.Name}</font>";
-            stringBuilder.AppendLine(strName);
-            stringBuilder.AppendLine(Target.TextData[0]);
-            stringBuilder.AppendLine("Syntaxs");
+            stringBuilder.Append(strName).AppendLine("<br>");
+            stringBuilder.Append(Target.TextData[0]).AppendLine("<br>");
+            stringBuilder.Append("Syntaxs").AppendLine("<br>");
             foreach (string str in data.Syntaxs)
-                stringBuilder.AppendLine(str);
+                stringBuilder.Append("&emsp;").Append(str).AppendLine("<br>");
             if (data.Params.Count > 0)
-                stringBuilder.AppendLine("Parameters");
+                stringBuilder.AppendLine("Parameters<br>");
             for (int i = 0;i < data.Params.Count; i++)
             {
-                string strParam = $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>{data.Params[i].Type + " "}</font>" + 
-                    data.Params[i].ParamName;
-                stringBuilder.AppendLine(strParam);
-                stringBuilder.AppendLine(Target.TextData[1 + i]);
+                string strParam = 
+                    $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>{data.Params[i].Type}</font>&emsp;{data.Params[i].ParamName}";
+                stringBuilder.Append("&emsp;").Append(strParam).AppendLine("<br>");
+                stringBuilder.Append("&emsp;&emsp;").Append(Target.TextData[1 + i]).AppendLine("<br>");
             }
             if (data.ReturnTypes.Count > 0)
-                stringBuilder.AppendLine("Return Values");
+                stringBuilder.Append("Return Values").AppendLine("<br>");
             for (int i = 0; i < data.ReturnTypes.Count; i++)
             {
                 string strReturnType = $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>{data.ReturnTypes[i]}</font>";
-                stringBuilder.Append("Type : ");
-                stringBuilder.AppendLine(strReturnType);
+                stringBuilder.Append("&emsp;Type : ").Append(strReturnType).AppendLine("<br>");
                 if (i == data.ReturnTypes.Count - 1)
-                    stringBuilder.Append(Target.TextData[1 + data.Params.Count + i]);
+                    stringBuilder.Append("&emsp;&emsp;").Append(Target.TextData[1 + data.Params.Count + i]);
+                else
+                    stringBuilder.Append("&emsp;&emsp;").Append(Target.TextData[1 + data.Params.Count + i]).AppendLine("<br>");
             }
 
             return stringBuilder.ToString();

@@ -84,7 +84,7 @@ MonoBehaviour:
     - 'The origin DocComponent data save from EditMode.
 
       If you are not sure
-      wheather the data is saved, check here.'
+      whether the data is saved, check here.'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0

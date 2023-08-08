@@ -24,7 +24,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - "Main visual to desplay contents, it has 5 typies : \nNone, Sucess, Warning,
+    - "Main visual to display contents, it has 5 types : \nNone, Sucess, Warning,
       Danger, Hint."
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
@@ -47,7 +47,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - while editting, what is the value means
+    - while editing, what is the value means
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0

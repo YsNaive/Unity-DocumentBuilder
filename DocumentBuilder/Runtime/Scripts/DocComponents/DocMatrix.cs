@@ -13,7 +13,7 @@ namespace NaiveAPI.DocumentBuilder
          * Hello
          * */
         public TextAnchor[,] textAnchors = new TextAnchor[5, 10];
-        public Dictionary<List<string>, DocMatrix> m_;
+        public Dictionary<List<string>, DocMatrix> m_=null, m_2 = null;
         public List<List<List<string>>> temp = new List<List<List<string>>>();
         /// <summary>
         /// Helllo there
@@ -21,7 +21,7 @@ namespace NaiveAPI.DocumentBuilder
         /// <param name="list"></param>
         /// <param name="a"></param>
         /// <returns></returns>
-        public List<List<List<string>>> testing<T>(ref Dictionary<List<string>, DocMatrix> list, int a = 2)
+        public List<List<List<string>>> testing<T>(ref Dictionary<List<string>, DocMatrix> list, int a= 2, float test = 1)
         {
             return null;
         }

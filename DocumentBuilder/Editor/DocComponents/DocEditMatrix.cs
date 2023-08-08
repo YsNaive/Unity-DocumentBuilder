@@ -53,11 +53,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     align.Append("-:");
                 align.Append("|");
             }
-            align.Append("\n");
             for (int i = 0;i < data.row; i++)
             {
                 if (i == 1)
-                    stringBuilder.Append(align.ToString());
+                    stringBuilder.Append(align.ToString()).AppendLine("<br>");
                 stringBuilder.Append("|");
                 for (int j = 0;j < data.col; j++)
                 {
@@ -65,10 +64,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     stringBuilder.Append(Target.TextData[index]);
                     stringBuilder.Append('|');
                 }
-                if (i == data.row - 1)
-                    stringBuilder.Append("\n");
+                if (i != data.row - 1)
+                    stringBuilder.AppendLine("<br>");
             }
-            return base.ToMarkdown(dstPath);
+
+            return stringBuilder.ToString();
         }
 
         private DocMatrix.Data setData(string jsonData, List<string> texts)

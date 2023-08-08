@@ -140,8 +140,8 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - In DocumentBuilder, animation beheavior is save in a Action, below sample code
-      is a MonoBeheavior that pop up a title and close it after 2 sec.
+    - In DocumentBuilder, animation behavior is save in a Action, below sample code
+      is a MonoBehavior that pop up a title and close it after 2 sec.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2

@@ -141,7 +141,7 @@ MonoBehaviour:
     - how long does it takes
     - TextFade
     - Text Fade in / out
-    - 'how long does one char apear
+    - 'how long does one char appear
 
       (total time = content length * num)'
     ObjsData: []

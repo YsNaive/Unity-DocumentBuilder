@@ -24,7 +24,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - Codeblock use a simple pahser we made. Syntax highlight only fit with common
+    - Codeblock use a simple parser we made. Syntax highlight only fit with common
       code, if you have any suguest, please contact us.
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000

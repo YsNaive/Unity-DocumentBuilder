@@ -27,7 +27,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - In DocumentBuilder, data is saved in below typies
+    - In DocumentBuilder, data is saved in below types
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0

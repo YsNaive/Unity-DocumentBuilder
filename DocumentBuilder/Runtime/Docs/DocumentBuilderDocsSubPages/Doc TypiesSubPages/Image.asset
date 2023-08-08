@@ -50,8 +50,8 @@ MonoBehaviour:
       width will be img width * scale.
 
       While using URL mode, system will download
-      the image in project cache folder in releated path "/imgCache" If needed, please
-      delete your self.'
+      the image in project cache folder in related path "/imgCache" If needed, please
+      delete yourself.'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0

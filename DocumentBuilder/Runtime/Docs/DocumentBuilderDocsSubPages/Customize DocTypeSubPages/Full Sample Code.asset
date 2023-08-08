@@ -31,7 +31,7 @@ MonoBehaviour:
       override void OnCreateGUI()\r\n    {\r\n        // Add some visual you want\r\n   
       }\r\n    protected override void OnSelectIntroAni(int type)\r\n    {\r\n       
       // Apply default animation first\r\n        base.OnSelectIntroAni(type);\r\n       
-      \r\n        // If not using defaul, Apply extends\r\n        if (IntroAnimation
+      \r\n        // If not using default, Apply extends\r\n        if (IntroAnimation
       == null)\r\n        {\r\n            if ((MyAniMode)type == MyAniMode.MyAnimation)\r\n           
       {\r\n                IntroAnimation = (callback) =>\r\n                {\r\n                   
       // MyAnimation 1\r\n\r\n                    // Invoke callback when animation

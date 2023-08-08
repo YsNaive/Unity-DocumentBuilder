@@ -62,13 +62,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
             switch (data.mode)
             {
                 case DocImage.Mode.Url:
-                    string strLink = $"![]({data.url})";
-                    stringBuilder.Append(strLink);
+                    string strImage = $"![]({data.url})";
+                    stringBuilder.Append(strImage);
                     break;
                 case DocImage.Mode.Object:
                     break;
             }
-            return base.ToMarkdown(dstPath);
+
+            return stringBuilder.ToString();
         }
 
         private void urlObjDisplay(DocImage.Mode mode)

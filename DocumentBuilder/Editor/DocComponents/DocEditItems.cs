@@ -42,8 +42,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 if (str == Target.TextData[^1])
                     stringBuilder.Append("- " + str);
                 else
-                    stringBuilder.AppendLine("- " + str);
+                    stringBuilder.Append("- " + str).Append("<br>");
             }
+
             return stringBuilder.ToString();
         }
 

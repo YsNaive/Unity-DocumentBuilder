@@ -9,22 +9,25 @@ using UnityEngine;
 
 public static class DocumentBuilderParser
 {
-    public const string type = @"(?:(?:[<,]\s*)?\b(\w+)(?:\[.*?\])?[>]*)+";
-    public const string functype = @"((?:(?:[<,]\s*)?\b(\w+)(?:\[.*?\])?[>]*)+)";
-    public const string prefix = @"(?:(?:(public|private|protected|internal|static|readonly|override)\s*)*\s+)?";
+    public const string variable = @"\b([A-Za-z_]\w*)";
+    public const string type = @"(?:(?:[<,]\s*)?\b" + variable + @"(?:\[.*?\])?[>]*)+";
+    public const string functype = @"((?:(?:[<,]\s*)?\b" + variable + @"(?:\[.*?\])?[>]*)+)";
+    public const string prefix = @"(?:(public|private|protected|internal|static|readonly|override|const)\s*)*";
     public const string test = "class|interface|enum|if|else|switch|case|default|do|while|for|foreach|break|continue|goto|return|using|using static|new";
-    public const string equal = @"";
+    public const string funcEqual = @"(?:\s*=[^\)]*?)?";
+    public const string fieldEqual = @"(?:\s*=[^;{]*?)?";
     public const string classPattern = @"\b" + prefix + @"(class|enum|interface)\s+(?:(?:\s*[:,]\s*)?(\w+))*";
     public const string stringPattern = @"""([^""]*)""";
     public const string controlReservedWordPattern = @"\b(?:if|else|switch|case|do|while|for|foreach|break|continue|goto|return|catch|try)\b";
-    public const string funcPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + functype + @"\s+" + type + @"\s*\((?:,?\s*(params|this|in|out|ref)?\s*(" + type + @")\s+(\w+)(?:\s*=\s*[^\)]*)?)*\)";
-    public const string fieldPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + type + @"\s+(\w+)\s*(?:=.*?)?\s*(?:;|,|{)";
+    public const string funcPattern = @"\b" + prefix + @"(?!\b" + test + @"\b)" + functype + @"\s+" + type + 
+        @"\s*\((?:(?:,\s*)?(params|this|in|out|ref)?\s*" + functype + @"\s+(\w+)" + funcEqual + @")*\)";
+    public const string fieldPattern = @"\b" + prefix + @"(?!\b" + test + @"\b)" + type + @"\s+(?:" + variable + fieldEqual + 
+        @")(?:,\s*" + variable + fieldEqual + ")*(?:;|{)";
     public const string commentPattern = @"//.*[\n]|/\*[\s\S]*?\*/";
     public const string newPattern = @"\bnew\s+" + type + @"(?:;|\()";
     public const string reservedWordPattern = @"\b(?:in|get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
     public const string methodPattern = @"\b" + type + @"\(";
     public const string numberPattern = @"[^""A-Za-z_][+-]?(\d+(?:\.\d+)?[fx]?)";
-    public const string functionPattern = @"\b" + prefix + @"(?!" + test + @"\b)" + functype + @"\s+" + type + @"\s*\((?:,?\s*(params|this|in|out|ref)?\s*(" + type + @")\s+(\w+)(?:\s*\=\s*[^\)]*)?)*\)";
 
     public static string CalGenericTypeName(Type type)
     {
@@ -224,9 +227,15 @@ public static class DocumentBuilderParser
         {
             addTable(table, match, 1, SODocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
             addTable(table, match, 2, SODocStyle.Current.TypeColor, ParseType.Capture, "Type");
-            addTable(table, match, 3, SODocStyle.Current.ArgsColor, ParseType.Single, "Args");
+            addTable(table, match, 3, SODocStyle.Current.ArgsColor, ParseType.Single, "Arg");
+            addTable(table, match, 4, SODocStyle.Current.ArgsColor, ParseType.Capture, "Arg");
             args.Append(match.Groups[3].Value);
             args.Append("|");
+            foreach (Capture capture in match.Groups[4].Captures)
+            {
+                args.Append(capture.Value);
+                args.Append("|");
+            }
         }
         matches = Regex.Matches(stringBuilder.ToString(), reservedWordPattern);
         foreach (Match match in matches)
@@ -286,10 +295,10 @@ public static class DocumentBuilderParser
         {
             addTable(table, match, 1, SODocStyle.Current.TypeColor, ParseType.Func, "Type");
         }
-        matches = Regex.Matches(stringBuilder.ToString(), @"\b(?:" + args.ToString() + @")\b");
+        matches = Regex.Matches(stringBuilder.ToString(), @"[^.]\b(" + args.ToString() + @")\b");
         foreach (Match match in matches)
         {
-            addTable(table, match, 0, SODocStyle.Current.ArgsColor, ParseType.Single, "Arg");
+            addTable(table, match, 1, SODocStyle.Current.ArgsColor, ParseType.Single, "Arg");
         }
         int index = 0, offset = 0;
         foreach (var key in table.Keys)
@@ -355,7 +364,7 @@ public static class DocumentBuilderParser
 
     public enum ParseType
     {
-        Single, Capture, Func 
+        Single, Capture, Func
     }
 
     public class FuncData
@@ -371,7 +380,7 @@ public static class DocumentBuilderParser
             ReturnType = "";
             paramsType.Clear();
             paramsName.Clear();
-            MatchCollection matches = Regex.Matches(syntax, functionPattern);
+            MatchCollection matches = Regex.Matches(syntax, funcPattern);
             foreach (Match match in matches)
             {
                 ReturnType = match.Groups[2].Value;
