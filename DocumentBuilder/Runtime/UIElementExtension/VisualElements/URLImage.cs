@@ -30,8 +30,8 @@ namespace NaiveAPI.DocumentBuilder
         public URLImage(string url, Action<Texture2D> onTextureLoaded)
         {
             if (string.IsNullOrEmpty(url)) return;
-            style.SetIS_Style(SODocStyle.Current.LabelText);
-            style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            style.SetIS_Style(DocStyle.Current.LabelText);
+            style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.unityTextAlign = TextAnchor.MiddleCenter;
             string path = Application.temporaryCachePath + "/imgCache";
             cachePath =url;

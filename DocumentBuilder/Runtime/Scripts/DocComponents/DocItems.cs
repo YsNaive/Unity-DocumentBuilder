@@ -30,10 +30,10 @@ namespace NaiveAPI.DocumentBuilder
             if (Target.ObjsData[0] is Texture2D)
             texture = (Texture2D)Target.ObjsData[0];
             icon.style.backgroundImage = texture;
-            icon.style.unityBackgroundImageTintColor = SODocStyle.Current.SubFrontgroundColor;
+            icon.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontgroundColor;
 
             TextElement descriptionField = DocRuntime.NewTextElement(description);
-            descriptionField.style.paddingLeft = SODocStyle.Current.MainTextSize;
+            descriptionField.style.paddingLeft = DocStyle.Current.MainTextSize;
 
             root.Add(icon);
             root.Add(descriptionField);

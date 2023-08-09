@@ -22,15 +22,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         protected override void OnCreateGUI()
         {
-            this.style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            this.style.backgroundColor = DocStyle.Current.BackgroundColor;
             this.style.width = -1;
             DocFuncDisplay.Data data = setData(Target.JsonData, Target.TextData);
             nameTextField = new TextField();
             nameTextField.label = "Name";
             nameTextField[0].style.minWidth = new Length(20, LengthUnit.Percent);
             nameTextField.value = data.Name + "";
-            nameTextField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
-            nameTextField.style.SetIS_Style(SODocStyle.Current.MainText);
+            nameTextField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            nameTextField.style.SetIS_Style(DocStyle.Current.MainText);
             nameTextField.style.ClearMarginPadding();
             nameTextField.style.paddingLeft = Length.Percent(1);
             nameTextField.style.paddingRight = Length.Percent(1);
@@ -44,8 +44,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             descriptionTextField.multiline = true;
             descriptionTextField[0].style.minWidth = new Length(20, LengthUnit.Percent);
             descriptionTextField.value = Target.TextData[0] + "";
-            descriptionTextField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
-            descriptionTextField.style.SetIS_Style(SODocStyle.Current.MainText);
+            descriptionTextField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            descriptionTextField.style.SetIS_Style(DocStyle.Current.MainText);
             descriptionTextField.style.ClearMarginPadding();
             descriptionTextField.style.paddingLeft = Length.Percent(1);
             descriptionTextField.style.paddingRight = Length.Percent(1);
@@ -67,7 +67,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             DocFuncDisplay.Data data = JsonUtility.FromJson<DocFuncDisplay.Data>(Target.JsonData);
             StringBuilder stringBuilder = new StringBuilder();
-            string strName = $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.FuncColor)}>{data.Name}</font>";
+            string strName = $"<font color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.FuncColor)}>{data.Name}</font>";
             stringBuilder.Append(strName).AppendLine("<br>");
             stringBuilder.Append(Target.TextData[0]).AppendLine("<br>");
             stringBuilder.Append("Syntaxs").AppendLine("<br>");
@@ -78,7 +78,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             for (int i = 0;i < data.Params.Count; i++)
             {
                 string strParam = 
-                    $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>{data.Params[i].Type}</font>&emsp;{data.Params[i].ParamName}";
+                    $"<font color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.TypeColor)}>{data.Params[i].Type}</font>&emsp;{data.Params[i].ParamName}";
                 stringBuilder.Append("&emsp;").Append(strParam).AppendLine("<br>");
                 stringBuilder.Append("&emsp;&emsp;").Append(Target.TextData[1 + i]).AppendLine("<br>");
             }
@@ -86,7 +86,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 stringBuilder.Append("Return Values").AppendLine("<br>");
             for (int i = 0; i < data.ReturnTypes.Count; i++)
             {
-                string strReturnType = $"<font color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>{data.ReturnTypes[i]}</font>";
+                string strReturnType = $"<font color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.TypeColor)}>{data.ReturnTypes[i]}</font>";
                 stringBuilder.Append("&emsp;Type : ").Append(strReturnType).AppendLine("<br>");
                 if (i == data.ReturnTypes.Count - 1)
                     stringBuilder.Append("&emsp;&emsp;").Append(Target.TextData[1 + data.Params.Count + i]);
@@ -287,20 +287,20 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             Button addButton = new Button();
             addButton.text = "+";
-            addButton.style.backgroundColor = SODocStyle.Current.SuccessColor;
+            addButton.style.backgroundColor = DocStyle.Current.SuccessColor;
             addButton.style.width = Length.Percent(10);
             addButton.style.ClearMarginPadding();
             addButton.style.SetIS_Style(new ISMargin(TextAnchor.MiddleRight));
-            addButton.style.SetIS_Style(SODocStyle.Current.MainText);
+            addButton.style.SetIS_Style(DocStyle.Current.MainText);
             addButton.style.unityTextAlign = TextAnchor.MiddleCenter;
 
             Button deleteButton = new Button();
             deleteButton.text = "-";
-            deleteButton.style.backgroundColor = SODocStyle.Current.DangerColor;
+            deleteButton.style.backgroundColor = DocStyle.Current.DangerColor;
             deleteButton.style.width = Length.Percent(10);
             deleteButton.style.ClearMarginPadding();
             deleteButton.style.marginRight = Length.Percent(1);
-            deleteButton.style.SetIS_Style(SODocStyle.Current.MainText);
+            deleteButton.style.SetIS_Style(DocStyle.Current.MainText);
             deleteButton.style.unityTextAlign = TextAnchor.MiddleCenter;
 
             root.Add(addButton);
@@ -312,7 +312,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private VisualElement generateSyntaxVisual(DocFuncDisplay.Data data, int index)
         {
             TextField syntaxField = new TextField();
-            syntaxField[0].style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
+            syntaxField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             syntaxField.RegisterValueChangedCallback(value =>
             {
                 data.Syntaxs[index] = value.newValue;
@@ -332,7 +332,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             syntaxField.value = data.Syntaxs[index];
             DocumentBuilderParser.FuncData funcData = new DocumentBuilderParser.FuncData(data.Syntaxs[index]);
             funcDatas[index] = funcData;
-            syntaxField.style.SetIS_Style(SODocStyle.Current.MainText);
+            syntaxField.style.SetIS_Style(DocStyle.Current.MainText);
             syntaxField.style.ClearMarginPadding();
             syntaxField.style.paddingLeft = Length.Percent(1);
             syntaxField.style.paddingRight = Length.Percent(1);
@@ -362,7 +362,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             Label label = new Label();
             label.text = "Syntaxs";
-            label.style.SetIS_Style(SODocStyle.Current.MainText);
+            label.style.SetIS_Style(DocStyle.Current.MainText);
             label.style.ClearMarginPadding();
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
@@ -406,8 +406,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             typeField[0].style.minWidth = new Length(20, LengthUnit.Percent);
             typeField.style.width = Length.Percent(percent);
             typeField.value = data.Params[index].Type + "";
-            typeField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
-            typeField.style.SetIS_Style(SODocStyle.Current.MainText);
+            typeField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            typeField.style.SetIS_Style(DocStyle.Current.MainText);
             typeField.style.ClearMarginPadding();
             typeField.SetEnabled(false);
             typeField.style.paddingLeft = Length.Percent(1);
@@ -421,8 +421,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             nameField[0].style.minWidth = new Length(20, LengthUnit.Percent);
             nameField.style.width = Length.Percent(percent);
             nameField.value = data.Params[index].ParamName + "";
-            nameField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
-            nameField.style.SetIS_Style(SODocStyle.Current.MainText);
+            nameField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            nameField.style.SetIS_Style(DocStyle.Current.MainText);
             nameField.style.ClearMarginPadding();
             nameField.SetEnabled(false);
             nameField.style.paddingLeft = Length.Percent(1);
@@ -439,8 +439,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             TextField descriptionField = new TextField();
             descriptionField.value = data.ParamsDescription[index] + "";
             descriptionField.multiline = true;
-            descriptionField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
-            descriptionField.style.SetIS_Style(SODocStyle.Current.MainText);
+            descriptionField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            descriptionField.style.SetIS_Style(DocStyle.Current.MainText);
             descriptionField.style.ClearMarginPadding();
             descriptionField.style.paddingLeft = Length.Percent(1);
             descriptionField.style.paddingRight = Length.Percent(1);
@@ -477,7 +477,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             Label label = new Label();
             label.text = "Params";
-            label.style.SetIS_Style(SODocStyle.Current.MainText);
+            label.style.SetIS_Style(DocStyle.Current.MainText);
             label.style.ClearMarginPadding();
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
@@ -517,8 +517,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             typeField[0].style.minWidth = new Length(20, LengthUnit.Percent);
             typeField.style.height = 20;
             typeField.value = data.ReturnTypes[index] + "";
-            typeField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
-            typeField.style.SetIS_Style(SODocStyle.Current.MainText);
+            typeField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            typeField.style.SetIS_Style(DocStyle.Current.MainText);
             typeField.style.ClearMarginPadding();
             typeField.SetEnabled(false);
             typeField.style.paddingLeft = Length.Percent(1);
@@ -531,8 +531,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             TextField descriptionField = new TextField();
             descriptionField.value = data.ReturnTypesDescription[index] + "";
             descriptionField.multiline = true;
-            descriptionField.Q("unity-text-input").style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
-            descriptionField.style.SetIS_Style(SODocStyle.Current.MainText);
+            descriptionField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            descriptionField.style.SetIS_Style(DocStyle.Current.MainText);
             descriptionField.style.ClearMarginPadding();
             descriptionField.style.paddingLeft = Length.Percent(1);
             descriptionField.style.paddingRight = Length.Percent(1);
@@ -569,7 +569,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 return root;
             Label label = new Label();
             label.text = "ReturnTypes";
-            label.style.SetIS_Style(SODocStyle.Current.MainText);
+            label.style.SetIS_Style(DocStyle.Current.MainText);
             label.style.ClearMarginPadding();
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);

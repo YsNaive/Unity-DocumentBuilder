@@ -24,6 +24,12 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
+    - Use to save DocStyle data and solve different scale in Runtime/Editor
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
     - 'to create a new style:
 
       Assets / Create / Naive API / DocumentBuilder
@@ -41,214 +47,38 @@ MonoBehaviour:
     - Members
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 2
-    JsonData: '{"Type":4}'
-    TextData:
-    - Current is to get current using DocStyle
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 3
-    JsonData: '{"row":31,"col":5,"anchors":[3,3,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],"mode":1}'
+    JsonData: '{"row":4,"col":3,"anchors":[3,3,3],"mode":1}'
     TextData:
     - Type
     - Name
-    - Get
-    - Set
     - Usage
-    - Int32
-    - MainTextSize
-    - "\u25A0"
-    - "\u25A0"
+    - DocStyle
+    - DocStyle
+    - this is private
+    - float
+    - RuntimeFontSizeScale
     - 
-    - Int32
-    - LabelTextSize
-    - "\u25A0"
-    - "\u25A0"
+    - float
+    - EditorFontSizeScale
     - 
-    - Int32
-    - ButtonTextSize
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - SODocStyle
-    - Current
-    - "\u25A0"
-    - "\u25A1"
-    - 
-    - Texture2D
-    - WhiteArrow
-    - "\u25A0"
-    - "\u25A1"
-    - 
-    - ISText
-    - MainText
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - ISText
-    - LabelText
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - ISText
-    - ButtonText
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - BackgroundColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - SubBackgroundColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - FrontgroundColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - SubFrontgroundColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - FuncColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - ArgsColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - TypeColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - PrefixColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - StringColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - NumberColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - ControlColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - CommentsColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - CodeBackgroundColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - SuccessColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - WarningColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - DangerColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - HintColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - SuccessTextColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - WarningTextColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - DangerTextColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Color
-    - HintTextColor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Single
-    - MarginVer
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Single
-    - MarginHor
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Single
-    - LineHeight
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Single
-    - ScrollerWidth
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Single
-    - ComponentSpace
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Single
-    - GUIScale
-    - "\u25A0"
-    - "\u25A0"
-    - 
-    - Texture2D
-    - m_whiteArrow
-    - "\u25A1"
-    - "\u25A1"
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Methods
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 4
+    JsonData: '{"Name":"Get","Syntaxs":["public DocStyle Get()"],"ReturnTypes":["DocStyle"],"Params":[],"isOn":false}'
+    TextData:
+    - get style saved in this scriptable object
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000

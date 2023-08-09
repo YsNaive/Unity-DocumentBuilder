@@ -14,7 +14,7 @@ namespace NaiveAPI.DocumentBuilder
         {
             if(Target.TextData.Count == 0)Target.TextData.Add("");
             text = DocRuntime.NewTextElement(Target.TextData[0]);
-            text.style.SetIS_Style(SODocStyle.Current.MainText);
+            text.style.SetIS_Style(DocStyle.Current.MainText);
             Add(text);
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             data ??= new Data();
@@ -78,17 +78,17 @@ namespace NaiveAPI.DocumentBuilder
         }
         Color getTypeColor(Type type)
         {
-            if (type == Type.Hint) return SODocStyle.Current.HintColor;
-            if (type == Type.Success) return SODocStyle.Current.SuccessColor;
-            if (type == Type.Warning) return SODocStyle.Current.WarningColor;
-            return SODocStyle.Current.DangerColor;
+            if (type == Type.Hint) return DocStyle.Current.HintColor;
+            if (type == Type.Success) return DocStyle.Current.SuccessColor;
+            if (type == Type.Warning) return DocStyle.Current.WarningColor;
+            return DocStyle.Current.DangerColor;
         }
         Color getTypeTextColor(Type type)
         {
-            if (type == Type.Hint) return SODocStyle.Current.HintTextColor;
-            if (type == Type.Success) return SODocStyle.Current.SuccessTextColor;
-            if (type == Type.Warning) return SODocStyle.Current.WarningTextColor;
-            return SODocStyle.Current.DangerTextColor;
+            if (type == Type.Hint) return DocStyle.Current.HintTextColor;
+            if (type == Type.Success) return DocStyle.Current.SuccessTextColor;
+            if (type == Type.Warning) return DocStyle.Current.WarningTextColor;
+            return DocStyle.Current.DangerTextColor;
         }
     }
 

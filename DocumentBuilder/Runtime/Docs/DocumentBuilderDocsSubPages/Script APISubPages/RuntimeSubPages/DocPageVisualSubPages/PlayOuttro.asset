@@ -24,7 +24,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - play outtro animaiton
+    - play outtro animation
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -39,10 +39,9 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
-    JsonData: '{"Name":"PlayOuttro","Syntaxs":["public void PlayOuttro(Action callback)"],"ReturnTypes":["void"],"Params":[{"ParamName":"callback","Type":"Action"}],"isOn":false}'
+    JsonData: '{"Name":"PlayOuttro","Syntaxs":["public void PlayOuttro(Action callback)"],"ReturnTypes":[],"Params":[{"ParamName":"callback","Type":"Action"}],"isOn":false}'
     TextData:
     - 
-    - invoke after animation is done
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000

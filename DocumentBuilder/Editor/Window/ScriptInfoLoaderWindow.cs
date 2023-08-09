@@ -27,7 +27,7 @@ namespace NaiveAPI.DocumentBuilder
             show = DocRuntime.NewScrollView();
             show.style.marginTop = 20;
             var root = rootVisualElement;
-            root.style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             root.style.SetIS_Style(ISPadding.Pixel(10));
             selectScript = DocEditor.NewObjectField<MonoScript>("", (e) =>
             {

@@ -45,7 +45,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         public DocComponentsField(List<DocComponent> initComponents)
         {
-            style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.SetIS_Style(ISPadding.Pixel(5));
             ComponentsVisualRoot = DocRuntime.NewEmpty();
             ComponentsVisualRoot.style.marginBottom = 15;
@@ -166,7 +166,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         VisualElement createPreview()
         {
-            style.borderLeftColor = SODocStyle.Current.HintColor;
+            style.borderLeftColor = DocStyle.Current.HintColor;
             RegisterCallback<PointerDownEvent>(enableEditMode);
             VisualElement ve = DocRuntime.CreateVisual(Target);
             foreach (var child in ve.Children())
@@ -175,7 +175,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         VisualElement createEdit()
         {
-            style.borderLeftColor = SODocStyle.Current.SuccessColor;
+            style.borderLeftColor = DocStyle.Current.SuccessColor;
             UnregisterCallback<PointerDownEvent>(enableEditMode);
             EditView = DocRuntime.NewEmpty();
             ToolBar = DocRuntime.NewEmptyHorizontal();
@@ -256,7 +256,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             style.borderLeftWidth = 6;
             style.borderBottomWidth = 6;
             style.paddingLeft = 6;
-            style.borderLeftColor = SODocStyle.Current.HintColor;
+            style.borderLeftColor = DocStyle.Current.HintColor;
             style.marginBottom = 1;
             Target = docComponent;
             RegisterCallback<GeometryChangedEvent>(e =>
@@ -268,7 +268,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 transform.position = toPos;
                 this.GoToPosition(Vector2.zero);
             });
-            Color highlight = SODocStyle.Current.HintColor;
+            Color highlight = DocStyle.Current.HintColor;
             highlight *= 1.3f;
             RegisterCallback<PointerEnterEvent>(e =>
             {
@@ -278,7 +278,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             RegisterCallback<PointerLeaveEvent>(e =>
             {
                 if (IsDraging || IsEditing) return;
-                style.borderLeftColor = SODocStyle.Current.HintColor;
+                style.borderLeftColor = DocStyle.Current.HintColor;
             });
             Repaint();
         }
@@ -383,7 +383,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             button = DocRuntime.NewButton("", () =>
             {
                 copyBuffer = Target.Copy();
-                button.style.unityBackgroundImageTintColor = SODocStyle.Current.SuccessTextColor;
+                button.style.unityBackgroundImageTintColor = DocStyle.Current.SuccessTextColor;
                 button.schedule.Execute(() =>
                 {
                     button.style.unityBackgroundImageTintColor = Color.white;
@@ -402,7 +402,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 if (copyBuffer == null)
                 {
-                    button.style.unityBackgroundImageTintColor = SODocStyle.Current.DangerTextColor;
+                    button.style.unityBackgroundImageTintColor = DocStyle.Current.DangerTextColor;
                     button.schedule.Execute(() =>
                     {
                         button.style.unityBackgroundImageTintColor = Color.white;
@@ -427,7 +427,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 IsDraging = true;
                 SetStatus(false);
-                style.borderLeftColor = SODocStyle.Current.WarningColor;
+                style.borderLeftColor = DocStyle.Current.WarningColor;
                 VisualElement dragMask = DocRuntime.NewEmpty();
                 dragMask.style.width = parent.resolvedStyle.width;
                 dragMask.style.height = parent.resolvedStyle.height;
@@ -436,7 +436,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 dragMask.RegisterCallback<PointerDownEvent>(e =>
                 {
                     parent.Remove(dragMask);
-                    style.borderLeftColor = SODocStyle.Current.HintColor;
+                    style.borderLeftColor = DocStyle.Current.HintColor;
                     IsDraging = false;
                     SetStatus(true);
                     OnModify?.Invoke(this);
@@ -477,7 +477,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             button.style.height = 20;
             button.style.width = 20;
             button.style.marginLeft = 5;
-            button.style.unityBackgroundImageTintColor = SODocStyle.Current.DangerTextColor;
+            button.style.unityBackgroundImageTintColor = DocStyle.Current.DangerTextColor;
             return button;
         }
         void closeOther()

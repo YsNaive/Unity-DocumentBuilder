@@ -13,7 +13,7 @@ public class Sample : MonoBehaviour
 
     // document pre-set in inspector
     [SerializeField] private DocComponent component;
-
+    public SODocPage root;
     void Start()
     {
         var visual = DocRuntime.CreateVisual(component);
@@ -28,5 +28,6 @@ public class Sample : MonoBehaviour
                 });
             }).ExecuteLater(2000); 
         });
+        UIDocument.rootVisualElement.Add(new DocBookVisual(root));
     }
 }

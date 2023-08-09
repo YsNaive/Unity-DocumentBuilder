@@ -24,18 +24,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - 'Set display target to this DocVisual
-
-      after target is set, func below
-      will be invoke.
-
-
-      -> OnCreateGUI
-
-      -> OnSelectIntroAni
-
-      ->
-      OnSelectOuttroAni'
+    - Base class of all DocType view mode
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -51,11 +40,10 @@ MonoBehaviour:
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
     JsonData: '{"Name":"SetTarget","Syntaxs":["public void SetTarget(DocComponent
-      target)"],"ReturnTypes":["void"],"Params":[{"ParamName":"target","Type":"DocComponent"}],"isOn":false}'
+      target)"],"ReturnTypes":[],"Params":[{"ParamName":"target","Type":"DocComponent"}],"isOn":false}'
     TextData:
     - 
-    - 
-    - 
+    - DocComponent to show
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1

@@ -43,8 +43,8 @@ namespace NaiveAPI.DocumentBuilder
             openState = new VisualElement();
             TextElement name = new TextElement();
             name.text = Target.name;
-            name.style.borderBottomColor = SODocStyle.Current.FrontgroundColor;
-            name.style.SetIS_Style(SODocStyle.Current.MainText);
+            name.style.borderBottomColor = DocStyle.Current.FrontgroundColor;
+            name.style.SetIS_Style(DocStyle.Current.MainText);
             name.style.SetIS_Style(ISMargin.None);
             name.style.whiteSpace = WhiteSpace.NoWrap;
             icon.style.ClearMarginPadding();
@@ -69,7 +69,7 @@ namespace NaiveAPI.DocumentBuilder
                         openState.style.height = e.newRect.height;
                         openState.style.width = e.newRect.height;
                         openState.style.position = Position.Absolute;
-                        openState.style.unityBackgroundImageTintColor = SODocStyle.Current.SubFrontgroundColor;
+                        openState.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontgroundColor;
                         openState.RegisterCallback<MouseDownEvent>(e => { 
                             IsOpen = !IsOpen; 
                         });
@@ -111,7 +111,7 @@ namespace NaiveAPI.DocumentBuilder
         public void RepaintSelect()
         {
             var ve = this.Q<TextElement>();
-            Color c = SODocStyle.Current.SuccessColor;
+            Color c = DocStyle.Current.SuccessColor;
             c.a = 0.5f;
             if (ve != null)
                 ve.style.backgroundColor = c;

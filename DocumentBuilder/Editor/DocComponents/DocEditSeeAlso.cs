@@ -76,7 +76,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.TextData[1] = value.newValue;
             });
             buttonTextField.value = Target.TextData[1];
-            buttonTextField.style.paddingLeft = SODocStyle.Current.MainTextSize;
+            buttonTextField.style.paddingLeft = DocStyle.Current.MainTextSize;
             buttonTextField.style.width = Length.Percent(50);
             root.Add(buttonTextField);
 
@@ -111,7 +111,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.ObjsData[0] = value.newValue;
             });
             objectField.style.width = Length.Percent(50);
-            objectField.style.paddingLeft = SODocStyle.Current.MainTextSize;
+            objectField.style.paddingLeft = DocStyle.Current.MainTextSize;
             objectField[0].style.minWidth = Length.Percent(25);
             objectField.value = Target.ObjsData[0];
             TextField urlTextField = DocRuntime.NewTextField("url", (value) =>
@@ -120,7 +120,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.JsonData = JsonUtility.ToJson(data);
             });
             urlTextField.value = data.url;
-            urlTextField.style.paddingLeft = SODocStyle.Current.MainTextSize;
+            urlTextField.style.paddingLeft = DocStyle.Current.MainTextSize;
             urlTextField[0].style.minWidth = Length.Percent(25);
             urlTextField.style.width = Length.Percent(50);
             EnumField enumField = DocEditor.NewEnumField("Mode", data.mode, (value) =>
@@ -138,7 +138,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 }
                 Target.JsonData = JsonUtility.ToJson(data);
             });
-            enumField.style.paddingLeft = SODocStyle.Current.MainTextSize;
+            enumField.style.paddingLeft = DocStyle.Current.MainTextSize;
             root.Add(enumField);
             enumField[0].style.minWidth = Length.Percent(25);
             enumField.style.width = Length.Percent(50);

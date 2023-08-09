@@ -66,7 +66,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root = new IMGUIContainer(OnInspectorGUI);
             #region mod bar
             root.style.SetIS_Style(ISPadding.Pixel(10));
-            root.style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             header = DocRuntime.NewEmpty();
             contents = DocRuntime.NewEmpty();
             clickMask = DocRuntime.NewEmpty();
@@ -91,13 +91,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 contents.Clear();
                 contents.Add(new IMGUIContainer(() => { DrawDefaultInspector(); }));
             });
-            Button saveBtn = DocRuntime.NewButton("Save", SODocStyle.Current.SuccessColor, Save);
+            Button saveBtn = DocRuntime.NewButton("Save", DocStyle.Current.SuccessColor, Save);
             saveBtn.style.SetIS_Style(new ISMargin(TextAnchor.MiddleRight));
             ObjectField curSOStyle = DocEditor.NewObjectField<SODocStyle>("", e =>
             {
                 DocRuntimeData.Instance.CurrentStyle = (SODocStyle)e.newValue;
             });
-            curSOStyle.value = SODocStyle.Current;
+            curSOStyle.value = DocRuntimeData.Instance.CurrentStyle;
             root.Add(DocRuntime.NewHorizontalBar(1f,editMode,viewMode,defuMode,curSOStyle,null,saveBtn));
 
             #endregion
@@ -175,7 +175,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             addPage = DocRuntime.NewButton("Add New Page", newPageBtn);
             addPage.style.width = Length.Percent(75);
             deletePage = DocRuntime.NewCheckButton("Delete Page",
-                SODocStyle.Current.DangerColor, SODocStyle.Current.DangerColor, SODocStyle.Current.SuccessColor, () =>
+                DocStyle.Current.DangerColor, DocStyle.Current.DangerColor, DocStyle.Current.SuccessColor, () =>
                 {
                     AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(Target));
                     AssetDatabase.Refresh();
@@ -203,7 +203,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 var select = DocRuntime.NewDropdownField("Template", findAllTemplateName());
                 select[0].style.minWidth = 94;
                 select.style.width = Length.Percent(70);
-                Button load = DocRuntime.NewButton("Load", SODocStyle.Current.DangerColor, () =>
+                Button load = DocRuntime.NewButton("Load", DocStyle.Current.DangerColor, () =>
                 {
                     if (select.value != null)
                     {
@@ -217,7 +217,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     header.Add(loadAndSave);
                 });
                 load.style.width = Length.Percent(15);
-                Button cancel = DocRuntime.NewButton("Cancel", SODocStyle.Current.SuccessColor, () =>
+                Button cancel = DocRuntime.NewButton("Cancel", DocStyle.Current.SuccessColor, () =>
                 {
                     header.Remove(hor);
                     header.Add(loadAndSave);
@@ -238,7 +238,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 VisualElement hor = DocRuntime.NewEmptyHorizontal();
                 TextField name = DocRuntime.NewTextField("Name");
                 name.style.width = Length.Percent(70);
-                name[1].style.backgroundColor = SODocStyle.Current.DangerColor;
+                name[1].style.backgroundColor = DocStyle.Current.DangerColor;
                 List<string> templates = findAllTemplateName();
                 Button save = DocRuntime.NewButton("Save", () =>
                 {
@@ -259,26 +259,26 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     string path = AssetDatabase.GetAssetPath(DocEditorData.Instance.DocTemplateFolder);
                     if (!AssetDatabase.IsValidFolder(path))
                     {
-                        name[1].style.backgroundColor = SODocStyle.Current.DangerColor;
+                        name[1].style.backgroundColor = DocStyle.Current.DangerColor;
                         save.SetEnabled(false);
                         hint.text = "Target folder not valid.\nPlease check DocumentBuilder setting.";
                         return;
                     }
                     if (string.IsNullOrEmpty(val.newValue.Replace(" ","")))
                     {
-                        name[1].style.backgroundColor = SODocStyle.Current.DangerColor;
+                        name[1].style.backgroundColor = DocStyle.Current.DangerColor;
                         hint.text = "Template name can not be empty.";
                         save.SetEnabled(false);
                         return;
                     }
                     if (templates.Contains(val.newValue))
                     {
-                        name[1].style.backgroundColor = SODocStyle.Current.DangerColor;
+                        name[1].style.backgroundColor = DocStyle.Current.DangerColor;
                         hint.text = "Already exist a template with same name.";
                         save.SetEnabled(false);
                         return;
                     }
-                    name[1].style.backgroundColor = SODocStyle.Current.SuccessColor;
+                    name[1].style.backgroundColor = DocStyle.Current.SuccessColor;
                     hint.text = "";
                     save.SetEnabled(true);
                 });
@@ -365,7 +365,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             int addPageIndex = addPageParent.IndexOf(bar);
             addPageParent.RemoveAt(addPageIndex);
             TextField inputName = DocRuntime.NewTextField("Page Name");
-            Button create = DocRuntime.NewButton("Create", SODocStyle.Current.SuccessColor, () =>
+            Button create = DocRuntime.NewButton("Create", DocStyle.Current.SuccessColor, () =>
             {
                 string path = AssetDatabase.GetAssetPath(Target);
                 path = path.Substring(0, path.LastIndexOf('/'));
@@ -384,7 +384,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 header.Remove(root);
                 addPageParent.Insert(addPageIndex, bar);
             });
-            Button cancel = DocRuntime.NewButton("Cancel", SODocStyle.Current.DangerColor, () =>
+            Button cancel = DocRuntime.NewButton("Cancel", DocStyle.Current.DangerColor, () =>
             {
                 header.Remove(root);
                 addPageParent.Insert(addPageIndex, bar);

@@ -39,10 +39,10 @@ namespace NaiveAPI
         #region VisualElement
         public static void ApplyMargin(VisualElement ve)
         {
-            ve.style.marginTop = SODocStyle.Current.MarginVer;
-            ve.style.marginLeft = SODocStyle.Current.MarginHor;
-            ve.style.marginRight = SODocStyle.Current.MarginHor;
-            ve.style.marginBottom = SODocStyle.Current.MarginVer;
+            ve.style.marginTop = DocStyle.Current.MarginVer;
+            ve.style.marginLeft = DocStyle.Current.MarginHor;
+            ve.style.marginRight = DocStyle.Current.MarginHor;
+            ve.style.marginBottom = DocStyle.Current.MarginVer;
         }
         public static DocVisual CreateVisual(DocComponent docComponent)
         {
@@ -94,27 +94,27 @@ namespace NaiveAPI
             }
             return bar;
         }
-        public static Button NewButton(Action onClick = null) { return NewButton("", SODocStyle.Current.SubBackgroundColor, onClick); }
-        public static Button NewButton(string text, Action onClick = null) { return NewButton(text, SODocStyle.Current.SubBackgroundColor, onClick); }
+        public static Button NewButton(Action onClick = null) { return NewButton("", DocStyle.Current.SubBackgroundColor, onClick); }
+        public static Button NewButton(string text, Action onClick = null) { return NewButton(text, DocStyle.Current.SubBackgroundColor, onClick); }
         public static Button NewButton(Color color, Action onClick = null) { return NewButton("",color, onClick); }
         public static Button NewButton(string text, Color color, Action onClick = null)
         {
             Button button = new Button();
-            button.style.height = SODocStyle.Current.LineHeight;
+            button.style.height = DocStyle.Current.LineHeight;
             ApplyStyle(button, color);
             button.style.paddingLeft = 4;
             button.style.paddingRight = 4;
             button.text = text;
-            button.style.height = SODocStyle.Current.MainTextSize*1.5f;
+            button.style.height = DocStyle.Current.MainTextSize*1.5f;
             if (onClick != null) button.clicked+= onClick;
             return button;
         }
-        public static CheckButton NewCheckButton(string text, Action onClick = null) { return NewCheckButton(text, SODocStyle.Current.SubBackgroundColor, SODocStyle.Current.SuccessColor, SODocStyle.Current.DangerColor, onClick); }
-        public static CheckButton NewCheckButton(string text, Color color, Action onClick = null) { return NewCheckButton(text, color, SODocStyle.Current.SuccessColor, SODocStyle.Current.DangerColor, onClick); }
+        public static CheckButton NewCheckButton(string text, Action onClick = null) { return NewCheckButton(text, DocStyle.Current.SubBackgroundColor, DocStyle.Current.SuccessColor, DocStyle.Current.DangerColor, onClick); }
+        public static CheckButton NewCheckButton(string text, Color color, Action onClick = null) { return NewCheckButton(text, color, DocStyle.Current.SuccessColor, DocStyle.Current.DangerColor, onClick); }
         public static CheckButton NewCheckButton(string text, Color color,Color confirm, Color cancel, Action onClick = null)
         {
             CheckButton button = new CheckButton();
-            button.style.height = SODocStyle.Current.LineHeight;
+            button.style.height = DocStyle.Current.LineHeight;
             ApplyMargin(button);
             ApplyStyle(button.MainBtn, color);
             ApplyStyle(button.ConfirmButton, confirm);
@@ -137,12 +137,12 @@ namespace NaiveAPI
             TextField textField = new TextField();
             textField.style.ClearPadding();
             ApplyMargin(textField);
-            textField[0].style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
-            textField[0].style.SetIS_Style(SODocStyle.Current.MainText);
+            textField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            textField[0].style.SetIS_Style(DocStyle.Current.MainText);
             if (!string.IsNullOrEmpty(label))
             {
                 textField.label = label;
-                textField[0].style.SetIS_Style(SODocStyle.Current.MainText);
+                textField[0].style.SetIS_Style(DocStyle.Current.MainText);
             }
             if(eventCallback != null)
                 textField.RegisterValueChangedCallback(eventCallback);
@@ -154,13 +154,13 @@ namespace NaiveAPI
             dropField.style.ClearPadding();
             dropField.focusable = false;
             ApplyMargin(dropField);
-            dropField.style.height = SODocStyle.Current.LineHeight;
-            dropField[0].style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
-            dropField[0].style.SetIS_Style(SODocStyle.Current.MainText);
+            dropField.style.height = DocStyle.Current.LineHeight;
+            dropField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            dropField[0].style.SetIS_Style(DocStyle.Current.MainText);
             if (!string.IsNullOrEmpty(text))
             {
                 dropField.label = text;
-                dropField[0].style.SetIS_Style(SODocStyle.Current.MainText);
+                dropField[0].style.SetIS_Style(DocStyle.Current.MainText);
             }
             if (eventCallback != null)
                 dropField.RegisterValueChangedCallback(eventCallback);
@@ -174,20 +174,20 @@ namespace NaiveAPI
             textElement.style.ClearPadding();
             ApplyMargin(textElement);
             textElement.style.whiteSpace = WhiteSpace.Normal;
-            textElement.style.SetIS_Style(SODocStyle.Current.MainText);
+            textElement.style.SetIS_Style(DocStyle.Current.MainText);
             return textElement;
         }
         public static Label NewLabel(string text)
         {
             Label label = new Label(text);
             label.style.ClearMarginPadding();
-            label.style.SetIS_Style(SODocStyle.Current.LabelText);
+            label.style.SetIS_Style(DocStyle.Current.LabelText);
             return label;
         }
         private static void applyScrollBarStyle(Scroller bar, bool isHor = false)
         {
             ISBorder border = new ISBorder();
-            float width = SODocStyle.Current.ScrollerWidth;
+            float width = DocStyle.Current.ScrollerWidth;
             bar.slider.style.marginTop = 0;
             bar.slider.style.marginBottom = 0;
             bar.style.ClearMarginPadding();
@@ -199,9 +199,9 @@ namespace NaiveAPI
             foreach (var ve in bar.slider.contentContainer.Children())
             {
                 if (isHor)
-                    ve.style.height = SODocStyle.Current.ScrollerWidth;
+                    ve.style.height = DocStyle.Current.ScrollerWidth;
                 else
-                    ve.style.width = SODocStyle.Current.ScrollerWidth;
+                    ve.style.width = DocStyle.Current.ScrollerWidth;
                 ve.style.backgroundColor = Color.clear;
                 ve.style.ClearMarginPadding();
             }
@@ -209,16 +209,16 @@ namespace NaiveAPI
             dragContainer.style.backgroundColor = new Color(0,0,0,0.1f);
             dragContainer.style.SetIS_Style(border);
             var drag = bar.Q("unity-dragger");
-            drag.style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
+            drag.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             if (isHor)
             {
-                bar.slider.style.height = SODocStyle.Current.ScrollerWidth;
+                bar.slider.style.height = DocStyle.Current.ScrollerWidth;
                 drag.style.height = Length.Percent(80);
                 drag.style.top = Length.Percent(10);
             }
             else
             {
-                bar.slider.style.width = SODocStyle.Current.ScrollerWidth;
+                bar.slider.style.width = DocStyle.Current.ScrollerWidth;
                 drag.style.width = Length.Percent(80);
                 drag.style.left = Length.Percent(10);
             }
@@ -236,7 +236,7 @@ namespace NaiveAPI
             scrollView.style.ClearMarginPadding();
             applyScrollBarStyle(scrollView.verticalScroller);
             applyScrollBarStyle(scrollView.horizontalScroller, true);
-            scrollView.verticalScroller.style.width = SODocStyle.Current.ScrollerWidth;
+            scrollView.verticalScroller.style.width = DocStyle.Current.ScrollerWidth;
         }
         public static void ApplyStyle(Button button, Color color)
         {
@@ -247,9 +247,9 @@ namespace NaiveAPI
             Color height = Color.HSVToRGB(h, s, v);
             button.style.ClearPadding();
             ApplyMargin(button);
-            button.style.height = SODocStyle.Current.LineHeight;
+            button.style.height = DocStyle.Current.LineHeight;
             button.style.backgroundColor = color;
-            button.style.SetIS_Style(SODocStyle.Current.ButtonText);
+            button.style.SetIS_Style(DocStyle.Current.ButtonText);
             button.RegisterCallback<PointerEnterEvent>(e =>
             {
                 button.style.backgroundColor = height;

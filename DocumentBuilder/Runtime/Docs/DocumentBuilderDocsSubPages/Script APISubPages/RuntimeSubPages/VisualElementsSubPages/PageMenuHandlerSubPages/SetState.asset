@@ -24,7 +24,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - set menu hierarchy by input
+    - Set hierarchy by input
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -39,10 +39,9 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 4
-    JsonData: '{"Name":"SetState","Syntaxs":["public void SetState(string state)"],"ReturnTypes":["void"],"Params":[{"ParamName":"state","Type":"string"}],"isOn":false}'
+    JsonData: '{"Name":"SetState","Syntaxs":["public void SetState(string state)"],"ReturnTypes":[],"Params":[{"ParamName":"state","Type":"string"}],"isOn":false}'
     TextData:
     - 
-    - hierarchy
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000

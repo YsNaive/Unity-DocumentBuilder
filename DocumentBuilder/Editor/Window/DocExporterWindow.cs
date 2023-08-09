@@ -37,11 +37,10 @@ public class DocExporterWindow : EditorWindow
             else if (ModeSelect.index == 1)
                 repaintMarkdown();
         }); ModeSelect.index = 0;
-        rootVisualElement.style.backgroundColor = SODocStyle.Current.BackgroundColor;
+        rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
         Layout = DocRuntime.NewEmpty();
         TargetFolder = DocEditor.NewObjectField<DefaultAsset>("Export Folder");
         rootVisualElement.Add(ModeSelect);
-        rootVisualElement.Add(TargetFolder);
         rootVisualElement.Add(Layout);
         repaintCharTable();
         rootVisualElement.style.SetIS_Style(ISPadding.Pixel(10));
@@ -73,6 +72,7 @@ public class DocExporterWindow : EditorWindow
     {
         var container = DocRuntime.NewEmpty();
         container.Add(createSODocPageSelectField());
+        Layout.Add(TargetFolder);
         Layout.Add(container);
         var btn = DocRuntime.NewButton("Export", () =>
         {
@@ -138,56 +138,102 @@ public class DocExporterWindow : EditorWindow
         Toggle includeSubPages = new Toggle();
         includeSubPages.label = "Include SubPages";
         includeSubPages.value = true;
+        DocRuntime.ApplyMargin(includeSubPages);
         Layout.Add(includeSubPages);
         var container = DocRuntime.NewEmpty();
         container.Add(createSODocPageSelectField());
-        Layout.Add(container);
+        VisualElement info = DocRuntime.NewEmpty();
         var btn = DocRuntime.NewButton("Export", () =>
         {
+            EditorUtility.DisplayProgressBar("Document Builder", "Exporting Markdown...", 1);
+            exportFailCount = 0;
             exportCount = 0;
+            failList.Clear();
+            info.Clear();
             foreach (ObjectField obj in container.Children())
             {
                 if (obj.value == null) continue;
                 exportMarkdown((SODocPage)obj.value, exportPath, includeSubPages.value);
             }
             AssetDatabase.Refresh();
-            Debug.Log($"DocumentBuilder: Export {exportCount} files.");
+            DocComponent doc = new DocComponent();
+            doc.VisualID = new DocDescription().VisualID;
+            doc.TextData.Add($"Success Export {exportCount} files.");
+            var data = new DocDescription.Data();
+            data.Type = DocDescription.Type.Success;
+            doc.JsonData = JsonUtility.ToJson(data);
+            info.Add(DocRuntime.CreateVisual(doc));
+            if(exportFailCount > 0)
+            {
+                doc.TextData[0] = $"Fail Export {exportFailCount}.";
+                data.Type = DocDescription.Type.Danger;
+                doc.JsonData = JsonUtility.ToJson(data);
+                info.Add(DocRuntime.CreateVisual(doc));
+                foreach (var page in failList)
+                {
+                    var field = DocEditor.NewObjectField<SODocPage>("");
+                    field.value = page;
+                    field.style.backgroundColor = DocStyle.Current.DangerColor;
+                    info.Add(field);
+                }
+            }
         });
         btn.style.marginTop = 20;
         btn.SetEnabled(false);
-        TargetFolder.RegisterValueChangedCallback(e =>
+        var pathField = DocRuntime.NewTextField("Dst Path", e =>
         {
-            if (e.newValue != null)
+            if (Directory.Exists(e.newValue))
             {
-                exportPath = AssetDatabase.GetAssetPath(e.newValue);
+                btn.SetEnabled(true);
+                exportPath = e.newValue;
             }
-            btn.SetEnabled(AssetDatabase.IsValidFolder(exportPath));
+            else
+            {
+                btn.SetEnabled(false);
+            }
         });
+
+        Layout.Add(pathField);
+        Layout.Add(container);
+        Layout.Add(info);
         Layout.Add(btn);
     }
     int exportCount = 0;
+    int exportFailCount = 0;
+    List<SODocPage> failList = new List<SODocPage>(); 
     private void exportMarkdown(SODocPage page, string path, bool includeSub)
     {
         if (page == null) return;
-        exportCount++;
         StringBuilder sb = new StringBuilder();
-        foreach (DocComponent doc in page.Components) {
-            var field = DocEditor.CreateComponentField(doc);
-            field.SetStatus(true);
-            sb.Append(field.DocEditVisual.ToMarkdown(path));
-            sb.AppendLine();
-            sb.AppendLine();
+        try
+        {
+            foreach (DocComponent doc in page.Components)
+            {
+                var field = DocEditor.CreateComponentField(doc);
+                field.SetStatus(true);
+                sb.Append(field.DocEditVisual.ToMarkdown(path));
+                sb.AppendLine();
+                sb.AppendLine();
+            }
+            exportCount++;
         }
-        File.WriteAllText($"{Application.dataPath}{path.Replace("Assets","")}/{page.name}.md", sb.ToString());
+        catch
+        {
+            exportFailCount++;
+            failList.Add(page);
+        }
+        string texts = sb.ToString();
+        if(!string.IsNullOrEmpty(texts))
+            File.WriteAllText($"{path}/{page.name}.md", sb.ToString());
         if(includeSub)
         {
             if(page.SubPages.Count > 0)
             {
-                string subPath = $"{page.name}SubPages";
-                if (!AssetDatabase.IsValidFolder(path + "/" + subPath))
-                    AssetDatabase.CreateFolder(path, subPath);
+                string subPath = $"{page.name}";
+                if (!Directory.Exists(path + "/" + subPath))
+                    Directory.CreateDirectory(path + "/" + subPath);
                 subPath = path + "/" + subPath;
-                foreach(var subPage in page.SubPages) 
+                foreach(var subPage in page.SubPages)
                     exportMarkdown(subPage, subPath, includeSub);
             }
         }

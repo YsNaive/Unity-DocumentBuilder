@@ -29,13 +29,13 @@ namespace NaiveAPI.DocumentBuilder
                 DocVisual docVisual = (DocVisual)DocRuntime.CreateVisual(com);
                 if (docVisual.VisualID == "1")
                 {
-                    docVisual.style.marginLeft = SODocStyle.Current.LabelTextSize;
-                    docVisual.style.marginTop = docVisual.style.marginTop.value.value + SODocStyle.Current.ComponentSpace+10;
+                    docVisual.style.marginLeft = DocStyle.Current.LabelTextSize;
+                    docVisual.style.marginTop = docVisual.style.marginTop.value.value + DocStyle.Current.ComponentSpace+10;
                 }
                 else
                 {
-                    docVisual.style.marginLeft = SODocStyle.Current.LabelTextSize*2;
-                    docVisual.style.marginTop = docVisual.style.marginTop.value.value+SODocStyle.Current.ComponentSpace;
+                    docVisual.style.marginLeft = DocStyle.Current.LabelTextSize*2;
+                    docVisual.style.marginTop = docVisual.style.marginTop.value.value+DocStyle.Current.ComponentSpace;
                 }
                 Add(docVisual);
                 visuals.Add(docVisual);

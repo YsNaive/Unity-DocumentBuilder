@@ -20,7 +20,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             var editView = new SerializedDocEditVisual(property);
             window.rootVisualElement.Add(editView);
             window.rootVisualElement.style.paddingRight = 10;
-            window.rootVisualElement.style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            window.rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
             Button save = new Button();
             save.text = "Save";
             save.style.SetIS_Style(new ISMargin(TextAnchor.LowerCenter));

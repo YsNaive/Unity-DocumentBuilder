@@ -24,7 +24,24 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - get current menu hierarchy
+    - Get current hierarchy in a string
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'Format
+
+      path : state
+
+
+      Example
+
+      0:0
+
+      021:1
+
+      ......'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0

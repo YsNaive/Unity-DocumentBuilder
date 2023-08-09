@@ -77,11 +77,11 @@ public static class DocumentBuilderParser
 
             string[] prefixs = strs[0].Split(" ");
             StringBuilder stringBuilder = new StringBuilder();
-            string subFrontGroundColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.SubFrontgroundColor)}>";
-            string prefixColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.PrefixColor)}>";
-            string funcColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.FuncColor)}>";
-            string typeColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.TypeColor)}>";
-            string paramColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(SODocStyle.Current.ArgsColor)}>";
+            string subFrontGroundColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.SubFrontgroundColor)}>";
+            string prefixColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.PrefixColor)}>";
+            string funcColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.FuncColor)}>";
+            string typeColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.TypeColor)}>";
+            string paramColor = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.ArgsColor)}>";
             string postfixColor = "</color>";
             foreach (string str in prefixs)
             {
@@ -165,14 +165,14 @@ public static class DocumentBuilderParser
         foreach (Match match in matches)
         {
             foreach (Capture capture in match.Groups[1].Captures)
-                offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, SODocStyle.Current.PrefixColor);
+                offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, DocStyle.Current.PrefixColor);
             foreach (Capture capture in match.Groups[3].Captures)
-                offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, SODocStyle.Current.TypeColor);
+                offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, DocStyle.Current.TypeColor);
             CaptureCollection funcCaptures = match.Groups[4].Captures;
-            offset += stringBuilder.UnityRTF(offset + funcCaptures[0].Index, funcCaptures[0].Length, SODocStyle.Current.FuncColor);
+            offset += stringBuilder.UnityRTF(offset + funcCaptures[0].Index, funcCaptures[0].Length, DocStyle.Current.FuncColor);
             for (int i = 1; i < funcCaptures.Count; i++)
             {
-            offset += stringBuilder.UnityRTF(offset + funcCaptures[i].Index, funcCaptures[i].Length, SODocStyle.Current.TypeColor);
+            offset += stringBuilder.UnityRTF(offset + funcCaptures[i].Index, funcCaptures[i].Length, DocStyle.Current.TypeColor);
             }
             CaptureCollection prefixCaptures = match.Groups[5].Captures;
             CaptureCollection typeCaptures = match.Groups[7].Captures;
@@ -186,7 +186,7 @@ public static class DocumentBuilderParser
                 typeIndex = typeCaptures[i].Index;
                 if (hasPrefix && prefixCaptures[index].Index < typeIndex)
                 {
-                    offset += stringBuilder.UnityRTF(offset + prefixCaptures[index].Index, prefixCaptures[index].Length, SODocStyle.Current.PrefixColor);
+                    offset += stringBuilder.UnityRTF(offset + prefixCaptures[index].Index, prefixCaptures[index].Length, DocStyle.Current.PrefixColor);
                     index++;
                     if (index >= prefixCaptures.Count)
                         hasPrefix = false;
@@ -194,10 +194,10 @@ public static class DocumentBuilderParser
                 argsIndex = argsCaptures[i].Index;
                 while (j < typeCaptures.Count && typeCaptures[j].Index < argsIndex)
                 {
-                    offset += stringBuilder.UnityRTF(offset + typeCaptures[j].Index, typeCaptures[j].Length, SODocStyle.Current.TypeColor);
+                    offset += stringBuilder.UnityRTF(offset + typeCaptures[j].Index, typeCaptures[j].Length, DocStyle.Current.TypeColor);
                     j++;
                 }
-                offset += stringBuilder.UnityRTF(offset + argsCaptures[i].Index, argsCaptures[i].Length, SODocStyle.Current.ArgsColor);
+                offset += stringBuilder.UnityRTF(offset + argsCaptures[i].Index, argsCaptures[i].Length, DocStyle.Current.ArgsColor);
             }
         }
 
@@ -215,20 +215,20 @@ public static class DocumentBuilderParser
         matches = Regex.Matches(stringBuilder.ToString(), commentPattern);
         foreach (Match match in matches)
         {
-            addTable(table, match, 0, SODocStyle.Current.CommentsColor, ParseType.Single, "Comment");
+            addTable(table, match, 0, DocStyle.Current.CommentsColor, ParseType.Single, "Comment");
         }
         matches = Regex.Matches(stringBuilder.ToString(), stringPattern);
         foreach (Match match in matches)
         {
-            addTable(table, match, 0, SODocStyle.Current.StringColor, ParseType.Single, "String");
+            addTable(table, match, 0, DocStyle.Current.StringColor, ParseType.Single, "String");
         }
         matches = Regex.Matches(stringBuilder.ToString(), fieldPattern);
         foreach (Match match in matches)
         {
-            addTable(table, match, 1, SODocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
-            addTable(table, match, 2, SODocStyle.Current.TypeColor, ParseType.Capture, "Type");
-            addTable(table, match, 3, SODocStyle.Current.ArgsColor, ParseType.Single, "Arg");
-            addTable(table, match, 4, SODocStyle.Current.ArgsColor, ParseType.Capture, "Arg");
+            addTable(table, match, 1, DocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
+            addTable(table, match, 2, DocStyle.Current.TypeColor, ParseType.Capture, "Type");
+            addTable(table, match, 3, DocStyle.Current.ArgsColor, ParseType.Single, "Arg");
+            addTable(table, match, 4, DocStyle.Current.ArgsColor, ParseType.Capture, "Arg");
             args.Append(match.Groups[3].Value);
             args.Append("|");
             foreach (Capture capture in match.Groups[4].Captures)
@@ -240,19 +240,19 @@ public static class DocumentBuilderParser
         matches = Regex.Matches(stringBuilder.ToString(), reservedWordPattern);
         foreach (Match match in matches)
         {
-            addTable(table, match, 0, SODocStyle.Current.PrefixColor, ParseType.Single, "ReserveWord");
+            addTable(table, match, 0, DocStyle.Current.PrefixColor, ParseType.Single, "ReserveWord");
         }
         matches = Regex.Matches(stringBuilder.ToString(), numberPattern);
         foreach (Match match in matches)
         {
-            addTable(table, match, 1, SODocStyle.Current.NumberColor, ParseType.Single, "Number");
+            addTable(table, match, 1, DocStyle.Current.NumberColor, ParseType.Single, "Number");
         }
         matches = Regex.Matches(stringBuilder.ToString(), funcPattern);
         foreach (Match match in matches)
         {
-            addTable(table, match, 1, SODocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
-            addTable(table, match, 3, SODocStyle.Current.TypeColor, ParseType.Capture, "Type");
-            addTable(table, match, 4, SODocStyle.Current.TypeColor, ParseType.Func, "Type");
+            addTable(table, match, 1, DocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
+            addTable(table, match, 3, DocStyle.Current.TypeColor, ParseType.Capture, "Type");
+            addTable(table, match, 4, DocStyle.Current.TypeColor, ParseType.Func, "Type");
             MatchData matchData;
             CaptureCollection typeCaptures = match.Groups[7].Captures;
             CaptureCollection argsCaptures = match.Groups[8].Captures;
@@ -263,11 +263,11 @@ public static class DocumentBuilderParser
                 int argsIndex = argsCaptures[i].Index;
                 while (j < typeCaptures.Count && typeCaptures[j].Index < argsIndex)
                 {
-                    matchData = new MatchData(typeCaptures[j].Length, typeCaptures[j].Value, "Type", SODocStyle.Current.TypeColor);
+                    matchData = new MatchData(typeCaptures[j].Length, typeCaptures[j].Value, "Type", DocStyle.Current.TypeColor);
                     checkAndAdd(table, typeCaptures[j].Index, matchData);
                     j++;
                 }
-                matchData = new MatchData(argsCaptures[i].Length, argsCaptures[i].Value, "Arg", SODocStyle.Current.ArgsColor);
+                matchData = new MatchData(argsCaptures[i].Length, argsCaptures[i].Value, "Arg", DocStyle.Current.ArgsColor);
                 checkAndAdd(table, argsCaptures[i].Index, matchData);
                 args.Append(matchData.Value);
                 args.Append("|");
@@ -276,29 +276,29 @@ public static class DocumentBuilderParser
         matches = Regex.Matches(stringBuilder.ToString(), classPattern);
         foreach (Match match in matches)
         {
-            addTable(table, match, 1, SODocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
-            addTable(table, match, 2, SODocStyle.Current.PrefixColor, ParseType.Single, "Prefix");
-            addTable(table, match, 3, SODocStyle.Current.TypeColor, ParseType.Capture, "Type");
+            addTable(table, match, 1, DocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
+            addTable(table, match, 2, DocStyle.Current.PrefixColor, ParseType.Single, "Prefix");
+            addTable(table, match, 3, DocStyle.Current.TypeColor, ParseType.Capture, "Type");
         }
         matches = Regex.Matches(stringBuilder.ToString(), controlReservedWordPattern);
         foreach (Match match in matches)
         {
-            addTable(table, match, 0, SODocStyle.Current.ControlColor, ParseType.Single, "Control");
+            addTable(table, match, 0, DocStyle.Current.ControlColor, ParseType.Single, "Control");
         }
         matches = Regex.Matches(stringBuilder.ToString(), newPattern);
         foreach (Match match in matches)
         {
-            addTable(table, match, 1, SODocStyle.Current.TypeColor, ParseType.Capture, "Type");
+            addTable(table, match, 1, DocStyle.Current.TypeColor, ParseType.Capture, "Type");
         }
         matches = Regex.Matches(stringBuilder.ToString(), methodPattern);
         foreach (Match match in matches)
         {
-            addTable(table, match, 1, SODocStyle.Current.TypeColor, ParseType.Func, "Type");
+            addTable(table, match, 1, DocStyle.Current.TypeColor, ParseType.Func, "Type");
         }
         matches = Regex.Matches(stringBuilder.ToString(), @"[^.]\b(" + args.ToString() + @")\b");
         foreach (Match match in matches)
         {
-            addTable(table, match, 1, SODocStyle.Current.ArgsColor, ParseType.Single, "Arg");
+            addTable(table, match, 1, DocStyle.Current.ArgsColor, ParseType.Single, "Arg");
         }
         int index = 0, offset = 0;
         foreach (var key in table.Keys)
@@ -332,7 +332,7 @@ public static class DocumentBuilderParser
                 break;
             case ParseType.Func:
                 CaptureCollection captures = match.Groups[index].Captures;
-                matchData = new MatchData(captures[0].Length, captures[0].Value, "Func", SODocStyle.Current.FuncColor);
+                matchData = new MatchData(captures[0].Length, captures[0].Value, "Func", DocStyle.Current.FuncColor);
                 checkAndAdd(table, captures[0].Index, matchData);
                 for (int i = 1; i < captures.Count; i++)
                 {

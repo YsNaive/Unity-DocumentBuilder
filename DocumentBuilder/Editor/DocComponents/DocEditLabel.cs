@@ -45,11 +45,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             intField.label = "Level";
             intField[0].style.minWidth = 36;
             intField.style.marginLeft = Length.Percent(1);
-            var addBtn = DocRuntime.NewButton("+", SODocStyle.Current.SuccessColor, () =>
+            var addBtn = DocRuntime.NewButton("+", DocStyle.Current.SuccessColor, () =>
             {
                 intField.value += 1;
             });
-            var subBtn = DocRuntime.NewButton("-", SODocStyle.Current.DangerColor, () =>
+            var subBtn = DocRuntime.NewButton("-", DocStyle.Current.DangerColor, () =>
             {
                 intField.value -= 1;
             });

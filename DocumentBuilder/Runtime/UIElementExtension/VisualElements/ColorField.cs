@@ -71,7 +71,7 @@ namespace NaiveAPI_UI
             foldout.text = label;
             foldout.value = false;
             value = initVal;
-            foldout.style.SetIS_Style(SODocStyle.Current.MainText);
+            foldout.style.SetIS_Style(DocStyle.Current.MainText);
             if(maxWidth != -1)foldout.Q("unity-content").style.width = maxWidth;
             previewImg3.style.backgroundColor = value;
             previewImg3.style.width = Length.Percent(33);
@@ -93,7 +93,7 @@ namespace NaiveAPI_UI
             });
             Add(foldout);
             Color.RGBToHSV(initVal, out h, out s, out v);
-            style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.SetIS_Style(ISPadding.Percent(5));
 
             VisualElement colorHor = new VisualElement();
@@ -148,7 +148,7 @@ namespace NaiveAPI_UI
                 }
             });
             foldout.Add(hor);
-            var border = new ISBorder(SODocStyle.Current.FrontgroundColor, 2);
+            var border = new ISBorder(DocStyle.Current.FrontgroundColor, 2);
             previewImg.style.SetIS_Style(border);
             previewImg2.style.SetIS_Style(border);
             previewImg3.style.SetIS_Style(border);
@@ -160,9 +160,9 @@ namespace NaiveAPI_UI
             a.style.SetIS_Style(ISRadius.Percent(15));
             a.style.marginRight = Length.Percent(5);
             a.style.width = Length.Percent(69);
-            a.style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
+            a.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             a.value = 1f;
-            a[0].style.SetIS_Style(SODocStyle.Current.MainText);
+            a[0].style.SetIS_Style(DocStyle.Current.MainText);
             a[0].style.minWidth = Length.Percent(5);
             a.RegisterValueChangedCallback(val =>
             {
@@ -171,9 +171,9 @@ namespace NaiveAPI_UI
             hor.Add(a);
             htmlColor.value = '#' + ColorUtility.ToHtmlStringRGBA(initVal);
             htmlColor.style.SetIS_Style(ISMargin.None);
-            htmlColor.style.SetIS_Style(SODocStyle.Current.MainText);
+            htmlColor.style.SetIS_Style(DocStyle.Current.MainText);
             htmlColor.style.width = Length.Percent(25);
-            htmlColor[0].style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
+            htmlColor[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             htmlColor.RegisterValueChangedCallback(val =>
             {
                 Color color;

@@ -42,7 +42,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 if (str == Target.TextData[^1])
                     stringBuilder.Append("- " + str);
                 else
-                    stringBuilder.Append("- " + str).Append("<br>");
+                    stringBuilder.Append("- " + str).AppendLine("<br>");
             }
 
             return stringBuilder.ToString();
@@ -91,10 +91,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = DocRuntime.NewEmptyHorizontal();
 
-            Button addButton = DocRuntime.NewButton("+", SODocStyle.Current.SuccessColor);
+            Button addButton = DocRuntime.NewButton("+", DocStyle.Current.SuccessColor);
             addButton.style.width = Length.Percent(50);
 
-            Button deleteButton = DocRuntime.NewButton("-", SODocStyle.Current.DangerColor);
+            Button deleteButton = DocRuntime.NewButton("-", DocStyle.Current.DangerColor);
             deleteButton.style.width = Length.Percent(50);
 
             root.Add(addButton);

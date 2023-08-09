@@ -44,9 +44,9 @@ namespace NaiveAPI.DocumentBuilder
         private VisualElement generateViewMatrixVisual(Data data, float width)
         {
             VisualElement root = new VisualElement();
-            root.style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             root.style.width = width;
-            root.style.backgroundColor = SODocStyle.Current.BackgroundColor;
+            root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             List<string> texts = Target.TextData;
             for (int i = 0; i < data.row; i++)
             {
@@ -55,27 +55,27 @@ namespace NaiveAPI.DocumentBuilder
                 for (int j = 0; j < data.col; j++)
                 {
                     TextElement label = new TextElement();
-                    label.style.backgroundColor = SODocStyle.Current.SubBackgroundColor;
+                    label.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
                     label.text = texts[i * data.col + j];
                     label.style.borderLeftWidth = 1;
-                    label.style.borderLeftColor = SODocStyle.Current.SubFrontgroundColor;
+                    label.style.borderLeftColor = DocStyle.Current.SubFrontgroundColor;
                     label.style.borderTopWidth = 1;
-                    label.style.borderTopColor = SODocStyle.Current.SubFrontgroundColor;
+                    label.style.borderTopColor = DocStyle.Current.SubFrontgroundColor;
                     if (i == data.row - 1)
                     {
                         label.style.borderBottomWidth = 1;
-                        label.style.borderBottomColor = SODocStyle.Current.SubFrontgroundColor;
+                        label.style.borderBottomColor = DocStyle.Current.SubFrontgroundColor;
                     }
                     if (j == data.col - 1)
                     {
                         label.style.borderRightWidth = 1;
-                        label.style.borderRightColor = SODocStyle.Current.SubFrontgroundColor;
+                        label.style.borderRightColor = DocStyle.Current.SubFrontgroundColor;
                     }
                     label.style.SetIS_Style(margin);
                     label.style.SetIS_Style(padding);
                     label.style.paddingLeft = 5;
                     label.style.paddingRight = 5;
-                    label.style.SetIS_Style(SODocStyle.Current.MainText);
+                    label.style.SetIS_Style(DocStyle.Current.MainText);
                     label.style.unityTextAlign = data.anchors[j];
                     child.Add(label);
                 }

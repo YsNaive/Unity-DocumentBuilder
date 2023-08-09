@@ -170,12 +170,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIDocument: {fileID: 489998791}
   component:
-    VisualID: 1
-    JsonData: 
+    VisualID: 2
+    JsonData: '{"Type":4}'
     TextData:
-    - Hello World !
+    - "\u6E2C\u8A66\u4E00\u4E9B\u6558\u8FF0\n\u5927\u5927 \u5927\u512A\u60E0"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+  root: {fileID: 11400000, guid: b4d768b0a8c3e3a4f9c56bd8f9815b43, type: 2}
 --- !u!114 &489998791
 MonoBehaviour:
   m_ObjectHideFlags: 0
