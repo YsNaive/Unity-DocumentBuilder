@@ -56,7 +56,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             for (int i = 0;i < data.row; i++)
             {
                 if (i == 1)
-                    stringBuilder.Append(align.ToString()).AppendLine("<br>");
+                    stringBuilder.Append(align.ToString()).AppendLine();
                 stringBuilder.Append("|");
                 for (int j = 0;j < data.col; j++)
                 {
@@ -65,7 +65,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     stringBuilder.Append('|');
                 }
                 if (i != data.row - 1)
-                    stringBuilder.AppendLine("<br>");
+                    stringBuilder.AppendLine();
             }
 
             return stringBuilder.ToString();

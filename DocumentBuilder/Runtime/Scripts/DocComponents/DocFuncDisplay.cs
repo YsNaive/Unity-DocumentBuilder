@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static NaiveAPI.DocumentBuilder.DocStyle;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -13,10 +12,10 @@ namespace NaiveAPI.DocumentBuilder
     {
         public override string VisualID => "4";
 
-        private static ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = Current.FuncColor, FontSize = Current.MainTextSize };
-        private static ISText paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = Current.ArgsColor, FontSize = Current.MainTextSize };
-        private static ISText typeTextStyle = new ISText() { Color = Current.TypeColor, FontSize = Current.MainTextSize };
-        private static ISText labelTextStyle = new ISText() { Color = Current.SubFrontgroundColor, FontSize = Current.MainTextSize };
+        private static ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = DocStyle.Current.FuncColor, FontSize = DocStyle.Current.MainTextSize };
+        private static ISText paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = DocStyle.Current.ArgsColor, FontSize = DocStyle.Current.MainTextSize };
+        private static ISText typeTextStyle = new ISText() { Color = DocStyle.Current.TypeColor, FontSize = DocStyle.Current.MainTextSize };
+        private static ISText labelTextStyle = new ISText() { Color = DocStyle.Current.SubFrontgroundColor, FontSize = DocStyle.Current.MainTextSize };
         private float tabGap = 2;
         private VisualElement veFoldOut;
 
@@ -57,13 +56,13 @@ namespace NaiveAPI.DocumentBuilder
             syntaxLabel.text = "Syntaxs";
             syntaxLabel.style.SetIS_Style(labelTextStyle);
             syntaxLabel.style.ClearMarginPadding();
-            syntaxLabel.style.marginTop = Current.MainTextSize / 2f;
+            syntaxLabel.style.marginTop = DocStyle.Current.MainTextSize / 2f;
             root.Add(syntaxLabel);
 
             for (int i = 0;i < data.Syntaxs.Count; i++)
             {
                 TextElement syntaxText = new TextElement();
-                syntaxText.text = DocumentBuilderParser.FunctionParser(data.Syntaxs[i]);
+                syntaxText.text = DocumentBuilderParser.FunctionParser(data.Syntaxs[i], false);
                 syntaxText.style.ClearMarginPadding();
                 syntaxText.style.paddingLeft = Length.Percent(tabGap);
                 syntaxText.style.SetIS_Style(DocStyle.Current.MainText);
@@ -107,7 +106,7 @@ namespace NaiveAPI.DocumentBuilder
             paramText.text = "Parameters";
             paramText.style.SetIS_Style(labelTextStyle);
             paramText.style.ClearMarginPadding();
-            paramText.style.marginTop = Current.MainTextSize / 2f;
+            paramText.style.marginTop = DocStyle.Current.MainTextSize / 2f;
             root.Add(paramText);
 
             for (int i = 0;i < data.Params.Count; i++)
@@ -152,7 +151,7 @@ namespace NaiveAPI.DocumentBuilder
             returnText.text = "Return Values";
             returnText.style.SetIS_Style(labelTextStyle);
             returnText.style.ClearMarginPadding();
-            returnText.style.marginTop = Current.MainTextSize / 2f;
+            returnText.style.marginTop = DocStyle.Current.MainTextSize / 2f;
             root.Add(returnText);
             for (int i = 0; i < data.ReturnTypes.Count; i++)
             {

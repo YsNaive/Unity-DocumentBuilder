@@ -28,7 +28,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             DocSeeAlso.Data data = JsonUtility.FromJson<DocSeeAlso.Data>(Target.JsonData);
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(Target.TextData[0]);
-            stringBuilder.Append("\t");
+            if (Target.TextData[0] != "")
+                stringBuilder.Append("\t");
             switch (data.mode)
             {
                 case DocSeeAlso.Mode.OpenPage:

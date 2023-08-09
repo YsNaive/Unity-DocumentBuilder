@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public static class DocumentBuilderParser
 {
@@ -28,6 +29,7 @@ public static class DocumentBuilderParser
     public const string reservedWordPattern = @"\b(?:in|get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
     public const string methodPattern = @"\b" + type + @"\(";
     public const string numberPattern = @"[^""A-Za-z_][+-]?(\d+(?:\.\d+)?[fx]?)";
+    public const string pattern = @"\w+((?:((?'Open'<)|,)(\w*)?(?:,\s*(\w+))?)+(?:(?'Close-Open'>))+)+(?(Open)(?!))";
 
     public static string CalGenericTypeName(Type type)
     {
@@ -156,23 +158,27 @@ public static class DocumentBuilderParser
         }
     }
 
-    public static string FunctionParser(string func)
+    public static string FunctionParser(string func, bool isHTML)
     {
         StringBuilder stringBuilder = new StringBuilder(func);
-
+        Func<StringBuilder, int, int, Color, int> action;
+        if (isHTML)
+            action = VisualElementExtension.HtmlRTF;
+        else
+            action = VisualElementExtension.UnityRTF;
         int offset = 0;
         MatchCollection matches = Regex.Matches(stringBuilder.ToString(), funcPattern);
         foreach (Match match in matches)
         {
             foreach (Capture capture in match.Groups[1].Captures)
-                offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, DocStyle.Current.PrefixColor);
+                offset += action(stringBuilder, offset + capture.Index, capture.Length, DocStyle.Current.PrefixColor);
             foreach (Capture capture in match.Groups[3].Captures)
-                offset += stringBuilder.UnityRTF(offset + capture.Index, capture.Length, DocStyle.Current.TypeColor);
+                offset += action(stringBuilder, offset + capture.Index, capture.Length, DocStyle.Current.TypeColor);
             CaptureCollection funcCaptures = match.Groups[4].Captures;
-            offset += stringBuilder.UnityRTF(offset + funcCaptures[0].Index, funcCaptures[0].Length, DocStyle.Current.FuncColor);
+            offset += action(stringBuilder, offset + funcCaptures[0].Index, funcCaptures[0].Length, DocStyle.Current.FuncColor);
             for (int i = 1; i < funcCaptures.Count; i++)
             {
-            offset += stringBuilder.UnityRTF(offset + funcCaptures[i].Index, funcCaptures[i].Length, DocStyle.Current.TypeColor);
+            offset += action(stringBuilder, offset + funcCaptures[i].Index, funcCaptures[i].Length, DocStyle.Current.TypeColor);
             }
             CaptureCollection prefixCaptures = match.Groups[5].Captures;
             CaptureCollection typeCaptures = match.Groups[7].Captures;
@@ -186,7 +192,7 @@ public static class DocumentBuilderParser
                 typeIndex = typeCaptures[i].Index;
                 if (hasPrefix && prefixCaptures[index].Index < typeIndex)
                 {
-                    offset += stringBuilder.UnityRTF(offset + prefixCaptures[index].Index, prefixCaptures[index].Length, DocStyle.Current.PrefixColor);
+                    offset += action(stringBuilder, offset + prefixCaptures[index].Index, prefixCaptures[index].Length, DocStyle.Current.PrefixColor);
                     index++;
                     if (index >= prefixCaptures.Count)
                         hasPrefix = false;
@@ -194,10 +200,10 @@ public static class DocumentBuilderParser
                 argsIndex = argsCaptures[i].Index;
                 while (j < typeCaptures.Count && typeCaptures[j].Index < argsIndex)
                 {
-                    offset += stringBuilder.UnityRTF(offset + typeCaptures[j].Index, typeCaptures[j].Length, DocStyle.Current.TypeColor);
+                    offset += action(stringBuilder, offset + typeCaptures[j].Index, typeCaptures[j].Length, DocStyle.Current.TypeColor);
                     j++;
                 }
-                offset += stringBuilder.UnityRTF(offset + argsCaptures[i].Index, argsCaptures[i].Length, DocStyle.Current.ArgsColor);
+                offset += action(stringBuilder, offset + argsCaptures[i].Index, argsCaptures[i].Length, DocStyle.Current.ArgsColor);
             }
         }
 
