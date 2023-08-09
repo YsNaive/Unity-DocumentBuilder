@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.0.0] -2023-08-01
+## [2.0.0] -2023-08-10
 New Version of Document Builder release
 old format are no longer supported. If needed, please download from github page
 

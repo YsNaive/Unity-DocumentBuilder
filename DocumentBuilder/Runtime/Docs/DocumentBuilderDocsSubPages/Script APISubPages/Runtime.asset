@@ -18,6 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 57a09a2d2d0bac4448d871c1cc6ab871, type: 2}
   - {fileID: 11400000, guid: 0212d1433ee63cd47b0db92c25917069, type: 2}
   - {fileID: 11400000, guid: 3446af2de5fb6454bb1d157001c3ec5e, type: 2}
+  - {fileID: 11400000, guid: 886ce9a2baaaa094d9551e75aa7a042f, type: 2}
   Components: []
   IntroMode: 1
   OuttroMode: 1

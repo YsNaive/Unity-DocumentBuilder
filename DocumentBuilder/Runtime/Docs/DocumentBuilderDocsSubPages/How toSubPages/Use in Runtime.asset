@@ -153,15 +153,14 @@ MonoBehaviour:
   - VisualID: 7
     JsonData: '{"MaxHeight":500,"LineHeightPercent":125}'
     TextData:
-    - "    // UID pre-set in inspector\r\n    [SerializeField] UIDocument UIDocument;\r\n\r\n   
-      // document pre-set in inspector\r\n    [SerializeField] private DocComponent
-      component;\r\n\r\n    void Start()\r\n    {\r\n        var visual = DocRuntime.CreateVisual(component);\r\n       
-      UIDocument.rootVisualElement.Add(visual);\r\n        visual.IntroAnimation(()
-      =>\r\n        { // after intro animation is done\r\n            visual.schedule.Execute(()
-      =>\r\n            { // wait 2 sec\r\n                visual.OuttroAnimation(()
-      =>\r\n                { // after outtro animation is done\r\n                   
-      UIDocument.rootVisualElement.Remove(visual);\r\n                });\r\n           
-      }).ExecuteLater(2000); \r\n        });\r\n    }"
+    - "// UID pre-set in inspector\r\n[SerializeField] UIDocument UIDocument;\r\n\r\n//
+      document pre-set in inspector\r\n[SerializeField] private DocComponent component;\r\n\r\nvoid
+      Start()\r\n{\r\n    var visual = DocRuntime.CreateVisual(component);\r\n   
+      UIDocument.rootVisualElement.Add(visual);\r\n    visual.IntroAnimation(() =>\r\n   
+      { // after intro animation is done\r\n        visual.schedule.Execute(() =>\r\n       
+      { // wait 2 sec\r\n            visual.OuttroAnimation(() =>\r\n           
+      { // after outtro animation is done\r\n                UIDocument.rootVisualElement.Remove(visual);\r\n           
+      });\r\n        }).ExecuteLater(2000); \r\n    });\r\n}"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1

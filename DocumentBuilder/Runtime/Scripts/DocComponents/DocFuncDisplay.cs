@@ -12,10 +12,10 @@ namespace NaiveAPI.DocumentBuilder
     {
         public override string VisualID => "4";
 
-        private static ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = DocStyle.Current.FuncColor, FontSize = DocStyle.Current.MainTextSize };
-        private static ISText paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = DocStyle.Current.ArgsColor, FontSize = DocStyle.Current.MainTextSize };
-        private static ISText typeTextStyle = new ISText() { Color = DocStyle.Current.TypeColor, FontSize = DocStyle.Current.MainTextSize };
-        private static ISText labelTextStyle = new ISText() { Color = DocStyle.Current.SubFrontgroundColor, FontSize = DocStyle.Current.MainTextSize };
+        private ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = DocStyle.Current.FuncColor, FontSize = DocStyle.Current.MainTextSize };
+        private ISText paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = DocStyle.Current.ArgsColor, FontSize = DocStyle.Current.MainTextSize };
+        private ISText typeTextStyle = new ISText() { Color = DocStyle.Current.TypeColor, FontSize = DocStyle.Current.MainTextSize };
+        private ISText labelTextStyle = new ISText() { Color = DocStyle.Current.SubFrontgroundColor, FontSize = DocStyle.Current.MainTextSize };
         private float tabGap = 2;
         private VisualElement veFoldOut;
 

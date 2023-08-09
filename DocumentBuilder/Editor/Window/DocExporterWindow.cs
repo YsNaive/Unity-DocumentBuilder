@@ -11,231 +11,235 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DocExporterWindow : EditorWindow
+namespace NaiveAPI_Editor.DocumentBuilder
 {
-    [MenuItem("Tools/NaiveAPI/DocumentBuilder/Exporter")]
-    public static void ShowWindow()
+    public class DocExporterWindow : EditorWindow
     {
-        GetWindow<DocExporterWindow>("Document Exporter");
-    }
-
-    public const string CommonChar = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-    public const string SpChar = "\\n\\t\\r\\0\\b\\f\\v\\\\\\'\\";
-    public static readonly List<string> Mode = new List<string>{ "Char Table", "Markdown" };
-    VisualElement Layout;
-    ObjectField TargetFolder;
-    DropdownField ModeSelect;
-    string exportPath;
-    private void CreateGUI()
-    {
-        ModeSelect = DocRuntime.NewDropdownField("Export Mode", Mode);
-        ModeSelect.RegisterValueChangedCallback(e =>
+        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Exporter")]
+        public static void ShowWindow()
         {
-            Layout.Clear();
-            if (ModeSelect.index == 0)
-                repaintCharTable();
-            else if (ModeSelect.index == 1)
-                repaintMarkdown();
-        }); ModeSelect.index = 0;
-        rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
-        Layout = DocRuntime.NewEmpty();
-        TargetFolder = DocEditor.NewObjectField<DefaultAsset>("Export Folder");
-        rootVisualElement.Add(ModeSelect);
-        rootVisualElement.Add(Layout);
-        repaintCharTable();
-        rootVisualElement.style.SetIS_Style(ISPadding.Pixel(10));
-    }
+            GetWindow<DocExporterWindow>("Document Exporter");
+        }
 
-    private ObjectField createSODocPageSelectField()
-    {
-        var field = DocEditor.NewObjectField<SODocPage>("");
-
-        field.RegisterValueChangedCallback(e =>
+        public const string CommonChar = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+        public const string SpChar = "\\n\\t\\r\\0\\b\\f\\v\\\\\\'\\";
+        public static readonly List<string> Mode = new List<string> { "Char Table", "Markdown" };
+        VisualElement Layout;
+        ObjectField TargetFolder;
+        DropdownField ModeSelect;
+        string exportPath;
+        private void CreateGUI()
         {
-            if(e.newValue != null && e.previousValue  == null)
+            ModeSelect = DocRuntime.NewDropdownField("Export Mode", Mode);
+            ModeSelect.RegisterValueChangedCallback(e =>
             {
-                field.parent.Add(createSODocPageSelectField());
-            }
-            else if(e.newValue == null && e.previousValue != null)
+                Layout.Clear();
+                if (ModeSelect.index == 0)
+                    repaintCharTable();
+                else if (ModeSelect.index == 1)
+                    repaintMarkdown();
+            }); ModeSelect.index = 0;
+            rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            Layout = DocRuntime.NewEmpty();
+            TargetFolder = DocEditor.NewObjectField<DefaultAsset>("Export Folder");
+            rootVisualElement.Add(ModeSelect);
+            rootVisualElement.Add(Layout);
+            repaintCharTable();
+            rootVisualElement.style.SetIS_Style(ISPadding.Pixel(10));
+        }
+
+        private ObjectField createSODocPageSelectField()
+        {
+            var field = DocEditor.NewObjectField<SODocPage>("");
+
+            field.RegisterValueChangedCallback(e =>
             {
-                if(field.parent.IndexOf(field) != field.parent.childCount-1)
+                if (e.newValue != null && e.previousValue == null)
                 {
-                    field.parent.Remove(field);
+                    field.parent.Add(createSODocPageSelectField());
                 }
-            }
-        });
-
-        return field;
-    }
-
-    private void repaintCharTable()
-    {
-        var container = DocRuntime.NewEmpty();
-        container.Add(createSODocPageSelectField());
-        Layout.Add(TargetFolder);
-        Layout.Add(container);
-        var btn = DocRuntime.NewButton("Export", () =>
-        {
-            Queue<SODocPage> queue = new Queue<SODocPage>();
-            List<SODocPage> pagelist = new List<SODocPage>();
-            foreach (ObjectField obj in container.Children())
-                queue.Enqueue((SODocPage)obj.value);
-            while (queue.Count > 0)
-            {
-                var now = queue.Dequeue();
-                if (now == null) continue;
-                foreach (var sub in now.SubPages)
+                else if (e.newValue == null && e.previousValue != null)
                 {
-                    if (sub == null) continue;
-                    if (!pagelist.Contains(sub))
+                    if (field.parent.IndexOf(field) != field.parent.childCount - 1)
                     {
-                        pagelist.Add(sub);
-                        queue.Enqueue(sub);
+                        field.parent.Remove(field);
                     }
                 }
-            }
-            HashSet<char> foundChars = new HashSet<char>();
-            Debug.Log(pagelist.Count);
-            foreach (var page in pagelist)
+            });
+
+            return field;
+        }
+
+        private void repaintCharTable()
+        {
+            var container = DocRuntime.NewEmpty();
+            container.Add(createSODocPageSelectField());
+            Layout.Add(TargetFolder);
+            Layout.Add(container);
+            var btn = DocRuntime.NewButton("Export", () =>
             {
-                foreach (var com in page.Components)
+                Queue<SODocPage> queue = new Queue<SODocPage>();
+                List<SODocPage> pagelist = new List<SODocPage>();
+                foreach (ObjectField obj in container.Children())
+                    queue.Enqueue((SODocPage)obj.value);
+                while (queue.Count > 0)
                 {
-                    foreach (var str in com.TextData)
+                    var now = queue.Dequeue();
+                    if (now == null) continue;
+                    foreach (var sub in now.SubPages)
                     {
-                        foreach (var c in str)
+                        if (sub == null) continue;
+                        if (!pagelist.Contains(sub))
                         {
-                            if (SpChar.Contains(c))
-                                continue;
-                            if (CommonChar.Contains(c))
-                                continue;
-                            if (!foundChars.Contains(c))
-                                foundChars.Add(c);
+                            pagelist.Add(sub);
+                            queue.Enqueue(sub);
                         }
                     }
                 }
-            }
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(CommonChar);
-            foreach (var c in foundChars)
-            { stringBuilder.Append(c); }
-            TextAsset textAsset = new TextAsset(stringBuilder.ToString());
-            AssetDatabase.CreateAsset(textAsset, exportPath + "/char table.asset");
-        });
-        btn.style.marginTop = 20;
-        btn.SetEnabled(false);
-        TargetFolder.RegisterValueChangedCallback(e =>
+                HashSet<char> foundChars = new HashSet<char>();
+                Debug.Log(pagelist.Count);
+                foreach (var page in pagelist)
+                {
+                    foreach (var com in page.Components)
+                    {
+                        foreach (var str in com.TextData)
+                        {
+                            foreach (var c in str)
+                            {
+                                if (SpChar.Contains(c))
+                                    continue;
+                                if (CommonChar.Contains(c))
+                                    continue;
+                                if (!foundChars.Contains(c))
+                                    foundChars.Add(c);
+                            }
+                        }
+                    }
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append(CommonChar);
+                foreach (var c in foundChars)
+                { stringBuilder.Append(c); }
+                TextAsset textAsset = new TextAsset(stringBuilder.ToString());
+                AssetDatabase.CreateAsset(textAsset, exportPath + "/char table.asset");
+            });
+            btn.style.marginTop = 20;
+            btn.SetEnabled(false);
+            TargetFolder.RegisterValueChangedCallback(e =>
+            {
+                if (e.newValue != null)
+                {
+                    exportPath = AssetDatabase.GetAssetPath(e.newValue);
+                }
+                btn.SetEnabled(AssetDatabase.IsValidFolder(exportPath));
+            });
+            Layout.Add(btn);
+        }
+        private void repaintMarkdown()
         {
-            if (e.newValue != null)
+            Toggle includeSubPages = new Toggle();
+            includeSubPages.label = "Include SubPages";
+            includeSubPages.value = true;
+            DocRuntime.ApplyMargin(includeSubPages);
+            Layout.Add(includeSubPages);
+            var container = DocRuntime.NewEmpty();
+            container.Add(createSODocPageSelectField());
+            VisualElement info = DocRuntime.NewEmpty();
+            var btn = DocRuntime.NewButton("Export", () =>
             {
-                exportPath = AssetDatabase.GetAssetPath(e.newValue);
-            }
-            btn.SetEnabled(AssetDatabase.IsValidFolder(exportPath));
-        });
-        Layout.Add(btn);
-    }
-    private void repaintMarkdown()
-    {
-        Toggle includeSubPages = new Toggle();
-        includeSubPages.label = "Include SubPages";
-        includeSubPages.value = true;
-        DocRuntime.ApplyMargin(includeSubPages);
-        Layout.Add(includeSubPages);
-        var container = DocRuntime.NewEmpty();
-        container.Add(createSODocPageSelectField());
-        VisualElement info = DocRuntime.NewEmpty();
-        var btn = DocRuntime.NewButton("Export", () =>
-        {
-            EditorUtility.DisplayProgressBar("Document Builder", "Exporting Markdown...", 1);
-            exportFailCount = 0;
-            exportCount = 0;
-            failList.Clear();
-            info.Clear();
-            foreach (ObjectField obj in container.Children())
-            {
-                if (obj.value == null) continue;
-                exportMarkdown((SODocPage)obj.value, exportPath, includeSubPages.value);
-            }
-            AssetDatabase.Refresh();
-            DocComponent doc = new DocComponent();
-            doc.VisualID = new DocDescription().VisualID;
-            doc.TextData.Add($"Success Export {exportCount} files.");
-            var data = new DocDescription.Data();
-            data.Type = DocDescription.Type.Success;
-            doc.JsonData = JsonUtility.ToJson(data);
-            info.Add(DocRuntime.CreateVisual(doc));
-            if(exportFailCount > 0)
-            {
-                doc.TextData[0] = $"Fail Export {exportFailCount}.";
-                data.Type = DocDescription.Type.Danger;
+                EditorUtility.DisplayProgressBar("Document Builder", "Exporting Markdown...", 1);
+                exportFailCount = 0;
+                exportCount = 0;
+                failList.Clear();
+                info.Clear();
+                foreach (ObjectField obj in container.Children())
+                {
+                    if (obj.value == null) continue;
+                    exportMarkdown((SODocPage)obj.value, exportPath, includeSubPages.value);
+                }
+                AssetDatabase.Refresh();
+                DocComponent doc = new DocComponent();
+                doc.VisualID = new DocDescription().VisualID;
+                doc.TextData.Add($"Success Export {exportCount} files.");
+                var data = new DocDescription.Data();
+                data.Type = DocDescription.Type.Success;
                 doc.JsonData = JsonUtility.ToJson(data);
                 info.Add(DocRuntime.CreateVisual(doc));
-                foreach (var page in failList)
+                if (exportFailCount > 0)
                 {
-                    var field = DocEditor.NewObjectField<SODocPage>("");
-                    field.value = page;
-                    field.style.backgroundColor = DocStyle.Current.DangerColor;
-                    info.Add(field);
+                    doc.TextData[0] = $"Fail Export {exportFailCount}.";
+                    data.Type = DocDescription.Type.Danger;
+                    doc.JsonData = JsonUtility.ToJson(data);
+                    info.Add(DocRuntime.CreateVisual(doc));
+                    foreach (var page in failList)
+                    {
+                        var field = DocEditor.NewObjectField<SODocPage>("");
+                        field.value = page;
+                        field.style.backgroundColor = DocStyle.Current.DangerColor;
+                        info.Add(field);
+                    }
+                }
+            });
+            btn.style.marginTop = 20;
+            btn.SetEnabled(false);
+            var pathField = DocRuntime.NewTextField("Dst Path", e =>
+            {
+                if (Directory.Exists(e.newValue))
+                {
+                    btn.SetEnabled(true);
+                    exportPath = e.newValue;
+                }
+                else
+                {
+                    btn.SetEnabled(false);
+                }
+            });
+
+            Layout.Add(pathField);
+            Layout.Add(container);
+            Layout.Add(info);
+            Layout.Add(btn);
+        }
+        int exportCount = 0;
+        int exportFailCount = 0;
+        List<SODocPage> failList = new List<SODocPage>();
+        private void exportMarkdown(SODocPage page, string path, bool includeSub)
+        {
+            if (page == null) return;
+            StringBuilder sb = new StringBuilder();
+            try
+            {
+                foreach (DocComponent doc in page.Components)
+                {
+                    var field = DocEditor.CreateComponentField(doc);
+                    field.SetStatus(true);
+                    sb.Append(field.DocEditVisual.ToMarkdown(path));
+                    sb.AppendLine();
+                    sb.AppendLine();
+                }
+                exportCount++;
+            }
+            catch
+            {
+                exportFailCount++;
+                failList.Add(page);
+            }
+            string texts = sb.ToString();
+            if (!string.IsNullOrEmpty(texts))
+                File.WriteAllText($"{path}/{page.name}.md", sb.ToString());
+            if (includeSub)
+            {
+                if (page.SubPages.Count > 0)
+                {
+                    string subPath = $"{page.name}";
+                    if (!Directory.Exists(path + "/" + subPath))
+                        Directory.CreateDirectory(path + "/" + subPath);
+                    subPath = path + "/" + subPath;
+                    foreach (var subPage in page.SubPages)
+                        exportMarkdown(subPage, subPath, includeSub);
                 }
             }
-        });
-        btn.style.marginTop = 20;
-        btn.SetEnabled(false);
-        var pathField = DocRuntime.NewTextField("Dst Path", e =>
-        {
-            if (Directory.Exists(e.newValue))
-            {
-                btn.SetEnabled(true);
-                exportPath = e.newValue;
-            }
-            else
-            {
-                btn.SetEnabled(false);
-            }
-        });
+        }
+    }
 
-        Layout.Add(pathField);
-        Layout.Add(container);
-        Layout.Add(info);
-        Layout.Add(btn);
-    }
-    int exportCount = 0;
-    int exportFailCount = 0;
-    List<SODocPage> failList = new List<SODocPage>(); 
-    private void exportMarkdown(SODocPage page, string path, bool includeSub)
-    {
-        if (page == null) return;
-        StringBuilder sb = new StringBuilder();
-        try
-        {
-            foreach (DocComponent doc in page.Components)
-            {
-                var field = DocEditor.CreateComponentField(doc);
-                field.SetStatus(true);
-                sb.Append(field.DocEditVisual.ToMarkdown(path));
-                sb.AppendLine();
-                sb.AppendLine();
-            }
-            exportCount++;
-        }
-        catch
-        {
-            exportFailCount++;
-            failList.Add(page);
-        }
-        string texts = sb.ToString();
-        if(!string.IsNullOrEmpty(texts))
-            File.WriteAllText($"{path}/{page.name}.md", sb.ToString());
-        if(includeSub)
-        {
-            if(page.SubPages.Count > 0)
-            {
-                string subPath = $"{page.name}";
-                if (!Directory.Exists(path + "/" + subPath))
-                    Directory.CreateDirectory(path + "/" + subPath);
-                subPath = path + "/" + subPath;
-                foreach(var subPage in page.SubPages)
-                    exportMarkdown(subPage, subPath, includeSub);
-            }
-        }
-    }
 }

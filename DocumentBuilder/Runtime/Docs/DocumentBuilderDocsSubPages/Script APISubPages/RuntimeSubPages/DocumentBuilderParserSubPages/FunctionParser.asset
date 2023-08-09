@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: DocRuntime
+  m_Name: FunctionParser
   m_EditorClassIdentifier: 
-  Icon: {fileID: 2800000, guid: 77fc49cad09df0142a9bbebdffc823a5, type: 3}
+  Icon: {fileID: 2800000, guid: 116bd5b02a236df4d9e4d81f16c51c48, type: 3}
   SubPages: []
   Components:
   - VisualID: 1
-    JsonData: 
+    JsonData: '{"Level":3}'
     TextData:
-    - DocRuntime
+    - Usage
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - utils in Runtime
+    - use to coloring a method syntax
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
@@ -33,35 +33,20 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
-    JsonData: 
+    JsonData: '{"Level":3}'
     TextData:
-    - Static Methods
+    - API
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 8
-    JsonData: '{"num":14}'
+  - VisualID: 4
+    JsonData: '{"Name":"FunctionParser","Syntaxs":["public static string FunctionParser(string
+      func, bool isHTML)"],"ReturnTypes":["string"],"Params":[{"ParamName":"func","Type":"string"},{"ParamName":"isHTML","Type":"bool"}],"isOn":false}'
     TextData:
-    - Reload
-    - ApplyMargin
-    - CreateVisual
-    - NewEmpty
-    - NewEmptyHorizontal
-    - NewHorizontalBar
-    - NewButton
-    - NewCheckButton
-    - NewTextField
-    - NewDropdownField
-    - NewTextElement
-    - NewLabel
-    - NewScrollView
-    - ApplyStyle
-    ObjsData:
-    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
-    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
-    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
-    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
-    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
-    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - 
+    - 
+    - 
+    - 
+    ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1
