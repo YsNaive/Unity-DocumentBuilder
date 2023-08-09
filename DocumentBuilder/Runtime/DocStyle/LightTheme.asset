@@ -12,51 +12,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03bfbaa136870064295a83c7ec8ac951, type: 3}
   m_Name: LightTheme
   m_EditorClassIdentifier: 
-  MainText:
-    FontAsset: {fileID: 0}
-    FontStyle: 0
-    FontSize: 12
-    Color: {r: 0.13599144, g: 0.1743098, b: 0.18867922, a: 1}
-    Align: 3
-    Wrap: 0
-  LabelText:
-    FontAsset: {fileID: 0}
-    FontStyle: 0
-    FontSize: 20
-    Color: {r: 0.07450981, g: 0.12941177, b: 0.14901961, a: 1}
-    Align: 3
-    Wrap: 0
-  ButtonText:
-    FontAsset: {fileID: 0}
-    FontStyle: 2
-    FontSize: 12
-    Color: {r: 0.07450981, g: 0.12941177, b: 0.14901961, a: 1}
-    Align: 4
-    Wrap: 0
-  BackgroundColor: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
-  SubBackgroundColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
-  FrontgroundColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
-  SubFrontgroundColor: {r: 0.5093271, g: 0.5306336, b: 0.5377358, a: 1}
-  FuncColor: {r: 0.89, g: 0.79, b: 0.35, a: 1}
-  ArgsColor: {r: 0.65, g: 0.85, b: 0.95, a: 1}
-  TypeColor: {r: 0.35, g: 0.7, b: 0.65, a: 1}
-  PrefixColor: {r: 0.4, g: 0.56, b: 0.82, a: 1}
-  StringColor: {r: 0.7924528, g: 0.56484157, b: 0.36183694, a: 1}
-  NumberColor: {r: 0.6, g: 0.8, b: 0.6, a: 1}
-  ControlColor: {r: 0.84, g: 0.45, b: 0.61, a: 1}
-  CommentsColor: {r: 0.4, g: 0.6, b: 0.35, a: 1}
-  CodeBackgroundColor: {r: 0.16037738, g: 0.14433965, b: 0.14433965, a: 1}
-  SuccessColor: {r: 0.7980064, g: 0.9056604, b: 0.83285904, a: 1}
-  WarningColor: {r: 0.9056604, g: 0.8933696, b: 0.73819864, a: 1}
-  DangerColor: {r: 0.9716981, g: 0.83786047, b: 0.83786047, a: 1}
-  HintColor: {r: 0.8215913, g: 0.87906927, b: 0.9528302, a: 1}
-  SuccessTextColor: {r: 0.038554624, g: 0.3584906, b: 0.1526403, a: 1}
-  WarningTextColor: {r: 0.4056604, g: 0.2881173, b: 0.0436276, a: 1}
-  DangerTextColor: {r: 0.49056602, g: 0.1915984, b: 0.1915984, a: 1}
-  HintTextColor: {r: 0.12958346, g: 0.20391597, b: 0.3773585, a: 1}
-  MarginVer: 0
-  MarginHor: 1
-  LineHeight: 18
-  ScrollerWidth: 14
-  ComponentSpace: 10
-  GUIScale: 1
+  DocStyle:
+    MainText:
+      FontAsset: {fileID: 0}
+      FontStyle: 0
+      FontSize: 12
+      Color: {r: 0.14117648, g: 0.16470589, b: 0.17254902, a: 1}
+      Align: 3
+      Wrap: 0
+    LabelText:
+      FontAsset: {fileID: 0}
+      FontStyle: 0
+      FontSize: 20
+      Color: {r: 0.14117648, g: 0.16470589, b: 0.17254902, a: 1}
+      Align: 3
+      Wrap: 0
+    ButtonText:
+      FontAsset: {fileID: 0}
+      FontStyle: 0
+      FontSize: 12
+      Color: {r: 0.14001423, g: 0.16196351, b: 0.16981131, a: 1}
+      Align: 4
+      Wrap: 0
+    BackgroundColor: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
+    SubBackgroundColor: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
+    FrontgroundColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+    SubFrontgroundColor: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+    FuncColor: {r: 0.89, g: 0.79, b: 0.35, a: 1}
+    ArgsColor: {r: 0.65, g: 0.85, b: 0.95, a: 1}
+    TypeColor: {r: 0.35, g: 0.7, b: 0.65, a: 1}
+    PrefixColor: {r: 0.4, g: 0.56, b: 0.82, a: 1}
+    StringColor: {r: 0.79, g: 0.56, b: 0.36, a: 1}
+    NumberColor: {r: 0.6, g: 0.8, b: 0.6, a: 1}
+    ControlColor: {r: 0.84, g: 0.45, b: 0.61, a: 1}
+    CommentsColor: {r: 0.4, g: 0.6, b: 0.35, a: 1}
+    CodeBackgroundColor: {r: 0.14585264, g: 0.14585264, b: 0.16037738, a: 1}
+    SuccessColor: {r: 0.6671502, g: 0.8113208, b: 0.61537915, a: 1}
+    WarningColor: {r: 0.8679245, g: 0.8073991, b: 0.59280884, a: 1}
+    DangerColor: {r: 0.8867924, g: 0.6004075, b: 0.53040224, a: 1}
+    HintColor: {r: 0.6006586, g: 0.74700636, b: 0.8018868, a: 1}
+    SuccessTextColor: {r: 0.19492966, g: 0.33962262, b: 0.17429689, a: 1}
+    WarningTextColor: {r: 0.2735849, g: 0.26468047, b: 0.083624065, a: 1}
+    DangerTextColor: {r: 0.26415092, g: 0.11064433, b: 0.11064433, a: 1}
+    HintTextColor: {r: 0.08191525, g: 0.17185122, b: 0.24528301, a: 1}
+    MarginVer: 1
+    MarginHor: 0
+    LineHeight: 18
+    ScrollerWidth: 14
+    ComponentSpace: 10
+    GUIScale: 1
+  RuntimeFontSizeScale: 2.5
+  EditorFontSizeScale: 1

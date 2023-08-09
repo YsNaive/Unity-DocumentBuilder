@@ -6,9 +6,16 @@ using UnityEngine.UIElements;
 
 public static class VisualElementExtension
 {
+    public static int HtmlRTF(this StringBuilder str, int begIndex, int length, Color color)
+    {
+        string colorFormat = $"<font color=#{ColorUtility.ToHtmlStringRGB(color)}>";
+        str.Insert(begIndex + length,"</font>");
+        str.Insert(begIndex,colorFormat);
+        return colorFormat.Length + 7;
+    }    
     public static int UnityRTF(this StringBuilder str, int begIndex, int length, Color color)
     {
-        string colorFormat = $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>";
+        string colorFormat = $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>";
         str.Insert(begIndex + length,"</color>");
         str.Insert(begIndex,colorFormat);
         return colorFormat.Length + 8;

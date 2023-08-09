@@ -16,18 +16,19 @@ public class Sample : MonoBehaviour
     public SODocPage root;
     void Start()
     {
-        var visual = DocRuntime.CreateVisual(component);
-        UIDocument.rootVisualElement.Add(visual);
-        visual.IntroAnimation(() =>
-        { // after intro animation is done
-            visual.schedule.Execute(() =>
-            { // wait 2 sec
-                visual.OuttroAnimation(() =>
-                { // after outtro animation is done
-                    UIDocument.rootVisualElement.Remove(visual);
-                });
-            }).ExecuteLater(2000); 
-        });
+        //var visual = DocRuntime.CreateVisual(component);
+        //UIDocument.rootVisualElement.Add(visual);
+        //visual.IntroAnimation(() =>
+        //{ // after intro animation is done
+        //    visual.schedule.Execute(() =>
+        //    { // wait 2 sec
+        //        visual.OuttroAnimation(() =>
+        //        { // after outtro animation is done
+        //            UIDocument.rootVisualElement.Remove(visual);
+        //        });
+        //    }).ExecuteLater(2000); 
+        //});
+
         UIDocument.rootVisualElement.Add(new DocBookVisual(root));
     }
 }
