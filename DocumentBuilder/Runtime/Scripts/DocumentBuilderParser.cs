@@ -13,7 +13,7 @@ namespace NaiveAPI.DocumentBuilder
         public const string type = @"(?:(?:[<,]\s*)?\b" + variable + @"(?:\[.*?\])?[>]*)+";
         public const string functype = @"((?:(?:[<,]\s*)?\b" + variable + @"(?:\[.*?\])?[>]*)+)";
         public const string prefix = @"(?:(public|private|protected|internal|static|readonly|override|const)\s*)*";
-        public const string test = "class|interface|enum|if|else|switch|case|default|do|while|for|foreach|break|continue|goto|return|using|using static|new";
+        public const string test = "(?:class|interface|enum|if|else|switch|case|default|do|while|for|foreach|break|continue|goto|return|using|using static|new)";
         public const string funcEqual = @"(?:\s*=[^\)]*?)?";
         public const string fieldEqual = @"(?:\s*=[^;{]*?)?";
         public const string classPattern = @"\b" + prefix + @"(class|enum|interface)\s+(?:(?:\s*[:,]\s*)?(\w+))*";
@@ -27,8 +27,9 @@ namespace NaiveAPI.DocumentBuilder
         public const string newPattern = @"\bnew\s+" + type + @"(?:;|\()";
         public const string reservedWordPattern = @"\b(?:in|get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
         public const string methodPattern = @"\b" + type + @"\(";
-        public const string numberPattern = @"[^""A-Za-z_][+-]?(\d+(?:\.\d+)?[fx]?)";
-        public const string pattern = @"\w+((?:((?'Open'<)|,)(\w*)?(?:,\s*(\w+))?)+(?:(?'Close-Open'>))+)+(?(Open)(?!))";
+        public const string numberPattern = @"[+-]?\b(\d+(?:\.\d+)?[fx]?)";
+        public const string pattern1 = @"\b(?<var>" + variable + @")\b(?(<)(?:(?'Open'<)|" + 
+                @"(?<var>" + variable + @")|(?'Close-Open'>)|(?:,\s*(?<var>" + variable + @")))*)(?(Open)(?!))";
 
         public static string CalGenericTypeName(Type type)
         {
@@ -216,7 +217,13 @@ namespace NaiveAPI.DocumentBuilder
             StringBuilder args = new StringBuilder();
             MatchCollection matches;
             StringBuilder stringBuilder = new StringBuilder(data);
-
+            /*
+            matches = Regex.Matches(stringBuilder.ToString(), pattern1);
+            foreach (Match match in matches)
+            {
+                foreach (Capture capture in match.Groups["var"].Captures)
+                    Debug.Log(capture.Value);
+            }*/
             matches = Regex.Matches(stringBuilder.ToString(), commentPattern);
             foreach (Match match in matches)
             {
@@ -300,10 +307,13 @@ namespace NaiveAPI.DocumentBuilder
             {
                 addTable(table, match, 1, DocStyle.Current.TypeColor, ParseType.Func, "Type");
             }
-            matches = Regex.Matches(stringBuilder.ToString(), @"[^.]\b(" + args.ToString() + @")\b");
-            foreach (Match match in matches)
+            if (args.ToString() != "")
             {
-                addTable(table, match, 1, DocStyle.Current.ArgsColor, ParseType.Single, "Arg");
+                matches = Regex.Matches(stringBuilder.ToString(), @"(?<!\.)\b(" + args.ToString().Substring(0, args.Length - 1) + @")\b");
+                foreach (Match match in matches)
+                {
+                    addTable(table, match, 1, DocStyle.Current.ArgsColor, ParseType.Single, "Arg");
+                }
             }
             int index = 0, offset = 0;
             foreach (var key in table.Keys)
