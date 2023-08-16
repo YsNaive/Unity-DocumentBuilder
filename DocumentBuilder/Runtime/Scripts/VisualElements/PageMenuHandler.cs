@@ -38,6 +38,7 @@ namespace NaiveAPI.DocumentBuilder
             DocCache.Get().OpeningBookHierarchy = GetState();
             AddedPages.Clear();
             AddedVisual.Clear();
+            if (RootVisual == null) return;
             RootVisual.Clear();
             var parent = RootVisual.parent;
             int i = parent.IndexOf(RootVisual);

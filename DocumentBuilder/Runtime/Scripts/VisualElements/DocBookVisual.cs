@@ -259,7 +259,7 @@ namespace NaiveAPI.DocumentBuilder
                         DocLabel.Data data = JsonUtility.FromJson<DocLabel.Data>(com.JsonData);
                         data ??= new DocLabel.Data();
 
-                        text.style.marginLeft = data.Level * DocStyle.Current.MainTextSize;
+                        text.style.marginLeft = (data.Level-1) * DocStyle.Current.MainTextSize;
                         int localI = comIndex;
                         text.RegisterCallback<PointerDownEvent>(e =>
                         {
@@ -277,7 +277,7 @@ namespace NaiveAPI.DocumentBuilder
             chapInfo.style.SetIS_Style(ISPadding.Percent(15));
             chapInfo.style.SetIS_Style(ISRadius.Percent(10));
             bool isOpen = false;
-            var btn = DocRuntime.NewTextElement("☰");
+            var btn = DocRuntime.NewTextElement("=");
             btn.RegisterCallback<PointerEnterEvent>(e =>
             {
                 if (!isOpen)

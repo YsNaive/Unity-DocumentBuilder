@@ -133,8 +133,11 @@ namespace NaiveAPI_UI
         }
         public static IStyle SetIS_Style(this IStyle element, ISText text)
         {
-            if(text.FontAsset!=null)
+            if (text.FontAsset != null)
+            {
                 element.unityFontDefinition = new StyleFontDefinition(text.FontAsset);
+                element.unityFont = text.FontAsset.sourceFontFile;
+            }
             element.fontSize = text.FontSize;
             element.unityTextAlign = text.Align;
             element.color = text.Color;

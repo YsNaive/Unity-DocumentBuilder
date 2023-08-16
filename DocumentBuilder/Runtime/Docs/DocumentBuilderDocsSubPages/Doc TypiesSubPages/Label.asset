@@ -18,14 +18,13 @@ MonoBehaviour:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Description
+    - Label
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - "Main visual to display contents, it has 5 types : \nNone, Sucess, Warning,
-      Danger, Hint."
+    - You can change its level between 1-6
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0
