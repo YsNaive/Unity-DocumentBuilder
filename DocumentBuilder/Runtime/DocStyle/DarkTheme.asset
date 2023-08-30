@@ -55,9 +55,21 @@ MonoBehaviour:
     WarningTextColor: {r: 0.9, g: 0.9, b: 0.7, a: 1}
     DangerTextColor: {r: 0.9, g: 0.7, b: 0.7, a: 1}
     HintTextColor: {r: 0.74, g: 0.74, b: 0.96, a: 1}
-    MarginVer: 1
-    MarginHor: 0
-    LineHeight: 18
+    m_labelWidth:
+      Unit: 0
+      Value: 120
+    InputFieldBackground:
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      ImageTint: {r: 0.21960784, g: 0.21960784, b: 0.24313726, a: 1}
+      Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+      Texture: {fileID: 0}
+      RenderTexture: {fileID: 0}
+      VectorImage: {fileID: 0}
+      ScaleMode: 0
+    MarginVertical: 2
+    MarginHorizontal: 0
+    PaddingVertical: 2
+    PaddingHorizontal: 2
     ScrollerWidth: 14
     ComponentSpace: 10
     GUIScale: 1

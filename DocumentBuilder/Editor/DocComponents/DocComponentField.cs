@@ -168,7 +168,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             style.borderLeftColor = DocStyle.Current.HintColor;
             RegisterCallback<PointerDownEvent>(enableEditMode);
-            VisualElement ve = DocRuntime.CreateVisual(Target);
+            VisualElement ve = DocRuntime.CreateDocVisual(Target);
             foreach (var child in ve.Children())
                 child.SetEnabled(false);
             return ve;

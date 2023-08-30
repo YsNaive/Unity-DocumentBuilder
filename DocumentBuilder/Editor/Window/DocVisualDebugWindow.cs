@@ -82,7 +82,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     int i = root.IndexOf(ve);
                     if (ve != null)
                         root.Remove(ve);
-                    root.Insert(i, DocRuntime.CreateVisual(docComponent));
+                    root.Insert(i, DocRuntime.CreateDocVisual(docComponent));
                 }
             }).Every(250);
             var viewbar = DocRuntime.NewEmptyHorizontal();
@@ -97,7 +97,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 int i = root.IndexOf(ve);
                 if (ve != null)
                     root.Remove(ve);
-                root.Insert(i, DocRuntime.CreateVisual(docComponent));
+                root.Insert(i, DocRuntime.CreateDocVisual(docComponent));
             });
             repaint.style.width = Length.Percent(25);
             viewbar.Add(viewText);
@@ -107,7 +107,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             viewbar.style.borderBottomColor = Color.gray;
             viewbar.style.borderBottomWidth = 2f;
             root.Add(viewbar);
-            root.Add(DocRuntime.CreateVisual(docComponent));
+            root.Add(DocRuntime.CreateDocVisual(docComponent));
             root.Add(dataText);
             root.Add(new IMGUIContainer(() =>
             {

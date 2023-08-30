@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -34,9 +35,16 @@ namespace NaiveAPI.DocumentBuilder
             if(instance.ComponentSpace != (int)(DocStyle.ComponentSpace * scale))
             {
                 instance.ComponentSpace = (int)(DocStyle.ComponentSpace * scale);
+                instance.ScrollerWidth = (int)(DocStyle.ScrollerWidth * scale);
                 instance.MainTextSize = (int)(DocStyle.MainTextSize * scale);
                 instance.LabelTextSize = (int)(DocStyle.LabelTextSize * scale);
                 instance.ButtonTextSize = (int)(DocStyle.ButtonTextSize * scale);
+                instance.MarginVertical = (int)(DocStyle.MarginVertical * scale);
+                instance.MarginHorizontal = (int)(DocStyle.MarginHorizontal * scale);
+                instance.PaddingVertical = (int)(DocStyle.PaddingVertical * scale);
+                instance.PaddingHorizontal = (int)(DocStyle.PaddingHorizontal * scale);
+                if(instance.LabelWidth.unit == LengthUnit.Pixel)
+                    instance.LabelWidth = (int)(DocStyle.LabelWidth.value * scale);
             }
             return instance;
         }

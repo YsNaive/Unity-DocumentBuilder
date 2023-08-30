@@ -140,7 +140,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Toggle includeSubPages = new Toggle();
             includeSubPages.label = "Include SubPages";
             includeSubPages.value = true;
-            DocRuntime.ApplyMargin(includeSubPages);
+            DocRuntime.ApplyMarginPadding(includeSubPages);
             Layout.Add(includeSubPages);
             var container = DocRuntime.NewEmpty();
             container.Add(createSODocPageSelectField());
@@ -164,13 +164,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 var data = new DocDescription.Data();
                 data.Type = DocDescription.Type.Success;
                 doc.JsonData = JsonUtility.ToJson(data);
-                info.Add(DocRuntime.CreateVisual(doc));
+                info.Add(DocRuntime.CreateDocVisual(doc));
                 if (exportFailCount > 0)
                 {
                     doc.TextData[0] = $"Fail Export {exportFailCount}.";
                     data.Type = DocDescription.Type.Danger;
                     doc.JsonData = JsonUtility.ToJson(data);
-                    info.Add(DocRuntime.CreateVisual(doc));
+                    info.Add(DocRuntime.CreateDocVisual(doc));
                     foreach (var page in failList)
                     {
                         var field = DocEditor.NewObjectField<SODocPage>("");

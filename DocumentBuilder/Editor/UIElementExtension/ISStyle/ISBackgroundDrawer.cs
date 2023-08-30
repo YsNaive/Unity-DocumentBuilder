@@ -28,9 +28,9 @@ namespace NaiveAPI_Editor.drawer
             EditorGUI.PropertyField(rect, property.FindPropertyRelative("Color"));
             rect.y = rect.yMax;
             EditorGUI.PropertyField(rect, property.FindPropertyRelative("ImageTint"));
+            rect.y = rect.yMax;
             Rect imageRect = rect;
             imageRect.y = imageRect.yMax;
-            rect.y = rect.yMax;
             EditorGUI.PropertyField(rect, property.FindPropertyRelative("ScaleMode"));
             imageRect.width -= 85;
 

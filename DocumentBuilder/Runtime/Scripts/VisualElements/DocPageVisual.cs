@@ -15,7 +15,7 @@ namespace NaiveAPI.DocumentBuilder
         public bool IsPlayingAnimation = false;
         int playingCount = 0;
         public DocPageVisual(SODocPage page) {
-            DocRuntime.ApplyStyle(this);
+            DocRuntime.ApplyScrollViewStyle(this);
             verticalScrollerVisibility = ScrollerVisibility.AlwaysVisible;
             this.Q("unity-content-container").style.marginRight = Length.Percent(3.5f);
             Target = page;
@@ -26,7 +26,7 @@ namespace NaiveAPI.DocumentBuilder
             Clear();
             foreach (var com in Target.Components)
             {
-                DocVisual docVisual = (DocVisual)DocRuntime.CreateVisual(com);
+                DocVisual docVisual = (DocVisual)DocRuntime.CreateDocVisual(com);
                 if (docVisual.VisualID == "1")
                 {
                     docVisual.style.marginLeft = DocStyle.Current.LabelTextSize;

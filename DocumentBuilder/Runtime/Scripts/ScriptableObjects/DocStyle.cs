@@ -2,13 +2,27 @@ using NaiveAPI_UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
     [System.Serializable]
-    public class DocStyle
+    public class DocStyle : ISerializationCallbackReceiver
     {
-        public static DocStyle Current => DocRuntimeData.Instance.CurrentStyle.Get();
+        public static DocStyle Current
+        {
+            get
+            {
+                if (m_current == null)
+                    m_current = DocRuntimeData.Instance.CurrentStyle.Get();
+                return m_current;
+            }
+            set
+            {
+                m_current = value;
+            }
+        }
+        private static DocStyle m_current;
         public int MainTextSize { get => MainText.FontSize; set => MainText.FontSize = value; }
         public int LabelTextSize { get => LabelText.FontSize; set => LabelText.FontSize = value; }
         public int ButtonTextSize { get => ButtonText.FontSize; set => ButtonText.FontSize = value; }
@@ -41,9 +55,22 @@ namespace NaiveAPI.DocumentBuilder
         public Color DangerTextColor = new Color(0, 0, 0, 1);
         public Color HintTextColor = new Color(0, 0, 0, 1);
 
-        public float MarginVer = 1;
-        public float MarginHor = 0;
-        public float LineHeight = 18;
+        public Length LabelWidth;
+        public Length ContentWidth(VisualElement ve)
+        {
+            if (LabelWidth.unit == LengthUnit.Percent)
+                return Length.Percent(100 - LabelWidth.value);
+            if (ve.parent == null) return new Length(0);
+            return new Length(ve.parent.resolvedStyle.width - LabelWidth.value);
+        }
+        [SerializeField] private ISLength m_labelWidth = ISLength.Pixel(80);
+
+        public ISBackground InputFieldBackground = new ISBackground();
+
+        public float MarginVertical = 2;
+        public float MarginHorizontal = 0;
+        public float PaddingVertical = 2;
+        public float PaddingHorizontal = 2;
         public float ScrollerWidth = 14;
         public float ComponentSpace = 10;
         public float GUIScale = 1;
@@ -79,14 +106,29 @@ namespace NaiveAPI.DocumentBuilder
             docStyle.DangerTextColor = this.DangerTextColor;  
             docStyle.HintTextColor = this.HintTextColor;
 
-            docStyle.MarginVer = this.MarginVer;
-            docStyle.MarginHor = this.MarginHor;
-            docStyle.LineHeight = this.LineHeight;
+            docStyle.LabelWidth = this.LabelWidth;
+
+            docStyle.InputFieldBackground = this.InputFieldBackground;
+
+            docStyle.MarginVertical = this.MarginVertical;
+            docStyle.MarginHorizontal = this.MarginHorizontal;
+            docStyle.PaddingVertical = this.PaddingVertical;
+            docStyle.PaddingHorizontal = this.PaddingHorizontal;
             docStyle.ScrollerWidth = this.ScrollerWidth;
             docStyle.ComponentSpace = this.ComponentSpace;
             docStyle.GUIScale = this.GUIScale;
 
             return docStyle;
+        }
+
+        public void OnBeforeSerialize()
+        {
+            m_labelWidth = new ISLength() { Value = LabelWidth.value, Unit = LabelWidth.unit };
+        }
+
+        public void OnAfterDeserialize()
+        {
+            LabelWidth = m_labelWidth;
         }
     }
 

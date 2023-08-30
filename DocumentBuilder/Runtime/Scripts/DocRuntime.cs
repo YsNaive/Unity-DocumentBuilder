@@ -37,14 +37,32 @@ namespace NaiveAPI
         }
 
         #region VisualElement
+        public static void ApplyMarginPadding(VisualElement ve)
+        {
+            ve.style.marginTop = DocStyle.Current.MarginVertical;
+            ve.style.marginLeft = DocStyle.Current.MarginHorizontal;
+            ve.style.marginRight = DocStyle.Current.MarginHorizontal;
+            ve.style.marginBottom = DocStyle.Current.MarginVertical;
+            ve.style.paddingTop = DocStyle.Current.PaddingVertical;
+            ve.style.paddingLeft = DocStyle.Current.PaddingHorizontal;
+            ve.style.paddingRight = DocStyle.Current.PaddingHorizontal;
+            ve.style.paddingBottom = DocStyle.Current.PaddingVertical;
+        }
         public static void ApplyMargin(VisualElement ve)
         {
-            ve.style.marginTop = DocStyle.Current.MarginVer;
-            ve.style.marginLeft = DocStyle.Current.MarginHor;
-            ve.style.marginRight = DocStyle.Current.MarginHor;
-            ve.style.marginBottom = DocStyle.Current.MarginVer;
+            ve.style.marginTop = DocStyle.Current.MarginVertical;
+            ve.style.marginLeft = DocStyle.Current.MarginHorizontal;
+            ve.style.marginRight = DocStyle.Current.MarginHorizontal;
+            ve.style.marginBottom = DocStyle.Current.MarginVertical;
         }
-        public static DocVisual CreateVisual(DocComponent docComponent)
+        public static void ApplyPadding(VisualElement ve)
+        {
+            ve.style.paddingTop = DocStyle.Current.PaddingVertical;
+            ve.style.paddingLeft = DocStyle.Current.PaddingHorizontal;
+            ve.style.paddingRight = DocStyle.Current.PaddingHorizontal;
+            ve.style.paddingBottom = DocStyle.Current.PaddingVertical;
+        }
+        public static DocVisual CreateDocVisual(DocComponent docComponent)
         {
             Type t;
             if (!VisualID_Dict.TryGetValue(docComponent.VisualID, out t))
@@ -94,16 +112,20 @@ namespace NaiveAPI
             }
             return bar;
         }
+        public static VisualElement NewContainer()
+        {
+            var ve = NewEmpty();
+            ApplyMarginPadding(ve);
+            ve.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            return ve;
+        }
         public static Button NewButton(Action onClick = null) { return NewButton("", DocStyle.Current.SubBackgroundColor, onClick); }
         public static Button NewButton(string text, Action onClick = null) { return NewButton(text, DocStyle.Current.SubBackgroundColor, onClick); }
         public static Button NewButton(Color color, Action onClick = null) { return NewButton("",color, onClick); }
         public static Button NewButton(string text, Color color, Action onClick = null)
         {
             Button button = new Button();
-            button.style.height = DocStyle.Current.LineHeight;
-            ApplyStyle(button, color);
-            button.style.paddingLeft = 4;
-            button.style.paddingRight = 4;
+            ApplyButtonStyle(button, color);
             button.text = text;
             button.style.height = DocStyle.Current.MainTextSize*1.5f;
             if (onClick != null) button.clicked+= onClick;
@@ -114,11 +136,10 @@ namespace NaiveAPI
         public static CheckButton NewCheckButton(string text, Color color,Color confirm, Color cancel, Action onClick = null)
         {
             CheckButton button = new CheckButton();
-            button.style.height = DocStyle.Current.LineHeight;
-            ApplyMargin(button);
-            ApplyStyle(button.MainBtn, color);
-            ApplyStyle(button.ConfirmButton, confirm);
-            ApplyStyle(button.CancelButton, cancel);
+            button.style.ClearMarginPadding();
+            ApplyButtonStyle(button.MainBtn, color);
+            ApplyButtonStyle(button.ConfirmButton, confirm);
+            ApplyButtonStyle(button.CancelButton, cancel);
             button.ConfirmButton.style.width = Length.Percent(50);
             button.CancelButton.style.width = Length.Percent(50);
             button.RegisterCallback<GeometryChangedEvent>(e =>
@@ -135,32 +156,59 @@ namespace NaiveAPI
         public static TextField NewTextField(string label = "", EventCallback<ChangeEvent<string>> eventCallback = null)
         {
             TextField textField = new TextField();
-            textField.style.ClearPadding();
-            ApplyMargin(textField);
-            textField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            textField.style.ClearMarginPadding();
+            ApplyMarginPadding(textField[0]);
+            textField[0].style.paddingLeft = DocStyle.Current.MainTextSize / 2f;
+            textField[0].style.SetIS_Style(DocStyle.Current.InputFieldBackground);
             textField[0].style.SetIS_Style(DocStyle.Current.MainText);
             if (!string.IsNullOrEmpty(label))
             {
                 textField.label = label;
-                textField[0].style.SetIS_Style(DocStyle.Current.MainText);
+                textField.labelElement.style.SetIS_Style(DocStyle.Current.MainText);
+                ApplyLabelStyle(textField.labelElement);
             }
             if(eventCallback != null)
                 textField.RegisterValueChangedCallback(eventCallback);
             return  textField;
         }
+        public static Foldout NewFoldout(string text = "")
+        {
+            Foldout foldout = new Foldout();
+            ApplyMarginPadding(foldout);
+            foldout.style.SetIS_Style(DocStyle.Current.MainText);
+            foldout.contentContainer.style.paddingLeft = 15;
+            foldout.text = text;
+            var toggle = foldout.Q<Toggle>();
+            toggle.style.ClearMarginPadding();
+            toggle.style.paddingLeft = 10;
+            toggle.style.backgroundColor = DocStyle.Current.BackgroundColor * 0.75f;
+            toggle[0].focusable = false;
+            var img = toggle[0][0];
+            img.style.backgroundImage = SODocStyle.WhiteArrow;
+            img.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontgroundColor;
+            img.style.ClearMarginPadding();
+            img.style.marginRight = DocStyle.Current.MainTextSize/2f;
+            toggle.RegisterValueChangedCallback(e =>
+            {
+                img.style.rotate = new Rotate(e.newValue ? 90 : 0);
+            });
+            foldout.value = false;
+            return foldout;
+        }
         public static DropdownField NewDropdownField(string text, List<string> choice, EventCallback<ChangeEvent<string>> eventCallback = null) 
         {
             DropdownField dropField = new DropdownField();
-            dropField.style.ClearPadding();
+            dropField.style.ClearMarginPadding();
             dropField.focusable = false;
-            ApplyMargin(dropField);
-            dropField.style.height = DocStyle.Current.LineHeight;
             dropField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             dropField[0].style.SetIS_Style(DocStyle.Current.MainText);
+            dropField[0][0].style.SetIS_Style(DocStyle.Current.MainText);
+            ApplyMarginPadding(dropField[0]);
             if (!string.IsNullOrEmpty(text))
             {
                 dropField.label = text;
-                dropField[0].style.SetIS_Style(DocStyle.Current.MainText);
+                dropField.labelElement.style.SetIS_Style(DocStyle.Current.MainText);
+                ApplyLabelStyle(dropField.labelElement);
             }
             if (eventCallback != null)
                 dropField.RegisterValueChangedCallback(eventCallback);
@@ -172,10 +220,17 @@ namespace NaiveAPI
             TextElement textElement = new TextElement();
             textElement.text = text;
             textElement.style.ClearPadding();
-            ApplyMargin(textElement);
+            ApplyMarginPadding(textElement);
             textElement.style.whiteSpace = WhiteSpace.Normal;
             textElement.style.SetIS_Style(DocStyle.Current.MainText);
             return textElement;
+        }
+        public static StringDropdown NewDropdown(string label, List<string> choices, Action<string> valueCallback = null)
+        {
+            StringDropdown dropdown = new StringDropdown(label);
+            dropdown.Choices = choices;
+            dropdown.OnValueChanged += valueCallback;
+            return dropdown;
         }
         public static Label NewLabel(string text)
         {
@@ -228,17 +283,17 @@ namespace NaiveAPI
         {
             
             ScrollView scrollView = new ScrollView();
-            ApplyStyle(scrollView);
+            ApplyScrollViewStyle(scrollView);
             return scrollView;
         }
-        public static void ApplyStyle(ScrollView scrollView)
+        public static void ApplyScrollViewStyle(ScrollView scrollView)
         {
             scrollView.style.ClearMarginPadding();
             applyScrollBarStyle(scrollView.verticalScroller);
             applyScrollBarStyle(scrollView.horizontalScroller, true);
             scrollView.verticalScroller.style.width = DocStyle.Current.ScrollerWidth;
         }
-        public static void ApplyStyle(Button button, Color color)
+        public static void ApplyButtonStyle(Button button, Color color)
         {
             Color org = color;
             float h,s,v;
@@ -247,7 +302,6 @@ namespace NaiveAPI
             Color height = Color.HSVToRGB(h, s, v);
             button.style.ClearPadding();
             ApplyMargin(button);
-            button.style.height = DocStyle.Current.LineHeight;
             button.style.backgroundColor = color;
             button.style.SetIS_Style(DocStyle.Current.ButtonText);
             button.RegisterCallback<PointerEnterEvent>(e =>
@@ -258,6 +312,11 @@ namespace NaiveAPI
             {
                 button.style.backgroundColor = color;
             });
+        }
+        public static void ApplyLabelStyle(TextElement label)
+        {
+            label.style.minWidth = 0;
+            label.style.width = DocStyle.Current.LabelWidth;
         }
         #endregion
     }

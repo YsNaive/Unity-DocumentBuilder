@@ -57,7 +57,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             ObjectField objectField = new ObjectField();
             objectField.style.ClearPadding();
-            DocRuntime.ApplyMargin(objectField);
+            DocRuntime.ApplyMarginPadding(objectField);
             objectField.objectType = typeof(T);
             if(valueChange != null)
                 objectField.RegisterValueChangedCallback(valueChange);
@@ -69,7 +69,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 objectField[0].style.SetIS_Style(DocStyle.Current.MainText);
                 objectField[0].style.ClearMarginPadding();
             }
-            objectField.style.height = DocStyle.Current.LineHeight;
             return  objectField;
         }
         
@@ -77,7 +76,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             IntegerField integerField = new IntegerField();
             integerField.style.ClearPadding();
-            DocRuntime.ApplyMargin(integerField);
+            DocRuntime.ApplyMarginPadding(integerField);
             integerField[0].style.ClearMarginPadding();
             integerField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             integerField[0].style.minHeight = 18;
@@ -96,7 +95,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             EnumField enumField = new EnumField();
             enumField.style.ClearPadding();
-            DocRuntime.ApplyMargin(enumField);
+            DocRuntime.ApplyMarginPadding(enumField);
             enumField.style.ClearMarginPadding();
             enumField[0].style.ClearMarginPadding();
             enumField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
