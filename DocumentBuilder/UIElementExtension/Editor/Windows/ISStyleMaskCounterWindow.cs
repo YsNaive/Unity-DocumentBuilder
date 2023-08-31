@@ -28,9 +28,9 @@ namespace NaiveAPI_Editor.window
             EditorGUILayout.Space(15);
             result = 0;
             int index = 0;
-            foreach(ISStyle.ISType type in System.Enum.GetValues(typeof(ISStyle.ISType)))
+            foreach(ISStyleFlag type in System.Enum.GetValues(typeof(ISStyleFlag)))
             {
-                if(type == ISStyle.ISType.None) { continue; }
+                if(type == ISStyleFlag.None) { continue; }
                 bools[index] = EditorGUILayout.Toggle(type.ToString(),bools[index]);
                 if (bools[index])
                     result += (int)type;

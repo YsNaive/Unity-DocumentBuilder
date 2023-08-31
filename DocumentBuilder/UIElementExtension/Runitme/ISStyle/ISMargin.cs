@@ -116,10 +116,10 @@ namespace NaiveAPI_UI
         {
             return new ISMargin
             {
-                Left = Left.Copy(),
-                Top = Top.Copy(),
-                Right = Right.Copy(),
-                Bottom = Bottom.Copy()
+                Left = Left,
+                Top = Top,
+                Right = Right,
+                Bottom = Bottom
             };
         }
         public static ISMargin Pixel(int px)

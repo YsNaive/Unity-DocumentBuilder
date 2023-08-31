@@ -64,7 +64,7 @@ namespace NaiveAPI_Editor.drawer
                     btnRect.x = btnRect.xMax;
                     btnRect.x += 10;
                     btnRect.width = 120;
-                    if (GUI.Button(btnRect, "Edit EnableMask", EditorStyles.miniTextField))
+                    if (GUI.Button(btnRect, "Edit Mask", EditorStyles.miniTextField))
                     {
                         editEnableMask = true;
                         newMask = properties[0].intValue;
@@ -87,8 +87,8 @@ namespace NaiveAPI_Editor.drawer
                     {
                         editEnableMask = false;
                     }
-                    rect.x -= rect.width * 3;
-                    rect.width *= 4;
+                    rect.x -= rect.width;
+                    rect.width *= 2;
                     rect.height = 20;
                 }
 
@@ -99,17 +99,25 @@ namespace NaiveAPI_Editor.drawer
             {
                 int m = (int)Mathf.Pow(2,11);
                 int nextMask = 0;
-                rect.y += 18 * 11;
+                rect.y += 18 * 12 + 6;
+                rect.height -= 2;
+                Color orgColor = GUI.color;
                 for(int i = 10; i>=0; i--)
                 {
                     rect.y -= 18;
-                    nextMask += EditorGUI.Toggle(rect, options[i], (newMask & m) == m)? 1:0;
+                    bool val = (newMask & m) == m;
+                    GUI.color = val ? new Color(.7f, .9f, .7f) : new Color(.7f, .55f, .55f);
+                    if (GUI.Button(rect, options[i]))
+                        val = !val;
+                    nextMask += val?1:0;
                     nextMask <<= 1;
                     m >>= 1;
                 }
+                GUI.color = orgColor;
                 nextMask++;
                 newMask = nextMask;
-                rect.y += 18 * 11;
+                rect.y += 18 * 12;
+                rect.height += 2;
             }
             else
             {
@@ -141,7 +149,7 @@ namespace NaiveAPI_Editor.drawer
             if (property.isExpanded)
             {
                 if(editEnableMask)
-                    output += 18 * 11 + 5;
+                    output += 18 * 12 + 16;
                 else
                     output += calISHeight();
             }

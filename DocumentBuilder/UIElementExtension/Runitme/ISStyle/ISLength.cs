@@ -2,19 +2,16 @@ using UnityEngine.UIElements;
 namespace NaiveAPI_UI
 {
     [System.Serializable]
-    public class ISLength
+    public struct ISLength
     {
-        public LengthUnit Unit = LengthUnit.Pixel;
-        public float Value = 0;
+        public LengthUnit Unit;
+        public float Value;
         public Length Get
         {
             get
             {
                 return new Length(Value, Unit);
             }
-        }
-        public ISLength Copy() {
-            return new ISLength { Unit = Unit, Value = Value};
         }
         public override string ToString()
         {
@@ -58,5 +55,6 @@ namespace NaiveAPI_UI
         }
 
         public static implicit operator Length(ISLength length) { return length.Get; }
+        public static implicit operator StyleLength(ISLength length) { return length.Get; }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -154,6 +154,136 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UsingStyle: {fileID: 11400000, guid: 4f4cc2f18f09caa42a5337654ad9e793, type: 2}
+  ISStyle:
+    EnableMask: 4095
+    Display:
+      m_opacity: 1
+      Display: 0
+      Visibility: 0
+      Overflow: 0
+    Position:
+      Position: 0
+      Left:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+      Top:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+      Right:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+      Bottom:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+    Flex:
+      Basis:
+        Keyword: 2
+        Value:
+          Unit: 0
+          Value: 0
+      Direction: 0
+      Wrap: 0
+    Align:
+      Content: 0
+      Items: 0
+    Size:
+      Width:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 100
+      Height:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 100
+    Margin:
+      Left:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+      Top:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+      Right:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+      Bottom:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+    Padding:
+      Left:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+      Top:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+      Right:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+      Bottom:
+        Keyword: 3
+        Value:
+          Unit: 0
+          Value: 0
+    Text:
+      FontAsset: {fileID: 0}
+      FontStyle: 0
+      FontSize: 14
+      Color: {r: 0, g: 0, b: 0, a: 1}
+      Align: 3
+      Wrap: 0
+    Background:
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      ImageTint: {r: 1, g: 1, b: 1, a: 1}
+      sprite: {fileID: 0}
+      texture: {fileID: 0}
+      renderTexture: {fileID: 0}
+      vectorImage: {fileID: 0}
+      ScaleMode: 0
+    Border:
+      LeftColor: {r: 0, g: 0, b: 0, a: 1}
+      TopColor: {r: 0, g: 0, b: 0, a: 1}
+      RightColor: {r: 0, g: 0, b: 0, a: 1}
+      BottomColor: {r: 0, g: 0, b: 0, a: 1}
+      Left: 0
+      Top: 0
+      Right: 0
+      Bottom: 0
+    Radius:
+      TopLeft:
+        Unit: 0
+        Value: 0
+      BottomLeft:
+        Unit: 0
+        Value: 0
+      TopRight:
+        Unit: 0
+        Value: 0
+      BottomRight:
+        Unit: 0
+        Value: 0
 --- !u!114 &93496425
 MonoBehaviour:
   m_ObjectHideFlags: 0

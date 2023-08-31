@@ -8,8 +8,15 @@ using UnityEngine.UIElements;
 namespace NaiveAPI.DocumentBuilder
 {
     [System.Serializable]
-    public class DocStyle : ISerializationCallbackReceiver
+    public class DocStyle
     {
+        static DocStyle()
+        {
+            Application.quitting += () =>
+            {
+                Current = DocRuntimeData.Instance.CurrentStyle.Get(false);
+            };
+        }
         public static event Action<DocStyle> OnStyleChanged;
         public static DocStyle Current
         {
@@ -30,10 +37,15 @@ namespace NaiveAPI.DocumentBuilder
         public int MainTextSize { get => MainText.FontSize; set => MainText.FontSize = value; }
         public int LabelTextSize { get => LabelText.FontSize; set => LabelText.FontSize = value; }
         public int ButtonTextSize { get => ButtonText.FontSize; set => ButtonText.FontSize = value; }
-
-        public ISText MainText = new ISText();
-        public ISText LabelText = new ISText();
-        public ISText ButtonText = new ISText();
+        public ISText MainText { get => MainTextStyle.Text; set => MainTextStyle.Text = value; }
+        public ISText LabelText { get => LabelTextStyle.Text; set => LabelTextStyle.Text = value; }
+        public ISText ButtonText { get => ButtonTextStyle.Text; set => ButtonTextStyle.Text = value; }
+        
+        public ISStyle MainTextStyle   = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Text | ISStyleFlag.MarginPadding);
+        public ISStyle LabelTextStyle  = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Text | ISStyleFlag.MarginPadding);
+        public ISStyle ButtonTextStyle = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Text | ISStyleFlag.Padding);
+        public ISStyle InputFieldStyle = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.MarginPadding | ISStyleFlag.Background);
+        public ISStyle ElementMarginPadding = new ISStyle(ISStyleFlag.MarginPadding);
 
         public Color BackgroundColor = new Color(0, 0, 0, 1);
         public Color SubBackgroundColor = new Color(0, 0, 0, 1);
@@ -59,18 +71,16 @@ namespace NaiveAPI.DocumentBuilder
         public Color DangerTextColor = new Color(0, 0, 0, 1);
         public Color HintTextColor = new Color(0, 0, 0, 1);
 
-        public Length LabelWidth;
+        public ISLength LineHeight = new ISLength { Unit = LengthUnit.Pixel, Value = 20 };
+        public ISLength LabelWidth = new ISLength { Unit = LengthUnit.Pixel, Value = 200 };
         public Length ContentWidth(VisualElement ve)
         {
-            if (LabelWidth.unit == LengthUnit.Percent)
-                return Length.Percent(100 - LabelWidth.value);
+            if (LabelWidth.Unit == LengthUnit.Percent)
+                return Length.Percent(100 - LabelWidth.Value);
             if (ve.parent == null) return new Length(0);
-            return new Length(ve.parent.resolvedStyle.width - LabelWidth.value);
+            return new Length(ve.parent.resolvedStyle.width - LabelWidth.Value);
         }
-        [SerializeField] private ISLength m_labelWidth = ISLength.Pixel(80);
 
-        public ISStyle InputField = new ISStyle(1536);
-        public ISStyle ElementMarginPadding = new ISStyle(192);
 
         public float MarginVer => ElementMarginPadding.Margin.Left.Value.Value;
         public float MarginHor => ElementMarginPadding.Margin.Top.Value.Value;
@@ -84,9 +94,10 @@ namespace NaiveAPI.DocumentBuilder
         public DocStyle Copy()
         {
             DocStyle docStyle = new DocStyle();
-            docStyle.MainText = this.MainText.Copy();
-            docStyle.LabelText = this.LabelText.Copy();
-            docStyle.ButtonText = this.ButtonText.Copy();
+            docStyle.MainTextStyle = this.MainTextStyle.Copy();
+            docStyle.LabelTextStyle = this.LabelTextStyle.Copy();
+            docStyle.ButtonTextStyle = this.ButtonTextStyle.Copy();
+            docStyle.InputFieldStyle = this.InputFieldStyle.Copy();
             docStyle.BackgroundColor = this.BackgroundColor;
             docStyle.SubBackgroundColor = this.SubBackgroundColor;
             docStyle.FrontgroundColor = this.FrontgroundColor;
@@ -112,8 +123,8 @@ namespace NaiveAPI.DocumentBuilder
             docStyle.HintTextColor = this.HintTextColor;
 
             docStyle.LabelWidth = this.LabelWidth;
+            docStyle.LineHeight = this.LineHeight;
 
-            docStyle.InputField = this.InputField.Copy();
             docStyle.ElementMarginPadding = this.ElementMarginPadding.Copy();
             
             docStyle.ScrollerWidth = this.ScrollerWidth;
@@ -121,16 +132,6 @@ namespace NaiveAPI.DocumentBuilder
             docStyle.GUIScale = this.GUIScale;
 
             return docStyle;
-        }
-
-        public void OnBeforeSerialize()
-        {
-            m_labelWidth = new ISLength() { Value = LabelWidth.value, Unit = LabelWidth.unit };
-        }
-
-        public void OnAfterDeserialize()
-        {
-            LabelWidth = m_labelWidth;
         }
     }
 

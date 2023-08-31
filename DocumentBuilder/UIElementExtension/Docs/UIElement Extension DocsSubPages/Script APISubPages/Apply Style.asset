@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: Apply Style
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 3543eaffc785cee4a879a77c6b51fede, type: 3}
+  SubPages: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Apply Style on VisualElement
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - While using any ISStyle, you can use below method to apply style.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":4}'
+    TextData:
+    - While applying class ISStyle, it only apply the enable parts depends on its
+      mask.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
+    TextData:
+    - '// create a ISStyle with Margin and Padding
+
+      ISStyle style = new ISStyle(ISStyleFlag.Margin
+      | ISStyleFlag.Padding);
+
+      // create a horizontal ISFlex
+
+      ISFlex
+      flex = ISFlex.Horizontal;
+
+      
+
+      VisualElement element = new VisualElement();
+
+      
+
+      //
+      apply style
+
+      element.style.SetIS_Style(style);
+
+      element.style.SetIS_Style(flex);'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":3}'
+    TextData:
+    - Return value is Unity "IStyle" <b>NOT</b> "ISStyle" !
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 4
+    JsonData: '{"Name":"SetIS_Style","Syntaxs":["public static void SetIS_Style(this
+      IStyle element, ISStyle style)","public static IStyle SetIS_Style(this IStyle
+      element, ISDisplay display)","public static IStyle SetIS_Style(this IStyle
+      element, ISPosition position)","public static IStyle SetIS_Style(this IStyle
+      element, ISFlex flex)","public static IStyle SetIS_Style(this IStyle element,
+      ISAlign align)","public static IStyle SetIS_Style(this IStyle element, ISSize
+      size)","public static IStyle SetIS_Style(this IStyle element, ISMargin margin)","public
+      static IStyle SetIS_Style(this IStyle element, ISPadding padding)","public
+      static IStyle SetIS_Style(this IStyle element, ISText text)","public static
+      IStyle SetIS_Style(this IStyle element, ISBackground background)","public static
+      IStyle SetIS_Style(this IStyle element, ISBorder border)","public static IStyle
+      SetIS_Style(this IStyle element, ISRadius radius)"],"ReturnTypes":["IStyle"],"Params":[{"ParamName":"element","Type":"IStyle"},{"ParamName":"style","Type":"ISStyle"},{"ParamName":"display","Type":"ISDisplay"},{"ParamName":"position","Type":"ISPosition"},{"ParamName":"flex","Type":"ISFlex"},{"ParamName":"align","Type":"ISAlign"},{"ParamName":"size","Type":"ISSize"},{"ParamName":"margin","Type":"ISMargin"},{"ParamName":"padding","Type":"ISPadding"},{"ParamName":"text","Type":"ISText"},{"ParamName":"background","Type":"ISBackground"},{"ParamName":"border","Type":"ISBorder"},{"ParamName":"radius","Type":"ISRadius"}],"isOn":false}'
+    TextData:
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - self ref
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200

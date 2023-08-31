@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: ISStyle
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 77fc49cad09df0142a9bbebdffc823a5, type: 3}
+  SubPages:
+  - {fileID: 11400000, guid: c5923f8424d4d5d40bea20c1ff163aad, type: 2}
+  - {fileID: 11400000, guid: 5e49f038f3494f949ba2aba2d666f86d, type: 2}
+  - {fileID: 11400000, guid: 8fe9675f6e7116645af7e48b05999eea, type: 2}
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - ISStyle
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - handle all support type style in IS Style
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Fields
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 3
+    JsonData: '{"row":13,"col":3,"anchors":[3,3,3],"mode":1}'
+    TextData:
+    - Type
+    - Name
+    - Usage
+    - int
+    - EnableMask
+    - mask for this ISStyle
+    - ISDisplay
+    - Display
+    - 
+    - ISPosition
+    - Position
+    - 
+    - ISFlex
+    - Flex
+    - 
+    - ISAlign
+    - Align
+    - 
+    - ISSize
+    - Size
+    - 
+    - ISMargin
+    - Margin
+    - 
+    - ISPadding
+    - Padding
+    - 
+    - ISText
+    - Text
+    - 
+    - ISBackground
+    - Background
+    - 
+    - ISBorder
+    - Border
+    - 
+    - ISRadius
+    - Radius
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Methods
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 8
+    JsonData: '{"num":3}'
+    TextData:
+    - Copy
+    - IsEnable
+    - SetEnable
+    ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    AniSettings: 01000000fa00000001000000fa000000
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200

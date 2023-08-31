@@ -63,7 +63,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 objectField.RegisterValueChangedCallback(valueChange);
             objectField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             objectField[0].style.ClearMarginPadding();
-            if(label != "")
+            objectField[0].Q<Label>().style.SetIS_Style(DocStyle.Current.MainText);
+            if (label != "")
             {
                 objectField.label = label;
                 objectField[0].style.SetIS_Style(DocStyle.Current.MainText);
@@ -75,16 +76,16 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public static IntegerField NewIntField(string label, EventCallback<ChangeEvent<int>> valueChange = null)
         {
             IntegerField integerField = new IntegerField();
-            integerField.style.ClearPadding();
-            DocRuntime.ApplyMarginPadding(integerField);
-            integerField[0].style.ClearMarginPadding();
+            integerField.style.ClearMarginPadding();
+            integerField[0].style.SetIS_Style(DocStyle.Current.MainText);
             integerField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             integerField[0].style.minHeight = 18;
+            integerField.style.flexGrow = 1;
             integerField.style.height = 18;
             if (label != "")
             {
                 integerField.label = label;
-                integerField[0].style.ClearMarginPadding();
+                integerField[0].style.SetIS_Style(DocStyle.Current.MainText);
                 integerField[0].style.minHeight = 18;
             }
             if (valueChange != null)
@@ -94,16 +95,17 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public static EnumField NewEnumField(string label, Enum initValue, EventCallback<ChangeEvent<Enum>> valueChange = null)
         {
             EnumField enumField = new EnumField();
-            enumField.style.ClearPadding();
-            DocRuntime.ApplyMarginPadding(enumField);
+            enumField.style.ClearMarginPadding();
             enumField[0].style.ClearMarginPadding();
             enumField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            enumField[0].style.minHeight = 18;
+            enumField.style.minHeight = 18;
+            enumField.style.flexGrow = 1;
+            enumField[0].Q<TextElement>().style.SetIS_Style(DocStyle.Current.MainText);
+            enumField[0].Q<TextElement>().style.paddingLeft = 5;
             if (label != "")
             {
                 enumField.label = label;
-                enumField[0].style.SetIS_Style(DocStyle.Current.ButtonText);
-                enumField[0].style.ClearMarginPadding();
+                enumField[0].style.SetIS_Style(DocStyle.Current.MainText);
             }
             enumField.Init(initValue);
             if(valueChange != null) 

@@ -10,7 +10,7 @@ namespace NaiveAPI_UI
 
         public ISSize Copy()
         {
-            return new ISSize { Height = Height.Copy(), Width = Width.Copy() };
+            return new ISSize { Height = Height, Width = Width };
         }
         public static ISSize Percent(Vector2 size) { return Percent(size.x, size.y); }
         public static ISSize Percent(float width, float height)

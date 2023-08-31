@@ -11,10 +11,10 @@ namespace NaiveAPI_UI
         {
             return new ISPadding
             {
-                Left = Left.Copy(),
-                Top = Top.Copy(),
-                Right = Right.Copy(),
-                Bottom = Bottom.Copy()
+                Left = Left,
+                Top = Top,
+                Right = Right,
+                Bottom = Bottom
             };
         }
         public static ISPadding operator *(ISPadding styleLength, float value)

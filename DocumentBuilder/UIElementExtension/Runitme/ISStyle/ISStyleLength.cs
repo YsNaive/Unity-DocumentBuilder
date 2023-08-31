@@ -3,10 +3,11 @@ using UnityEngine.UIElements;
 namespace NaiveAPI_UI
 {
     [System.Serializable]
-    public class ISStyleLength
+    public struct ISStyleLength
     {
-        public StyleKeyword Keyword = StyleKeyword.None;
-        public ISLength Value = new ISLength();
+        public StyleKeyword Keyword;
+        public ISLength Value;
+
         public StyleLength Get
         {
             get
@@ -20,10 +21,6 @@ namespace NaiveAPI_UI
                     return new StyleLength(Value.Get);
                 }
             }
-        }
-        public ISStyleLength Copy()
-        {
-            return new ISStyleLength { Keyword = Keyword , Value = Value.Copy()};
         }
         public override string ToString()
         {

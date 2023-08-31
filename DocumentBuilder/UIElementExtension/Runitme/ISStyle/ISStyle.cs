@@ -1,6 +1,24 @@
 using UnityEngine;
 namespace NaiveAPI_UI
 {
+    public enum ISStyleFlag
+    {
+        None = 0,
+        Editable = 1,
+        Display = 2,
+        Position = 4,
+        Flex = 8,
+        Align = 16,
+        Size = 32,
+        Margin = 64,
+        Padding = 128,
+        Text = 256,
+        Background = 512,
+        Border = 1024,
+        Radius = 2048,
+
+        MarginPadding = 192,
+    }
     /// <summary>
     /// Include all IS component
     /// </summary>
@@ -19,13 +37,9 @@ namespace NaiveAPI_UI
             EnableMask = enableMask;
             initByMask();
         }
-        public ISStyle(ISType[] types)
+        public ISStyle(ISStyleFlag flag)
         {
-            EnableMask = 0;
-            foreach (var type in types)
-            {
-                EnableMask += (int)type;
-            }
+            EnableMask = (int)flag;
             initByMask();
         }
 
@@ -60,31 +74,11 @@ namespace NaiveAPI_UI
                 Radius = (Radius != null) ? Radius.Copy() : null,
             };
         }
-        public enum ISType
-        {
-            None = 0,
-            EnableMask = 1,
-            Display = 2,
-            Position = 4,
-            Flex = 8,
-            Align = 16,
-            Size = 32,
-            Margin = 64,
-            Padding = 128,
-            Text = 256,
-            Background = 512,
-            Border = 1024,
-            Radius = 2048
-        }
-        public bool IsEnable(int mask)
-        {
-            return (EnableMask & (int)mask) == (int)mask;
-        }
-        public bool IsEnable(ISType type)
+        public bool IsEnable(ISStyleFlag type)
         {
             return (EnableMask & (int)type) == (int)type;
         }
-        public void SetEnable(ISType type, bool isEnable)
+        public void SetEnable(ISStyleFlag type, bool isEnable)
         {
             if (isEnable) 
                 EnableMask |= (int)type;
@@ -94,37 +88,37 @@ namespace NaiveAPI_UI
 
         private void initByMask()
         {
-            if (IsEnable(ISType.Display)) Display = new ISDisplay();
+            if (IsEnable(ISStyleFlag.Display)) Display = new ISDisplay();
             else Display = null;
 
-            if (IsEnable(ISType.Position)) Position = new ISPosition();
+            if (IsEnable(ISStyleFlag.Position)) Position = new ISPosition();
             else Position = null;
 
-            if (IsEnable(ISType.Flex)) Flex = new ISFlex();
+            if (IsEnable(ISStyleFlag.Flex)) Flex = new ISFlex();
             else Flex = null;
 
-            if (IsEnable(ISType.Align)) Align = new ISAlign();
+            if (IsEnable(ISStyleFlag.Align)) Align = new ISAlign();
             else Align = null;
 
-            if (IsEnable(ISType.Size)) Size = new ISSize();
+            if (IsEnable(ISStyleFlag.Size)) Size = new ISSize();
             else Size = null;
 
-            if (IsEnable(ISType.Margin)) Margin = new ISMargin();
+            if (IsEnable(ISStyleFlag.Margin)) Margin = new ISMargin();
             else Margin = null;
 
-            if (IsEnable(ISType.Padding)) Padding = new ISPadding();
+            if (IsEnable(ISStyleFlag.Padding)) Padding = new ISPadding();
             else Padding = null;
 
-            if (IsEnable(ISType.Text)) Text = new ISText();
+            if (IsEnable(ISStyleFlag.Text)) Text = new ISText();
             else Text = null;
 
-            if (IsEnable(ISType.Background)) Background = new ISBackground();
+            if (IsEnable(ISStyleFlag.Background)) Background = new ISBackground();
             else Background = null;
 
-            if (IsEnable(ISType.Border)) Border = new ISBorder();
+            if (IsEnable(ISStyleFlag.Border)) Border = new ISBorder();
             else Border = null;
 
-            if (IsEnable(ISType.Radius)) Radius = new ISRadius();
+            if (IsEnable(ISStyleFlag.Radius)) Radius = new ISRadius();
             else Radius = null;
         }
         public void OnBeforeSerialize()
@@ -132,27 +126,27 @@ namespace NaiveAPI_UI
         }
         public void OnAfterDeserialize()
         {
-            if (!IsEnable(ISType.Display))
+            if (!IsEnable(ISStyleFlag.Display))
                 Display = null;
-            if (!IsEnable(ISType.Position))
+            if (!IsEnable(ISStyleFlag.Position))
                 Position = null;
-            if (!IsEnable(ISType.Flex))
+            if (!IsEnable(ISStyleFlag.Flex))
                 Flex = null;
-            if (!IsEnable(ISType.Align))
+            if (!IsEnable(ISStyleFlag.Align))
                 Align = null;
-            if (!IsEnable(ISType.Size))
+            if (!IsEnable(ISStyleFlag.Size))
                 Size = null;
-            if (!IsEnable(ISType.Margin))
+            if (!IsEnable(ISStyleFlag.Margin))
                 Margin = null;
-            if (!IsEnable(ISType.Padding))
+            if (!IsEnable(ISStyleFlag.Padding))
                 Padding = null;
-            if (!IsEnable(ISType.Text))
+            if (!IsEnable(ISStyleFlag.Text))
                 Text = null;
-            if (!IsEnable(ISType.Background))
+            if (!IsEnable(ISStyleFlag.Background))
                 Background = null;
-            if (!IsEnable(ISType.Border))
+            if (!IsEnable(ISStyleFlag.Border))
                 Border = null;
-            if (!IsEnable(ISType.Radius))
+            if (!IsEnable(ISStyleFlag.Radius))
                 Radius = null;
         }
     }

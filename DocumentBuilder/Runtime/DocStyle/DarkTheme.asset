@@ -13,53 +13,8 @@ MonoBehaviour:
   m_Name: DarkTheme
   m_EditorClassIdentifier: 
   DocStyle:
-    MainText:
-      FontAsset: {fileID: 0}
-      FontStyle: 0
-      FontSize: 12
-      Color: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
-      Align: 3
-      Wrap: 0
-    LabelText:
-      FontAsset: {fileID: 0}
-      FontStyle: 0
-      FontSize: 20
-      Color: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
-      Align: 3
-      Wrap: 0
-    ButtonText:
-      FontAsset: {fileID: 0}
-      FontStyle: 0
-      FontSize: 12
-      Color: {r: 0.83137256, g: 0.83137256, b: 0.83137256, a: 1}
-      Align: 4
-      Wrap: 0
-    BackgroundColor: {r: 0.15, g: 0.15, b: 0.16, a: 1}
-    SubBackgroundColor: {r: 0.22, g: 0.22, b: 0.245, a: 1}
-    FrontgroundColor: {r: 0.55, g: 0.55, b: 0.6, a: 1}
-    SubFrontgroundColor: {r: 0.68, g: 0.71, b: 0.71, a: 1}
-    FuncColor: {r: 0.89, g: 0.79, b: 0.35, a: 1}
-    ArgsColor: {r: 0.65, g: 0.85, b: 0.95, a: 1}
-    TypeColor: {r: 0.35, g: 0.7, b: 0.65, a: 1}
-    PrefixColor: {r: 0.4, g: 0.56, b: 0.82, a: 1}
-    StringColor: {r: 0.79, g: 0.56, b: 0.36, a: 1}
-    NumberColor: {r: 0.6, g: 0.8, b: 0.6, a: 1}
-    ControlColor: {r: 0.84, g: 0.45, b: 0.61, a: 1}
-    CommentsColor: {r: 0.4, g: 0.6, b: 0.35, a: 1}
-    CodeBackgroundColor: {r: 0.08, g: 0.08, b: 0.09, a: 1}
-    SuccessColor: {r: 0.2, g: 0.3, b: 0.2, a: 1}
-    WarningColor: {r: 0.3, g: 0.3, b: 0.2, a: 1}
-    DangerColor: {r: 0.3, g: 0.2, b: 0.2, a: 1}
-    HintColor: {r: 0.26, g: 0.26, b: 0.34, a: 1}
-    SuccessTextColor: {r: 0.7, g: 0.9, b: 0.7, a: 1}
-    WarningTextColor: {r: 0.9, g: 0.9, b: 0.7, a: 1}
-    DangerTextColor: {r: 0.9, g: 0.7, b: 0.7, a: 1}
-    HintTextColor: {r: 0.74, g: 0.74, b: 0.96, a: 1}
-    m_labelWidth:
-      Unit: 0
-      Value: 120
-    InputField:
-      EnableMask: 1536
+    MainTextStyle:
+      EnableMask: 449
       Display:
         m_opacity: 1
         Display: 0
@@ -68,22 +23,282 @@ MonoBehaviour:
       Position:
         Position: 0
         Left:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
         Top:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
         Right:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
         Bottom:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+      Flex:
+        Basis:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+        Direction: 0
+        Wrap: 0
+      Align:
+        Content: 0
+        Items: 0
+      Size:
+        Width:
           Keyword: 3
+          Value:
+            Unit: 0
+            Value: 100
+        Height:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 100
+      Margin:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Top:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 2
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Bottom:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 2
+      Padding:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 6
+        Top:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 2
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 6
+        Bottom:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 2
+      Text:
+        FontAsset: {fileID: 0}
+        FontStyle: 0
+        FontSize: 12
+        Color: {r: 0.83137256, g: 0.83137256, b: 0.83137256, a: 1}
+        Align: 3
+        Wrap: 0
+      Background:
+        Color: {r: 0, g: 0, b: 0, a: 0}
+        ImageTint: {r: 1, g: 1, b: 1, a: 1}
+        sprite: {fileID: 0}
+        texture: {fileID: 0}
+        renderTexture: {fileID: 0}
+        vectorImage: {fileID: 0}
+        ScaleMode: 0
+      Border:
+        LeftColor: {r: 0, g: 0, b: 0, a: 1}
+        TopColor: {r: 0, g: 0, b: 0, a: 1}
+        RightColor: {r: 0, g: 0, b: 0, a: 1}
+        BottomColor: {r: 0, g: 0, b: 0, a: 1}
+        Left: 0
+        Top: 0
+        Right: 0
+        Bottom: 0
+      Radius:
+        TopLeft:
+          Unit: 0
+          Value: 0
+        BottomLeft:
+          Unit: 0
+          Value: 0
+        TopRight:
+          Unit: 0
+          Value: 0
+        BottomRight:
+          Unit: 0
+          Value: 0
+    LabelTextStyle:
+      EnableMask: 449
+      Display:
+        m_opacity: 1
+        Display: 0
+        Visibility: 0
+        Overflow: 0
+      Position:
+        Position: 0
+        Left:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+        Top:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+        Right:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+        Bottom:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+      Flex:
+        Basis:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+        Direction: 0
+        Wrap: 0
+      Align:
+        Content: 0
+        Items: 0
+      Size:
+        Width:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 100
+        Height:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 100
+      Margin:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 4
+        Top:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 4
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 4
+        Bottom:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 4
+      Padding:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Top:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 4
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Bottom:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 4
+      Text:
+        FontAsset: {fileID: 0}
+        FontStyle: 0
+        FontSize: 20
+        Color: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+        Align: 3
+        Wrap: 0
+      Background:
+        Color: {r: 0, g: 0, b: 0, a: 0}
+        ImageTint: {r: 1, g: 1, b: 1, a: 1}
+        sprite: {fileID: 0}
+        texture: {fileID: 0}
+        renderTexture: {fileID: 0}
+        vectorImage: {fileID: 0}
+        ScaleMode: 0
+      Border:
+        LeftColor: {r: 0, g: 0, b: 0, a: 1}
+        TopColor: {r: 0, g: 0, b: 0, a: 1}
+        RightColor: {r: 0, g: 0, b: 0, a: 1}
+        BottomColor: {r: 0, g: 0, b: 0, a: 1}
+        Left: 0
+        Top: 0
+        Right: 0
+        Bottom: 0
+      Radius:
+        TopLeft:
+          Unit: 0
+          Value: 0
+        BottomLeft:
+          Unit: 0
+          Value: 0
+        TopRight:
+          Unit: 0
+          Value: 0
+        BottomRight:
+          Unit: 0
+          Value: 0
+    ButtonTextStyle:
+      EnableMask: 257
+      Display:
+        m_opacity: 1
+        Display: 0
+        Visibility: 0
+        Overflow: 0
+      Position:
+        Position: 0
+        Left:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+        Top:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+        Right:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+        Bottom:
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
@@ -154,12 +369,142 @@ MonoBehaviour:
       Text:
         FontAsset: {fileID: 0}
         FontStyle: 0
+        FontSize: 12
+        Color: {r: 0.83137256, g: 0.83137256, b: 0.83137256, a: 1}
+        Align: 4
+        Wrap: 0
+      Background:
+        Color: {r: 0, g: 0, b: 0, a: 0}
+        ImageTint: {r: 1, g: 1, b: 1, a: 1}
+        sprite: {fileID: 0}
+        texture: {fileID: 0}
+        renderTexture: {fileID: 0}
+        vectorImage: {fileID: 0}
+        ScaleMode: 0
+      Border:
+        LeftColor: {r: 0, g: 0, b: 0, a: 1}
+        TopColor: {r: 0, g: 0, b: 0, a: 1}
+        RightColor: {r: 0, g: 0, b: 0, a: 1}
+        BottomColor: {r: 0, g: 0, b: 0, a: 1}
+        Left: 0
+        Top: 0
+        Right: 0
+        Bottom: 0
+      Radius:
+        TopLeft:
+          Unit: 0
+          Value: 0
+        BottomLeft:
+          Unit: 0
+          Value: 0
+        TopRight:
+          Unit: 0
+          Value: 0
+        BottomRight:
+          Unit: 0
+          Value: 0
+    InputFieldStyle:
+      EnableMask: 705
+      Display:
+        m_opacity: 1
+        Display: 0
+        Visibility: 0
+        Overflow: 0
+      Position:
+        Position: 0
+        Left:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+        Top:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+        Right:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+        Bottom:
+          Keyword: 0
+          Value:
+            Unit: 0
+            Value: 0
+      Flex:
+        Basis:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+        Direction: 0
+        Wrap: 0
+      Align:
+        Content: 0
+        Items: 0
+      Size:
+        Width:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 100
+        Height:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 100
+      Margin:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 0
+        Top:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 0
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 0
+        Bottom:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 0
+      Padding:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 6
+        Top:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 6
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 6
+        Bottom:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 6
+      Text:
+        FontAsset: {fileID: 0}
+        FontStyle: 0
         FontSize: 14
         Color: {r: 0, g: 0, b: 0, a: 1}
         Align: 3
         Wrap: 0
       Background:
-        Color: {r: 0.21960784, g: 0.21960784, b: 0.24313726, a: 1}
+        Color: {r: 0.19937699, g: 0.19937699, b: 0.21698111, a: 1}
         ImageTint: {r: 0, g: 0, b: 0, a: 0}
         sprite: {fileID: 0}
         texture: {fileID: 0}
@@ -198,22 +543,22 @@ MonoBehaviour:
       Position:
         Position: 0
         Left:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
         Top:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
         Right:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
         Bottom:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
@@ -244,7 +589,7 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 10
         Top:
           Keyword: 3
           Value:
@@ -254,7 +599,7 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 10
         Bottom:
           Keyword: 3
           Value:
@@ -265,21 +610,21 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 8
+            Value: 0
         Top:
-          Keyword: 2
+          Keyword: 3
           Value:
             Unit: 0
             Value: 0
         Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 8
-        Bottom:
           Keyword: 2
           Value:
             Unit: 0
+            Value: 0
+        Bottom:
+          Keyword: 2
+          Value:
+            Unit: 1
             Value: 0
       Text:
         FontAsset: {fileID: 0}
@@ -318,6 +663,33 @@ MonoBehaviour:
         BottomRight:
           Unit: 0
           Value: 0
+    BackgroundColor: {r: 0.15, g: 0.15, b: 0.16, a: 1}
+    SubBackgroundColor: {r: 0.22, g: 0.22, b: 0.245, a: 1}
+    FrontgroundColor: {r: 0.55, g: 0.55, b: 0.6, a: 1}
+    SubFrontgroundColor: {r: 0.68, g: 0.71, b: 0.71, a: 1}
+    FuncColor: {r: 0.89, g: 0.79, b: 0.35, a: 1}
+    ArgsColor: {r: 0.65, g: 0.85, b: 0.95, a: 1}
+    TypeColor: {r: 0.35, g: 0.7, b: 0.65, a: 1}
+    PrefixColor: {r: 0.4, g: 0.56, b: 0.82, a: 1}
+    StringColor: {r: 0.79, g: 0.56, b: 0.36, a: 1}
+    NumberColor: {r: 0.6, g: 0.8, b: 0.6, a: 1}
+    ControlColor: {r: 0.84, g: 0.45, b: 0.61, a: 1}
+    CommentsColor: {r: 0.4, g: 0.6, b: 0.35, a: 1}
+    CodeBackgroundColor: {r: 0.08, g: 0.08, b: 0.09, a: 1}
+    SuccessColor: {r: 0.2, g: 0.3, b: 0.2, a: 1}
+    WarningColor: {r: 0.3, g: 0.3, b: 0.2, a: 1}
+    DangerColor: {r: 0.3, g: 0.2, b: 0.2, a: 1}
+    HintColor: {r: 0.26, g: 0.26, b: 0.34, a: 1}
+    SuccessTextColor: {r: 0.7, g: 0.9, b: 0.7, a: 1}
+    WarningTextColor: {r: 0.9, g: 0.9, b: 0.7, a: 1}
+    DangerTextColor: {r: 0.9, g: 0.7, b: 0.7, a: 1}
+    HintTextColor: {r: 0.74, g: 0.74, b: 0.96, a: 1}
+    LineHeight:
+      Unit: 0
+      Value: 20
+    LabelWidth:
+      Unit: 0
+      Value: 120
     ScrollerWidth: 14
     ComponentSpace: 10
     GUIScale: 1

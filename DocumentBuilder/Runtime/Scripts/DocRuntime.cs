@@ -1,7 +1,5 @@
-using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -70,8 +68,7 @@ namespace NaiveAPI.DocumentBuilder
         }
         public static VisualElement NewEmptyHorizontal()
         {
-            VisualElement visualElement = new VisualElement();
-            visualElement.style.ClearMarginPadding();
+            VisualElement visualElement = NewEmpty();
             visualElement.style.flexDirection = FlexDirection.Row;
             return visualElement;
         }
@@ -79,13 +76,14 @@ namespace NaiveAPI.DocumentBuilder
         public static VisualElement NewHorizontalBar(float space, params VisualElement[] elements)
         {
             VisualElement bar = NewEmptyHorizontal();
-            float width = (99.9f - space* elements.Length) / elements.Length;
+            bar.style.minHeight = DocStyle.Current.LineHeight;
+            float width = (100f / (float)elements.Length);
             VisualElement last = null;
             foreach (var ve in elements)
             {
                 if(ve != null)
                 {
-                    ve.style.width = Length.Percent(width);
+                    ve.style.width = Length.Percent(width-space);
                     ve.style.marginRight = Length.Percent(space/2f);
                     ve.style.marginLeft = Length.Percent(space/2f);
                     last = ve;
@@ -102,7 +100,7 @@ namespace NaiveAPI.DocumentBuilder
         public static VisualElement NewContainer()
         {
             var ve = NewEmpty();
-            ApplyMarginPadding(ve);
+            ve.style.minHeight = DocStyle.Current.LineHeight;
             ve.style.backgroundColor = DocStyle.Current.BackgroundColor;
             return ve;
         }
@@ -123,35 +121,25 @@ namespace NaiveAPI.DocumentBuilder
         public static CheckButton NewCheckButton(string text, Color color,Color confirm, Color cancel, Action onClick = null)
         {
             CheckButton button = new CheckButton();
-            button.style.ClearMarginPadding();
             ApplyButtonStyle(button.MainBtn, color);
             ApplyButtonStyle(button.ConfirmButton, confirm);
             ApplyButtonStyle(button.CancelButton, cancel);
-            button.ConfirmButton.style.width = Length.Percent(50);
-            button.CancelButton.style.width = Length.Percent(50);
-            button.RegisterCallback<GeometryChangedEvent>(e =>
-            {
-                if (e.oldRect.width != e.newRect.width)
-                {
-                    button.style.width = e.newRect.width;
-                };
-            });
             button.text = text;
+            button.style.minHeight = DocStyle.Current.LineHeight;
             if (onClick != null) button.Confirm += onClick;
             return button;
         }
         public static TextField NewTextField(string label = "", EventCallback<ChangeEvent<string>> eventCallback = null)
         {
             TextField textField = new TextField();
-            textField.style.ClearMarginPadding();
-            ApplyMarginPadding(textField[0]);
+            textField.style.minHeight = DocStyle.Current.LineHeight;
             textField[0].style.paddingLeft = DocStyle.Current.MainTextSize / 2f;
-            textField[0].style.SetIS_Style(DocStyle.Current.InputField);
-            textField[0].style.SetIS_Style(DocStyle.Current.MainText);
+            textField[0].style.SetIS_Style(DocStyle.Current.MainTextStyle);
+            textField[0].style.SetIS_Style(DocStyle.Current.InputFieldStyle);
             if (!string.IsNullOrEmpty(label))
             {
                 textField.label = label;
-                textField.labelElement.style.SetIS_Style(DocStyle.Current.MainText);
+                textField.labelElement.style.SetIS_Style(DocStyle.Current.MainTextStyle);
                 ApplyLabelStyle(textField.labelElement);
             }
             if(eventCallback != null)
@@ -161,8 +149,9 @@ namespace NaiveAPI.DocumentBuilder
         public static Foldout NewFoldout(string text = "")
         {
             Foldout foldout = new Foldout();
-            ApplyMarginPadding(foldout);
-            foldout.style.SetIS_Style(DocStyle.Current.MainText);
+            
+            foldout.style.SetIS_Style(DocStyle.Current.MainTextStyle);
+            foldout.contentContainer.style.minHeight = DocStyle.Current.LineHeight;
             foldout.contentContainer.style.paddingLeft = 15;
             foldout.text = text;
             var toggle = foldout.Q<Toggle>();
@@ -182,18 +171,23 @@ namespace NaiveAPI.DocumentBuilder
             foldout.value = false;
             return foldout;
         }
+        /// <summary>
+        /// This will create Unity Dropdown Field
+        /// </summary>
         public static DropdownField NewDropdownField(string text, List<string> choice, EventCallback<ChangeEvent<string>> eventCallback = null) 
         {
             DropdownField dropField = new DropdownField();
             dropField.focusable = false;
+            dropField.style.minHeight = DocStyle.Current.LineHeight;
             dropField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            dropField[0].style.SetIS_Style(DocStyle.Current.MainText);
-            dropField[0][0].style.SetIS_Style(DocStyle.Current.MainText);
-            
+            dropField[0].style.SetIS_Style(DocStyle.Current.MainTextStyle);
+            dropField[0].style.SetIS_Style(DocStyle.Current.InputFieldStyle);
+            dropField[0][0].style.SetIS_Style(DocStyle.Current.MainTextStyle);
+
             if (!string.IsNullOrEmpty(text))
             {
                 dropField.label = text;
-                dropField.labelElement.style.SetIS_Style(DocStyle.Current.MainText);
+                dropField.labelElement.style.SetIS_Style(DocStyle.Current.MainTextStyle);
                 ApplyLabelStyle(dropField.labelElement);
             }
             if (eventCallback != null)
@@ -205,24 +199,27 @@ namespace NaiveAPI.DocumentBuilder
         {
             TextElement textElement = new TextElement();
             textElement.text = text;
-            textElement.style.ClearPadding();
-            ApplyMarginPadding(textElement);
             textElement.style.whiteSpace = WhiteSpace.Normal;
-            textElement.style.SetIS_Style(DocStyle.Current.MainText);
+            textElement.style.minHeight = DocStyle.Current.LineHeight;
+            textElement.style.SetIS_Style(DocStyle.Current.MainTextStyle);
             return textElement;
         }
+        /// <summary>
+        /// This will create Custom String Field
+        /// </summary>
         public static StringDropdown NewDropdown(string label, List<string> choices, Action<string> valueCallback = null)
         {
             StringDropdown dropdown = new StringDropdown(label);
             dropdown.Choices = choices;
             dropdown.OnValueChanged += valueCallback;
+            dropdown.style.minHeight = DocStyle.Current.LineHeight;
             return dropdown;
         }
         public static Label NewLabel(string text)
         {
             Label label = new Label(text);
-            label.style.ClearMarginPadding();
-            label.style.SetIS_Style(DocStyle.Current.LabelText);
+            label.style.SetIS_Style(DocStyle.Current.LabelTextStyle);
+            label.style.minHeight = DocStyle.Current.LineHeight;
             return label;
         }
         private static void applyScrollBarStyle(Scroller bar, bool isHor = false)
@@ -267,8 +264,8 @@ namespace NaiveAPI.DocumentBuilder
         }
         public static ScrollView NewScrollView()
         {
-            
             ScrollView scrollView = new ScrollView();
+            scrollView.style.minHeight = DocStyle.Current.LineHeight;
             ApplyScrollViewStyle(scrollView);
             return scrollView;
         }
@@ -286,10 +283,9 @@ namespace NaiveAPI.DocumentBuilder
             Color.RGBToHSV(org, out h, out s, out v);
             v += (v > 0.5f) ? -0.1f : 0.055f;
             Color height = Color.HSVToRGB(h, s, v);
-            button.style.ClearPadding();
-            ApplyMargin(button);
+            button.style.SetIS_Style(DocStyle.Current.ButtonTextStyle);
             button.style.backgroundColor = color;
-            button.style.SetIS_Style(DocStyle.Current.ButtonText);
+            button.style.SetIS_Style(DocStyle.Current.ButtonTextStyle);
             button.RegisterCallback<PointerEnterEvent>(e =>
             {
                 button.style.backgroundColor = height;
@@ -298,6 +294,7 @@ namespace NaiveAPI.DocumentBuilder
             {
                 button.style.backgroundColor = color;
             });
+            button.style.minHeight = DocStyle.Current.LineHeight;
         }
         public static void ApplyLabelStyle(TextElement label)
         {

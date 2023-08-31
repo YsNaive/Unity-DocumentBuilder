@@ -1,3 +1,4 @@
+using NaiveAPI_UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
@@ -47,11 +48,12 @@ namespace NaiveAPI.DocumentBuilder
         protected T m_value;
         public CustomDropdown(string label = "")
         {
-            style.flexDirection = FlexDirection.Row;
+            style.ClearMarginPadding();
             LabelElement = DocRuntime.NewTextElement("");
             PopupElement = CreatePopupElement();
-            Add(LabelElement);
-            Add(PopupElement);
+            var hor = DocRuntime.NewHorizontalBar(LabelElement, PopupElement);
+            hor.style.flexGrow = 1;
+            Add(hor);
 
             EventCallback<GeometryChangedEvent> createLabel = null;
             createLabel = e =>

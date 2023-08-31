@@ -11,10 +11,10 @@ namespace NaiveAPI_UI
         {
             return new ISRadius
             {
-                TopLeft = TopLeft.Copy(),
-                BottomLeft = BottomLeft.Copy(),
-                TopRight = TopRight.Copy(),
-                BottomRight = BottomRight.Copy()
+                TopLeft = TopLeft,
+                BottomLeft = BottomLeft,
+                TopRight = TopRight,
+                BottomRight = BottomRight
             };
         }
         public static ISRadius Pixel(float px)

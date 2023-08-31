@@ -2,7 +2,8 @@
     "name": "Naive.UIElementExtension.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:45db4eb6f2823c3428607863a9078e0c"
+        "GUID:45db4eb6f2823c3428607863a9078e0c",
+        "GUID:39998dbcc539eae4599a6b2e71b42b8c"
     ],
     "includePlatforms": [
         "Editor"

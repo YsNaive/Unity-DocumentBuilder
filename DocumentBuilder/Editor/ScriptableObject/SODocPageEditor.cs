@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
@@ -30,6 +31,20 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 buildinIconList.Add(asset.name);
             }
+            DocStyle.OnStyleChanged += RepaintStyle;
+        }
+        private void OnDestroy()
+        {
+            DocStyle.OnStyleChanged -= RepaintStyle;
+        }
+        void RepaintStyle(DocStyle style)
+        {
+            if (root == null) return;
+            var parent = root.parent;
+            if (parent == null) return;
+            int i = parent.IndexOf(root);
+            parent.Remove(root);
+            parent.Add(CreateInspectorGUI());
         }
         public override void OnInspectorGUI()
         {
@@ -43,11 +58,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
         VisualElement root;
         VisualElement contents;
         VisualElement header;
-        VisualElement addAndDeleteBar;
         Button addPage;
         CheckButton deletePage;
-        VisualElement introSetting;
-        VisualElement outtroSetting;
         ObjectField icon;
         List<string> buildinIconList = new List<string>(); 
         [SerializeField] private List<DocComponent> undoBuffer;
@@ -75,13 +87,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
             clickMask.style.SetIS_Style(ISSize.Percent(100, 100));
             clickMask.style.position = Position.Absolute;
             
-            Button editMode = DocRuntime.NewButton("Edit Layout", () =>
+            Button editMode = DocRuntime.NewButton("Edit", () =>
             {
                 root.Insert(1, header);
                 contents.Clear();
                 contents.Add(createEdit());
             });
-            Button viewMode = DocRuntime.NewButton("View Layout", () =>
+            Button viewMode = DocRuntime.NewButton("View", () =>
             {
                 if (root.Contains(header)) { root.Remove(header); }
                 contents.Clear();
@@ -98,31 +110,36 @@ namespace NaiveAPI_Editor.DocumentBuilder
             ObjectField curSOStyle = DocEditor.NewObjectField<SODocStyle>("", e =>
             {
                 DocRuntimeData.Instance.CurrentStyle = (SODocStyle)e.newValue;
+                DocStyle.Current = ((SODocStyle)e.newValue).Get();
             });
             curSOStyle.value = DocRuntimeData.Instance.CurrentStyle;
-            root.Add(DocRuntime.NewHorizontalBar(1f,editMode,viewMode,defuMode,curSOStyle,null,saveBtn));
+            curSOStyle.Q<Label>().style.SetIS_Style(DocStyle.Current.MainText);
+            var hor = DocRuntime.NewHorizontalBar(1f, editMode, viewMode, defuMode, curSOStyle, null, saveBtn);
+            root.Add(hor);
 
             #endregion
 
             #region header bar
-            VisualElement iconHorBar = DocRuntime.NewEmptyHorizontal();
-            icon = DocEditor.NewObjectField<Texture2D>("icon", (value) =>
+            icon = DocEditor.NewObjectField<Texture2D>("Menu icon", (value) =>
             {
                 Target.Icon = (Texture2D)value.newValue;
+                EditorUtility.SetDirty(target);
             });
             icon.value = Target.Icon;
-            icon[0].style.minWidth = 95;
-            icon.style.width = Length.Percent(80);
+            icon.style.ClearMarginPadding();
+            icon[0].style.minWidth = 98;
+            icon[0].style.unityTextAlign = TextAnchor.MiddleCenter;
+            icon.style.width = Length.Percent(50);
             var buildinIcon = DocRuntime.NewDropdownField("", buildinIconList, e =>
             {
                 icon.value = DocEditorData.Instance.BuildinIcon[buildinIconList.IndexOf(e.newValue)];
             });
             buildinIcon.index = DocEditorData.Instance.BuildinIcon.IndexOf(Target.Icon);
-            buildinIcon.style.width = Length.Percent(20);
-            introSetting =DocRuntime.NewEmptyHorizontal();
-            introSetting.style.height = 18;
-            iconHorBar.Add(icon);
-            iconHorBar.Add(buildinIcon);
+            buildinIcon.style.width = Length.Percent(50);
+            buildinIcon.style.ClearMarginPadding();
+            buildinIcon[0].style.ClearMarginPadding();
+            buildinIcon[0].style.marginLeft = 5;
+            buildinIcon[0].style.paddingLeft = 5;
             EnumField introMode = DocEditor.NewEnumField("Intro Mode", Target.IntroMode, value =>
             {
                 Target.IntroMode = (DocPageAniMode)value.newValue;
@@ -130,50 +147,33 @@ namespace NaiveAPI_Editor.DocumentBuilder
             introMode[0].style.minWidth = 96;
             introMode[0].style.unityTextAlign = TextAnchor.MiddleCenter;
             introMode.style.ClearMarginPadding();
-            introMode.style.height = 18;
+            introMode.style.height = 20;
             introMode.style.width = Length.Percent(49);
-            introSetting.Add(introMode);
-            IntegerField durField = new IntegerField();
-            durField.label = "Duration";
-            durField.style.height = 18;
-            durField[1].style.height = 18;
-            durField.style.ClearMarginPadding();
-            durField.style.width = Length.Percent(50);
-            durField[0].style.minWidth = 60;
-            durField.style.height = 18;
-            durField[0].style.unityTextAlign = TextAnchor.UpperCenter;
-            durField.value = Target.IntroDuration;
-            durField.RegisterValueChangedCallback((value) =>
+            IntegerField introDurField = DocEditor.NewIntField(" Duration", (value) =>
             {
                 Target.IntroDuration = value.newValue;
             });
-            introSetting.Add(durField);
-            outtroSetting =DocRuntime.NewEmptyHorizontal();
+            introDurField.style.height = 20;
+            introDurField.style.width = Length.Percent(50);
+            introDurField[0].style.minWidth = 70;
+            introDurField.value = Target.IntroDuration;
             EnumField outroMode = DocEditor.NewEnumField("Outtro Mode", Target.OuttroMode, value =>
             {
                 Target.OuttroMode = (DocPageAniMode)value.newValue;
             });
             outroMode[0].style.minWidth = 96;
             outroMode[0].style.unityTextAlign = TextAnchor.MiddleCenter;
-            outroMode.style.height = 18;
+            outroMode.style.height = 20;
             outroMode.style.ClearMarginPadding();
             outroMode.style.width = Length.Percent(49);
-            outtroSetting.Add(outroMode);
-            outtroSetting.style.height = 18;
-            IntegerField outroDurField = new IntegerField();
-            outroDurField.label = "Duration";
-            outroDurField[0].style.unityTextAlign = TextAnchor.UpperCenter;
-            outroDurField.style.ClearMarginPadding();
-            outroDurField.style.width = Length.Percent(50);
-            outroDurField[0].style.minWidth = 60;
-            outroDurField.style.height = 18;
-            outroDurField.value = Target.IntroDuration;
-            outroDurField.RegisterValueChangedCallback((value) =>
+            IntegerField outroDurField = DocEditor.NewIntField(" Duration", (value) =>
             {
                 Target.OuttroDuration = value.newValue;
             });
-            outtroSetting.Add(outroDurField);
-            addAndDeleteBar = DocRuntime.NewEmptyHorizontal();
+            outroDurField.style.width = Length.Percent(50);
+            outroDurField[0].style.minWidth = 70;
+            outroDurField.style.height = 20;
+            outroDurField.value = Target.OuttroDuration;
             addPage = DocRuntime.NewButton("Add New Page", newPageBtn);
             addPage.style.width = Length.Percent(75);
             deletePage = DocRuntime.NewCheckButton("Delete Page",
@@ -182,12 +182,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(Target));
                     AssetDatabase.Refresh();
                 });
-            deletePage.style.width = Length.Percent(24);
             deletePage.style.SetIS_Style(new ISMargin(TextAnchor.UpperRight));
-            addAndDeleteBar.Add(addPage);
-            addAndDeleteBar.Add(deletePage);
 
-            header.style.marginBottom = 20;
+            header.style.marginBottom = 10;
             root.Add(header);
             #endregion
 
@@ -195,7 +192,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             contents.Add(createEdit());
             root.Add(contents);
 
-            VisualElement loadAndSave = DocRuntime.NewEmptyHorizontal();
+            VisualElement loadAndSave = null;
             Button loadFromTemplate = DocRuntime.NewButton("Load Template", () =>
             {
                 header.Remove(loadAndSave);
@@ -232,7 +229,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 header.Add(hor);
             });
             loadFromTemplate.style.width = Length.Percent(50);
-            loadAndSave.Add(loadFromTemplate);
             var hint = DocRuntime.NewTextElement("Template name can not be empty.");
             Button saveAsTemplate = DocRuntime.NewButton("Save As Template", () =>
             {
@@ -303,16 +299,25 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 header.Add(hint);
             });
             saveAsTemplate.style.width = Length.Percent(50);
-            loadAndSave.Add(saveAsTemplate);
 
-            header.Add(introSetting);
-            header.Add(outtroSetting);
-            header.Add(iconHorBar);
-            header.Add(addAndDeleteBar);
-            header.Add(new IMGUIContainer(() => {
+            var imgui = new IMGUIContainer(() =>
+            {
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("SubPages"));
-            }));
+            });
+
+            imgui.style.backgroundColor = new Color(.1f, .1f, .1f);
+            header.Add(DocRuntime.NewHorizontalBar(introMode,introDurField));
+            header.Add(DocRuntime.NewHorizontalBar(outroMode,outroDurField));
+            header.Add(DocRuntime.NewHorizontalBar(icon,buildinIcon));
+            header.Add(DocRuntime.NewHorizontalBar(0.5f,addPage,null,null,null,null,deletePage));
+            header.Add(imgui);
+            loadAndSave = DocRuntime.NewHorizontalBar(1f,loadFromTemplate, saveAsTemplate);
             header.Add(loadAndSave);
+            foreach (var ve in header.Children())
+            {
+                ve.style.marginTop = 2;
+                ve.style.marginBottom = 0;
+            }
             DocStyle.Current = styleTemp;
             return root;
         }

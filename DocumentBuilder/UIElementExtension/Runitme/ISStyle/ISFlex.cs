@@ -5,15 +5,17 @@ namespace NaiveAPI_UI
     public class ISFlex
     {
         public ISStyleLength Basis = ISStyleLength.Auto;
+        public float FlexGrow = 0;
         public FlexDirection Direction;
         public Wrap Wrap;
 
         public ISFlex Copy()
         {
             var copy = new ISFlex();
-            copy.Basis = Basis.Copy();
+            copy.Basis = Basis;
             copy.Direction = Direction;
             copy.Wrap = Wrap;
+            copy.FlexGrow = FlexGrow;
             return copy;
         }
 
@@ -21,6 +23,7 @@ namespace NaiveAPI_UI
         {
             Direction = FlexDirection.Row,
             Wrap = Wrap.Wrap,
+            FlexGrow = 1,
         };
 
         public static ISFlex Vertical => new ISFlex

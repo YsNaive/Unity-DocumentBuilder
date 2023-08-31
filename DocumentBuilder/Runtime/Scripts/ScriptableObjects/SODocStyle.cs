@@ -10,13 +10,6 @@ namespace NaiveAPI.DocumentBuilder
     [CreateAssetMenu(menuName = "Naive API/DocumentBuilder/new DocStyle")]
     public class SODocStyle : ScriptableObject
     {
-        static SODocStyle()
-        {
-            Application.quitting += () =>
-            {
-                DocStyle.Current = DocRuntimeData.Instance.CurrentStyle.Get(false);
-            };
-        }
         [SerializeField]
         private DocStyle DocStyle = new DocStyle();
 
@@ -49,8 +42,10 @@ namespace NaiveAPI.DocumentBuilder
                 instance.ButtonTextSize = (int)(DocStyle.ButtonTextSize * scale);
                 instance.ElementMarginPadding.Margin *= scale;
                 instance.ElementMarginPadding.Padding *= scale;
-                if(instance.LabelWidth.unit == LengthUnit.Pixel)
-                    instance.LabelWidth = (int)(DocStyle.LabelWidth.value * scale);
+                if(instance.LabelWidth.Unit == LengthUnit.Pixel)
+                    instance.LabelWidth = (DocStyle.LabelWidth * scale);
+                if(instance.LineHeight.Unit == LengthUnit.Pixel)
+                    instance.LineHeight = (DocStyle.LineHeight * scale);
             }
             return instance;
         }

@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: IsEnable
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 116bd5b02a236df4d9e4d81f16c51c48, type: 3}
+  SubPages: []
+  Components:
+  - VisualID: 1
+    JsonData: '{"Level":3}'
+    TextData:
+    - Usage
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Check is a mask is Enable on this ISStyle
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":3}'
+    TextData:
+    - API
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 4
+    JsonData: '{"Name":"IsEnable","Syntaxs":["public bool IsEnable(ISStyleFlag type)"],"ReturnTypes":["bool"],"Params":[{"ParamName":"type","Type":"ISStyleFlag"}],"isOn":false}'
+    TextData:
+    - 
+    - mask
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":3}'
+    TextData:
+    - Sample Code
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
+    TextData:
+    - "ISStyle style = new ISStyle(ISStyleFlag.MarginPadding | ISStyleFlag.Background);\r\n           
+      \r\n/* True  */ _ = style.IsEnable(ISStyleFlag.Padding );\r\n/* True  */ _
+      = style.IsEnable(ISStyleFlag.Padding  | ISStyleFlag.Background);\r\n/* False
+      */ _ = style.IsEnable(ISStyleFlag.Editable | ISStyleFlag.Padding | ISStyleFlag.Background);\n"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200

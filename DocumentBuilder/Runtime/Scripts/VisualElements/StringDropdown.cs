@@ -10,7 +10,9 @@ namespace NaiveAPI.DocumentBuilder
         public override VisualElement CreatePopupElement()
         {
             TextElement ve = DocRuntime.NewTextElement(Value);
+            ve.style.SetIS_Style(DocStyle.Current.InputFieldStyle);
             ve.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+            ve.style.unityBackgroundImageTintColor = Color.clear;
             return ve;
         }
 
@@ -33,5 +35,4 @@ namespace NaiveAPI.DocumentBuilder
             ((TextElement)PopupElement).text = newValue;
         }
     }
-
 }

@@ -12,6 +12,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public class DocEditDescription : DocEditVisual
     {
+        private static ISPadding padding = ISPadding.Pixel(5);
         public override string DisplayName => "Description";
         public override string VisualID => "2";
         protected override Enum InitAniType => DocDescription.AniMode.Fade;
@@ -26,7 +27,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.TextData.Add(string.Empty);
             textInput.value = Target.TextData[0];
             textInput.multiline = true;
-            textInput.style.ClearMarginPadding();
+            textInput[0].style.SetIS_Style(padding);
             textInput.style.whiteSpace = WhiteSpace.Normal;
             textInput.RegisterValueChangedCallback((val) =>
             {
@@ -38,6 +39,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 data.Type = (DocDescription.Type)e.newValue;
                 save();
             });
+            typeField[0].style.minWidth = 45;
+            typeField[1].style.paddingLeft = 4;
+            typeField[0].style.unityTextAlign = TextAnchor.MiddleCenter;
             Add(typeField);
             Add(textInput);
         }

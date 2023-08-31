@@ -285,6 +285,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private void createDropfield()
         {
             SelectVisualType = DocRuntime.NewDropdownField("", null, null);
+            SelectVisualType[0].style.ClearMarginPadding();
             SelectVisualType.choices = DocEditor.NameList;
             string tName = string.Empty;
             DocEditor.ID2Name.TryGetValue(Target.VisualID, out tName);
@@ -304,9 +305,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Repaint();
             });
             SelectVisualType.value = DocEditor.NameList[SelectVisualType.index];
-            SelectVisualType.style.marginLeft = 5;
+            SelectVisualType[0].style.paddingLeft = 5;
             SelectVisualType.style.height = 20;
-            SelectVisualType.style.width = 100;
+            SelectVisualType.style.width = 160;
         }
         VisualElement editFavoriteRoot;
         public void Repaint()
@@ -374,6 +375,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 doc.SetStatus(true);
                 doc.OnModify += this.OnModify;
             });
+            button.style.width = 41;
             button.style.height = 20;
             return button;
         }

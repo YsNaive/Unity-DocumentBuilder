@@ -56,27 +56,27 @@ namespace NaiveAPI_UI
         #region IS_Style setting
         public static void SetIS_Style(this IStyle element, ISStyle style)
         {
-            if (style.IsEnable(ISStyle.ISType.Display))
+            if (style.IsEnable(ISStyleFlag.Display))
                 element.SetIS_Style(style.Display);
-            if (style.IsEnable(ISStyle.ISType.Position))
+            if (style.IsEnable(ISStyleFlag.Position))
                 element.SetIS_Style(style.Position);
-            if (style.IsEnable(ISStyle.ISType.Flex))
+            if (style.IsEnable(ISStyleFlag.Flex))
                 element.SetIS_Style(style.Flex);
-            if (style.IsEnable(ISStyle.ISType.Align))
+            if (style.IsEnable(ISStyleFlag.Align))
                 element.SetIS_Style(style.Align);
-            if (style.IsEnable(ISStyle.ISType.Size))
+            if (style.IsEnable(ISStyleFlag.Size))
                 element.SetIS_Style(style.Size);
-            if (style.IsEnable(ISStyle.ISType.Margin))
+            if (style.IsEnable(ISStyleFlag.Margin))
                 element.SetIS_Style(style.Margin);
-            if (style.IsEnable(ISStyle.ISType.Padding))
+            if (style.IsEnable(ISStyleFlag.Padding))
                 element.SetIS_Style(style.Padding);
-            if (style.IsEnable(ISStyle.ISType.Text))
+            if (style.IsEnable(ISStyleFlag.Text))
                 element.SetIS_Style(style.Text);
-            if (style.IsEnable(ISStyle.ISType.Background))
+            if (style.IsEnable(ISStyleFlag.Background))
                 element.SetIS_Style(style.Background);
-            if (style.IsEnable(ISStyle.ISType.Border))
+            if (style.IsEnable(ISStyleFlag.Border))
                 element.SetIS_Style(style.Border);
-            if (style.IsEnable(ISStyle.ISType.Radius))
+            if (style.IsEnable(ISStyleFlag.Radius))
                 element.SetIS_Style(style.Radius);
         }
         public static IStyle SetIS_Style(this IStyle element, ISDisplay display)
@@ -101,6 +101,7 @@ namespace NaiveAPI_UI
             element.flexBasis = flex.Basis;
             element.flexDirection = flex.Direction;
             element.flexWrap = flex.Wrap;
+            element.flexGrow = flex.FlexGrow;
             return element;
         }
         public static IStyle SetIS_Style(this IStyle element, ISAlign align)

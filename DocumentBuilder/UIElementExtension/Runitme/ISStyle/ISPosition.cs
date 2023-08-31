@@ -14,10 +14,10 @@ namespace NaiveAPI_UI
             return new ISPosition
             {
                 Position = Position,
-                Left = Left.Copy(),
-                Top = Top.Copy(),
-                Right = Right.Copy(),
-                Bottom = Bottom.Copy()
+                Left = Left,
+                Top = Top,
+                Right = Right,
+                Bottom = Bottom
             };
         }
         public override string ToString()
