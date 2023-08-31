@@ -17,7 +17,6 @@ namespace NaiveAPI.DocumentBuilder
         public override VisualElement CreateSelectableItem(string choice, int i)
         {
             TextElement ve = DocRuntime.NewTextElement(choice);
-            ve.text = choice;
             if (i % 2 == 1)
                 ve.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             ISBorder clear = new ISBorder(Color.clear, 3);

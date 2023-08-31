@@ -42,6 +42,24 @@ namespace NaiveAPI_UI
         public ISBorder     Border;
         public ISRadius     Radius;
 
+        public ISStyle Copy()
+        {
+            return new ISStyle
+            {
+                EnableMask = EnableMask,
+                Display = (Display!=null)? Display.Copy(): null,
+                Position = (Position != null) ? Position.Copy() : null,
+                Flex = (Flex != null) ? Flex.Copy() : null,
+                Align = (Align != null) ? Align.Copy() : null,
+                Size = (Size != null) ? Size.Copy() : null,
+                Margin = (Margin != null) ? Margin.Copy() : null,
+                Padding = (Padding != null) ? Padding.Copy() : null,
+                Text = (Text != null) ? Text.Copy() : null,
+                Background = (Background != null) ? Background.Copy() : null,
+                Border = (Border != null) ? Border.Copy() : null,
+                Radius = (Radius != null) ? Radius.Copy() : null,
+            };
+        }
         public enum ISType
         {
             None = 0,

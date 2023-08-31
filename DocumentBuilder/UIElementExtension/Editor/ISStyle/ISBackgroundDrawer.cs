@@ -14,10 +14,10 @@ namespace NaiveAPI_Editor.drawer
         private int index = -1;
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            propertys[0] = property.FindPropertyRelative("Sprite");
-            propertys[1] = property.FindPropertyRelative("Texture");
-            propertys[2] = property.FindPropertyRelative("RenderTexture");
-            propertys[3] = property.FindPropertyRelative("VectorImage");
+            propertys[0] = property.FindPropertyRelative("sprite");
+            propertys[1] = property.FindPropertyRelative("texture");
+            propertys[2] = property.FindPropertyRelative("renderTexture");
+            propertys[3] = property.FindPropertyRelative("vectorImage");
             Rect rect = position;
             rect.height = 20;
             property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, label);

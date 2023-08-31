@@ -1,4 +1,3 @@
-using UnityEngine.UIElements;
 namespace NaiveAPI_UI
 {
     [System.Serializable]
@@ -8,6 +7,24 @@ namespace NaiveAPI_UI
         public ISStyleLength Top = ISStyleLength.Pixel(0);
         public ISStyleLength Right = ISStyleLength.Pixel(0);
         public ISStyleLength Bottom = ISStyleLength.Pixel(0);
+        public ISPadding Copy()
+        {
+            return new ISPadding
+            {
+                Left = Left.Copy(),
+                Top = Top.Copy(),
+                Right = Right.Copy(),
+                Bottom = Bottom.Copy()
+            };
+        }
+        public static ISPadding operator *(ISPadding styleLength, float value)
+        {
+            styleLength.Top *= value;
+            styleLength.Left *= value;
+            styleLength.Right *= value;
+            styleLength.Bottom *= value;
+            return styleLength;
+        }
         public static ISPadding Pixel(int px)
         {
             return new ISPadding

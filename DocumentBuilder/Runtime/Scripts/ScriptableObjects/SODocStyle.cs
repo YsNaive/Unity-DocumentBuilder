@@ -10,6 +10,13 @@ namespace NaiveAPI.DocumentBuilder
     [CreateAssetMenu(menuName = "Naive API/DocumentBuilder/new DocStyle")]
     public class SODocStyle : ScriptableObject
     {
+        static SODocStyle()
+        {
+            Application.quitting += () =>
+            {
+                DocStyle.Current = DocRuntimeData.Instance.CurrentStyle.Get(false);
+            };
+        }
         [SerializeField]
         private DocStyle DocStyle = new DocStyle();
 
@@ -25,13 +32,14 @@ namespace NaiveAPI.DocumentBuilder
         {
             instance = null;
         }
-        public DocStyle Get()
+        public DocStyle Get() { return Get(Application.isPlaying); }
+        public DocStyle Get(bool isRuntime)
         {
             if (instance == null)
             {
                 instance = DocStyle.Copy();
             }
-            float scale = Application.isPlaying ? RuntimeFontSizeScale : EditorFontSizeScale;
+            float scale = isRuntime ? RuntimeFontSizeScale : EditorFontSizeScale;
             if(instance.ComponentSpace != (int)(DocStyle.ComponentSpace * scale))
             {
                 instance.ComponentSpace = (int)(DocStyle.ComponentSpace * scale);
@@ -39,10 +47,8 @@ namespace NaiveAPI.DocumentBuilder
                 instance.MainTextSize = (int)(DocStyle.MainTextSize * scale);
                 instance.LabelTextSize = (int)(DocStyle.LabelTextSize * scale);
                 instance.ButtonTextSize = (int)(DocStyle.ButtonTextSize * scale);
-                instance.MarginVertical = (int)(DocStyle.MarginVertical * scale);
-                instance.MarginHorizontal = (int)(DocStyle.MarginHorizontal * scale);
-                instance.PaddingVertical = (int)(DocStyle.PaddingVertical * scale);
-                instance.PaddingHorizontal = (int)(DocStyle.PaddingHorizontal * scale);
+                instance.ElementMarginPadding.Margin *= scale;
+                instance.ElementMarginPadding.Padding *= scale;
                 if(instance.LabelWidth.unit == LengthUnit.Pixel)
                     instance.LabelWidth = (int)(DocStyle.LabelWidth.value * scale);
             }

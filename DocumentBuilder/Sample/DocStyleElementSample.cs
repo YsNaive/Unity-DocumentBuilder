@@ -1,4 +1,5 @@
 using NaiveAPI.DocumentBuilder;
+using NaiveAPI_UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,10 @@ namespace NaiveAPI.Sample
         UIDocument UID;
         VisualElement root;
         public SODocStyle UsingStyle;
+        public ISStyle ISStyle = new ISStyle();
         void Start()
         {
-            if (UsingStyle != null) DocStyle.Current = UsingStyle.Get();
+            //if (UsingStyle != null) DocStyle.Current = UsingStyle.Get();
             UID = FindObjectOfType<UIDocument>();
             root = DocRuntime.NewContainer();
             UID.rootVisualElement.Add(root);

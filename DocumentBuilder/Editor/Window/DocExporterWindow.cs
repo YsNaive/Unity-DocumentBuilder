@@ -15,7 +15,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public class DocExporterWindow : EditorWindow
     {
-        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Exporter")]
+        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Exporter", priority = 4)]
         public static void ShowWindow()
         {
             GetWindow<DocExporterWindow>("Document Exporter");

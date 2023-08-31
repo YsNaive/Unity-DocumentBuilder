@@ -62,6 +62,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         public override VisualElement CreateInspectorGUI()
         {
+            var styleTemp = DocStyle.Current.Copy();
+            DocStyle.Current = DocRuntimeData.Instance.CurrentStyle.Get(false);
             Target = target as SODocPage;
             root = new IMGUIContainer(OnInspectorGUI);
             #region mod bar
@@ -311,6 +313,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("SubPages"));
             }));
             header.Add(loadAndSave);
+            DocStyle.Current = styleTemp;
             return root;
         }
         private void OnDisable() { Save(); }

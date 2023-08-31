@@ -33,13 +33,13 @@ namespace NaiveAPI.DocumentBuilder
                 LabelElement.text = value;
                 if (value == "")
                 {
-                    LabelElement.style.width = 0;
-                    PopupElement.style.width = Length.Percent(100);
+                    LabelElement.style.minWidth = 0;
+                    PopupElement.style.minWidth = Length.Percent(100);
                 }
                 else
                 {
-                    LabelElement.style.width = DocStyle.Current.LabelWidth;
-                    PopupElement.style.width = DocStyle.Current.ContentWidth(PopupElement);
+                    LabelElement.style.minWidth = DocStyle.Current.LabelWidth;
+                    PopupElement.style.minWidth = DocStyle.Current.ContentWidth(PopupElement);
                 }
             }
         }

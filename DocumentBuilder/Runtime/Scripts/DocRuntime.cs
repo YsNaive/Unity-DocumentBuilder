@@ -39,28 +39,15 @@ namespace NaiveAPI.DocumentBuilder
         #region VisualElement
         public static void ApplyMarginPadding(VisualElement ve)
         {
-            ve.style.marginTop = DocStyle.Current.MarginVertical;
-            ve.style.marginLeft = DocStyle.Current.MarginHorizontal;
-            ve.style.marginRight = DocStyle.Current.MarginHorizontal;
-            ve.style.marginBottom = DocStyle.Current.MarginVertical;
-            ve.style.paddingTop = DocStyle.Current.PaddingVertical;
-            ve.style.paddingLeft = DocStyle.Current.PaddingHorizontal;
-            ve.style.paddingRight = DocStyle.Current.PaddingHorizontal;
-            ve.style.paddingBottom = DocStyle.Current.PaddingVertical;
+            ve.style.SetIS_Style(DocStyle.Current.ElementMarginPadding);
         }
         public static void ApplyMargin(VisualElement ve)
         {
-            ve.style.marginTop = DocStyle.Current.MarginVertical;
-            ve.style.marginLeft = DocStyle.Current.MarginHorizontal;
-            ve.style.marginRight = DocStyle.Current.MarginHorizontal;
-            ve.style.marginBottom = DocStyle.Current.MarginVertical;
+            ve.style.SetIS_Style(DocStyle.Current.ElementMarginPadding.Margin);
         }
         public static void ApplyPadding(VisualElement ve)
         {
-            ve.style.paddingTop = DocStyle.Current.PaddingVertical;
-            ve.style.paddingLeft = DocStyle.Current.PaddingHorizontal;
-            ve.style.paddingRight = DocStyle.Current.PaddingHorizontal;
-            ve.style.paddingBottom = DocStyle.Current.PaddingVertical;
+            ve.style.SetIS_Style(DocStyle.Current.ElementMarginPadding.Padding);
         }
         public static DocVisual CreateDocVisual(DocComponent docComponent)
         {
@@ -159,7 +146,7 @@ namespace NaiveAPI.DocumentBuilder
             textField.style.ClearMarginPadding();
             ApplyMarginPadding(textField[0]);
             textField[0].style.paddingLeft = DocStyle.Current.MainTextSize / 2f;
-            textField[0].style.SetIS_Style(DocStyle.Current.InputFieldBackground);
+            textField[0].style.SetIS_Style(DocStyle.Current.InputField);
             textField[0].style.SetIS_Style(DocStyle.Current.MainText);
             if (!string.IsNullOrEmpty(label))
             {
@@ -198,12 +185,11 @@ namespace NaiveAPI.DocumentBuilder
         public static DropdownField NewDropdownField(string text, List<string> choice, EventCallback<ChangeEvent<string>> eventCallback = null) 
         {
             DropdownField dropField = new DropdownField();
-            dropField.style.ClearMarginPadding();
             dropField.focusable = false;
             dropField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             dropField[0].style.SetIS_Style(DocStyle.Current.MainText);
             dropField[0][0].style.SetIS_Style(DocStyle.Current.MainText);
-            ApplyMarginPadding(dropField[0]);
+            
             if (!string.IsNullOrEmpty(text))
             {
                 dropField.label = text;

@@ -1,4 +1,5 @@
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace NaiveAPI.DocumentBuilder
     [System.Serializable]
     public class DocStyle : ISerializationCallbackReceiver
     {
+        public static event Action<DocStyle> OnStyleChanged;
         public static DocStyle Current
         {
             get
@@ -19,7 +21,9 @@ namespace NaiveAPI.DocumentBuilder
             }
             set
             {
+                if (m_current == value) return;
                 m_current = value;
+                OnStyleChanged?.Invoke(value);
             }
         }
         private static DocStyle m_current;
@@ -65,12 +69,13 @@ namespace NaiveAPI.DocumentBuilder
         }
         [SerializeField] private ISLength m_labelWidth = ISLength.Pixel(80);
 
-        public ISBackground InputFieldBackground = new ISBackground();
+        public ISStyle InputField = new ISStyle(1536);
+        public ISStyle ElementMarginPadding = new ISStyle(192);
 
-        public float MarginVertical = 2;
-        public float MarginHorizontal = 0;
-        public float PaddingVertical = 2;
-        public float PaddingHorizontal = 2;
+        public float MarginVer => ElementMarginPadding.Margin.Left.Value.Value;
+        public float MarginHor => ElementMarginPadding.Margin.Top.Value.Value;
+        public float PaddingVer => ElementMarginPadding.Padding.Left.Value.Value;
+        public float PaddingHor => ElementMarginPadding.Padding.Top.Value.Value;
         public float ScrollerWidth = 14;
         public float ComponentSpace = 10;
         public float GUIScale = 1;
@@ -108,12 +113,9 @@ namespace NaiveAPI.DocumentBuilder
 
             docStyle.LabelWidth = this.LabelWidth;
 
-            docStyle.InputFieldBackground = this.InputFieldBackground;
-
-            docStyle.MarginVertical = this.MarginVertical;
-            docStyle.MarginHorizontal = this.MarginHorizontal;
-            docStyle.PaddingVertical = this.PaddingVertical;
-            docStyle.PaddingHorizontal = this.PaddingHorizontal;
+            docStyle.InputField = this.InputField.Copy();
+            docStyle.ElementMarginPadding = this.ElementMarginPadding.Copy();
+            
             docStyle.ScrollerWidth = this.ScrollerWidth;
             docStyle.ComponentSpace = this.ComponentSpace;
             docStyle.GUIScale = this.GUIScale;

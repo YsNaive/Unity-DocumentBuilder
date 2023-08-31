@@ -68,6 +68,11 @@ namespace NaiveAPI_UI
             styleLength.Value -= value;
             return styleLength;
         }
+        public static ISStyleLength operator* (ISStyleLength styleLength, float value)
+        {
+            styleLength.Value *= value;
+            return styleLength;
+        }
 
         public static implicit operator StyleLength(ISStyleLength styleLength) { return styleLength.Get; }
     }

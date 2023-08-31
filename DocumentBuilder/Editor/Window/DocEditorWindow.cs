@@ -14,7 +14,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
     public class DocEditorWindow : EditorWindow
     {
         #region get window
-        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Document Editor")]
+        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Document Editor", priority = 1)]
         public static void ShowWindow()
         {
             m_editorInstance = GetWindow<DocEditorWindow>("Document Editor");
@@ -73,7 +73,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         IVisualElementScheduledItem update;
         private void CreateGUI()
         {
-
             update = rootVisualElement.schedule.Execute(() =>
             {
                 if (!forceUpdate) return;

@@ -1,6 +1,3 @@
-using System;
-using System.Runtime.InteropServices;
-using UnityEngine;
 using UnityEngine.UIElements;
 namespace NaiveAPI_UI
 {
@@ -9,5 +6,13 @@ namespace NaiveAPI_UI
     {
         public Justify Content;
         public Align Items;
+        public ISAlign Copy()
+        {
+            return new ISAlign
+            {
+                Content = Content,
+                Items = Items
+            };
+        }
     }
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 namespace NaiveAPI_UI
 {
     [System.Serializable]
@@ -14,18 +13,46 @@ namespace NaiveAPI_UI
         public float Right;
         public float Bottom;
 
+        public Color Color
+        {
+            set
+            {
+                LeftColor = value;
+                TopColor = value;
+                RightColor = value;
+                BottomColor = value;
+            }
+        }
+        public float Width
+        {
+            set
+            {
+                Left = value;
+                Top = value;
+                Right = value;
+                Bottom = value;
+            }
+        }
         public ISBorder() { }
 
         public ISBorder(Color color, float size)
         {
-            LeftColor = color;
-            TopColor = color;
-            RightColor = color;
-            BottomColor = color;
-            Left = size;
-            Top = size;
-            Right = size;
-            Bottom = size;
+            Color = color;
+            Width = size;
+        }
+
+        public ISBorder Copy()
+        {
+            var copy  = new ISBorder();
+            copy.Left = Left;
+            copy.Top = Top;
+            copy.Right = Right;
+            copy.Bottom = Bottom;
+            copy.LeftColor = LeftColor;
+            copy.TopColor = TopColor;
+            copy.RightColor = RightColor;
+            copy.BottomColor = BottomColor;
+            return copy;
         }
     }
 }

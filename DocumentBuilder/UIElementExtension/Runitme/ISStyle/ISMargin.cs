@@ -104,6 +104,14 @@ namespace NaiveAPI_UI
             }
         }
 
+        public static ISMargin operator *(ISMargin styleLength, float value)
+        {
+            styleLength.Top *= value;
+            styleLength.Left *= value;
+            styleLength.Right *= value;
+            styleLength.Bottom *= value;
+            return styleLength;
+        }
         public ISMargin Copy()
         {
             return new ISMargin

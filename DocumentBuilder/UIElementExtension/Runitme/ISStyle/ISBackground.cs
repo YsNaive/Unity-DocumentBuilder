@@ -7,31 +7,49 @@ namespace NaiveAPI_UI
     {
         public Color Color = Color.clear;
         public Color ImageTint = Color.white;
-        [SerializeField] private Sprite Sprite = null;
-        [SerializeField] private Texture2D Texture = null;
-        [SerializeField] private RenderTexture RenderTexture = null;
-        [SerializeField] private VectorImage VectorImage = null;
+        [SerializeField] private Sprite sprite = null;
+        [SerializeField] private Texture2D texture = null;
+        [SerializeField] private RenderTexture renderTexture = null;
+        [SerializeField] private VectorImage vectorImage = null;
         public ScaleMode ScaleMode = ScaleMode.StretchToFill;
-
+        public Sprite Sprite { set => sprite = value; }
+        public Texture2D Texture2D { set => texture = value; }
+        public RenderTexture RenderTexture { set => renderTexture = value; }
+        public VectorImage VectorImage { set => vectorImage = value; }
         public StyleBackground StyleBackground
         {
             get
             {
-                if (Sprite!=null)
-                    return new  StyleBackground(Sprite);
-                if(Texture!=null)
-                    return new  StyleBackground(Texture);
-                if (RenderTexture != null)
+                if (sprite!=null)
+                    return new  StyleBackground(sprite);
+                if(texture!=null)
+                    return new  StyleBackground(texture);
+                if (renderTexture != null)
                 {
                     Background background = new Background();
-                    background.renderTexture = RenderTexture;
+                    background.renderTexture = renderTexture;
                     return new StyleBackground(background);
                 }
-                if(Sprite!=null)
-                    return new  StyleBackground(VectorImage);
+                if(sprite!=null)
+                    return new  StyleBackground(vectorImage);
 
                 return null;
             }
+        }
+        public ISBackground Copy()
+        {
+            var copy = new ISBackground();
+            copy.Color = Color;
+            copy.ImageTint = ImageTint;
+            copy.sprite = sprite;
+            copy.texture = texture;
+            copy.renderTexture = renderTexture;
+            copy.vectorImage = vectorImage;
+            return copy;
+        }
+        public static implicit operator StyleBackground(ISBackground background)
+        {
+            return background.StyleBackground;
         }
     }
 }

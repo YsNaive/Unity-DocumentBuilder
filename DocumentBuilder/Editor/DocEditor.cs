@@ -96,7 +96,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             EnumField enumField = new EnumField();
             enumField.style.ClearPadding();
             DocRuntime.ApplyMarginPadding(enumField);
-            enumField.style.ClearMarginPadding();
             enumField[0].style.ClearMarginPadding();
             enumField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             enumField[0].style.minHeight = 18;

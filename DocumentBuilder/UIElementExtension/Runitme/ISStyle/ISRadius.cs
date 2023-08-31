@@ -1,5 +1,3 @@
-using UnityEngine;
-using UnityEngine.UIElements;
 namespace NaiveAPI_UI
 {
     [System.Serializable]
@@ -9,7 +7,16 @@ namespace NaiveAPI_UI
         public ISLength BottomLeft = new ISLength();
         public ISLength TopRight = new ISLength();
         public ISLength BottomRight = new ISLength();
-
+        public ISRadius Copy()
+        {
+            return new ISRadius
+            {
+                TopLeft = TopLeft.Copy(),
+                BottomLeft = BottomLeft.Copy(),
+                TopRight = TopRight.Copy(),
+                BottomRight = BottomRight.Copy()
+            };
+        }
         public static ISRadius Pixel(float px)
         {
             return new ISRadius

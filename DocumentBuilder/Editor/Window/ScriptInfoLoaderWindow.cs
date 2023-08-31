@@ -13,7 +13,7 @@ namespace NaiveAPI.DocumentBuilder
 {
     public class ScriptInfoLoaderWindow : EditorWindow
     {
-        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Script Components Loader")]
+        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Script Components Loader", priority = 3)]
         public static void ShowWindow()
         {
             GetWindow<ScriptInfoLoaderWindow>("Script Components Loader");

@@ -181,7 +181,6 @@ namespace NaiveAPI.DocumentBuilder
             SearchField.style.marginLeft = DocStyle.Current.MainTextSize/2;
             SearchField.style.marginTop = DocStyle.Current.MainTextSize/2;
             SearchField.style.marginRight = DocStyle.Current.MainTextSize/2;
-            SearchField.style.height = DocStyle.Current.MainTextSize*1.5f;
             menuScrollView.Add(menuVisual);
             menuScrollView.mode = ScrollViewMode.VerticalAndHorizontal;
             var leftSide = DocRuntime.NewEmpty();

@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.UIElements;
 namespace NaiveAPI_UI
 {
@@ -51,6 +50,10 @@ namespace NaiveAPI_UI
         }
         public static ISLength operator- (ISLength length,float value){
             length.Value -= value;
+            return length;
+        }
+        public static ISLength operator* (ISLength length,float value){
+            length.Value *= value;
             return length;
         }
 
