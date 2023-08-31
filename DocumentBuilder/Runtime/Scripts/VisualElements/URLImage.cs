@@ -1,13 +1,10 @@
 using NaiveAPI_UI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
-using UnityEngine.XR;
 
 namespace NaiveAPI.DocumentBuilder
 {

@@ -1,4 +1,3 @@
-using NaiveAPI.DocumentBuilder;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +10,8 @@ namespace NaiveAPI_UI
     {
         public string ConfirmText = "YES";
         public string CancelText = "NO";
-        public Color ConfirmColor = DocStyle.Current.SuccessColor;
-        public Color CancelColor = DocStyle.Current.DangerColor;
+        public Color ConfirmColor = Color.green;
+        public Color CancelColor = Color.red;
         public event Action Confirm;
         public event Action Cancel;
         public Button MainBtn;

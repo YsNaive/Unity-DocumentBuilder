@@ -7,7 +7,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace NaiveAPI
+namespace NaiveAPI.DocumentBuilder
 {
     public static class DocRuntime
     {
