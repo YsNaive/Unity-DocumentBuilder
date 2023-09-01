@@ -23,13 +23,14 @@ namespace NaiveAPI.DocumentBuilder
             @"\s*\((?:(?:,\s*)?(params|this|in|out|ref)?\s*" + functype + @"\s+(\w+)" + funcEqual + @")*\)";
         public const string fieldPattern = @"\b" + prefix + @"(?!\b" + test + @"\b)" + type + @"\s+(?:" + variable + fieldEqual +
             @")(?:,\s*" + variable + fieldEqual + ")*(?:;|{)";
-        public const string commentPattern = @"//.*[\n]|/\*[\s\S]*?\*/";
+        public const string commentPattern = @"//.*(?:\n|$)|/\*[\s\S]*?\*/";
         public const string newPattern = @"\bnew\s+" + type + @"(?:;|\()";
-        public const string reservedWordPattern = @"\b(?:in|get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
+        public const string reservedWordPattern = @"\b(?:var|in|get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
         public const string methodPattern = @"\b" + type + @"\(";
         public const string numberPattern = @"[+-]?\b(\d+(?:\.\d+)?[fx]?)";
         public const string pattern1 = @"\b(?<var>" + variable + @")\b(?(<)(?:(?'Open'<)|" + 
                 @"(?<var>" + variable + @")|(?'Close-Open'>)|(?:,\s*(?<var>" + variable + @")))*)(?(Open)(?!))";
+        public static readonly string[] typeNameTable = { "Void", "void", "Int32", "int", "String", "string", "Single", "float", "Boolean", "bool" };
 
         public static string CalGenericTypeName(Type type)
         {
@@ -41,7 +42,7 @@ namespace NaiveAPI.DocumentBuilder
                 return GetTypeName(name);
             i = 0;
             name += "<";
-            foreach (var arg in type.GenericTypeArguments)
+            foreach (var arg in type.GetGenericArguments())
             {
                 name += ((i != 0) ? ", " : "") + CalGenericTypeName(arg);
                 i++;
@@ -52,18 +53,12 @@ namespace NaiveAPI.DocumentBuilder
 
         public static string GetTypeName(string typeName)
         {
-            switch (typeName)
+            for (int i = 0;i < typeNameTable.Length; i += 2)
             {
-                case "Void":
-                    return "void";
-                case "Int32":
-                    return "int";
-                case "String":
-                    return "string";
-                case "Single":
-                    return "float";
-                case "Boolean":
-                    return "bool";
+                if (typeName.Contains(typeNameTable[i]))
+                {
+                    return typeName.Replace(typeNameTable[i], typeNameTable[i + 1]);
+                }
             }
 
             return typeName;

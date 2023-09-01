@@ -107,10 +107,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = DocRuntime.NewEmptyHorizontal();
 
+            DocStyle.Current.BeginLabelWidth(ISLength.Percent(10));
             TextField textField = DocRuntime.NewTextField(i.ToString(), (value) =>
             {
                 Target.TextData[i] = value.newValue;
             });
+            DocStyle.Current.EndLabelWidth();
             textField[0].style.minWidth = Length.Percent(5);
             textField.style.width = Length.Percent(70);
             textField.value = Target.TextData[i];

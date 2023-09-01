@@ -282,6 +282,7 @@ namespace NaiveAPI.DocumentBuilder
         public static void ApplyButtonStyle(Button button, Color color) { ApplyButtonStyle(button, color, Color.clear); }
         public static void ApplyButtonStyle(Button button, Color color, Color hoverColor)
         {
+            button.style.ClearMarginPadding();
             if(hoverColor == Color.clear)
             {
                 float h, s, v;

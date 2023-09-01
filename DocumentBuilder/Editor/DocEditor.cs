@@ -80,7 +80,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             integerField.style.minHeight = DocStyle.Current.LineHeight;
             integerField[0].style.SetIS_Style(DocStyle.Current.MainText);
             integerField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            integerField.style.flexGrow = 1;
             integerField.style.height = 18;
             if (label != "")
             {
@@ -99,7 +98,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             enumField[0].style.ClearMarginPadding();
             enumField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             enumField.style.minHeight = 18;
-            enumField.style.flexGrow = 1;
             enumField[0].Q<TextElement>().style.SetIS_Style(DocStyle.Current.MainText);
             enumField[0].Q<TextElement>().style.paddingLeft = 5;
             if (label != "")

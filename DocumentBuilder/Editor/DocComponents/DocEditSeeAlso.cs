@@ -65,6 +65,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
+            DocStyle.Current.BeginLabelWidth(ISLength.Percent(40));
             TextField descriptionField = DocRuntime.NewTextField("description", (value) =>
             {
                 Target.TextData[0] = value.newValue;
@@ -81,6 +82,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             buttonTextField.style.width = Length.Percent(50);
             root.Add(buttonTextField);
 
+            DocStyle.Current.EndLabelWidth();
+
             return root;
         }
 
@@ -88,16 +91,18 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
+            DocStyle.Current.BeginLabelWidth(ISLength.Percent(30));
             IntegerField integerField = DocEditor.NewIntField("height", (value) =>
             {
                 data.height = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
             });
-            integerField.style.width = Length.Percent(50);
             integerField.value = data.height;
+            integerField.style.width = Length.Percent(30);
             root.Add(integerField);
+            DocStyle.Current.EndLabelWidth();
             VisualElement veMode = generateModeVisual(data);
-            veMode.style.width = Length.Percent(50);
+            veMode.style.width = Length.Percent(70);
             root.Add(veMode);
 
             return root;
@@ -107,13 +112,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
+            DocStyle.Current.BeginLabelWidth(ISLength.Percent(15));
             ObjectField objectField = DocEditor.NewObjectField<SODocPage>("page", (value) =>
             {
                 Target.ObjsData[0] = value.newValue;
             });
             objectField.style.width = Length.Percent(50);
             objectField.style.paddingLeft = DocStyle.Current.MainTextSize;
-            objectField[0].style.minWidth = Length.Percent(25);
             objectField.value = Target.ObjsData[0];
             TextField urlTextField = DocRuntime.NewTextField("url", (value) =>
             {
@@ -122,8 +127,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             urlTextField.value = data.url;
             urlTextField.style.paddingLeft = DocStyle.Current.MainTextSize;
-            urlTextField[0].style.minWidth = Length.Percent(25);
             urlTextField.style.width = Length.Percent(50);
+            DocStyle.Current.EndLabelWidth();
             EnumField enumField = DocEditor.NewEnumField("Mode", data.mode, (value) =>
             {
                 data.mode = (DocSeeAlso.Mode)value.newValue;
@@ -140,9 +145,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.JsonData = JsonUtility.ToJson(data);
             });
             enumField.style.paddingLeft = DocStyle.Current.MainTextSize;
-            root.Add(enumField);
             enumField[0].style.minWidth = Length.Percent(25);
             enumField.style.width = Length.Percent(50);
+            root.Add(enumField);
             if (data.mode == DocSeeAlso.Mode.OpenPage)
             {
                 if (root.Contains(urlTextField))

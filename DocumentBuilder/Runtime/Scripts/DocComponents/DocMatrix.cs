@@ -12,6 +12,7 @@ namespace NaiveAPI.DocumentBuilder
          * 
          * Hello
          * */
+        public float[] floats = null;
         public TextAnchor[,] textAnchors = new TextAnchor[5, 10];
         public double test = 2.5f;
         public Dictionary<List<string>, DocMatrix> m_=null, m_2 = null;
