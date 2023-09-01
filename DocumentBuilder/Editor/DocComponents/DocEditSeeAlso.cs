@@ -112,7 +112,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
-            DocStyle.Current.BeginLabelWidth(ISLength.Percent(15));
+            DocStyle.Current.BeginLabelWidth(ISLength.Pixel(40));
             ObjectField objectField = DocEditor.NewObjectField<SODocPage>("page", (value) =>
             {
                 Target.ObjsData[0] = value.newValue;

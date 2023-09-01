@@ -8,27 +8,6 @@ namespace NaiveAPI.DocumentBuilder
 {
     public class DocMatrix : DocVisual
     {
-        /*
-         * 
-         * Hello
-         * */
-        public float[] floats = null;
-        public TextAnchor[,] textAnchors = new TextAnchor[5, 10];
-        public double test = 2.5f;
-        public Dictionary<List<string>, DocMatrix> m_=null, m_2 = null;
-        public Dictionary<string, DocMatrix> ttst=null;
-        public Dictionary<string, List<DocMatrix>> ttst2=null;
-        public List<List<List<string>>> temp = new List<List<List<string>>>();
-        /// <summary>
-        /// Helllo there
-        /// </summary>
-        /// <param name="list"></param>
-        /// <param name="a"></param>
-        /// <returns></returns>
-        public List<List<List<string>>> testing<T>(ref Dictionary<List<string>, DocMatrix> list, int a= 2, float test = 1)
-        {
-            return null;
-        }
         public override string VisualID => "3";
 
         private static ISMargin margin = ISMargin.None;

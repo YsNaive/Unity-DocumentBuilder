@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.1] -2023-09-01
+Improve. DocStyle layout
+Fixed. Parser Number/Typename bug
+Add. Simple UIElement Extension Docs
+Add. UIElement Extension asmdef
+
 ## [2.0.0] -2023-08-10
 New Version of Document Builder release
 old format are no longer supported. If needed, please download from github page

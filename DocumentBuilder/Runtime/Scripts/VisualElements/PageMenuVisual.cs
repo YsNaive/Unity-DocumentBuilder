@@ -69,7 +69,7 @@ namespace NaiveAPI.DocumentBuilder
                         openState.style.height = e.newRect.height;
                         openState.style.width = e.newRect.height;
                         openState.style.position = Position.Absolute;
-                        openState.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontgroundColor;
+                        openState.style.unityBackgroundImageTintColor = DocStyle.Current.FrontgroundColor;
                         openState.RegisterCallback<MouseDownEvent>(e => { 
                             IsOpen = !IsOpen; 
                         });

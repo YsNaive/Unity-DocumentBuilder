@@ -56,13 +56,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public static ObjectField NewObjectField<T>(string label = "", EventCallback<ChangeEvent<UnityEngine.Object>> valueChange = null)
         {
             ObjectField objectField = new ObjectField();
-            objectField.style.ClearPadding();
-            DocRuntime.ApplyMarginPadding(objectField);
+            objectField.style.ClearMarginPadding();
             objectField.objectType = typeof(T);
             if(valueChange != null)
                 objectField.RegisterValueChangedCallback(valueChange);
             objectField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            objectField[0].style.ClearMarginPadding();
             objectField[0].Q<Label>().style.SetIS_Style(DocStyle.Current.MainText);
             if (label != "")
             {

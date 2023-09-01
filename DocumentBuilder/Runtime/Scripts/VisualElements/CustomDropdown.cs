@@ -76,9 +76,11 @@ namespace NaiveAPI.DocumentBuilder
                 ScrollView selectableContainer = DocRuntime.NewScrollView();
                 selectableContainer.style.ClearMarginPadding();
                 selectableContainer.style.backgroundColor = DocStyle.Current.BackgroundColor;
+                selectableContainer.style.SetIS_Style(new ISBorder(DocStyle.Current.FrontgroundColor, DocStyle.Current.MainTextSize / 6f));
                 selectableContainer.style.left = PopupElement.worldBound.x;
                 selectableContainer.style.top = PopupElement.worldBound.yMax;
                 selectableContainer.style.width = PopupElement.worldBound.width;
+                selectableContainer.style.maxHeight = panel.visualTree.worldBound.height - PopupElement.worldBound.yMax;
                 Action close = () => { 
                     if(panel.visualTree.Contains(tempCover))
                         panel.visualTree.Remove(tempCover); 
