@@ -40,12 +40,32 @@ namespace NaiveAPI.DocumentBuilder
         public ISText MainText { get => MainTextStyle.Text; set => MainTextStyle.Text = value; }
         public ISText LabelText { get => LabelTextStyle.Text; set => LabelTextStyle.Text = value; }
         public ISText ButtonText { get => ButtonTextStyle.Text; set => ButtonTextStyle.Text = value; }
-        
-        public ISStyle MainTextStyle   = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Text | ISStyleFlag.MarginPadding);
-        public ISStyle LabelTextStyle  = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Text | ISStyleFlag.MarginPadding);
-        public ISStyle ButtonTextStyle = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Text | ISStyleFlag.Padding);
-        public ISStyle InputFieldStyle = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.MarginPadding | ISStyleFlag.Background);
-        public ISStyle ElementMarginPadding = new ISStyle(ISStyleFlag.MarginPadding);
+
+        public ISStyle MainTextStyle = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Text | ISStyleFlag.MarginPadding)
+        {
+            Margin  = new ISMargin  { Left = ISStyleLength.Pixel(2), Top = ISStyleLength.Auto, Right = ISStyleLength.Pixel(2), Bottom = ISStyleLength.Auto},
+            Padding = new ISPadding { Left = ISStyleLength.Pixel(6), Top = ISStyleLength.Auto, Right = ISStyleLength.Pixel(6), Bottom = ISStyleLength.Auto},
+            Text = new ISText { FontSize = 12},
+        };
+        public ISStyle LabelTextStyle  = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Text | ISStyleFlag.MarginPadding)
+        {
+            Margin  = new ISMargin  { Left = ISStyleLength.Pixel(0), Top = ISStyleLength.Pixel(4), Right = ISStyleLength.Pixel(4), Bottom = ISStyleLength.Auto },
+            Padding = new ISPadding { Left = ISStyleLength.Pixel(2), Top = ISStyleLength.Pixel(4), Right = ISStyleLength.Pixel(2), Bottom = ISStyleLength.Pixel(4) },
+            Text = new ISText { FontSize = 22 },
+        };
+        public ISStyle ButtonTextStyle = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Text)
+        {
+            Text = new ISText { FontSize = 12, Align = TextAnchor.MiddleCenter },
+        };
+        public ISStyle InputFieldStyle = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Padding | ISStyleFlag.Background)
+        {
+            Padding = new ISPadding { Left = ISStyleLength.Pixel(6), Top = ISStyleLength.Auto, Right = ISStyleLength.Pixel(6), Bottom = ISStyleLength.Auto },
+        };
+        public ISStyle ElementMarginPadding = new ISStyle(ISStyleFlag.MarginPadding)
+        {
+            Margin  = new ISMargin  { Left = ISStyleLength.Pixel(10), Top = ISStyleLength.Pixel(2), Right = ISStyleLength.Pixel(10), Bottom = ISStyleLength.Pixel(2) },
+            Padding = new ISPadding { Left = ISStyleLength.Pixel(0) , Top = ISStyleLength.Pixel(0), Right = ISStyleLength.Auto, Bottom = ISStyleLength.Auto },
+        };
 
         public Color BackgroundColor = new Color(0, 0, 0, 1);
         public Color SubBackgroundColor = new Color(0, 0, 0, 1);
@@ -80,14 +100,12 @@ namespace NaiveAPI.DocumentBuilder
             if (ve.parent == null) return new Length(0);
             return new Length(ve.parent.resolvedStyle.width - LabelWidth.Value);
         }
-
-
         public float MarginVer => ElementMarginPadding.Margin.Left.Value.Value;
         public float MarginHor => ElementMarginPadding.Margin.Top.Value.Value;
         public float PaddingVer => ElementMarginPadding.Padding.Left.Value.Value;
         public float PaddingHor => ElementMarginPadding.Padding.Top.Value.Value;
-        public float ScrollerWidth = 14;
-        public float ComponentSpace = 10;
+        public ISLength ScrollerWidth = ISLength.Pixel(14);
+        public ISLength ComponentSpace = ISLength.Pixel(10);
         public float GUIScale = 1;
 
         private Stack<ISLength> m_ISLengthBuffer = new Stack<ISLength>();
@@ -99,7 +117,6 @@ namespace NaiveAPI.DocumentBuilder
         public void EndLabelWidth() {
             LabelWidth = m_ISLengthBuffer.Pop();
         }
-
 
         public DocStyle Copy()
         {

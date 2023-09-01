@@ -26,24 +26,22 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.TextData.Clear();
                 Target.TextData.Add(val.newValue);
             });
-            labelInput.style.width = Length.Percent(68);
             if (Target.TextData.Count == 0)
                 Target.TextData.Add(string.Empty);
             labelInput.value = Target.TextData[0];
             labelInput.style.SetIS_Style(ISMargin.None);
             IntegerField intField = null;
-            intField = DocEditor.NewIntField("", e =>
+            DocStyle.Current.BeginLabelWidth(ISLength.Pixel(36));
+            intField = DocEditor.NewIntField("Level", e =>
             {
                 data.Level = Mathf.Clamp(e.newValue, 1, 6);
                 if (e.newValue != data.Level)
                     intField.value = data.Level;
                 save();
             });
-            intField.style.width = Length.Percent(20);
             intField.value = data.Level;
             intField.label = "Level";
-            intField[0].style.minWidth = 36;
-            intField.style.marginLeft = Length.Percent(1);
+            DocStyle.Current.EndLabelWidth();
             var addBtn = DocRuntime.NewButton("+", DocStyle.Current.SuccessColor, () =>
             {
                 intField.value += 1;
@@ -59,12 +57,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 subBtn.style.width = e.newRect.height;
                 subBtn.style.height = e.newRect.height;
             });
-            var hor = DocRuntime.NewEmptyHorizontal();
-            hor.Add(labelInput);
-            hor.Add(intField);
-            hor.Add(addBtn);
-            hor.Add(subBtn);
-            Add(hor);
+            Add(DocRuntime.NewHorizontalBar(1f,labelInput,null,DocRuntime.NewHorizontalBar(intField,null,addBtn,subBtn)));
         }
         void save()
         {

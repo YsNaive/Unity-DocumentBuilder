@@ -77,16 +77,16 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             IntegerField integerField = new IntegerField();
             integerField.style.ClearMarginPadding();
+            integerField.style.minHeight = DocStyle.Current.LineHeight;
             integerField[0].style.SetIS_Style(DocStyle.Current.MainText);
             integerField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            integerField[0].style.minHeight = 18;
             integerField.style.flexGrow = 1;
             integerField.style.height = 18;
             if (label != "")
             {
                 integerField.label = label;
                 integerField[0].style.SetIS_Style(DocStyle.Current.MainText);
-                integerField[0].style.minHeight = 18;
+                integerField[0].style.minWidth = DocStyle.Current.LabelWidth;
             }
             if (valueChange != null)
                 integerField.RegisterValueChangedCallback(valueChange);

@@ -33,10 +33,10 @@ namespace NaiveAPI.DocumentBuilder
                 instance = DocStyle.Copy();
             }
             float scale = isRuntime ? RuntimeFontSizeScale : EditorFontSizeScale;
-            if(instance.ComponentSpace != (int)(DocStyle.ComponentSpace * scale))
+            if(instance.ComponentSpace.Value != (DocStyle.ComponentSpace * scale).Value)
             {
-                instance.ComponentSpace = (int)(DocStyle.ComponentSpace * scale);
-                instance.ScrollerWidth = (int)(DocStyle.ScrollerWidth * scale);
+                instance.ComponentSpace = (DocStyle.ComponentSpace * scale);
+                instance.ScrollerWidth = (DocStyle.ScrollerWidth * scale);
                 instance.MainTextSize = (int)(DocStyle.MainTextSize * scale);
                 instance.LabelTextSize = (int)(DocStyle.LabelTextSize * scale);
                 instance.ButtonTextSize = (int)(DocStyle.ButtonTextSize * scale);

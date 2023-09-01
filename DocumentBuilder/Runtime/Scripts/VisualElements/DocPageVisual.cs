@@ -26,16 +26,16 @@ namespace NaiveAPI.DocumentBuilder
             Clear();
             foreach (var com in Target.Components)
             {
-                DocVisual docVisual = (DocVisual)DocRuntime.CreateDocVisual(com);
+                DocVisual docVisual = DocRuntime.CreateDocVisual(com);
                 if (docVisual.VisualID == "1")
                 {
                     docVisual.style.marginLeft = DocStyle.Current.LabelTextSize;
-                    docVisual.style.marginTop = docVisual.style.marginTop.value.value + DocStyle.Current.ComponentSpace+10;
+                    docVisual.style.marginTop = DocStyle.Current.ComponentSpace + docVisual.style.marginTop.value.value + 10;
                 }
                 else
                 {
                     docVisual.style.marginLeft = DocStyle.Current.LabelTextSize*2;
-                    docVisual.style.marginTop = docVisual.style.marginTop.value.value+DocStyle.Current.ComponentSpace;
+                    docVisual.style.marginTop = DocStyle.Current.ComponentSpace + docVisual.style.marginTop.value.value;
                 }
                 Add(docVisual);
                 visuals.Add(docVisual);
