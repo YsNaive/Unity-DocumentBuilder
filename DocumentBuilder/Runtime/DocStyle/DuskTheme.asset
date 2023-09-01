@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03bfbaa136870064295a83c7ec8ac951, type: 3}
-  m_Name: DarkTheme
+  m_Name: DuskTheme
   m_EditorClassIdentifier: 
-  RuntimeFontSizeScale: 2.5
+  RuntimeFontSizeScale: 2
   EditorFontSizeScale: 1
   DocStyle:
     MainTextStyle:
@@ -77,7 +77,7 @@ MonoBehaviour:
           Keyword: 2
           Value:
             Unit: 0
-            Value: 2
+            Value: 0
         Right:
           Keyword: 3
           Value:
@@ -87,7 +87,7 @@ MonoBehaviour:
           Keyword: 2
           Value:
             Unit: 0
-            Value: 2
+            Value: 0
       Padding:
         Left:
           Keyword: 3
@@ -98,7 +98,7 @@ MonoBehaviour:
           Keyword: 2
           Value:
             Unit: 0
-            Value: 2
+            Value: 0
         Right:
           Keyword: 3
           Value:
@@ -108,12 +108,12 @@ MonoBehaviour:
           Keyword: 2
           Value:
             Unit: 0
-            Value: 2
+            Value: 0
       Text:
         FontAsset: {fileID: 0}
         FontStyle: 0
         FontSize: 12
-        Color: {r: 0.83137256, g: 0.83137256, b: 0.83137256, a: 1}
+        Color: {r: 0.20754719, g: 0.17661092, b: 0.14567463, a: 1}
         Align: 3
         Wrap: 0
       Background:
@@ -203,7 +203,7 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 4
+            Value: 0
         Top:
           Keyword: 3
           Value:
@@ -215,10 +215,10 @@ MonoBehaviour:
             Unit: 0
             Value: 4
         Bottom:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
-            Value: 4
+            Value: 0
       Padding:
         Left:
           Keyword: 3
@@ -243,8 +243,8 @@ MonoBehaviour:
       Text:
         FontAsset: {fileID: 0}
         FontStyle: 0
-        FontSize: 20
-        Color: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+        FontSize: 22
+        Color: {r: 0.1509434, g: 0.10486866, b: 0.07319331, a: 1}
         Align: 3
         Wrap: 0
       Background:
@@ -375,7 +375,7 @@ MonoBehaviour:
         FontAsset: {fileID: 0}
         FontStyle: 0
         FontSize: 12
-        Color: {r: 0.83137256, g: 0.83137256, b: 0.83137256, a: 1}
+        Color: {r: 0.20784314, g: 0.1764706, b: 0.14509805, a: 1}
         Align: 4
         Wrap: 0
       Background:
@@ -409,7 +409,7 @@ MonoBehaviour:
           Unit: 0
           Value: 0
     InputFieldStyle:
-      EnableMask: 705
+      EnableMask: 641
       Display:
         m_opacity: 1
         Display: 0
@@ -491,7 +491,7 @@ MonoBehaviour:
           Keyword: 2
           Value:
             Unit: 0
-            Value: 6
+            Value: 0
         Right:
           Keyword: 3
           Value:
@@ -501,7 +501,7 @@ MonoBehaviour:
           Keyword: 2
           Value:
             Unit: 0
-            Value: 6
+            Value: 0
       Text:
         FontAsset: {fileID: 0}
         FontStyle: 0
@@ -510,8 +510,8 @@ MonoBehaviour:
         Align: 3
         Wrap: 0
       Background:
-        Color: {r: 0.19937699, g: 0.19937699, b: 0.21698111, a: 1}
-        ImageTint: {r: 0, g: 0, b: 0, a: 0}
+        Color: {r: 0.9150943, g: 0.86010236, b: 0.7458882, a: 1}
+        ImageTint: {r: 1, g: 1, b: 1, a: 1}
         sprite: {fileID: 0}
         texture: {fileID: 0}
         renderTexture: {fileID: 0}
@@ -631,7 +631,7 @@ MonoBehaviour:
         Bottom:
           Keyword: 2
           Value:
-            Unit: 1
+            Unit: 0
             Value: 0
       Text:
         FontAsset: {fileID: 0}
@@ -670,10 +670,10 @@ MonoBehaviour:
         BottomRight:
           Unit: 0
           Value: 0
-    BackgroundColor: {r: 0.15, g: 0.15, b: 0.16, a: 1}
-    SubBackgroundColor: {r: 0.22, g: 0.22, b: 0.245, a: 1}
-    FrontgroundColor: {r: 0.55, g: 0.55, b: 0.6, a: 1}
-    SubFrontgroundColor: {r: 0.68, g: 0.71, b: 0.71, a: 1}
+    BackgroundColor: {r: 0.9433962, g: 0.9082572, b: 0.7778569, a: 1}
+    SubBackgroundColor: {r: 0.8301887, g: 0.7683062, b: 0.6296903, a: 1}
+    FrontgroundColor: {r: 0.5, g: 0.41482165, b: 0.30849057, a: 1}
+    SubFrontgroundColor: {r: 0.2830189, g: 0.24098678, b: 0.19864722, a: 1}
     FuncColor: {r: 0.89, g: 0.79, b: 0.35, a: 1}
     ArgsColor: {r: 0.65, g: 0.85, b: 0.95, a: 1}
     TypeColor: {r: 0.35, g: 0.7, b: 0.65, a: 1}
@@ -684,14 +684,14 @@ MonoBehaviour:
     CommentsColor: {r: 0.4, g: 0.6, b: 0.35, a: 1}
     CodeBackgroundColor: {r: 0.08, g: 0.08, b: 0.09, a: 1}
     CodeTextColor: {r: 0.85, g: 0.85, b: 0.85, a: 1}
-    SuccessColor: {r: 0.2, g: 0.3, b: 0.2, a: 1}
-    WarningColor: {r: 0.3, g: 0.3, b: 0.2, a: 1}
-    DangerColor: {r: 0.3, g: 0.2, b: 0.2, a: 1}
-    HintColor: {r: 0.26, g: 0.26, b: 0.34, a: 1}
-    SuccessTextColor: {r: 0.7, g: 0.9, b: 0.7, a: 1}
-    WarningTextColor: {r: 0.9, g: 0.9, b: 0.7, a: 1}
-    DangerTextColor: {r: 0.9, g: 0.7, b: 0.7, a: 1}
-    HintTextColor: {r: 0.74, g: 0.74, b: 0.96, a: 1}
+    SuccessColor: {r: 0.77140087, g: 0.8584906, b: 0.64305806, a: 1}
+    WarningColor: {r: 0.9056604, g: 0.8195908, b: 0.56731933, a: 1}
+    DangerColor: {r: 0.9056604, g: 0.6182814, b: 0.55877537, a: 1}
+    HintColor: {r: 0.7980064, g: 0.84824497, b: 0.9056604, a: 1}
+    SuccessTextColor: {r: 0.15274562, g: 0.18867922, b: 0.07369169, a: 1}
+    WarningTextColor: {r: 0.27450982, g: 0.22837915, b: 0.08235293, a: 1}
+    DangerTextColor: {r: 0.21698111, g: 0.10556971, b: 0.058134552, a: 1}
+    HintTextColor: {r: 0.06632252, g: 0.12864289, b: 0.16981131, a: 1}
     LineHeight:
       Unit: 0
       Value: 20

@@ -94,7 +94,7 @@ namespace NaiveAPI.DocumentBuilder
         public Color HintTextColor = new Color(0, 0, 0, 1);
 
         public ISLength LineHeight = new ISLength { Unit = LengthUnit.Pixel, Value = 20 };
-        public ISLength LabelWidth = new ISLength { Unit = LengthUnit.Pixel, Value = 200 };
+        public ISLength LabelWidth = new ISLength { Unit = LengthUnit.Pixel, Value = 120 };
         public Length ContentWidth(VisualElement ve)
         {
             if (LabelWidth.Unit == LengthUnit.Percent)

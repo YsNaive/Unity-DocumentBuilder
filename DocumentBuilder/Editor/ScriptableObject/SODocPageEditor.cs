@@ -115,14 +115,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
             #endregion
 
             #region header bar
+            DocStyle.Current.BeginLabelWidth(ISLength.Pixel(96));
             icon = DocEditor.NewObjectField<Texture2D>("Menu icon", (value) =>
             {
                 Target.Icon = (Texture2D)value.newValue;
                 EditorUtility.SetDirty(target);
             });
+            DocStyle.Current.EndLabelWidth();
             icon.value = Target.Icon;
             icon.style.ClearMarginPadding();
-            icon[0].style.minWidth = 98;
             icon[0].style.unityTextAlign = TextAnchor.MiddleCenter;
             icon.style.width = Length.Percent(50);
             var buildinIcon = DocRuntime.NewDropdownField("", buildinIconList, e =>

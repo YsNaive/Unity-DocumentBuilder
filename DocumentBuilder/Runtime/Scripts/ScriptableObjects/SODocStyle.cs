@@ -10,11 +10,11 @@ namespace NaiveAPI.DocumentBuilder
     [CreateAssetMenu(menuName = "Naive API/DocumentBuilder/new DocStyle")]
     public class SODocStyle : ScriptableObject
     {
+        public float RuntimeFontSizeScale = 2f;
+        public float EditorFontSizeScale = 1f;
         [SerializeField]
         private DocStyle DocStyle = new DocStyle();
 
-        public float RuntimeFontSizeScale = 2.5f;
-        public float EditorFontSizeScale = 1f;
         // NonSerialized
         private DocStyle instance;
         private void OnEnable()

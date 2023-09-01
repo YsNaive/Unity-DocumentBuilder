@@ -69,6 +69,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 objectField.label = label;
                 objectField[0].style.SetIS_Style(DocStyle.Current.MainText);
                 objectField[0].style.width = DocStyle.Current.LabelWidth;
+                objectField[0].style.minWidth = 0;
             }
             return  objectField;
         }

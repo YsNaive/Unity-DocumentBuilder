@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03bfbaa136870064295a83c7ec8ac951, type: 3}
   m_Name: LightTheme
   m_EditorClassIdentifier: 
+  RuntimeFontSizeScale: 2.5
+  EditorFontSizeScale: 1
   DocStyle:
     MainTextStyle:
       EnableMask: 449
@@ -111,7 +113,7 @@ MonoBehaviour:
         FontAsset: {fileID: 0}
         FontStyle: 0
         FontSize: 12
-        Color: {r: 0.12659307, g: 0.12659307, b: 0.5283019, a: 1}
+        Color: {r: 0.17693126, g: 0.17693126, b: 0.18867922, a: 1}
         Align: 3
         Wrap: 0
       Background:
@@ -242,7 +244,7 @@ MonoBehaviour:
         FontAsset: {fileID: 0}
         FontStyle: 0
         FontSize: 22
-        Color: {r: 0, g: 0, b: 0, a: 1}
+        Color: {r: 0.14154504, g: 0.14154504, b: 0.1509434, a: 1}
         Align: 3
         Wrap: 0
       Background:
@@ -373,7 +375,7 @@ MonoBehaviour:
         FontAsset: {fileID: 0}
         FontStyle: 0
         FontSize: 12
-        Color: {r: 0, g: 0, b: 0, a: 1}
+        Color: {r: 0.18039216, g: 0.18039216, b: 0.19215687, a: 1}
         Align: 4
         Wrap: 0
       Background:
@@ -508,7 +510,7 @@ MonoBehaviour:
         Align: 3
         Wrap: 0
       Background:
-        Color: {r: 0, g: 0, b: 0, a: 0}
+        Color: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
         ImageTint: {r: 1, g: 1, b: 1, a: 1}
         sprite: {fileID: 0}
         texture: {fileID: 0}
@@ -681,8 +683,9 @@ MonoBehaviour:
     ControlColor: {r: 0.84, g: 0.45, b: 0.61, a: 1}
     CommentsColor: {r: 0.4, g: 0.6, b: 0.35, a: 1}
     CodeBackgroundColor: {r: 0.14585264, g: 0.14585264, b: 0.16037738, a: 1}
+    CodeTextColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     SuccessColor: {r: 0.6671502, g: 0.8113208, b: 0.61537915, a: 1}
-    WarningColor: {r: 0.8679245, g: 0.8073991, b: 0.59280884, a: 1}
+    WarningColor: {r: 0.8113208, g: 0.77753395, b: 0.65364903, a: 1}
     DangerColor: {r: 0.8867924, g: 0.6004075, b: 0.53040224, a: 1}
     HintColor: {r: 0.6006586, g: 0.74700636, b: 0.8018868, a: 1}
     SuccessTextColor: {r: 0.19492966, g: 0.33962262, b: 0.17429689, a: 1}
@@ -694,7 +697,7 @@ MonoBehaviour:
       Value: 20
     LabelWidth:
       Unit: 0
-      Value: 200
+      Value: 120
     ScrollerWidth:
       Unit: 0
       Value: 14
@@ -702,5 +705,3 @@ MonoBehaviour:
       Unit: 0
       Value: 10
     GUIScale: 1
-  RuntimeFontSizeScale: 2.5
-  EditorFontSizeScale: 1
