@@ -133,6 +133,7 @@ namespace NaiveAPI.DocumentBuilder
         public static TextField NewTextField(string label = "", EventCallback<ChangeEvent<string>> eventCallback = null)
         {
             TextField textField = new TextField();
+            textField.style.ClearMarginPadding();
             textField.style.minHeight = DocStyle.Current.LineHeight;
             textField[0].style.paddingLeft = DocStyle.Current.MainTextSize / 2f;
             textField[0].style.SetIS_Style(DocStyle.Current.MainTextStyle);

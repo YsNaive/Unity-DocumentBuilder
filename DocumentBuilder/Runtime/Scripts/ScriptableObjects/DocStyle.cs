@@ -90,6 +90,16 @@ namespace NaiveAPI.DocumentBuilder
         public float ComponentSpace = 10;
         public float GUIScale = 1;
 
+        private Stack<ISLength> m_ISLengthBuffer = new Stack<ISLength>();
+        public void BeginLabelWidth(ISLength width)
+        {
+            m_ISLengthBuffer.Push(LabelWidth);
+            LabelWidth = width;
+        }
+        public void EndLabelWidth() {
+            LabelWidth = m_ISLengthBuffer.Pop();
+        }
+
 
         public DocStyle Copy()
         {

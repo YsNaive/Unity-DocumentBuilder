@@ -21,16 +21,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
             data = JsonUtility.FromJson<DocLabel.Data>(Target.JsonData);
             data ??= new DocLabel.Data();
 
-            TextField labelInput = new TextField();
-            labelInput.style.width = Length.Percent(68);
-            if (Target.TextData.Count == 0)
-                Target.TextData.Add(string.Empty);
-            labelInput.value = Target.TextData[0];
-            labelInput.RegisterValueChangedCallback((val) =>
+            TextField labelInput = DocRuntime.NewTextField("", (val) =>
             {
                 Target.TextData.Clear();
                 Target.TextData.Add(val.newValue);
             });
+            labelInput.style.width = Length.Percent(68);
+            if (Target.TextData.Count == 0)
+                Target.TextData.Add(string.Empty);
+            labelInput.value = Target.TextData[0];
             labelInput.style.SetIS_Style(ISMargin.None);
             IntegerField intField = null;
             intField = DocEditor.NewIntField("", e =>
