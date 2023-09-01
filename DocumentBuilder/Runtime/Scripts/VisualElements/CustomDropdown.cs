@@ -79,6 +79,7 @@ namespace NaiveAPI.DocumentBuilder
                     if(panel.visualTree.Contains(tempCover))
                         panel.visualTree.Remove(tempCover); 
                 };
+
                 int i = 0;
                 foreach(T val in Choices)
                 {

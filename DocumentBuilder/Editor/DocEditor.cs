@@ -68,7 +68,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 objectField.label = label;
                 objectField[0].style.SetIS_Style(DocStyle.Current.MainText);
-                objectField[0].style.ClearMarginPadding();
+                objectField[0].style.width = DocStyle.Current.LabelWidth;
             }
             return  objectField;
         }
