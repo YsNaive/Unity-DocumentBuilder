@@ -48,6 +48,7 @@ MonoBehaviour:
           Value:
             Unit: 0
             Value: 0
+        FlexGrow: 0
         Direction: 0
         Wrap: 0
       Align:
@@ -69,9 +70,9 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 2
         Top:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
             Value: 0
@@ -79,9 +80,9 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 2
         Bottom:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
             Value: 0
@@ -90,9 +91,9 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 6
         Top:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
             Value: 0
@@ -100,9 +101,9 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 6
         Bottom:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
             Value: 0
@@ -110,7 +111,7 @@ MonoBehaviour:
         FontAsset: {fileID: 0}
         FontStyle: 0
         FontSize: 12
-        Color: {r: 0, g: 0, b: 0, a: 1}
+        Color: {r: 0.12659307, g: 0.12659307, b: 0.5283019, a: 1}
         Align: 3
         Wrap: 0
       Background:
@@ -178,6 +179,7 @@ MonoBehaviour:
           Value:
             Unit: 0
             Value: 0
+        FlexGrow: 0
         Direction: 0
         Wrap: 0
       Align:
@@ -204,14 +206,14 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 4
         Right:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 4
         Bottom:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
             Value: 0
@@ -220,26 +222,26 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 2
         Top:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 4
         Right:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 2
         Bottom:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 4
       Text:
         FontAsset: {fileID: 0}
         FontStyle: 0
-        FontSize: 14
+        FontSize: 22
         Color: {r: 0, g: 0, b: 0, a: 1}
         Align: 3
         Wrap: 0
@@ -274,7 +276,7 @@ MonoBehaviour:
           Unit: 0
           Value: 0
     ButtonTextStyle:
-      EnableMask: 385
+      EnableMask: 257
       Display:
         m_opacity: 1
         Display: 0
@@ -308,6 +310,7 @@ MonoBehaviour:
           Value:
             Unit: 0
             Value: 0
+        FlexGrow: 0
         Direction: 0
         Wrap: 0
       Align:
@@ -404,7 +407,7 @@ MonoBehaviour:
           Unit: 0
           Value: 0
     InputFieldStyle:
-      EnableMask: 705
+      EnableMask: 641
       Display:
         m_opacity: 1
         Display: 0
@@ -438,6 +441,7 @@ MonoBehaviour:
           Value:
             Unit: 0
             Value: 0
+        FlexGrow: 0
         Direction: 0
         Wrap: 0
       Align:
@@ -482,20 +486,20 @@ MonoBehaviour:
             Unit: 0
             Value: 6
         Top:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
-            Value: 1
+            Value: 0
         Right:
           Keyword: 3
           Value:
             Unit: 0
             Value: 6
         Bottom:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
-            Value: 1
+            Value: 0
       Text:
         FontAsset: {fileID: 0}
         FontStyle: 0
@@ -568,6 +572,7 @@ MonoBehaviour:
           Value:
             Unit: 0
             Value: 0
+        FlexGrow: 0
         Direction: 0
         Wrap: 0
       Align:
@@ -589,22 +594,22 @@ MonoBehaviour:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 10
         Top:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 2
         Right:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 10
         Bottom:
           Keyword: 3
           Value:
             Unit: 0
-            Value: 0
+            Value: 2
       Padding:
         Left:
           Keyword: 3
@@ -617,12 +622,12 @@ MonoBehaviour:
             Unit: 0
             Value: 0
         Right:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
             Value: 0
         Bottom:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
             Value: 0
@@ -690,8 +695,12 @@ MonoBehaviour:
     LabelWidth:
       Unit: 0
       Value: 200
-    ScrollerWidth: 14
-    ComponentSpace: 10
+    ScrollerWidth:
+      Unit: 0
+      Value: 14
+    ComponentSpace:
+      Unit: 0
+      Value: 10
     GUIScale: 1
   RuntimeFontSizeScale: 2.5
   EditorFontSizeScale: 1

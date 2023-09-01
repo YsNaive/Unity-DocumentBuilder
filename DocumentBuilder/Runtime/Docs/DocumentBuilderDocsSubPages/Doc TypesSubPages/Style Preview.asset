@@ -10,54 +10,99 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: Items
+  m_Name: Style Preview
   m_EditorClassIdentifier: 
-  Icon: {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+  Icon: {fileID: 2800000, guid: 3543eaffc785cee4a879a77c6b51fede, type: 3}
   SubPages: []
   Components:
   - VisualID: 1
     JsonData: 
     TextData:
-    - Items
+    - 1 Label
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - 2 Label
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":3}'
+    TextData:
+    - 3 Label
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":4}'
+    TextData:
+    - 4 Label
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":5}'
+    TextData:
+    - 5 Label
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 1
+    JsonData: '{"Level":6}'
+    TextData:
+    - 6 Label
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
     JsonData: 
     TextData:
-    - use items to show a list or feature etc.
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 0
-    JsonData: 
-    TextData: []
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 1
-    JsonData: 
-    TextData:
-    - Settings
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/HkJz-sDi2.png","mode":0}'
-    TextData: []
+    - This description with no theme
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 2
-    JsonData: 
+    JsonData: '{"Type":1,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
-    - Hmm... I think it's clear enough.
+    - This is Success
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 0
-    JsonData: 
-    TextData: []
+  - VisualID: 2
+    JsonData: '{"Type":2,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
+    TextData:
+    - Something should be notice
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
-  - VisualID: 1
-    JsonData: 
+  - VisualID: 2
+    JsonData: '{"Type":3,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
-    - Show Case
+    - Use this carefuly
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 2
+    JsonData: '{"Type":4,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
+    TextData:
+    - Maybe this hint can help you
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 3
+    JsonData: '{"row":2,"col":3,"anchors":[3,3,3],"mode":1}'
+    TextData:
+    - Fix
+    - with
+    - text
+    - And
+    - No
+    - Anchor
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 3
+    JsonData: '{"row":2,"col":3,"anchors":[3,4,5],"mode":0}'
+    TextData:
+    - Fix
+    - with
+    - width
+    - Left
+    - 'Mid
+
+      Also Newline'
+    - Right
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 8
@@ -105,6 +150,39 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 6
+    JsonData: '{"height":250,"url":"","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
+    TextData:
+    - Check our intro page !
+    - Document Builder
+    ObjsData:
+    - {fileID: 11400000, guid: b4d768b0a8c3e3a4f9c56bd8f9815b43, type: 2}
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 7
+    JsonData: '{"MaxHeight":350,"LineHeightPercent":120}'
+    TextData:
+    - "    public DocVisual()\r\n    {\r\n        RegisterCallback<GeometryChangedEvent>(e
+      =>\r\n        {\r\n            if (e.oldRect.width != e.newRect.width)\r\n               
+      OnWidthChanged?.Invoke(e.newRect.width);\r\n            if (e.oldRect.height
+      != e.newRect.height)\r\n                OnHeightChanged?.Invoke(e.newRect.height);\r\n       
+      });\r\n    }\r\n    public abstract string VisualID { get; }\r\n    public
+      Action<float> OnHeightChanged;\r\n    public Action<float> OnWidthChanged;\r\n\n   
+      /// <summary>\r\n    /// Call after Target is set\r\n    /// </summary>\r\n   
+      protected abstract void OnCreateGUI();\r"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+  - VisualID: 4
+    JsonData: '{"Name":"Foo","Syntaxs":["public bool Foo()","public bool Foo(int
+      index)","public bool Foo(int index, string token)"],"ReturnTypes":["bool"],"Params":[{"ParamName":"index","Type":"int"},{"ParamName":"token","Type":"string"}],"isOn":true}'
+    TextData:
+    - this is a Function sample
+    - to tell function where the obj is...
+    - the match token to target...
+    - is Function success
+    ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   IntroMode: 1
   OuttroMode: 1

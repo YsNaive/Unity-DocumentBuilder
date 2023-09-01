@@ -16,7 +16,7 @@ MonoBehaviour:
   SubPages: []
   Components:
   - VisualID: 1
-    JsonData: 
+    JsonData: '{"Level":1}'
     TextData:
     - Label
     ObjsData: []

@@ -34,25 +34,29 @@ namespace NaiveAPI.DocumentBuilder
                 LabelElement.text = value;
                 if (value == "")
                 {
-                    LabelElement.style.minWidth = 0;
-                    PopupElement.style.minWidth = Length.Percent(100);
+                    LabelElement.style.width = 0;
                 }
                 else
                 {
-                    LabelElement.style.minWidth = DocStyle.Current.LabelWidth;
-                    PopupElement.style.minWidth = DocStyle.Current.ContentWidth(PopupElement);
+                    LabelElement.style.width = labelWidth;
                 }
             }
         }
-
+        protected ISLength labelWidth;
         protected T m_value;
         public CustomDropdown(string label = "")
         {
+            labelWidth = DocStyle.Current.LabelWidth;
             style.ClearMarginPadding();
             LabelElement = DocRuntime.NewTextElement("");
+            LabelElement.style.minWidth = 0;
             PopupElement = CreatePopupElement();
             var hor = DocRuntime.NewHorizontalBar(LabelElement, PopupElement);
             hor.style.flexGrow = 1;
+            hor.RegisterCallback<GeometryChangedEvent>(e =>
+            {
+                PopupElement.style.width = e.newRect.width - LabelElement.layout.width;
+            });
             Add(hor);
 
             EventCallback<GeometryChangedEvent> createLabel = null;
@@ -70,7 +74,7 @@ namespace NaiveAPI.DocumentBuilder
                 tempCover.style.height = Length.Percent(100);
                 panel.visualTree.Add(tempCover);
                 ScrollView selectableContainer = DocRuntime.NewScrollView();
-                DocRuntime.ApplyMarginPadding(selectableContainer);
+                selectableContainer.style.ClearMarginPadding();
                 selectableContainer.style.backgroundColor = DocStyle.Current.BackgroundColor;
                 selectableContainer.style.left = PopupElement.worldBound.x;
                 selectableContainer.style.top = PopupElement.worldBound.yMax;

@@ -67,6 +67,7 @@ namespace NaiveAPI.DocumentBuilder
             Padding = new ISPadding { Left = ISStyleLength.Pixel(0) , Top = ISStyleLength.Pixel(0), Right = ISStyleLength.Auto, Bottom = ISStyleLength.Auto },
         };
 
+
         public Color BackgroundColor = new Color(0, 0, 0, 1);
         public Color SubBackgroundColor = new Color(0, 0, 0, 1);
         public Color FrontgroundColor = new Color(0, 0, 0, 1);
@@ -81,6 +82,7 @@ namespace NaiveAPI.DocumentBuilder
         public Color ControlColor = new Color(.84f, .45f, .61f);
         public Color CommentsColor = new Color(.4f, .6f, .35f);
         public Color CodeBackgroundColor = new Color(.08f, .08f, .09f);
+        public Color CodeTextColor = new Color(.85f, .85f, .85f);
 
         public Color SuccessColor = new Color(0, 0, 0, 1);
         public Color WarningColor = new Color(0, 0, 0, 1);

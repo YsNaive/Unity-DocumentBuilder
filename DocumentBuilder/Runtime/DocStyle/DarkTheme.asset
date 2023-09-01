@@ -48,6 +48,7 @@ MonoBehaviour:
           Value:
             Unit: 0
             Value: 0
+        FlexGrow: 0
         Direction: 0
         Wrap: 0
       Align:
@@ -178,6 +179,7 @@ MonoBehaviour:
           Value:
             Unit: 0
             Value: 0
+        FlexGrow: 0
         Direction: 0
         Wrap: 0
       Align:
@@ -308,6 +310,7 @@ MonoBehaviour:
           Value:
             Unit: 0
             Value: 0
+        FlexGrow: 0
         Direction: 0
         Wrap: 0
       Align:
@@ -438,6 +441,7 @@ MonoBehaviour:
           Value:
             Unit: 0
             Value: 0
+        FlexGrow: 0
         Direction: 0
         Wrap: 0
       Align:
@@ -568,6 +572,7 @@ MonoBehaviour:
           Value:
             Unit: 0
             Value: 0
+        FlexGrow: 0
         Direction: 0
         Wrap: 0
       Align:
@@ -690,8 +695,12 @@ MonoBehaviour:
     LabelWidth:
       Unit: 0
       Value: 120
-    ScrollerWidth: 14
-    ComponentSpace: 10
+    ScrollerWidth:
+      Unit: 0
+      Value: 14
+    ComponentSpace:
+      Unit: 0
+      Value: 10
     GUIScale: 1
   RuntimeFontSizeScale: 2.5
   EditorFontSizeScale: 1

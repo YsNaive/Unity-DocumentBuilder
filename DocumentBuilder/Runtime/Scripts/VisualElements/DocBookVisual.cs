@@ -33,7 +33,7 @@ namespace NaiveAPI.DocumentBuilder
             if (rootPage == null) return;
             style.SetIS_Style(ISFlex.Horizontal);
             divLineBar.style.width = 5;
-            divLineBar.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
+            divLineBar.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
             divLineBar.RegisterCallback<PointerDownEvent>(e =>{isChangingWidth = true;});
             RegisterCallback<PointerUpEvent>(e =>{isChangingWidth = false;});
             RegisterCallback<PointerLeaveEvent>(e => { isChangingWidth = false; });
