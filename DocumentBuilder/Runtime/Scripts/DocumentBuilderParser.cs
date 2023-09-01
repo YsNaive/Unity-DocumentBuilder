@@ -12,7 +12,7 @@ namespace NaiveAPI.DocumentBuilder
         public const string variable = @"\b([A-Za-z_]\w*)";
         public const string type = @"(?:(?:[<,]\s*)?\b" + variable + @"(?:\[.*?\])?[>]*)+";
         public const string functype = @"((?:(?:[<,]\s*)?\b" + variable + @"(?:\[.*?\])?[>]*)+)";
-        public const string prefix = @"(?:(public|private|protected|internal|static|readonly|override|const)\s*)*";
+        public const string prefix = @"(?:(public|private|protected|internal|static|readonly|override|const|abstract)\s*)*";
         public const string test = "(?:class|interface|enum|if|else|switch|case|default|do|while|for|foreach|break|continue|goto|return|using|using static|new)";
         public const string funcEqual = @"(?:\s*=[^\)]*?)?";
         public const string fieldEqual = @"(?:\s*=[^;{]*?)?";
