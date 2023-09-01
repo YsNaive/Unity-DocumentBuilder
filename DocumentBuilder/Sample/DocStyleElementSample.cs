@@ -44,15 +44,7 @@ namespace NaiveAPI.Sample
             foreach (var ve in root.Children())
                 ve.style.SetIS_Style(DocStyle.Current.ElementMarginPadding);
 
-            ISStyle style = new ISStyle(ISStyleFlag.MarginPadding | ISStyleFlag.Background);
-            
-            /* True  */ _ = style.IsEnable(ISStyleFlag.Padding );
-            /* True  */ _ = style.IsEnable(ISStyleFlag.Padding  | ISStyleFlag.Background);
-            /* False */ _ = style.IsEnable(ISStyleFlag.Editable | ISStyleFlag.Padding | ISStyleFlag.Background);
 
-            Debug.Log(style.IsEnable(ISStyleFlag.Padding));
-            Debug.Log(style.IsEnable(ISStyleFlag.Padding | ISStyleFlag.Background));
-            Debug.Log(style.IsEnable(ISStyleFlag.Editable | ISStyleFlag.Padding | ISStyleFlag.Background));
         }
     }
 }

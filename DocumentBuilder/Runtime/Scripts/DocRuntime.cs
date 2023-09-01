@@ -15,23 +15,24 @@ namespace NaiveAPI.DocumentBuilder
         }
         public static Dictionary<string, Type> VisualID_Dict = new Dictionary<string, Type>();
 
+        public static List<Type> FindAllTypesWhere(Func<Type, bool> where)
+        {
+            List<Type> ret = new List<Type>();
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                foreach (var type in assembly.GetTypes())
+                {
+                    if(where(type))
+                        ret.Add(type);
+                }
+            }
+            return ret;
+        }
         public static void Reload()
         {
             VisualID_Dict.Clear();
-            Type baseType = typeof(DocVisual);
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var assembly in assemblies)
-            {
-                Type[] types = assembly.GetTypes();
-                foreach (var type in types)
-                {
-                    if (type.IsSubclassOf(baseType) && !type.IsAbstract)
-                    {
-                        DocVisual doc = (DocVisual)System.Activator.CreateInstance(type);
-                        VisualID_Dict.Add(doc.VisualID, type);
-                    }
-                }
-            }
+            foreach (var type in FindAllTypesWhere(t => { return (t.IsSubclassOf(typeof(DocVisual)) && !t.IsAbstract); }))
+                VisualID_Dict.Add(((DocVisual)Activator.CreateInstance(type)).VisualID, type);
         }
 
         #region VisualElement
@@ -112,7 +113,7 @@ namespace NaiveAPI.DocumentBuilder
             Button button = new Button();
             ApplyButtonStyle(button, color);
             button.text = text;
-            button.style.height = DocStyle.Current.MainTextSize*1.5f;
+            button.style.minHeight = DocStyle.Current.LineHeight;
             if (onClick != null) button.clicked+= onClick;
             return button;
         }
@@ -146,10 +147,11 @@ namespace NaiveAPI.DocumentBuilder
                 textField.RegisterValueChangedCallback(eventCallback);
             return  textField;
         }
+
         public static Foldout NewFoldout(string text = "")
         {
             Foldout foldout = new Foldout();
-            
+
             foldout.style.SetIS_Style(DocStyle.Current.MainTextStyle);
             foldout.contentContainer.style.minHeight = DocStyle.Current.LineHeight;
             foldout.contentContainer.style.paddingLeft = 15;
@@ -163,7 +165,7 @@ namespace NaiveAPI.DocumentBuilder
             img.style.backgroundImage = SODocStyle.WhiteArrow;
             img.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontgroundColor;
             img.style.ClearMarginPadding();
-            img.style.marginRight = DocStyle.Current.MainTextSize/2f;
+            img.style.marginRight = DocStyle.Current.MainTextSize / 2f;
             toggle.RegisterValueChangedCallback(e =>
             {
                 img.style.rotate = new Rotate(e.newValue ? 90 : 0);
@@ -204,6 +206,7 @@ namespace NaiveAPI.DocumentBuilder
             textElement.style.SetIS_Style(DocStyle.Current.MainTextStyle);
             return textElement;
         }
+
         /// <summary>
         /// This will create Custom String Field
         /// </summary>
@@ -222,10 +225,16 @@ namespace NaiveAPI.DocumentBuilder
             label.style.minHeight = DocStyle.Current.LineHeight;
             return label;
         }
-        private static void applyScrollBarStyle(Scroller bar, bool isHor = false)
+        public static ScrollView NewScrollView()
+        {
+            ScrollView scrollView = new ScrollView();
+            scrollView.style.minHeight = DocStyle.Current.LineHeight;
+            ApplyScrollViewStyle(scrollView);
+            return scrollView;
+        }
+        public static void ApplyScrollerStyle(Scroller bar, bool isHor = false)
         {
             ISBorder border = new ISBorder();
-            float width = DocStyle.Current.ScrollerWidth;
             bar.slider.style.marginTop = 0;
             bar.slider.style.marginBottom = 0;
             bar.style.ClearMarginPadding();
@@ -244,7 +253,7 @@ namespace NaiveAPI.DocumentBuilder
                 ve.style.ClearMarginPadding();
             }
             var dragContainer = bar.Q("unity-tracker");
-            dragContainer.style.backgroundColor = new Color(0,0,0,0.1f);
+            dragContainer.style.backgroundColor = new Color(0, 0, 0, 0.1f);
             dragContainer.style.SetIS_Style(border);
             var drag = bar.Q("unity-dragger");
             drag.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
@@ -260,35 +269,30 @@ namespace NaiveAPI.DocumentBuilder
                 drag.style.width = Length.Percent(80);
                 drag.style.left = Length.Percent(10);
             }
-
-        }
-        public static ScrollView NewScrollView()
-        {
-            ScrollView scrollView = new ScrollView();
-            scrollView.style.minHeight = DocStyle.Current.LineHeight;
-            ApplyScrollViewStyle(scrollView);
-            return scrollView;
         }
         public static void ApplyScrollViewStyle(ScrollView scrollView)
         {
             scrollView.style.ClearMarginPadding();
-            applyScrollBarStyle(scrollView.verticalScroller);
-            applyScrollBarStyle(scrollView.horizontalScroller, true);
+            ApplyScrollerStyle(scrollView.verticalScroller);
+            ApplyScrollerStyle(scrollView.horizontalScroller, true);
             scrollView.verticalScroller.style.width = DocStyle.Current.ScrollerWidth;
         }
-        public static void ApplyButtonStyle(Button button, Color color)
+
+        public static void ApplyButtonStyle(Button button, Color color) { ApplyButtonStyle(button, color, Color.clear); }
+        public static void ApplyButtonStyle(Button button, Color color, Color hoverColor)
         {
-            Color org = color;
-            float h,s,v;
-            Color.RGBToHSV(org, out h, out s, out v);
-            v += (v > 0.5f) ? -0.1f : 0.055f;
-            Color height = Color.HSVToRGB(h, s, v);
-            button.style.SetIS_Style(DocStyle.Current.ButtonTextStyle);
+            if(hoverColor == Color.clear)
+            {
+                float h, s, v;
+                Color.RGBToHSV(color, out h, out s, out v);
+                v += (v > 0.5f) ? -0.1f : 0.055f;
+                hoverColor = Color.HSVToRGB(h, s, v);
+            }
             button.style.backgroundColor = color;
             button.style.SetIS_Style(DocStyle.Current.ButtonTextStyle);
             button.RegisterCallback<PointerEnterEvent>(e =>
             {
-                button.style.backgroundColor = height;
+                button.style.backgroundColor = hoverColor;
             });
             button.RegisterCallback<PointerLeaveEvent>(e =>
             {

@@ -4,14 +4,9 @@ using NaiveAPI_UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using UnityEditor;
-using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using static NaiveAPI.DocumentBuilder.SODocPage;
 
@@ -305,7 +300,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("SubPages"));
             });
 
-            imgui.style.backgroundColor = new Color(.1f, .1f, .1f);
+            imgui.style.backgroundColor = new Color(.24f, .24f, .24f);
             header.Add(DocRuntime.NewHorizontalBar(introMode,introDurField));
             header.Add(DocRuntime.NewHorizontalBar(outroMode,outroDurField));
             header.Add(DocRuntime.NewHorizontalBar(icon,buildinIcon));

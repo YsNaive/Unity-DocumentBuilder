@@ -24,7 +24,9 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - utils in Runtime
+    - 'utils in Runtime
+
+      element create by below method will apply full DocStyle'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0

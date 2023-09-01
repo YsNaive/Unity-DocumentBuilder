@@ -29,7 +29,10 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - run utils in DocumentBuilder while EditorOnly
+    - 'run utils in DocumentBuilder while EditorOnly
+
+      element create by below
+      method will only apply DocStyle without layout (no padding, margin etc.)'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 0

@@ -173,7 +173,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: '{"Type":3}'
     TextData:
-    - It will delete ths page asset, BUT NOT SubPages
+    - It will delete this page asset, <b>BUT NOT</b> SubPages
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
   - VisualID: 1
