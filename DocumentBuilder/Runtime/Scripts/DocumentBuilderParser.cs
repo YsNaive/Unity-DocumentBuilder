@@ -27,10 +27,18 @@ namespace NaiveAPI.DocumentBuilder
         public const string newPattern = @"\bnew\s+" + type + @"(?:;|\()";
         public const string reservedWordPattern = @"\b(?:var|in|get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
         public const string methodPattern = @"\b" + type + @"\(";
-        public const string numberPattern = @"[+-]?\b(\d+(?:\.\d+)?[fx]?)";
+        public const string numberPattern = @"[+-]?\b(\d+(?:\.\d+)?(?:[fFLlDdBb]|[Xx]\d+)?)";
         public const string pattern1 = @"\b(?<var>" + variable + @")\b(?(<)(?:(?'Open'<)|" + 
                 @"(?<var>" + variable + @")|(?'Close-Open'>)|(?:,\s*(?<var>" + variable + @")))*)(?(Open)(?!))";
-        public static readonly string[] typeNameTable = { "Void", "void", "Int32", "int", "String", "string", "Single", "float", "Boolean", "bool" };
+        public static readonly Dictionary<Type, string> typeNameTable = new Dictionary<Type, string> {
+            { typeof(string) , "string"},
+            { typeof(void), "void" },
+            { typeof(float), "float" },
+            { typeof(int), "int" },
+            { typeof(short), "short" },
+            { typeof(double), "double" },
+            { typeof(long), "long" },
+            { typeof(bool), "bool" }};
 
         public static string CalGenericTypeName(Type type)
         {
@@ -39,7 +47,7 @@ namespace NaiveAPI.DocumentBuilder
             if (i != -1)
                 name = name.Substring(0, i);
             else
-                return GetTypeName(name);
+                return GetTypeName(type);
             i = 0;
             name += "<";
             foreach (var arg in type.GetGenericArguments())
@@ -51,17 +59,24 @@ namespace NaiveAPI.DocumentBuilder
             return name;
         }
 
-        public static string GetTypeName(string typeName)
+        public static string GetTypeName(Type type)
         {
-            for (int i = 0;i < typeNameTable.Length; i += 2)
+            string postfix = "";
+
+            int index = type.Name.IndexOf("[");
+            if (index != -1)
+                postfix = type.Name.Substring(index);
+            while (type.GetElementType() != null)
             {
-                if (typeName.Contains(typeNameTable[i]))
-                {
-                    return typeName.Replace(typeNameTable[i], typeNameTable[i + 1]);
-                }
+                type = type.GetElementType();
             }
 
-            return typeName;
+            if (typeNameTable.ContainsKey(type))
+            {
+                return typeNameTable[type] + postfix;
+            }
+
+            return type.Name + postfix;
         }
 
         public static string ParseSyntax(string synatx)

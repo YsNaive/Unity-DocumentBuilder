@@ -25,36 +25,28 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.style.backgroundColor = DocStyle.Current.BackgroundColor;
             this.style.width = -1;
             DocFuncDisplay.Data data = setData(Target.JsonData, Target.TextData);
-            nameTextField = new TextField();
-            nameTextField.label = "Name";
-            nameTextField[0].style.minWidth = new Length(20, LengthUnit.Percent);
-            nameTextField.value = data.Name + "";
-            nameTextField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            nameTextField.style.SetIS_Style(DocStyle.Current.MainText);
-            nameTextField.style.ClearMarginPadding();
-            nameTextField.style.paddingLeft = Length.Percent(1);
-            nameTextField.style.paddingRight = Length.Percent(1);
-            nameTextField.RegisterValueChangedCallback(value =>
+            DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
+            nameTextField = DocRuntime.NewTextField("Name", value =>
             {
                 data.Name = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
             });
-            TextField descriptionTextField = new TextField();
-            descriptionTextField.label = "Description";
-            descriptionTextField.multiline = true;
-            descriptionTextField[0].style.minWidth = new Length(20, LengthUnit.Percent);
-            descriptionTextField.value = Target.TextData[0] + "";
-            descriptionTextField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            descriptionTextField.style.SetIS_Style(DocStyle.Current.MainText);
-            descriptionTextField.style.ClearMarginPadding();
-            descriptionTextField.style.paddingLeft = Length.Percent(1);
-            descriptionTextField.style.paddingRight = Length.Percent(1);
-            descriptionTextField.RegisterValueChangedCallback(value =>
+            nameTextField.label = "Name";
+            nameTextField.value = data.Name + "";
+            nameTextField.style.paddingLeft = Length.Percent(1);
+            nameTextField.style.paddingRight = Length.Percent(1);
+            TextField descriptionTextField = DocRuntime.NewTextField("Description", value =>
             {
                 Target.TextData[0] = value.newValue;
             });
+            descriptionTextField.label = "Description";
+            descriptionTextField.multiline = true;
+            descriptionTextField.value = Target.TextData[0] + "";
+            descriptionTextField.style.paddingLeft = Length.Percent(1);
+            descriptionTextField.style.paddingRight = Length.Percent(1);
             this.Add(nameTextField);
             this.Add(descriptionTextField);
+            DocStyle.Current.EndLabelWidth();
             syntaxContainer = generateSyntaxContainer(data);
             this.Add(syntaxContainer);
             paramsContainer = generateParamsContainer(data);
@@ -285,23 +277,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
 
-            Button addButton = new Button();
-            addButton.text = "+";
-            addButton.style.backgroundColor = DocStyle.Current.SuccessColor;
+            Button addButton = DocRuntime.NewButton("+", DocStyle.Current.SuccessColor);
             addButton.style.width = Length.Percent(10);
             addButton.style.ClearMarginPadding();
             addButton.style.SetIS_Style(new ISMargin(TextAnchor.MiddleRight));
-            addButton.style.SetIS_Style(DocStyle.Current.MainText);
-            addButton.style.unityTextAlign = TextAnchor.MiddleCenter;
 
-            Button deleteButton = new Button();
-            deleteButton.text = "-";
-            deleteButton.style.backgroundColor = DocStyle.Current.DangerColor;
+            Button deleteButton = DocRuntime.NewButton("-", DocStyle.Current.DangerColor);
             deleteButton.style.width = Length.Percent(10);
-            deleteButton.style.ClearMarginPadding();
             deleteButton.style.marginRight = Length.Percent(1);
-            deleteButton.style.SetIS_Style(DocStyle.Current.MainText);
-            deleteButton.style.unityTextAlign = TextAnchor.MiddleCenter;
 
             root.Add(addButton);
             root.Add(deleteButton);
@@ -311,9 +294,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         private VisualElement generateSyntaxVisual(DocFuncDisplay.Data data, int index)
         {
-            TextField syntaxField = new TextField();
-            syntaxField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            syntaxField.RegisterValueChangedCallback(value =>
+            TextField syntaxField = DocRuntime.NewTextField("", value =>
             {
                 data.Syntaxs[index] = value.newValue;
                 DocumentBuilderParser.FuncData funcData = new DocumentBuilderParser.FuncData(value.newValue);
@@ -332,8 +313,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             syntaxField.value = data.Syntaxs[index];
             DocumentBuilderParser.FuncData funcData = new DocumentBuilderParser.FuncData(data.Syntaxs[index]);
             funcDatas[index] = funcData;
-            syntaxField.style.SetIS_Style(DocStyle.Current.MainText);
-            syntaxField.style.ClearMarginPadding();
             syntaxField.style.paddingLeft = Length.Percent(1);
             syntaxField.style.paddingRight = Length.Percent(1);
 
@@ -360,10 +339,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement root = new VisualElement();
             VisualElement veSyntax = generateSyntax(data);
 
-            Label label = new Label();
-            label.text = "Syntaxs";
-            label.style.SetIS_Style(DocStyle.Current.MainText);
-            label.style.ClearMarginPadding();
+            Label label = DocRuntime.NewLabel("Syntaxs");
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
             root.Add(label);
@@ -397,58 +373,35 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private VisualElement generateParamsVisual(DocFuncDisplay.Data data, int index)
         {
             VisualElement root = new VisualElement();
-            VisualElement ve = new VisualElement();
-            ve.style.SetIS_Style(ISFlex.Horizontal);
-            ve.style.height = 20;
-            float percent = 50;
-            TextField typeField = new TextField();
-            typeField.label = "Type";
-            typeField[0].style.minWidth = new Length(20, LengthUnit.Percent);
-            typeField.style.width = Length.Percent(percent);
-            typeField.value = data.Params[index].Type + "";
-            typeField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            typeField.style.SetIS_Style(DocStyle.Current.MainText);
-            typeField.style.ClearMarginPadding();
-            typeField.SetEnabled(false);
-            typeField.style.paddingLeft = Length.Percent(1);
-            typeField.RegisterValueChangedCallback(value =>
+            DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
+            TextField typeField = DocRuntime.NewTextField("Type", value =>
             {
                 data.Params[index].Type = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
             });
-            TextField nameField = new TextField();
-            nameField.label = "Name";
-            nameField[0].style.minWidth = new Length(20, LengthUnit.Percent);
-            nameField.style.width = Length.Percent(percent);
-            nameField.value = data.Params[index].ParamName + "";
-            nameField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            nameField.style.SetIS_Style(DocStyle.Current.MainText);
-            nameField.style.ClearMarginPadding();
-            nameField.SetEnabled(false);
-            nameField.style.paddingLeft = Length.Percent(1);
-            nameField.style.paddingRight = Length.Percent(1);
-            nameField.RegisterValueChangedCallback(value =>
+            typeField.value = data.Params[index].Type + "";
+            typeField.focusable = false;
+            typeField.style.paddingLeft = Length.Percent(1);
+            TextField nameField = DocRuntime.NewTextField("Name", value =>
             {
                 data.Params[index].ParamName = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
             });
-            ve.Add(typeField);
-            ve.Add(nameField);
-            root.Add(ve);
+            nameField.value = data.Params[index].ParamName + "";
+            nameField.focusable = false;
+            nameField.style.paddingLeft = Length.Percent(1);
+            nameField.style.paddingRight = Length.Percent(1);
+            root.Add(DocRuntime.NewHorizontalBar(typeField, nameField));
 
-            TextField descriptionField = new TextField();
-            descriptionField.value = data.ParamsDescription[index] + "";
-            descriptionField.multiline = true;
-            descriptionField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            descriptionField.style.SetIS_Style(DocStyle.Current.MainText);
-            descriptionField.style.ClearMarginPadding();
-            descriptionField.style.paddingLeft = Length.Percent(1);
-            descriptionField.style.paddingRight = Length.Percent(1);
-            descriptionField.RegisterValueChangedCallback(value =>
+            TextField descriptionField = DocRuntime.NewTextField("", value =>
             {
                 data.ParamsDescription[index] = value.newValue;
                 Target.TextData[1 + index] = value.newValue;
             });
+            descriptionField.value = data.ParamsDescription[index] + "";
+            descriptionField.multiline = true;
+            descriptionField.style.paddingLeft = Length.Percent(1);
+            descriptionField.style.paddingRight = Length.Percent(1);
             root.Add(descriptionField);
             return root;
         }
@@ -475,36 +428,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             VisualElement veParams = generateParams(data);
 
-            Label label = new Label();
-            label.text = "Params";
-            label.style.SetIS_Style(DocStyle.Current.MainText);
-            label.style.ClearMarginPadding();
+            Label label = DocRuntime.NewLabel("Params");
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
             root.Add(label);
-            /*
-            VisualElement veAddDelete = generateAddDeleteButton();
-
-            ((Button)veAddDelete[0]).clicked += () =>
-            {
-                Target.TextData.Insert(1 + data.Params.Count, "");
-                data.AddNewParams();
-                VisualElement ve = generateParamsVisual(data, data.Params.Count - 1);
-                veParams.Add(ve);
-                Target.JsonData = JsonUtility.ToJson(data);
-            };
-            ((Button)veAddDelete[1]).clicked += () =>
-            {
-                if (data.Params.Count == 0)
-                    return;
-                Target.TextData.RemoveAt(data.Params.Count);
-                veParams.RemoveAt(veParams.childCount - 1);
-                data.RemoveLastParams();
-                Target.JsonData = JsonUtility.ToJson(data);
-            };*/
 
             root.Add(veParams);
-            //root.Add(veAddDelete);
 
             return root;
         }
@@ -512,35 +441,26 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private VisualElement generateReturnTypeVisual(DocFuncDisplay.Data data, int index)
         {
             VisualElement root = new VisualElement();
-            TextField typeField = new TextField();
-            typeField.label = "ReturnType";
-            typeField[0].style.minWidth = new Length(20, LengthUnit.Percent);
-            typeField.style.height = 20;
-            typeField.value = data.ReturnTypes[index] + "";
-            typeField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            typeField.style.SetIS_Style(DocStyle.Current.MainText);
-            typeField.style.ClearMarginPadding();
-            typeField.SetEnabled(false);
-            typeField.style.paddingLeft = Length.Percent(1);
-            typeField.style.paddingRight = Length.Percent(1);
-            typeField.RegisterValueChangedCallback(value =>
+            DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
+            TextField typeField = DocRuntime.NewTextField("ReturnType", value =>
             {
                 data.ReturnTypes[index] = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
             });
-            TextField descriptionField = new TextField();
-            descriptionField.value = data.ReturnTypesDescription[index] + "";
-            descriptionField.multiline = true;
-            descriptionField.Q("unity-text-input").style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            descriptionField.style.SetIS_Style(DocStyle.Current.MainText);
-            descriptionField.style.ClearMarginPadding();
-            descriptionField.style.paddingLeft = Length.Percent(1);
-            descriptionField.style.paddingRight = Length.Percent(1);
-            descriptionField.RegisterValueChangedCallback(value =>
+            typeField.style.height = 20;
+            typeField.value = data.ReturnTypes[index] + "";
+            typeField.focusable = false;
+            typeField.style.paddingLeft = Length.Percent(1);
+            typeField.style.paddingRight = Length.Percent(1);
+            TextField descriptionField = DocRuntime.NewTextField("", value =>
             {
                 data.ReturnTypesDescription[index] = value.newValue;
                 Target.TextData[1 + data.Params.Count + index] = value.newValue;
             });
+            descriptionField.value = data.ReturnTypesDescription[index] + "";
+            descriptionField.multiline = true;
+            descriptionField.style.paddingLeft = Length.Percent(1);
+            descriptionField.style.paddingRight = Length.Percent(1);
 
             root.Add(typeField);
             root.Add(descriptionField);
@@ -567,38 +487,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             if (data.ReturnTypes.Count == 0)
                 return root;
-            Label label = new Label();
-            label.text = "ReturnTypes";
-            label.style.SetIS_Style(DocStyle.Current.MainText);
-            label.style.ClearMarginPadding();
+            Label label = DocRuntime.NewLabel("ReturnTypes");
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
             root.Add(label);
 
             VisualElement veReturnTypes = generateReturnType(data);
-            /*
-            VisualElement veAddDelete = generateAddDeleteButton();
-
-            ((Button)veAddDelete[0]).clicked += () =>
-            {
-                Target.TextData.Insert(1 + data.Params.Count + data.ReturnTypes.Count, "");
-                data.AddNewReturnType();
-                VisualElement ve = generateReturnTypeVisual(data, data.ReturnTypes.Count - 1);
-                veReturnTypes.Add(ve);
-                Target.JsonData = JsonUtility.ToJson(data);
-            };
-            ((Button)veAddDelete[1]).clicked += () =>
-            {
-                if (data.ReturnTypes.Count == 0)
-                    return;
-                Target.TextData.RemoveAt(data.Params.Count + data.ReturnTypes.Count);
-                veReturnTypes.RemoveAt(veReturnTypes.childCount - 1);
-                data.RemoveLastReturnType();
-                Target.JsonData = JsonUtility.ToJson(data);
-            };*/
 
             root.Add(veReturnTypes);
-            //root.Add(veAddDelete);
 
             return root;
         }

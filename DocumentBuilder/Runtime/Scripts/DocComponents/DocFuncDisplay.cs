@@ -10,19 +10,23 @@ namespace NaiveAPI.DocumentBuilder
 {
     public class DocFuncDisplay : DocVisual
     {
+        static DocFuncDisplay()
+        {
+            DocStyle.OnStyleChanged += (newStyle) =>
+            {
+                funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = DocStyle.Current.FuncColor, FontSize = DocStyle.Current.MainTextSize };
+                paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = DocStyle.Current.ArgsColor, FontSize = DocStyle.Current.MainTextSize };
+                typeTextStyle = new ISText() { Color = DocStyle.Current.TypeColor, FontSize = DocStyle.Current.MainTextSize };
+                labelTextStyle = new ISText() { Color = DocStyle.Current.SubFrontgroundColor, FontSize = DocStyle.Current.MainTextSize };
+            };
+        }
         public override string VisualID => "4";
 
-        private ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = DocStyle.Current.FuncColor, FontSize = DocStyle.Current.MainTextSize };
-        private ISText paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = DocStyle.Current.ArgsColor, FontSize = DocStyle.Current.MainTextSize };
-        private ISText typeTextStyle = new ISText() { Color = DocStyle.Current.TypeColor, FontSize = DocStyle.Current.MainTextSize };
-        private ISText labelTextStyle = new ISText() { Color = DocStyle.Current.SubFrontgroundColor, FontSize = DocStyle.Current.MainTextSize };
+        private static ISText funcNameTextStyle = new ISText() { FontStyle = FontStyle.Bold, Color = DocStyle.Current.FuncColor, FontSize = DocStyle.Current.MainTextSize };
+        private static ISText paramTextStyle = new ISText() { FontStyle = FontStyle.BoldAndItalic, Color = DocStyle.Current.ArgsColor, FontSize = DocStyle.Current.MainTextSize };
+        private static ISText typeTextStyle = new ISText() { Color = DocStyle.Current.TypeColor, FontSize = DocStyle.Current.MainTextSize };
+        private static ISText labelTextStyle = new ISText() { Color = DocStyle.Current.SubFrontgroundColor, FontSize = DocStyle.Current.MainTextSize };
         private float tabGap = 2;
-        private VisualElement veFoldOut;
-
-        public float test
-        {
-            get; set;
-        }
 
         protected override void OnCreateGUI()
         {
@@ -30,19 +34,21 @@ namespace NaiveAPI.DocumentBuilder
             if (data == null) return;
             TextElement nameText = DocRuntime.NewTextElement(data.Name);
             nameText.style.SetIS_Style(funcNameTextStyle);
-            veFoldOut = new VisualElement();
-            veFoldOut.style.ClearMarginPadding();
-            veFoldOut.style.paddingLeft = 5;
+            VisualElement child = DocRuntime.NewEmpty();
             this.Add(nameText);
             if (Target.TextData[0] != "")
             {
                 TextElement descriptionText = DocRuntime.NewTextElement(Target.TextData[0]);
+                descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
+                descriptionText.style.color = DocStyle.Current.CodeTextColor;
                 this.Add(descriptionText);
             }
-            veFoldOut.Add(generateSyntaxContainer(data));
-            veFoldOut.Add(generateParamContainer(data));
-            veFoldOut.Add(generateReturnTypeContainer(data));
-            this.Add(veFoldOut);
+            child.Add(generateSyntaxContainer(data));
+            child.Add(generateParamContainer(data));
+            child.Add(generateReturnTypeContainer(data));
+            this.style.SetIS_Style(ISPadding.Pixel(DocStyle.Current.MainTextSize));
+            this.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
+            this.Add(child);
         }
 
         private VisualElement generateSyntaxContainer(Data data)
@@ -66,6 +72,7 @@ namespace NaiveAPI.DocumentBuilder
                 syntaxText.style.ClearMarginPadding();
                 syntaxText.style.paddingLeft = Length.Percent(tabGap);
                 syntaxText.style.SetIS_Style(DocStyle.Current.MainText);
+                syntaxText.style.color = DocStyle.Current.CodeTextColor;
                 root.Add(syntaxText);
             }
 
@@ -87,6 +94,7 @@ namespace NaiveAPI.DocumentBuilder
                 TextElement descriptionText = new TextElement();
                 descriptionText.text = description;
                 descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
+                descriptionText.style.color = DocStyle.Current.CodeTextColor;
                 descriptionText.style.ClearMarginPadding();
                 descriptionText.style.paddingLeft = Length.Percent(2 * tabGap);
                 root.Add(descriptionText);
@@ -122,7 +130,7 @@ namespace NaiveAPI.DocumentBuilder
         {
             VisualElement root = new VisualElement();
             TextElement returnTypeText = new TextElement();
-            returnTypeText.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.MainText.Color)}>Type: </color>" + returnType;
+            returnTypeText.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(DocStyle.Current.CodeTextColor)}>Type: </color>" + returnType;
             returnTypeText.style.SetIS_Style(typeTextStyle); 
             returnTypeText.style.ClearMarginPadding();
             returnTypeText.style.paddingLeft = Length.Percent(tabGap);
@@ -132,6 +140,7 @@ namespace NaiveAPI.DocumentBuilder
                 TextElement descriptionText = new TextElement();
                 descriptionText.text = description;
                 descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
+                descriptionText.style.color = DocStyle.Current.CodeTextColor;
                 descriptionText.style.ClearMarginPadding();
                 descriptionText.style.paddingLeft = Length.Percent(tabGap);
                 root.Add(descriptionText);

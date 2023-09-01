@@ -25,28 +25,22 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 data = new DocImage.Data();
             root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
-            TextField scaleField = new TextField();
-            scaleField.label = "scale";
-            scaleField[0].style.minWidth = Length.Percent(20);
-            scaleField.value = data.scale + "";
-            scaleField.style.width = Length.Percent(39);
-            scaleField.style.SetIS_Style(ISMargin.None);
-            scaleField.RegisterValueChangedCallback(value =>
+            DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
+            TextField scaleField = DocRuntime.NewTextField("Scale", value =>
             {
                 float.TryParse(value.newValue, out data.scale);
                 Target.JsonData = JsonUtility.ToJson(data);
             });
-            EnumField enumField = new EnumField();
-            enumField.Init(DocImage.Mode.Object);
-            enumField.value = data.mode;
-            enumField.style.width = Length.Percent(20);
-            enumField.style.SetIS_Style(ISMargin.None);
-            enumField.RegisterValueChangedCallback(value =>
+            DocStyle.Current.EndLabelWidth();
+            scaleField.value = data.scale + "";
+            scaleField.style.width = Length.Percent(39);
+            EnumField enumField = DocEditor.NewEnumField("", data.mode, value =>
             {
-                data.mode = (DocImage.Mode) value.newValue;
+                data.mode = (DocImage.Mode)value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
                 urlObjDisplay(data.mode);
             });
+            enumField.style.width = Length.Percent(20);
             urlVisual = generateUrlVisual(data);
             objVisual = generateObjVisual(data);
             root.Add(scaleField);
@@ -95,33 +89,28 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 texture = (Texture2D)Target.ObjsData[0];
             else
                 texture = null;
-            ObjectField objectField = new ObjectField();
-            objectField.objectType = typeof(Texture2D);
-            objectField.style.width = Length.Percent(40);
-            objectField.style.SetIS_Style(ISMargin.None);
-            objectField.value = texture;
-            objectField.RegisterValueChangedCallback(value =>
+            ObjectField objectField = DocEditor.NewObjectField<Texture2D>(value =>
             {
                 Target.ObjsData.Clear();
                 Target.ObjsData.Add(value.newValue);
             });
+            objectField.style.width = Length.Percent(40);
+            objectField.value = texture;
 
             return objectField;
         }
 
         private VisualElement generateUrlVisual(DocImage.Data data)
         {
-            TextField urlField = new TextField();
-            urlField.label = "url";
-            urlField.value = data.url + "";
-            urlField.style.width = Length.Percent(40);
-            urlField[0].style.minWidth = Length.Percent(10);
-            urlField.style.SetIS_Style(ISMargin.None);
-            urlField.RegisterValueChangedCallback(value =>
+            DocStyle.Current.BeginLabelWidth(ISLength.Percent(10));
+            TextField urlField = DocRuntime.NewTextField("Url", value =>
             {
                 data.url = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
             });
+            DocStyle.Current.EndLabelWidth();
+            urlField.value = data.url + "";
+            urlField.style.width = Length.Percent(40);
 
             return urlField;
         }
