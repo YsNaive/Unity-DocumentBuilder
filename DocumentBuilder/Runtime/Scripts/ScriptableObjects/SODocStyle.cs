@@ -10,8 +10,6 @@ namespace NaiveAPI.DocumentBuilder
     [CreateAssetMenu(menuName = "Naive API/DocumentBuilder/new DocStyle")]
     public class SODocStyle : ScriptableObject
     {
-        public float RuntimeFontSizeScale = 2f;
-        public float EditorFontSizeScale = 1f;
         [SerializeField]
         private DocStyle DocStyle = new DocStyle();
 
@@ -25,27 +23,11 @@ namespace NaiveAPI.DocumentBuilder
         {
             instance = null;
         }
-        public DocStyle Get() { return Get(Application.isPlaying); }
-        public DocStyle Get(bool isRuntime)
+        public DocStyle Get()
         {
             if (instance == null)
             {
                 instance = DocStyle.Copy();
-            }
-            float scale = isRuntime ? RuntimeFontSizeScale : EditorFontSizeScale;
-            if(instance.ComponentSpace.Value != (DocStyle.ComponentSpace * scale).Value)
-            {
-                instance.ComponentSpace = (DocStyle.ComponentSpace * scale);
-                instance.ScrollerWidth = (DocStyle.ScrollerWidth * scale);
-                instance.MainTextSize = (int)(DocStyle.MainTextSize * scale);
-                instance.LabelTextSize = (int)(DocStyle.LabelTextSize * scale);
-                instance.ButtonTextSize = (int)(DocStyle.ButtonTextSize * scale);
-                instance.ElementMarginPadding.Margin *= scale;
-                instance.ElementMarginPadding.Padding *= scale;
-                if(instance.LabelWidth.Unit == LengthUnit.Pixel)
-                    instance.LabelWidth = (DocStyle.LabelWidth * scale);
-                if(instance.LineHeight.Unit == LengthUnit.Pixel)
-                    instance.LineHeight = (DocStyle.LineHeight * scale);
             }
             return instance;
         }

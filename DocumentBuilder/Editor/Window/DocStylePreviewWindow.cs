@@ -24,7 +24,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         ObjectField selectStyle;
         private void CreateGUI()
         {
-            DocStyle.Current = DocRuntimeData.Instance.CurrentStyle.Get(false);
             docPreview = AssetDatabase.LoadAssetAtPath<SODocPage>(AssetDatabase.GUIDToAssetPath("63540aec46af1414faabf82062162966"));
             root = rootVisualElement;
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
@@ -51,14 +50,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         public void RepaintContainer()
         {
-            if(selectStyle.value != null)
-            {
-                DocStyle.Current = (selectStyle.value as SODocStyle).Get(false);
-            }
-            else
-            {
-                DocStyle.Current = DocRuntimeData.Instance.CurrentStyle.Get(false);
-            }
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             container.Clear();
 

@@ -10,13 +10,6 @@ namespace NaiveAPI.DocumentBuilder
     [System.Serializable]
     public class DocStyle
     {
-        static DocStyle()
-        {
-            Application.quitting += () =>
-            {
-                Current = DocRuntimeData.Instance.CurrentStyle.Get(false);
-            };
-        }
         public static event Action<DocStyle> OnStyleChanged;
         public static DocStyle Current
         {
