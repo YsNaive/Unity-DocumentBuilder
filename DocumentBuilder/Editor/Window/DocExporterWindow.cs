@@ -2,6 +2,7 @@ using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_Editor.DocumentBuilder;
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -161,15 +162,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 DocComponent doc = new DocComponent();
                 doc.VisualID = new DocDescription().VisualID;
                 doc.TextData.Add($"Success Export {exportCount} files.");
-                var data = new DocDescription.Data();
-                data.Type = DocDescription.Type.Success;
-                doc.JsonData = JsonUtility.ToJson(data);
+                doc.JsonData = JsonUtility.ToJson(new ValueTuple<DocDescription.DescriptionType>(DocDescription.DescriptionType.Success));
                 info.Add(DocRuntime.CreateDocVisual(doc));
                 if (exportFailCount > 0)
                 {
                     doc.TextData[0] = $"Fail Export {exportFailCount}.";
-                    data.Type = DocDescription.Type.Danger;
-                    doc.JsonData = JsonUtility.ToJson(data);
+                    doc.JsonData = JsonUtility.ToJson(new ValueTuple<DocDescription.DescriptionType>(DocDescription.DescriptionType.Danger));
                     info.Add(DocRuntime.CreateDocVisual(doc));
                     foreach (var page in failList)
                     {

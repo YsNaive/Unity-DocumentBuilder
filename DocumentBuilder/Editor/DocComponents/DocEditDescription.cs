@@ -10,18 +10,15 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
-    public class DocEditDescription : DocEditVisual
+    public class DocEditDescription : DocEditVisual<ValueTuple<DocDescription.DescriptionType>>
     {
         private static ISPadding padding = ISPadding.Pixel(5);
         public override string DisplayName => "Description";
         public override string VisualID => "2";
+        public override ushort Version => 1;
         protected override Enum InitAniType => DocDescription.AniMode.Fade;
-        DocDescription.Data data;
         protected override void OnCreateGUI()
         {
-            data = JsonUtility.FromJson<DocDescription.Data>(Target.JsonData);
-            data ??= new DocDescription.Data();
-
             TextField textInput = DocRuntime.NewTextField();
             if (Target.TextData.Count == 0)
                 Target.TextData.Add(string.Empty);
@@ -34,10 +31,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.TextData.Clear();
                 Target.TextData.Add(val.newValue);
             });
-            var typeField = DocEditor.NewEnumField("Type", data.Type, e =>
+            var typeField = DocEditor.NewEnumField("Type", visualData.Item1, e =>
             {
-                data.Type = (DocDescription.Type)e.newValue;
-                save();
+                visualData.Item1 = (DocDescription.DescriptionType)e.newValue;
+                SaveDataToTarget();
             });
             typeField[0].style.minWidth = 45;
             typeField[1].style.paddingLeft = 4;
@@ -45,14 +42,17 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Add(typeField);
             Add(textInput);
         }
-        void save()
-        {
-            Target.JsonData = JsonUtility.ToJson(data);
-        }
-
         public override string ToMarkdown(string dstPath)
         {
             return Target.TextData[0];
+        }
+        protected override void VersionConflict()
+        {
+            if(Target.VisualVersion < 1)
+            {
+                Target.JsonData = Target.JsonData.Replace("Type", "Item1");
+            }
+            Target.VisualVersion = 1;
         }
     }
 }

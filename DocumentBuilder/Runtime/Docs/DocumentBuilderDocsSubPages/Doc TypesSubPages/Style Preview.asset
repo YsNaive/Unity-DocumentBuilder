@@ -21,66 +21,77 @@ MonoBehaviour:
     - 1 Label
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - 2 Label
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - 3 Label
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":4}'
     TextData:
     - 4 Label
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":5}'
     TextData:
     - 5 Label
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":6}'
     TextData:
     - 6 Label
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - This description with no theme
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":1,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
     - This is Success
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":2,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
     - Something should be notice
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":3,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
     - Use this carefuly
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":4,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
     TextData:
     - Maybe this hint can help you
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 3
     JsonData: '{"row":2,"col":3,"anchors":[3,3,3],"mode":1}'
     TextData:
@@ -92,6 +103,7 @@ MonoBehaviour:
     - Anchor
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 3
     JsonData: '{"row":2,"col":3,"anchors":[3,4,5],"mode":0}'
     TextData:
@@ -105,6 +117,7 @@ MonoBehaviour:
     - Right
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 8
     JsonData: '{"num":5,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData:
@@ -153,6 +166,7 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 6
     JsonData: '{"height":250,"url":"","mode":0,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData:
@@ -161,6 +175,7 @@ MonoBehaviour:
     ObjsData:
     - {fileID: 11400000, guid: b4d768b0a8c3e3a4f9c56bd8f9815b43, type: 2}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":350,"LineHeightPercent":120}'
     TextData:
@@ -174,6 +189,7 @@ MonoBehaviour:
       protected abstract void OnCreateGUI();\r"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 4
     JsonData: '{"Name":"Foo","Syntaxs":["public bool Foo()","public bool Foo(int
       index)","public bool Foo(int index, string token)"],"ReturnTypes":["bool"],"Params":[{"ParamName":"index","Type":"int"},{"ParamName":"token","Type":"string"}],"isOn":true}'
@@ -184,6 +200,7 @@ MonoBehaviour:
     - is Function success
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

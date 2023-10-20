@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocCodeblock : DocVisual
+    public class DocCodeblock : DocVisual<(int MaxHeight,int LineHeightPercent)>
     {
         public override string VisualID => "7";
 
@@ -15,21 +15,19 @@ namespace NaiveAPI.DocumentBuilder
         ScrollView codeScrollView;
         protected override void OnCreateGUI()
         {
-            Data data = JsonUtility.FromJson<Data>(Target.JsonData);
-            data ??=  new Data();
             IntroAnimation = (callBack) => { this.Fade(0, 1, 200, 50, callBack); };
             OuttroAnimation = (callBack) => { this.Fade(1, 0, 200, 50, callBack); };
             codeScrollView =DocRuntime.NewScrollView();
             if (Target.TextData.Count == 0) Target.TextData.Add("");
             ISPadding padding = ISPadding.Pixel(DocStyle.Current.MainTextSize / 2);
-            codeContents = DocRuntime.NewTextElement($"<line-height={data.LineHeightPercent}%>"+DocumentBuilderParser.CSharpParser(Target.TextData[0]));
+            codeContents = DocRuntime.NewTextElement($"<line-height={visualData.LineHeightPercent}%>"+DocumentBuilderParser.CSharpParser(Target.TextData[0]));
             codeContents.style.whiteSpace = WhiteSpace.NoWrap;
             codeContents.style.color = new Color(.85f, .85f, .85f);
             codeContents.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
             codeContents.style.SetIS_Style(padding);
             codeContents.style.fontSize = DocStyle.Current.MainTextSize;
             //codeContents.style.width = data.MinWidth;
-            string lineNum = $"<line-height={data.LineHeightPercent}%>1";
+            string lineNum = $"<line-height={visualData.LineHeightPercent}%>1";
             int i = 2;
             foreach(var c in Target.TextData[0])
             {
@@ -70,8 +68,8 @@ namespace NaiveAPI.DocumentBuilder
             codeContents.RegisterCallback(exe);
             copy.style.position = Position.Absolute;
             copy.style.top = 5;
-            codeScrollView.style.maxHeight = data.MaxHeight;
-            numScrollView.style.maxHeight = data.MaxHeight ;
+            codeScrollView.style.maxHeight = visualData.MaxHeight;
+            numScrollView.style.maxHeight = visualData.MaxHeight ;
             numScrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
             numScrollView.verticalScroller.valueChanged += v => { codeScrollView.verticalScroller.value = v; };
             codeScrollView.verticalScroller.valueChanged += v => { numScrollView.verticalScroller.value = v; };
@@ -90,12 +88,6 @@ namespace NaiveAPI.DocumentBuilder
                 codeScrollView.style.marginLeft = 6;
                 copy.style.right = codeScrollView.verticalScroller.enabledInHierarchy ? (DocStyle.Current.ScrollerWidth) : 0;
             });
-        }
-
-        public class Data
-        {
-            public int MaxHeight = 300;
-            public int LineHeightPercent = 125;
         }
     }
 }

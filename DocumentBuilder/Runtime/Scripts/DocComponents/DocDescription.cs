@@ -1,12 +1,11 @@
 using NaiveAPI_UI;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocDescription : DocVisual
+    public class DocDescription : DocVisual<ValueTuple<DocDescription.DescriptionType>>
     {
         public override string VisualID => "2";
         TextElement text;
@@ -16,17 +15,15 @@ namespace NaiveAPI.DocumentBuilder
             text = DocRuntime.NewTextElement(Target.TextData[0]);
             text.style.SetIS_Style(DocStyle.Current.MainText);
             Add(text);
-            Data data = JsonUtility.FromJson<Data>(Target.JsonData);
-            data ??= new Data();
             if (text.text == "")
             {
                 text.text = "Warning ! This is a Empty Description";
-                data.Type = Type.Warning;
+                visualData.Item1 = DescriptionType.Warning;
             }
-            if (data.Type != Type.None)
+            if (visualData.Item1 != DescriptionType.None)
             {
-                text.style.backgroundColor = getTypeColor(data.Type);
-                text.style.color = getTypeTextColor(data.Type);
+                text.style.backgroundColor = getTypeColor(visualData.Item1);
+                text.style.color = getTypeTextColor(visualData.Item1);
                 text.style.SetIS_Style(ISPadding.Percent(5));
             }
         }
@@ -58,17 +55,13 @@ namespace NaiveAPI.DocumentBuilder
                     break;
             }
         }
-        public class Data
-        {
-            public Type Type = Type.None;
-        }
         public new enum AniMode
         {
             None,
             Fade,
             TextFade,
         }
-        public enum Type
+        public enum DescriptionType
         {
             None,
             Success,
@@ -76,18 +69,18 @@ namespace NaiveAPI.DocumentBuilder
             Danger,
             Hint,
         }
-        Color getTypeColor(Type type)
+        Color getTypeColor(DescriptionType type)
         {
-            if (type == Type.Hint) return DocStyle.Current.HintColor;
-            if (type == Type.Success) return DocStyle.Current.SuccessColor;
-            if (type == Type.Warning) return DocStyle.Current.WarningColor;
+            if (type == DescriptionType.Hint) return DocStyle.Current.HintColor;
+            if (type == DescriptionType.Success) return DocStyle.Current.SuccessColor;
+            if (type == DescriptionType.Warning) return DocStyle.Current.WarningColor;
             return DocStyle.Current.DangerColor;
         }
-        Color getTypeTextColor(Type type)
+        Color getTypeTextColor(DescriptionType type)
         {
-            if (type == Type.Hint) return DocStyle.Current.HintTextColor;
-            if (type == Type.Success) return DocStyle.Current.SuccessTextColor;
-            if (type == Type.Warning) return DocStyle.Current.WarningTextColor;
+            if (type == DescriptionType.Hint) return DocStyle.Current.HintTextColor;
+            if (type == DescriptionType.Success) return DocStyle.Current.SuccessTextColor;
+            if (type == DescriptionType.Warning) return DocStyle.Current.WarningTextColor;
             return DocStyle.Current.DangerTextColor;
         }
     }

@@ -21,6 +21,7 @@ MonoBehaviour:
     - Intro
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -28,6 +29,7 @@ MonoBehaviour:
       for DocEditVisual.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
@@ -38,18 +40,21 @@ MonoBehaviour:
       contents, also use Target\n    }\n}"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
-    JsonData: '{"Type":3}'
+    JsonData: '{"Item1":3}'
     TextData:
     - This Script should in a Editor folder. ( * / Editor / YourScript.cs )
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 1
   - VisualID: 2
-    JsonData: '{"Type":3}'
+    JsonData: '{"Item1":3}'
     TextData:
     - VisualID must same in DocVisual, this is how system detect them as same DocType.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 1
   - VisualID: 2
     JsonData: 
     TextData:
@@ -58,17 +63,20 @@ MonoBehaviour:
       check the source code of DocLabel / DocEditLabel
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 1
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Debugger
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -80,6 +88,7 @@ MonoBehaviour:
       / DocVisual Debugger'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 1
   - VisualID: 6
     JsonData: '{"height":400,"url":"","mode":0}'
     TextData:
@@ -88,6 +97,7 @@ MonoBehaviour:
     ObjsData:
     - {fileID: 11400000, guid: 578e7024e63c9ec4684b73a323028f6e, type: 2}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

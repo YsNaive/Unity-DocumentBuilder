@@ -21,6 +21,7 @@ MonoBehaviour:
     - Codeblock
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -28,22 +29,26 @@ MonoBehaviour:
       code, if you have any suguest, please contact us.
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Settings
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
+    VisualVersion: 0
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/By3CloPjh.png","mode":0}'
     TextData: []
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -52,25 +57,29 @@ MonoBehaviour:
       detect it , if you have any idea, please let us know.
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Show Case
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - This codeblock use DocVisual src code
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
+    VisualVersion: 0
   - VisualID: 7
-    JsonData: '{"MaxHeight":300,"LineHeightPercent":120}'
+    JsonData: '{"Item1":300,"Item2":120}'
     TextData:
     - "\rpublic abstract class DocVisual : VisualElement\r\n{\r\n    public DocVisual()\r\n   
       {\r\n        RegisterCallback<GeometryChangedEvent>(e =>\r\n        {\r\n           
@@ -85,6 +94,7 @@ MonoBehaviour:
       set\r\n    /// </summary>\r\n    protected abstract void OnCreateGUI();\r\n}"
     ObjsData: []
     AniSettings: 0100000001000000fa000000fa000000
+    VisualVersion: 1
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

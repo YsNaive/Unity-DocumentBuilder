@@ -32,8 +32,8 @@ namespace NaiveAPI.DocumentBuilder
         public Action<Action> OuttroAnimation;
         public DocComponent Target => m_target;
 
-        private DocComponent m_target;
-        public void SetTarget(DocComponent target)
+        protected DocComponent m_target;
+        public virtual void SetTarget(DocComponent target)
         {
             m_target = target;
             Clear();
@@ -41,9 +41,6 @@ namespace NaiveAPI.DocumentBuilder
             OnSelectIntroAni(Target.IntroType);
             OnSelectOuttroAni(Target.OuttroType);
         }
-        /// <summary>
-        /// Call after Target is set
-        /// </summary>
         protected abstract void OnCreateGUI();
         protected virtual void OnSelectIntroAni(int type)
         {
@@ -58,6 +55,30 @@ namespace NaiveAPI.DocumentBuilder
                 return;
             else if ((AniMode)type == AniMode.Fade)
                 OuttroAnimation = (callback) => { this.Fade(1, 0, Target.OuttroTime, 20, callback); };
+        }
+    }
+    public abstract class DocVisual<DType> : DocVisual
+        where DType : new()
+    {
+        protected DType visualData;
+        public override void SetTarget(DocComponent target)
+        {
+            m_target = target;
+            LoadDataFromTarget();
+            Clear();
+            OnCreateGUI();
+            OnSelectIntroAni(Target.IntroType);
+            OnSelectOuttroAni(Target.OuttroType);
+        }
+        protected void LoadDataFromTarget()
+        {
+            if(!string.IsNullOrEmpty(Target.JsonData))
+                visualData = JsonUtility.FromJson<DType>(Target.JsonData);
+            visualData ??= new DType();
+        }
+        protected void SaveDataToTarget()
+        {
+            Target.JsonData = JsonUtility.ToJson(visualData);
         }
     }
 }

@@ -19,15 +19,18 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     OnHeightChanged?.Invoke(e.newRect.height);
             });
         }
+        public virtual ushort Version => 0;
         public abstract string DisplayName { get; }
         public abstract string VisualID { get; }
         public Action<float> OnHeightChanged;
         public Action<float> OnWidthChanged;
         public DocComponent Target => m_target;
-        private DocComponent m_target;
-        public void SetTarget(DocComponent target)
+        protected DocComponent m_target;
+        public virtual void SetTarget(DocComponent target)
         {
             m_target = target;
+            if (target.VisualVersion != Version)
+                VersionConflict();
             OnCreateAniGUI(InitAniType);
             OnCreateGUI();
         }
@@ -79,6 +82,32 @@ namespace NaiveAPI_Editor.DocumentBuilder
             bar.Add(outtroTime);
             Add(bar);
         }
+        protected virtual void VersionConflict()
+        {
+            Debug.LogWarning($"DocEditVisual: VersionConflict NOT Implement in type [{GetType()}]");
+        }
         public virtual string ToMarkdown(string dstPath) { return string.Empty; }
+    }
+    public abstract class DocEditVisual<DType> : DocEditVisual
+    where DType : new()
+    {
+        protected DType visualData;
+        public override void SetTarget(DocComponent target)
+        {
+            m_target = target;
+            LoadDataFromTarget();
+            base.SetTarget(target);
+        }
+        protected void LoadDataFromTarget()
+        {
+            if(!string.IsNullOrEmpty(Target.JsonData))
+                visualData = JsonUtility.FromJson<DType>(Target.JsonData);
+            visualData ??= new DType();
+        }
+        protected void SaveDataToTarget()
+        {
+            Target.JsonData = JsonUtility.ToJson(visualData);
+            Target.VisualVersion = Version;
+        }
     }
 }
