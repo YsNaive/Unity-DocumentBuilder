@@ -7,8 +7,13 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocCodeblock : DocVisual<(int MaxHeight,int LineHeightPercent)>
+    public class DocCodeblock : DocVisual<DocCodeblock.Data>
     {
+        public class Data
+        {
+            public int MaxHeight = 300;
+            public int LineHeightPercent = 125;
+        }
         public override string VisualID => "7";
 
         TextElement codeContents;

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.XR;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
@@ -58,6 +57,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             docComponent = new DocComponent();
             ScrollView scrollView = new ScrollView();
+            scrollView.style.flexGrow = 1;
+            scrollView.contentContainer.style.minHeight = Length.Percent(100);
             scrollView.Add(createView());
             rootVisualElement.Add(scrollView);
         }
@@ -70,6 +71,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             root.style.paddingLeft = 10;
             root.style.paddingRight = 10;
+            root.style.flexGrow = 1;
             root.Add(editText);
             var comField = DocRuntime.NewEmpty();
             comField.Add(DocEditor.CreateComponentField(docComponent,true));
@@ -80,8 +82,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     var ve = root.Q<DocVisual>();
                     int i = root.IndexOf(ve);
-                    if (ve != null)
-                        root.Remove(ve);
+                    if (i == -1) return;
+                    root.Remove(ve);
                     root.Insert(i, DocRuntime.CreateDocVisual(docComponent));
                 }
             }).Every(250);
@@ -125,6 +127,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     EditorGUILayout.ObjectField(obj, typeof(Object), false);
                 }
+                EditorGUILayout.LabelField($"AniSettings Intro: {docComponent.IntroType}, {docComponent.IntroTime}    Outtro: {docComponent.OuttroType}, {docComponent.OuttroTime}");
+                EditorGUILayout.LabelField($"Version: {docComponent.VisualVersion}");
                 EditorGUI.EndDisabledGroup();
             }));
             return root;

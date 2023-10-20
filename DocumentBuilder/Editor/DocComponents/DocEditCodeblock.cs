@@ -1,6 +1,7 @@
 using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.UIElements;
@@ -9,12 +10,12 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
-    public class DocEditCodeblock : DocEditVisual<(int MaxHeight, int LineHeightPercent)>
+    [CustomDocEditVisual("Advance/Code block", 0)]
+    public class DocEditCodeblock : DocEditVisual<DocCodeblock.Data>
     {
-        public override string DisplayName => "Advance/Code block";
-
+        [Obsolete]public override string DisplayName => "Code block";
         public override string VisualID => "7";
-        public override ushort Version => 1;
+        public override ushort Version => 0;
 
         public TextField textInput;
         protected override void OnCreateGUI()
@@ -50,16 +51,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             textInput.value = Target.TextData[0];
             Add(hor);
             Add(textInput);
-        }
-        protected override void VersionConflict()
-        {
-            if(Target.VisualVersion < 1)
-            {
-                Target.JsonData = Target.JsonData
-                    .Replace("MaxHeight", "Item1")
-                    .Replace("LineHeightPercent", "Item2");
-            }
-            Target.VisualVersion = 1;
         }
     }
 }

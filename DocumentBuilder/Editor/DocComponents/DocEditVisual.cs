@@ -20,7 +20,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
         }
         public virtual ushort Version => 0;
-        public abstract string DisplayName { get; }
+        [Obsolete("\nThis is no longer needed after version 2.0.2, define it on Attribute instead")]
+        public virtual string DisplayName { get => "N/A"; }
         public abstract string VisualID { get; }
         public Action<float> OnHeightChanged;
         public Action<float> OnWidthChanged;

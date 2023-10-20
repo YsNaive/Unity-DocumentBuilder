@@ -22,6 +22,14 @@ namespace NaiveAPI.DocumentBuilder
             copy.ObjsData = new List<Object>(ObjsData);
             return copy;
         } 
+        public void Clear()
+        {
+            VisualID = string.Empty;
+            JsonData = string.Empty;
+            TextData = new();
+            AniSettings = new int[] { 1, 250, 1, 250 };
+            VisualVersion = 0;
+        }
         public bool ContentsEqual(DocComponent other)
         {
             if(VisualID != other.VisualID) return false;

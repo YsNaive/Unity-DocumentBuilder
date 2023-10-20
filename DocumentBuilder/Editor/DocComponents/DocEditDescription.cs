@@ -10,10 +10,11 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
+    [CustomDocEditVisual("Description",0)]
     public class DocEditDescription : DocEditVisual<ValueTuple<DocDescription.DescriptionType>>
     {
         private static ISPadding padding = ISPadding.Pixel(5);
-        public override string DisplayName => "Description";
+        [Obsolete] public override string DisplayName => "Description";
         public override string VisualID => "2";
         public override ushort Version => 1;
         protected override Enum InitAniType => DocDescription.AniMode.Fade;

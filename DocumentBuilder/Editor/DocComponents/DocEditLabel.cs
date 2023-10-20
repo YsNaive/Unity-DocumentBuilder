@@ -1,18 +1,16 @@
-using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+using System;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
+    [CustomDocEditVisual("Label", 1)]
     public class DocEditLabel : DocEditVisual
     {
-        public override string DisplayName => "Label";
+        [Obsolete] public override string DisplayName => "Label";
         public override string VisualID => "1";
 
         DocLabel.Data data;

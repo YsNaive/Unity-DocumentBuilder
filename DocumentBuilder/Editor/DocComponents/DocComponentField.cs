@@ -293,6 +293,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             if (SelectVisualType.index == -1) SelectVisualType.index = 0;
             SelectVisualType.RegisterValueChangedCallback((val) =>
             {
+                Target.Clear();
                 Target.TextData.Clear();
                 Target.JsonData = string.Empty;
                 Target.ObjsData.Clear();

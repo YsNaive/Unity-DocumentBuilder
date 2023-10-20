@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
+    [CustomDocEditVisual("Dividline", 3)]
     public class DocEditDividline : DocEditVisual
     {
-        public override string DisplayName => "Dividline";
+        [Obsolete]public override string DisplayName => "Dividline";
 
         public override string VisualID => "0";
 
