@@ -8,22 +8,20 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocSeeAlso : DocVisual
+    public class DocSeeAlso : DocVisual<DocSeeAlso.Data>
     {
         public override string VisualID => "6";
 
         protected override void OnCreateGUI()
         {
-            Data data = JsonUtility.FromJson<Data>(Target.JsonData);
-            if (data == null) return;
             VisualElement child = new VisualElement();
             child.style.SetIS_Style(ISFlex.Horizontal);
             child.style.paddingLeft = DocStyle.Current.MainTextSize;
             Action buttonClick = null;
-            if (data.mode == Mode.OpenPage)
+            if (visualData.mode == Mode.OpenPage)
             {
-                ScrollView scrollView = new DocScrollView();
-                scrollView.style.maxHeight = data.height;
+                ScrollView scrollView = DocRuntime.NewScrollView();
+                scrollView.style.maxHeight = visualData.height;
                 scrollView.style.overflow = Overflow.Hidden;
                 scrollView.style.marginLeft = 2 * DocStyle.Current.MainTextSize;
                 VisualElement mask = DocRuntime.NewEmpty();
@@ -57,18 +55,18 @@ namespace NaiveAPI.DocumentBuilder
                     mask.style.height = scrollView.resolvedStyle.height;
                 });
             }
-            else if (data.mode == Mode.OpenUrl)
+            else if (visualData.mode == Mode.OpenUrl)
             {
                 buttonClick = () =>
                 {
-                    Application.OpenURL(data.url);
+                    Application.OpenURL(visualData.url);
                 };
             }
             Button button = DocRuntime.NewButton(buttonClick);
             button.text = Target.TextData[1];
             button.style.minWidth = Length.Percent(10);
             button.style.SetIS_Style(ISMargin.Pixel(DocStyle.Current.MainTextSize / 2));
-            TextElement textElement = new DocTextElement(Target.TextData[0]);
+            TextElement textElement = DocRuntime.NewTextElement(Target.TextData[0]);
             textElement.style.SetIS_Style(ISMargin.Pixel(DocStyle.Current.MainTextSize / 2));
             child.Add(textElement);
             child.Add(button);

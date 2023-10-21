@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocMatrix : DocVisual
+    public class DocMatrix : DocVisual<DocMatrix.Data>
     {
         public override string VisualID => "3";
 
@@ -16,9 +16,7 @@ namespace NaiveAPI.DocumentBuilder
 
         protected override void OnCreateGUI()
         {
-            Data data = JsonUtility.FromJson<Data>(Target.JsonData);
-            if (data == null) return;
-            matrixVisual = generateViewMatrixVisual(data, -1);
+            matrixVisual = generateViewMatrixVisual(visualData, -1);
             if(matrixVisual.childCount !=0)
             matrixVisual[matrixVisual.childCount - 1].RegisterCallback<GeometryChangedEvent>(repaintMatrix);
             this.Add(matrixVisual);
@@ -147,21 +145,36 @@ namespace NaiveAPI.DocumentBuilder
         [System.Serializable]
         public class Data
         {
-            public int row, col;
+            public int row = 3, col = 3;
             public string[,] contents;
             public TextAnchor[] anchors;
             public Mode mode = Mode.FixedWidth;
 
             public Data()
             {
-                row = col = 3;
                 contents = new string[row, col];
+                contents.Initialize();
                 anchors = new TextAnchor[col];
                 for (int i = 0;i < col; i++)
                 {
                     anchors[i] = TextAnchor.MiddleLeft;
                 }
-                contents.Initialize();
+            }
+
+            public void SetContents(List<string> texts)
+            {
+                if (contents.Length != texts.Count)
+                {
+                    contents = new string[row, col];
+                }
+                int index = 0;
+                for (int i = 0; i < row; i++)
+                {
+                    for (int j = 0; j < col; j++)
+                    {
+                        contents[i, j] = texts[index++];
+                    }
+                }
             }
 
             public void ResizeContent(int row, int col)

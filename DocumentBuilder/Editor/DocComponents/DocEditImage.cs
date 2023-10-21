@@ -1,6 +1,7 @@
 using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -10,9 +11,10 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
+    [CustomDocEditVisual("Charts/Image")]
     public class DocEditImage : DocEditVisual
     {
-        public override string DisplayName => "Image";
+        [Obsolete] public override string DisplayName => "Image";
 
         public override string VisualID => "5";
 
