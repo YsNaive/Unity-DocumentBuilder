@@ -11,16 +11,16 @@ using UnityEngine.UIElements;
 namespace NaiveAPI_Editor.DocumentBuilder
 {
     [CustomDocEditVisual("Description",0)]
-    public class DocEditDescription : DocEditVisual<ValueTuple<DocDescription.DescriptionType>>
+    public class DocEditDescription : DocEditVisual<DocDescription.Data>
     {
         private static ISPadding padding = ISPadding.Pixel(5);
         [Obsolete] public override string DisplayName => "Description";
         public override string VisualID => "2";
-        public override ushort Version => 1;
+        public override ushort Version => 0;
         protected override Enum InitAniType => DocDescription.AniMode.Fade;
         protected override void OnCreateGUI()
         {
-            TextField textInput = DocRuntime.NewTextField();
+            TextField textInput = new DocTextField();
             if (Target.TextData.Count == 0)
                 Target.TextData.Add(string.Empty);
             textInput.value = Target.TextData[0];
@@ -32,9 +32,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.TextData.Clear();
                 Target.TextData.Add(val.newValue);
             });
-            var typeField = DocEditor.NewEnumField("Type", visualData.Item1, e =>
+            var typeField = DocEditor.NewEnumField("Type", visualData.Type, e =>
             {
-                visualData.Item1 = (DocDescription.DescriptionType)e.newValue;
+                visualData.Type = (DocDescription.DescriptionType)e.newValue;
                 SaveDataToTarget();
             });
             typeField[0].style.minWidth = 45;
@@ -46,14 +46,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override string ToMarkdown(string dstPath)
         {
             return Target.TextData[0];
-        }
-        protected override void VersionConflict()
-        {
-            if(Target.VisualVersion < 1)
-            {
-                Target.JsonData = Target.JsonData.Replace("Type", "Item1");
-            }
-            Target.VisualVersion = 1;
         }
     }
 }

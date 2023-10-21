@@ -12,664 +12,127 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03bfbaa136870064295a83c7ec8ac951, type: 3}
   m_Name: DuskTheme
   m_EditorClassIdentifier: 
-  RuntimeFontSizeScale: 2
-  EditorFontSizeScale: 1
   DocStyle:
     MainTextStyle:
       EnableMask: 449
       Display:
-        m_opacity: 1
-        Display: 0
-        Visibility: 0
-        Overflow: 0
+        rid: -2
       Position:
-        Position: 0
-        Left:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Bottom:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
+        rid: -2
       Flex:
-        Basis:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
-        FlexGrow: 0
-        Direction: 0
-        Wrap: 0
+        rid: -2
       Align:
-        Content: 0
-        Items: 0
+        rid: -2
       Size:
-        Width:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 100
-        Height:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 100
+        rid: -2
       Margin:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 2
-        Top:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 2
-        Bottom:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
+        rid: 8869985086138221424
       Padding:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 6
-        Top:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 6
-        Bottom:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
+        rid: 8869985086138221425
       Text:
-        FontAsset: {fileID: 0}
-        FontStyle: 0
-        FontSize: 12
-        Color: {r: 0.20754719, g: 0.17661092, b: 0.14567463, a: 1}
-        Align: 3
-        Wrap: 0
+        rid: 8869985086138221426
       Background:
-        Color: {r: 0, g: 0, b: 0, a: 0}
-        ImageTint: {r: 1, g: 1, b: 1, a: 1}
-        sprite: {fileID: 0}
-        texture: {fileID: 0}
-        renderTexture: {fileID: 0}
-        vectorImage: {fileID: 0}
-        ScaleMode: 0
+        rid: -2
       Border:
-        LeftColor: {r: 0, g: 0, b: 0, a: 1}
-        TopColor: {r: 0, g: 0, b: 0, a: 1}
-        RightColor: {r: 0, g: 0, b: 0, a: 1}
-        BottomColor: {r: 0, g: 0, b: 0, a: 1}
-        Left: 0
-        Top: 0
-        Right: 0
-        Bottom: 0
+        rid: -2
       Radius:
-        TopLeft:
-          Unit: 0
-          Value: 0
-        BottomLeft:
-          Unit: 0
-          Value: 0
-        TopRight:
-          Unit: 0
-          Value: 0
-        BottomRight:
-          Unit: 0
-          Value: 0
+        rid: -2
     LabelTextStyle:
       EnableMask: 449
       Display:
-        m_opacity: 1
-        Display: 0
-        Visibility: 0
-        Overflow: 0
+        rid: -2
       Position:
-        Position: 0
-        Left:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Bottom:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
+        rid: -2
       Flex:
-        Basis:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
-        FlexGrow: 0
-        Direction: 0
-        Wrap: 0
+        rid: -2
       Align:
-        Content: 0
-        Items: 0
+        rid: -2
       Size:
-        Width:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 100
-        Height:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 100
+        rid: -2
       Margin:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 4
-        Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 4
-        Bottom:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
+        rid: 8869985086138221427
       Padding:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 2
-        Top:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 4
-        Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 2
-        Bottom:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 4
+        rid: 8869985086138221428
       Text:
-        FontAsset: {fileID: 0}
-        FontStyle: 0
-        FontSize: 22
-        Color: {r: 0.1509434, g: 0.10486866, b: 0.07319331, a: 1}
-        Align: 3
-        Wrap: 0
+        rid: 8869985086138221429
       Background:
-        Color: {r: 0, g: 0, b: 0, a: 0}
-        ImageTint: {r: 1, g: 1, b: 1, a: 1}
-        sprite: {fileID: 0}
-        texture: {fileID: 0}
-        renderTexture: {fileID: 0}
-        vectorImage: {fileID: 0}
-        ScaleMode: 0
+        rid: -2
       Border:
-        LeftColor: {r: 0, g: 0, b: 0, a: 1}
-        TopColor: {r: 0, g: 0, b: 0, a: 1}
-        RightColor: {r: 0, g: 0, b: 0, a: 1}
-        BottomColor: {r: 0, g: 0, b: 0, a: 1}
-        Left: 0
-        Top: 0
-        Right: 0
-        Bottom: 0
+        rid: -2
       Radius:
-        TopLeft:
-          Unit: 0
-          Value: 0
-        BottomLeft:
-          Unit: 0
-          Value: 0
-        TopRight:
-          Unit: 0
-          Value: 0
-        BottomRight:
-          Unit: 0
-          Value: 0
+        rid: -2
     ButtonTextStyle:
       EnableMask: 257
       Display:
-        m_opacity: 1
-        Display: 0
-        Visibility: 0
-        Overflow: 0
+        rid: -2
       Position:
-        Position: 0
-        Left:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Bottom:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
+        rid: -2
       Flex:
-        Basis:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
-        FlexGrow: 0
-        Direction: 0
-        Wrap: 0
+        rid: -2
       Align:
-        Content: 0
-        Items: 0
+        rid: -2
       Size:
-        Width:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 100
-        Height:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 100
+        rid: -2
       Margin:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Bottom:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
+        rid: -2
       Padding:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Bottom:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
+        rid: -2
       Text:
-        FontAsset: {fileID: 0}
-        FontStyle: 0
-        FontSize: 12
-        Color: {r: 0.20784314, g: 0.1764706, b: 0.14509805, a: 1}
-        Align: 4
-        Wrap: 0
+        rid: 8869985086138221430
       Background:
-        Color: {r: 0, g: 0, b: 0, a: 0}
-        ImageTint: {r: 1, g: 1, b: 1, a: 1}
-        sprite: {fileID: 0}
-        texture: {fileID: 0}
-        renderTexture: {fileID: 0}
-        vectorImage: {fileID: 0}
-        ScaleMode: 0
+        rid: -2
       Border:
-        LeftColor: {r: 0, g: 0, b: 0, a: 1}
-        TopColor: {r: 0, g: 0, b: 0, a: 1}
-        RightColor: {r: 0, g: 0, b: 0, a: 1}
-        BottomColor: {r: 0, g: 0, b: 0, a: 1}
-        Left: 0
-        Top: 0
-        Right: 0
-        Bottom: 0
+        rid: -2
       Radius:
-        TopLeft:
-          Unit: 0
-          Value: 0
-        BottomLeft:
-          Unit: 0
-          Value: 0
-        TopRight:
-          Unit: 0
-          Value: 0
-        BottomRight:
-          Unit: 0
-          Value: 0
+        rid: -2
     InputFieldStyle:
       EnableMask: 641
       Display:
-        m_opacity: 1
-        Display: 0
-        Visibility: 0
-        Overflow: 0
+        rid: -2
       Position:
-        Position: 0
-        Left:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Bottom:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
+        rid: -2
       Flex:
-        Basis:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
-        FlexGrow: 0
-        Direction: 0
-        Wrap: 0
+        rid: -2
       Align:
-        Content: 0
-        Items: 0
+        rid: -2
       Size:
-        Width:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 100
-        Height:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 100
+        rid: -2
       Margin:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Bottom:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
+        rid: -2
       Padding:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 6
-        Top:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 6
-        Bottom:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
+        rid: 8869985086138221431
       Text:
-        FontAsset: {fileID: 0}
-        FontStyle: 0
-        FontSize: 14
-        Color: {r: 0, g: 0, b: 0, a: 1}
-        Align: 3
-        Wrap: 0
+        rid: -2
       Background:
-        Color: {r: 0.9150943, g: 0.86010236, b: 0.7458882, a: 1}
-        ImageTint: {r: 1, g: 1, b: 1, a: 1}
-        sprite: {fileID: 0}
-        texture: {fileID: 0}
-        renderTexture: {fileID: 0}
-        vectorImage: {fileID: 0}
-        ScaleMode: 0
+        rid: 8869985086138221432
       Border:
-        LeftColor: {r: 0, g: 0, b: 0, a: 1}
-        TopColor: {r: 0, g: 0, b: 0, a: 1}
-        RightColor: {r: 0, g: 0, b: 0, a: 1}
-        BottomColor: {r: 0, g: 0, b: 0, a: 1}
-        Left: 0
-        Top: 0
-        Right: 0
-        Bottom: 0
+        rid: -2
       Radius:
-        TopLeft:
-          Unit: 0
-          Value: 0
-        BottomLeft:
-          Unit: 0
-          Value: 0
-        TopRight:
-          Unit: 0
-          Value: 0
-        BottomRight:
-          Unit: 0
-          Value: 0
+        rid: -2
     ElementMarginPadding:
       EnableMask: 192
       Display:
-        m_opacity: 1
-        Display: 0
-        Visibility: 0
-        Overflow: 0
+        rid: -2
       Position:
-        Position: 0
-        Left:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
-        Bottom:
-          Keyword: 0
-          Value:
-            Unit: 0
-            Value: 0
+        rid: -2
       Flex:
-        Basis:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
-        FlexGrow: 0
-        Direction: 0
-        Wrap: 0
+        rid: -2
       Align:
-        Content: 0
-        Items: 0
+        rid: -2
       Size:
-        Width:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 100
-        Height:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 100
+        rid: -2
       Margin:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 10
-        Top:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 2
-        Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 10
-        Bottom:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 2
+        rid: 8869985086138221433
       Padding:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
-        Bottom:
-          Keyword: 2
-          Value:
-            Unit: 0
-            Value: 0
+        rid: 8869985086138221434
       Text:
-        FontAsset: {fileID: 0}
-        FontStyle: 0
-        FontSize: 14
-        Color: {r: 0, g: 0, b: 0, a: 1}
-        Align: 3
-        Wrap: 0
+        rid: -2
       Background:
-        Color: {r: 0, g: 0, b: 0, a: 0}
-        ImageTint: {r: 1, g: 1, b: 1, a: 1}
-        sprite: {fileID: 0}
-        texture: {fileID: 0}
-        renderTexture: {fileID: 0}
-        vectorImage: {fileID: 0}
-        ScaleMode: 0
+        rid: -2
       Border:
-        LeftColor: {r: 0, g: 0, b: 0, a: 1}
-        TopColor: {r: 0, g: 0, b: 0, a: 1}
-        RightColor: {r: 0, g: 0, b: 0, a: 1}
-        BottomColor: {r: 0, g: 0, b: 0, a: 1}
-        Left: 0
-        Top: 0
-        Right: 0
-        Bottom: 0
+        rid: -2
       Radius:
-        TopLeft:
-          Unit: 0
-          Value: 0
-        BottomLeft:
-          Unit: 0
-          Value: 0
-        TopRight:
-          Unit: 0
-          Value: 0
-        BottomRight:
-          Unit: 0
-          Value: 0
+        rid: -2
     BackgroundColor: {r: 0.9433962, g: 0.9082572, b: 0.7778569, a: 1}
     SubBackgroundColor: {r: 0.8301887, g: 0.7683062, b: 0.6296903, a: 1}
     FrontgroundColor: {r: 0.5, g: 0.41482165, b: 0.30849057, a: 1}
@@ -705,3 +168,206 @@ MonoBehaviour:
       Unit: 0
       Value: 10
     GUIScale: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8869985086138221424
+      type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Top:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Bottom:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+    - rid: 8869985086138221425
+      type: {class: ISPadding, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 6
+        Top:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 6
+        Bottom:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+    - rid: 8869985086138221426
+      type: {class: ISText, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        FontAsset: {fileID: 0}
+        FontStyle: 0
+        FontSize: 12
+        Color: {r: 0.16037738, g: 0.13612625, b: 0.11407976, a: 1}
+        Align: 3
+        Wrap: 0
+    - rid: 8869985086138221427
+      type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 0
+        Top:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 4
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 4
+        Bottom:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+    - rid: 8869985086138221428
+      type: {class: ISPadding, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Top:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 4
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Bottom:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 4
+    - rid: 8869985086138221429
+      type: {class: ISText, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        FontAsset: {fileID: 0}
+        FontStyle: 0
+        FontSize: 22
+        Color: {r: 0.16078432, g: 0.13725491, b: 0.11372549, a: 1}
+        Align: 3
+        Wrap: 0
+    - rid: 8869985086138221430
+      type: {class: ISText, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        FontAsset: {fileID: 0}
+        FontStyle: 0
+        FontSize: 12
+        Color: {r: 0.16078432, g: 0.13725491, b: 0.11372549, a: 1}
+        Align: 4
+        Wrap: 0
+    - rid: 8869985086138221431
+      type: {class: ISPadding, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 6
+        Top:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 6
+        Bottom:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+    - rid: 8869985086138221432
+      type: {class: ISBackground, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Color: {r: 0, g: 0, b: 0, a: 0}
+        ImageTint: {r: 1, g: 1, b: 1, a: 1}
+        sprite: {fileID: 0}
+        texture: {fileID: 0}
+        renderTexture: {fileID: 0}
+        vectorImage: {fileID: 0}
+        ScaleMode: 0
+    - rid: 8869985086138221433
+      type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 10
+        Top:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 10
+        Bottom:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+    - rid: 8869985086138221434
+      type: {class: ISPadding, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 0
+        Top:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 0
+        Right:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0
+        Bottom:
+          Keyword: 2
+          Value:
+            Unit: 0
+            Value: 0

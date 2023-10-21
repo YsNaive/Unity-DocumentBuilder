@@ -113,6 +113,19 @@ namespace NaiveAPI.DocumentBuilder
             LabelWidth = m_ISLengthBuffer.Pop();
         }
 
+        public static void ApplyByMask(VisualElement element, DocStyleFlag flag)
+        {
+            if ((flag & DocStyleFlag.MainText) == DocStyleFlag.MainText)
+                element.style.SetIS_Style(Current.MainText);
+            if ((flag & DocStyleFlag.LabelText) == DocStyleFlag.LabelText)
+                element.style.SetIS_Style(Current.LabelText);
+            if ((flag & DocStyleFlag.ButtonText) == DocStyleFlag.ButtonText)
+                element.style.SetIS_Style(Current.ButtonText);
+            if ((flag & DocStyleFlag.InputField) == DocStyleFlag.InputField)
+                element.style.SetIS_Style(Current.InputFieldStyle);
+            if ((flag & DocStyleFlag.Element) == DocStyleFlag.Element)
+                element.style.SetIS_Style(Current.ElementMarginPadding);
+        }
         public DocStyle Copy()
         {
             DocStyle docStyle = new DocStyle();

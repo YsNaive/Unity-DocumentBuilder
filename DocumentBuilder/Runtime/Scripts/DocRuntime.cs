@@ -130,49 +130,9 @@ namespace NaiveAPI.DocumentBuilder
             if (onClick != null) button.Confirm += onClick;
             return button;
         }
-        public static TextField NewTextField(string label = "", EventCallback<ChangeEvent<string>> eventCallback = null)
-        {
-            TextField textField = new TextField();
-            textField.style.ClearMarginPadding();
-            textField.style.minHeight = DocStyle.Current.LineHeight;
-            textField[0].style.paddingLeft = DocStyle.Current.MainTextSize / 2f;
-            textField[0].style.SetIS_Style(DocStyle.Current.MainTextStyle);
-            textField[0].style.SetIS_Style(DocStyle.Current.InputFieldStyle);
-            if (!string.IsNullOrEmpty(label))
-            {
-                textField.label = label;
-                textField.labelElement.style.SetIS_Style(DocStyle.Current.MainTextStyle);
-                ApplyLabelStyle(textField.labelElement);
-            }
-            if(eventCallback != null)
-                textField.RegisterValueChangedCallback(eventCallback);
-            return  textField;
-        }
-
         public static Foldout NewFoldout(string text = "")
         {
-            Foldout foldout = new Foldout();
-
-            foldout.style.SetIS_Style(DocStyle.Current.MainTextStyle);
-            foldout.contentContainer.style.minHeight = DocStyle.Current.LineHeight;
-            foldout.contentContainer.style.paddingLeft = 15;
-            foldout.text = text;
-            var toggle = foldout.Q<Toggle>();
-            toggle.style.ClearMarginPadding();
-            toggle.style.paddingLeft = 10;
-            toggle.style.backgroundColor = DocStyle.Current.BackgroundColor * 0.75f;
-            toggle[0].focusable = false;
-            var img = toggle[0][0];
-            img.style.backgroundImage = SODocStyle.WhiteArrow;
-            img.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontgroundColor;
-            img.style.ClearMarginPadding();
-            img.style.marginRight = DocStyle.Current.MainTextSize / 2f;
-            toggle.RegisterValueChangedCallback(e =>
-            {
-                img.style.rotate = new Rotate(e.newValue ? 90 : 0);
-            });
-            foldout.value = false;
-            return foldout;
+            return new DocFoldout(text);
         }
         /// <summary>
         /// This will create Unity Dropdown Field
@@ -198,15 +158,7 @@ namespace NaiveAPI.DocumentBuilder
             dropField.choices = choice;
             return dropField;
         }
-        public static TextElement NewTextElement(string text)
-        {
-            TextElement textElement = new TextElement();
-            textElement.text = text;
-            textElement.style.whiteSpace = WhiteSpace.Normal;
-            textElement.style.minHeight = DocStyle.Current.LineHeight;
-            textElement.style.SetIS_Style(DocStyle.Current.MainTextStyle);
-            return textElement;
-        }
+
 
         /// <summary>
         /// This will create Custom String Field
@@ -225,58 +177,6 @@ namespace NaiveAPI.DocumentBuilder
             label.style.SetIS_Style(DocStyle.Current.LabelTextStyle);
             label.style.minHeight = DocStyle.Current.LineHeight;
             return label;
-        }
-        public static ScrollView NewScrollView()
-        {
-            ScrollView scrollView = new ScrollView();
-            scrollView.style.minHeight = DocStyle.Current.LineHeight;
-            ApplyScrollViewStyle(scrollView);
-            return scrollView;
-        }
-        public static void ApplyScrollerStyle(Scroller bar, bool isHor = false)
-        {
-            ISBorder border = new ISBorder();
-            bar.slider.style.marginTop = 0;
-            bar.slider.style.marginBottom = 0;
-            bar.style.ClearMarginPadding();
-            bar.style.borderLeftWidth = 0;
-            bar.style.borderTopWidth = 0;
-            bar.highButton.style.display = DisplayStyle.None;
-            bar.lowButton.style.display = DisplayStyle.None;
-            bar.contentContainer.style.backgroundColor = Color.clear;
-            foreach (var ve in bar.slider.contentContainer.Children())
-            {
-                if (isHor)
-                    ve.style.height = DocStyle.Current.ScrollerWidth;
-                else
-                    ve.style.width = DocStyle.Current.ScrollerWidth;
-                ve.style.backgroundColor = Color.clear;
-                ve.style.ClearMarginPadding();
-            }
-            var dragContainer = bar.Q("unity-tracker");
-            dragContainer.style.backgroundColor = new Color(0, 0, 0, 0.1f);
-            dragContainer.style.SetIS_Style(border);
-            var drag = bar.Q("unity-dragger");
-            drag.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            if (isHor)
-            {
-                bar.slider.style.height = DocStyle.Current.ScrollerWidth;
-                drag.style.height = Length.Percent(80);
-                drag.style.top = Length.Percent(10);
-            }
-            else
-            {
-                bar.slider.style.width = DocStyle.Current.ScrollerWidth;
-                drag.style.width = Length.Percent(80);
-                drag.style.left = Length.Percent(10);
-            }
-        }
-        public static void ApplyScrollViewStyle(ScrollView scrollView)
-        {
-            scrollView.style.ClearMarginPadding();
-            ApplyScrollerStyle(scrollView.verticalScroller);
-            ApplyScrollerStyle(scrollView.horizontalScroller, true);
-            scrollView.verticalScroller.style.width = DocStyle.Current.ScrollerWidth;
         }
 
         public static void ApplyButtonStyle(Button button, Color color) { ApplyButtonStyle(button, color, Color.clear); }

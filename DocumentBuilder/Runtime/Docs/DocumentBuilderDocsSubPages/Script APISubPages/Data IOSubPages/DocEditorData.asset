@@ -21,17 +21,20 @@ MonoBehaviour:
     - DocEditorData
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Static Properties
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 3
     JsonData: '{"row":2,"col":5,"anchors":[3,3,4,4,3],"mode":1}'
     TextData:
@@ -47,17 +50,20 @@ MonoBehaviour:
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Properties
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 3
     JsonData: '{"row":2,"col":5,"anchors":[3,3,4,4,3],"mode":1}'
     TextData:
@@ -73,17 +79,20 @@ MonoBehaviour:
     - star icon
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Fields
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 3
     JsonData: '{"row":5,"col":3,"anchors":[3,3,3],"mode":1}'
     TextData:
@@ -104,6 +113,7 @@ MonoBehaviour:
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

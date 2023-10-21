@@ -21,6 +21,7 @@ MonoBehaviour:
     - Intro
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -29,17 +30,20 @@ MonoBehaviour:
       follow the steps below.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - 1. Create Enum
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -48,24 +52,28 @@ MonoBehaviour:
       If you still want the default choice, add them to your enum.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - This is default animation enum
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - "public enum AniMode\r\n{\r\n    None = 0,\r\n    Fade = 1,\r\n}"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - Create your own enum
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
@@ -73,6 +81,7 @@ MonoBehaviour:
       1,\r\n        MyAnimation = 101,\r\n        MyAnimation2 = 102,\r\n    }"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":4}'
     TextData:
@@ -80,17 +89,20 @@ MonoBehaviour:
       if more default animations are added in the future. '
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - 2. Override InitAniType
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -101,23 +113,27 @@ MonoBehaviour:
       the enum dropdown is changed.'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - "protected override Enum InitAniType\r\n        => DocSample.MyAniMode.None;"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/SJiN5PIs2.png","mode":0}'
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - 2.1 change layout
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -125,17 +141,20 @@ MonoBehaviour:
       this is call before OnCreateGUI() to add Animation Selector.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - 3. Apply Animation
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -143,6 +162,7 @@ MonoBehaviour:
       needs to override
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -155,6 +175,7 @@ MonoBehaviour:
       same as func above, but select OuttroAnimation.'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":1000,"LineHeightPercent":125}'
     TextData:
@@ -169,11 +190,13 @@ MonoBehaviour:
       // MyAnimation_2 ...\n            };\r\n        }\r\n    }\r\n}"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":4}'
     TextData:
@@ -181,6 +204,7 @@ MonoBehaviour:
       now.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

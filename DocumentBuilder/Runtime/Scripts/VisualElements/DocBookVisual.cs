@@ -26,7 +26,7 @@ namespace NaiveAPI.DocumentBuilder
         private List<PageMenuVisual> searchBuffer = new List<PageMenuVisual>();
         public DocBookVisual(SODocPage rootPage)
         {
-            menuScrollView = DocRuntime.NewScrollView();
+            menuScrollView = new DocScrollView();
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             menuWidthPercent = DocCache.Get().DocMenuWidth;
             menuWidthPercent = Mathf.Clamp(menuWidthPercent, 0.01f, 1f);
@@ -103,7 +103,7 @@ namespace NaiveAPI.DocumentBuilder
             };
             MenuHandler.SetState(DocCache.Get().OpeningBookHierarchy);
 
-            SearchField = DocRuntime.NewTextField("",e =>
+            SearchField = new DocTextField("",e =>
             {
                 if(e.newValue == "")
                 {
@@ -152,7 +152,7 @@ namespace NaiveAPI.DocumentBuilder
                 searchView.Clear();
                 foreach(var page in searchBuffer)
                 {
-                    var button = DocRuntime.NewTextElement(page.Target.name);
+                    var button = new DocTextElement(page.Target.name);
                     button.style.marginLeft = DocStyle.Current.LabelTextSize;
                     button.RegisterCallback<PointerDownEvent>(e =>
                     {
@@ -253,7 +253,7 @@ namespace NaiveAPI.DocumentBuilder
                 {
                     if (com.TextData.Count != 0)
                     {
-                        var text = (DocRuntime.NewTextElement("·  " + com.TextData[0]));
+                        var text = (new DocTextElement("·  " + com.TextData[0]));
                         chapInfo.Add(text);
                         DocLabel.Data data = JsonUtility.FromJson<DocLabel.Data>(com.JsonData);
                         data ??= new DocLabel.Data();
@@ -276,7 +276,7 @@ namespace NaiveAPI.DocumentBuilder
             chapInfo.style.SetIS_Style(ISPadding.Percent(15));
             chapInfo.style.SetIS_Style(ISRadius.Percent(10));
             bool isOpen = false;
-            var btn = DocRuntime.NewTextElement("=");
+            var btn = new DocTextElement("=");
             btn.RegisterCallback<PointerEnterEvent>(e =>
             {
                 if (!isOpen)

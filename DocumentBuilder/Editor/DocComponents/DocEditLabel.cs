@@ -19,7 +19,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             data = JsonUtility.FromJson<DocLabel.Data>(Target.JsonData);
             data ??= new DocLabel.Data();
 
-            TextField labelInput = DocRuntime.NewTextField("", (val) =>
+            TextField labelInput = new DocTextField("", (val) =>
             {
                 Target.TextData.Clear();
                 Target.TextData.Add(val.newValue);

@@ -113,7 +113,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             float percent = 100f / 3;
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
-            TextField rowTextField = DocRuntime.NewTextField("row", (value) =>
+            TextField rowTextField = new DocTextField("row", (value) =>
             {
                 if (int.TryParse(value.newValue, out int rowNum))
                 {
@@ -127,7 +127,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             rowTextField.value = data.row + "";
             rowTextField.style.width = Length.Percent(percent);
 
-            TextField colTextField = DocRuntime.NewTextField("col", (value) =>
+            TextField colTextField = new DocTextField("col", (value) =>
             {
                 if (int.TryParse(value.newValue, out int colNum))
                 {
@@ -221,7 +221,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 for (int j = 0; j < data.col; j++)
                 {
                     int j1 = j;
-                    TextField textField = DocRuntime.NewTextField("", value =>
+                    TextField textField = new DocTextField("", value =>
                     {
                         Target.TextData[i1 * data.col + j1] = value.newValue;
                         data.contents[i1, j1] = value.newValue;

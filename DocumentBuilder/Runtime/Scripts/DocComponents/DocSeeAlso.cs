@@ -22,7 +22,7 @@ namespace NaiveAPI.DocumentBuilder
             Action buttonClick = null;
             if (data.mode == Mode.OpenPage)
             {
-                ScrollView scrollView = DocRuntime.NewScrollView();
+                ScrollView scrollView = new DocScrollView();
                 scrollView.style.maxHeight = data.height;
                 scrollView.style.overflow = Overflow.Hidden;
                 scrollView.style.marginLeft = 2 * DocStyle.Current.MainTextSize;
@@ -68,7 +68,7 @@ namespace NaiveAPI.DocumentBuilder
             button.text = Target.TextData[1];
             button.style.minWidth = Length.Percent(10);
             button.style.SetIS_Style(ISMargin.Pixel(DocStyle.Current.MainTextSize / 2));
-            TextElement textElement = DocRuntime.NewTextElement(Target.TextData[0]);
+            TextElement textElement = new DocTextElement(Target.TextData[0]);
             textElement.style.SetIS_Style(ISMargin.Pixel(DocStyle.Current.MainTextSize / 2));
             child.Add(textElement);
             child.Add(button);

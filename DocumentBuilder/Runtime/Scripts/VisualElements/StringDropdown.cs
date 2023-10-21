@@ -37,7 +37,7 @@ namespace NaiveAPI.DocumentBuilder
         public StringDropdown(string label = "") : base(label) { }
         public override VisualElement CreatePopupElement()
         {
-            TextElement ve = DocRuntime.NewTextElement(Value);
+            TextElement ve = new DocTextElement(Value);
             ve.style.SetIS_Style(DocStyle.Current.InputFieldStyle);
             ve.style.unityBackgroundImageTintColor = Color.clear;
             ve.style.SetIS_Style(new ISBorder(DocStyle.Current.BackgroundColor, DocStyle.Current.MainTextSize / 6f));
@@ -46,7 +46,7 @@ namespace NaiveAPI.DocumentBuilder
 
         public override VisualElement CreateSelectableItem(string choice, int i)
         {
-            TextElement ve = DocRuntime.NewTextElement(choice);
+            TextElement ve = new DocTextElement(choice);
             ve.style.color = ItemTextColor;
             if (i % 2 == 1)
                 ve.style.backgroundColor = OddItemColor;

@@ -21,6 +21,7 @@ MonoBehaviour:
     - Intro
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -28,17 +29,20 @@ MonoBehaviour:
       single DocComponent, DocPage, and DocBook.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - DocVisual
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -47,6 +51,7 @@ MonoBehaviour:
       type and return you a Instance, or you can do it by yourself.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
@@ -56,6 +61,7 @@ MonoBehaviour:
       DocComponent());'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":2}'
     TextData:
@@ -63,6 +69,7 @@ MonoBehaviour:
       in component is for that DocType.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
@@ -74,46 +81,54 @@ MonoBehaviour:
       DocComponent());'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - DocPageVisual
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - This is for display a SODocPage
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - DocPageVisual visual = new DocPageVisual(pageAsset);
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - DocBookVisual
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - This is for display a SODocPage and it's all sub pages
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
@@ -126,17 +141,20 @@ MonoBehaviour:
       visual.DontPlayAnimation = true;'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - About Animation
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -144,12 +162,14 @@ MonoBehaviour:
       is a MonoBehavior that pop up a title and close it after 2 sec.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":4}'
     TextData:
     - For DocPage, use DocPage.PlayIntro() and DocPage.PlayOuttro() instead.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":500,"LineHeightPercent":125}'
     TextData:
@@ -163,6 +183,7 @@ MonoBehaviour:
       });\r\n        }).ExecuteLater(2000); \r\n    });\r\n}"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

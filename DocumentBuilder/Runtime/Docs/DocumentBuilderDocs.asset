@@ -27,11 +27,13 @@ MonoBehaviour:
     - Document Builder
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://drive.google.com/uc?id=135flwh2lTftow6tz-3X4HIfEhRgrbNLR","mode":0}'
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 6
     JsonData: '{"height":400,"url":"https://github.com/YsNaive/Unity-DocumentBuilder","mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
     TextData:
@@ -40,6 +42,7 @@ MonoBehaviour:
     ObjsData:
     - {fileID: 0}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 3
     JsonData: '{"row":2,"col":2,"anchors":[3,3],"mode":1}'
     TextData:
@@ -49,17 +52,20 @@ MonoBehaviour:
     - .ysnaive
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Feature
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 8
     JsonData: '{"num":6}'
     TextData:
@@ -181,17 +187,20 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - What's New in 2.0?
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -203,6 +212,7 @@ MonoBehaviour:
       for the older version, you can download it from the GitHub page.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -214,6 +224,7 @@ MonoBehaviour:
       requirements, enhancing the overall user experience.\r"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -223,6 +234,7 @@ MonoBehaviour:
       making it easy to add dynamic and engaging visual effects to your documents.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 3
   OuttroMode: 3
   IntroDuration: 50

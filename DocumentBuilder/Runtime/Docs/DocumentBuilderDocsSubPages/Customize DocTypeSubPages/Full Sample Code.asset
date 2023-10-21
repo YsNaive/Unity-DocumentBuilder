@@ -21,6 +21,7 @@ MonoBehaviour:
     - DocSample
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":2000,"LineHeightPercent":125}'
     TextData:
@@ -43,17 +44,20 @@ MonoBehaviour:
       // Same as SelectIntro ...\r\n    }\r\n}"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - DocEditSample
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
@@ -64,6 +68,7 @@ MonoBehaviour:
       {\r\n        // Add some visual to modify contents\r\n    }\r\n}"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

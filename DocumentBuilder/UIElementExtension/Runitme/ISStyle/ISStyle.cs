@@ -44,17 +44,17 @@ namespace NaiveAPI_UI
         }
 
         public int EnableMask;
-        public ISDisplay    Display;
-        public ISPosition   Position;
-        public ISFlex       Flex;
-        public ISAlign      Align;
-        public ISSize       Size;
-        public ISMargin     Margin;
-        public ISPadding    Padding;
-        public ISText       Text;
-        public ISBackground Background;
-        public ISBorder     Border;
-        public ISRadius     Radius;
+        [SerializeReference] public ISDisplay    Display;
+        [SerializeReference] public ISPosition   Position;
+        [SerializeReference] public ISFlex       Flex;
+        [SerializeReference] public ISAlign      Align;
+        [SerializeReference] public ISSize       Size;
+        [SerializeReference] public ISMargin     Margin;
+        [SerializeReference] public ISPadding    Padding;
+        [SerializeReference] public ISText       Text;
+        [SerializeReference] public ISBackground Background;
+        [SerializeReference] public ISBorder     Border;
+        [SerializeReference] public ISRadius     Radius;
 
         public ISStyle Copy()
         {
@@ -121,33 +121,49 @@ namespace NaiveAPI_UI
             if (IsEnable(ISStyleFlag.Radius)) Radius = new ISRadius();
             else Radius = null;
         }
-        public void OnBeforeSerialize()
-        {
-        }
-        public void OnAfterDeserialize()
+
+        public void ApplyMask()
         {
             if (!IsEnable(ISStyleFlag.Display))
                 Display = null;
+            else Display ??= new();
             if (!IsEnable(ISStyleFlag.Position))
                 Position = null;
+            else Position ??= new();
             if (!IsEnable(ISStyleFlag.Flex))
                 Flex = null;
+            else Flex ??= new();
             if (!IsEnable(ISStyleFlag.Align))
                 Align = null;
+            else Align ??= new();
             if (!IsEnable(ISStyleFlag.Size))
                 Size = null;
+            else Size ??= new();
             if (!IsEnable(ISStyleFlag.Margin))
                 Margin = null;
+            else Margin ??= new();
             if (!IsEnable(ISStyleFlag.Padding))
                 Padding = null;
+            else Padding ??= new();
             if (!IsEnable(ISStyleFlag.Text))
                 Text = null;
+            else Text ??= new();
             if (!IsEnable(ISStyleFlag.Background))
                 Background = null;
+            else Background ??= new();
             if (!IsEnable(ISStyleFlag.Border))
                 Border = null;
+            else Border ??= new();
             if (!IsEnable(ISStyleFlag.Radius))
                 Radius = null;
+            else Radius ??= new();
+        }
+        public void OnBeforeSerialize()
+        {
+            ApplyMask();
+        }
+        public void OnAfterDeserialize()
+        {
         }
     }
 }

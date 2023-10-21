@@ -22,10 +22,10 @@ namespace NaiveAPI.DocumentBuilder
         {
             IntroAnimation = (callBack) => { this.Fade(0, 1, 200, 50, callBack); };
             OuttroAnimation = (callBack) => { this.Fade(1, 0, 200, 50, callBack); };
-            codeScrollView =DocRuntime.NewScrollView();
+            codeScrollView =new DocScrollView();
             if (Target.TextData.Count == 0) Target.TextData.Add("");
             ISPadding padding = ISPadding.Pixel(DocStyle.Current.MainTextSize / 2);
-            codeContents = DocRuntime.NewTextElement($"<line-height={visualData.LineHeightPercent}%>"+DocumentBuilderParser.CSharpParser(Target.TextData[0]));
+            codeContents = new DocTextElement($"<line-height={visualData.LineHeightPercent}%>"+DocumentBuilderParser.CSharpParser(Target.TextData[0]));
             codeContents.style.whiteSpace = WhiteSpace.NoWrap;
             codeContents.style.color = new Color(.85f, .85f, .85f);
             codeContents.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
@@ -41,8 +41,8 @@ namespace NaiveAPI.DocumentBuilder
                     lineNum += $"\n{i++}";
                 }
             }
-            ScrollView numScrollView = DocRuntime.NewScrollView();
-            TextElement lineNumber = DocRuntime.NewTextElement(lineNum);
+            ScrollView numScrollView = new DocScrollView();
+            TextElement lineNumber = new DocTextElement(lineNum);
             lineNumber.style.SetIS_Style(padding);
             lineNumber.style.fontSize = DocStyle.Current.MainTextSize;
             lineNumber.style.color = DocStyle.Current.SubFrontgroundColor;

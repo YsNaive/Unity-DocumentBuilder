@@ -40,7 +40,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             lineHeightInput.style.width = Length.Percent(50);
             lineHeightInput[0].style.minWidth = 100;
             hor.Add(lineHeightInput);
-            textInput = DocRuntime.NewTextField("", e =>
+            textInput = new DocTextField("", e =>
             {
                 if (Target.TextData.Count == 0) Target.TextData.Add(e.newValue);
                 else Target.TextData[0] = e.newValue;

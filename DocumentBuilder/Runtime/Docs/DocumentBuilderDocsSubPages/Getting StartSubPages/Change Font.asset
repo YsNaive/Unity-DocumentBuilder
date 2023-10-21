@@ -21,6 +21,7 @@ MonoBehaviour:
     - Intro
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -28,6 +29,7 @@ MonoBehaviour:
       your book.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 6
     JsonData: '{"height":400,"url":"","mode":0}'
     TextData:
@@ -36,6 +38,7 @@ MonoBehaviour:
     ObjsData:
     - {fileID: 11400000, guid: a5086e1c5ffb2214e8865fdc764d8e90, type: 2}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

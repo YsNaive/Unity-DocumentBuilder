@@ -30,11 +30,13 @@ MonoBehaviour:
     - Here shows the build-in DocType
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 3
     JsonData: '{"row":10,"col":3,"anchors":[3,4,4],"mode":1}'
     TextData:
@@ -70,6 +72,7 @@ MonoBehaviour:
     - YES
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 3
   OuttroMode: 1
   IntroDuration: 50

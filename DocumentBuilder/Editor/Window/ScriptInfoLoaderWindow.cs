@@ -24,7 +24,7 @@ namespace NaiveAPI.DocumentBuilder
         DropdownField publicDrop, staticDrop;
         private void CreateGUI()
         {
-            show = DocRuntime.NewScrollView();
+            show =new DocScrollView();
             show.style.marginTop = 20;
             var root = rootVisualElement;
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;

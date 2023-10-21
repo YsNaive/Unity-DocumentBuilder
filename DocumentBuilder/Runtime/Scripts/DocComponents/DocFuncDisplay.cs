@@ -32,13 +32,13 @@ namespace NaiveAPI.DocumentBuilder
         {
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;
-            TextElement nameText = DocRuntime.NewTextElement(data.Name);
+            TextElement nameText = new DocTextElement(data.Name);
             nameText.style.SetIS_Style(funcNameTextStyle);
             VisualElement child = DocRuntime.NewEmpty();
             this.Add(nameText);
             if (Target.TextData[0] != "")
             {
-                TextElement descriptionText = DocRuntime.NewTextElement(Target.TextData[0]);
+                TextElement descriptionText = new DocTextElement(Target.TextData[0]);
                 descriptionText.style.SetIS_Style(DocStyle.Current.MainText);
                 descriptionText.style.color = DocStyle.Current.CodeTextColor;
                 this.Add(descriptionText);

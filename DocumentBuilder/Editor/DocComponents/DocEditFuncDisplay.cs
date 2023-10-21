@@ -26,7 +26,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.style.width = -1;
             DocFuncDisplay.Data data = setData(Target.JsonData, Target.TextData);
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
-            nameTextField = DocRuntime.NewTextField("Name", value =>
+            nameTextField = new DocTextField("Name", value =>
             {
                 data.Name = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
@@ -35,7 +35,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             nameTextField.value = data.Name + "";
             nameTextField.style.paddingLeft = Length.Percent(1);
             nameTextField.style.paddingRight = Length.Percent(1);
-            TextField descriptionTextField = DocRuntime.NewTextField("Description", value =>
+            TextField descriptionTextField = new DocTextField("Description", value =>
             {
                 Target.TextData[0] = value.newValue;
             });
@@ -294,7 +294,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         private VisualElement generateSyntaxVisual(DocFuncDisplay.Data data, int index)
         {
-            TextField syntaxField = DocRuntime.NewTextField("", value =>
+            TextField syntaxField = new DocTextField("", value =>
             {
                 data.Syntaxs[index] = value.newValue;
                 DocumentBuilderParser.FuncData funcData = new DocumentBuilderParser.FuncData(value.newValue);
@@ -374,7 +374,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = new VisualElement();
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
-            TextField typeField = DocRuntime.NewTextField("Type", value =>
+            TextField typeField = new DocTextField("Type", value =>
             {
                 data.Params[index].Type = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
@@ -382,7 +382,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             typeField.value = data.Params[index].Type + "";
             typeField.focusable = false;
             typeField.style.paddingLeft = Length.Percent(1);
-            TextField nameField = DocRuntime.NewTextField("Name", value =>
+            TextField nameField = new DocTextField("Name", value =>
             {
                 data.Params[index].ParamName = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
@@ -393,7 +393,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             nameField.style.paddingRight = Length.Percent(1);
             root.Add(DocRuntime.NewHorizontalBar(typeField, nameField));
 
-            TextField descriptionField = DocRuntime.NewTextField("", value =>
+            TextField descriptionField = new DocTextField("", value =>
             {
                 data.ParamsDescription[index] = value.newValue;
                 Target.TextData[1 + index] = value.newValue;
@@ -442,7 +442,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             VisualElement root = new VisualElement();
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
-            TextField typeField = DocRuntime.NewTextField("ReturnType", value =>
+            TextField typeField = new DocTextField("ReturnType", value =>
             {
                 data.ReturnTypes[index] = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
@@ -452,7 +452,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             typeField.focusable = false;
             typeField.style.paddingLeft = Length.Percent(1);
             typeField.style.paddingRight = Length.Percent(1);
-            TextField descriptionField = DocRuntime.NewTextField("", value =>
+            TextField descriptionField = new DocTextField("", value =>
             {
                 data.ReturnTypesDescription[index] = value.newValue;
                 Target.TextData[1 + data.Params.Count + index] = value.newValue;

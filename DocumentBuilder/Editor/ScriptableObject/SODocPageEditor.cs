@@ -224,12 +224,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 header.Add(hor);
             });
             loadFromTemplate.style.width = Length.Percent(50);
-            var hint = DocRuntime.NewTextElement("Template name can not be empty.");
+            var hint = new DocTextElement("Template name can not be empty.");
             Button saveAsTemplate = DocRuntime.NewButton("Save As Template", () =>
             {
                 header.Remove(loadAndSave);
                 VisualElement hor = DocRuntime.NewEmptyHorizontal();
-                TextField name = DocRuntime.NewTextField("Name");
+                TextField name = new DocTextField("Name");
                 name.style.width = Length.Percent(70);
                 name[1].style.backgroundColor = DocStyle.Current.DangerColor;
                 List<string> templates = findAllTemplateName();
@@ -367,7 +367,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             var bar = addPage.parent;
             int addPageIndex = addPageParent.IndexOf(bar);
             addPageParent.RemoveAt(addPageIndex);
-            TextField inputName = DocRuntime.NewTextField("Page Name");
+            TextField inputName = new DocTextField("Page Name");
             Button create = DocRuntime.NewButton("Create", DocStyle.Current.SuccessColor, () =>
             {
                 string path = AssetDatabase.GetAssetPath(Target);

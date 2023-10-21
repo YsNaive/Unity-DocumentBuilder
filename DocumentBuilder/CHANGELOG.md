@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0]
+### This version change some API about create DocStyle VisualElement
+Refactored. DocRuntime.NewSomething() -> Group of DocVisualElement class
+Improve. DocStyle layout
+Add. Component version
+Add. DocVisual Attribute
+
+
 ## [2.0.1] -2023-09-01
 Improve. DocStyle layout
 Fixed. Parser Number/Typename bug

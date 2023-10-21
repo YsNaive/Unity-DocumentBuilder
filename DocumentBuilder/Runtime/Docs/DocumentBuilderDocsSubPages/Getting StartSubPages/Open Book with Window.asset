@@ -23,6 +23,7 @@ MonoBehaviour:
       to store and access the root page Asset.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -30,6 +31,7 @@ MonoBehaviour:
       than you can found your window in Tools menu.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":500,"LineHeightPercent":125}'
     TextData:
@@ -41,6 +43,7 @@ MonoBehaviour:
       DocBookVisual(rootPage));\n    }\r\n}"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

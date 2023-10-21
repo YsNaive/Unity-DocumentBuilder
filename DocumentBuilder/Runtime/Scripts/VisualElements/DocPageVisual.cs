@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocPageVisual : ScrollView
+    public class DocPageVisual : DocScrollView
     {
         public SODocPage Target;
         List<DocVisual> visuals = new List<DocVisual>();
@@ -14,8 +14,7 @@ namespace NaiveAPI.DocumentBuilder
         Action aniCallback;
         public bool IsPlayingAnimation = false;
         int playingCount = 0;
-        public DocPageVisual(SODocPage page) {
-            DocRuntime.ApplyScrollViewStyle(this);
+        public DocPageVisual(SODocPage page) : base() {
             verticalScrollerVisibility = ScrollerVisibility.AlwaysVisible;
             this.Q("unity-content-container").style.marginRight = Length.Percent(3.5f);
             Target = page;

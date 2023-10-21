@@ -21,6 +21,7 @@ MonoBehaviour:
     - Intro
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -28,12 +29,14 @@ MonoBehaviour:
       is represent like Label, than it named DocLabel
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - Now let create a script and extend DocVisual to tell system it's a DocType.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
@@ -44,6 +47,7 @@ MonoBehaviour:
       string text = Target.TextData[0];\n    }\r\n}\r"
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":2}'
     TextData:
@@ -53,6 +57,7 @@ MonoBehaviour:
       Build-in list
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":4}'
     TextData:
@@ -60,6 +65,7 @@ MonoBehaviour:
       data type contents in TextData, use JsonData instead.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -67,6 +73,7 @@ MonoBehaviour:
       display part! Next, let's create DocEditVisual.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

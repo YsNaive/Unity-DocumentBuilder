@@ -180,7 +180,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             btn.style.marginTop = 20;
             btn.SetEnabled(false);
-            var pathField = DocRuntime.NewTextField("Dst Path", e =>
+            var pathField = new DocTextField("Dst Path", e =>
             {
                 if (Directory.Exists(e.newValue))
                 {

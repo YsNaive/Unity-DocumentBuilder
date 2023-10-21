@@ -5,25 +5,29 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocDescription : DocVisual<ValueTuple<DocDescription.DescriptionType>>
+    public class DocDescription : DocVisual<DocDescription.Data>
     {
+        public class Data
+        {
+            public DescriptionType Type = DescriptionType.None;
+        }
         public override string VisualID => "2";
         TextElement text;
         protected override void OnCreateGUI()
         {
             if(Target.TextData.Count == 0)Target.TextData.Add("");
-            text = DocRuntime.NewTextElement(Target.TextData[0]);
+            text = new DocTextElement(Target.TextData[0]);
             text.style.SetIS_Style(DocStyle.Current.MainText);
             Add(text);
             if (text.text == "")
             {
                 text.text = "Warning ! This is a Empty Description";
-                visualData.Item1 = DescriptionType.Warning;
+                visualData.Type = DescriptionType.Warning;
             }
-            if (visualData.Item1 != DescriptionType.None)
+            if (visualData.Type != DescriptionType.None)
             {
-                text.style.backgroundColor = getTypeColor(visualData.Item1);
-                text.style.color = getTypeTextColor(visualData.Item1);
+                text.style.backgroundColor = getTypeColor(visualData.Type);
+                text.style.color = getTypeTextColor(visualData.Type);
                 text.style.SetIS_Style(ISPadding.Percent(5));
             }
         }

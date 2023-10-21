@@ -21,6 +21,7 @@ MonoBehaviour:
     - Intro
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -28,12 +29,14 @@ MonoBehaviour:
       in this package, here are some important Type you needs to know.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":4}'
     TextData:
     - With better experience, you can use Document Editor Window to edit.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 6
     JsonData: '{"height":400,"url":"","mode":0}'
     TextData:
@@ -42,11 +45,13 @@ MonoBehaviour:
     ObjsData:
     - {fileID: 11400000, guid: 4feb84f7399e3f2449535435648d279c, type: 2}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 6
     JsonData: '{"height":400,"url":"","mode":0}'
     TextData:
@@ -55,6 +60,7 @@ MonoBehaviour:
     ObjsData:
     - {fileID: 11400000, guid: 0212d1433ee63cd47b0db92c25917069, type: 2}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -62,11 +68,13 @@ MonoBehaviour:
       from this type
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 6
     JsonData: '{"height":400,"url":"","mode":0}'
     TextData:
@@ -75,23 +83,27 @@ MonoBehaviour:
     ObjsData:
     - {fileID: 11400000, guid: 035e8cb4d2fa0e545b268d02aa387935, type: 2}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - This is a ScriptableObject to store information for a page, also can be a BookRoot
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":1}'
     TextData:
     - Create Book Root
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -100,6 +112,7 @@ MonoBehaviour:
       contents of the book.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -109,17 +122,20 @@ MonoBehaviour:
       Doc Page'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":1}'
     TextData:
     - Edit Contents
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -127,17 +143,20 @@ MonoBehaviour:
       see the GUI like below image.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/BJwjUIHjh.png","mode":0}'
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - Top tool bar
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -149,12 +168,14 @@ MonoBehaviour:
       Inspector\t\tdefault layout for debug'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - Add New Page
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -164,24 +185,28 @@ MonoBehaviour:
       / this.name SunPages / newPage.asset'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - Delete Page
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":3}'
     TextData:
     - It will delete this page asset, <b>BUT NOT</b> SubPages
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - Sub Page List
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -189,12 +214,14 @@ MonoBehaviour:
       on the menu.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - Load/Save Template
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -203,29 +230,34 @@ MonoBehaviour:
       DocumentBuilder/Runtime/DocTemplate'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - Add Component
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - Now you can Add new component and enjoy !
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":1}'
     TextData:
     - DocComponent Edit
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -235,11 +267,13 @@ MonoBehaviour:
       component.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/HJlmnPBs3.png","mode":0}'
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -259,23 +293,27 @@ MonoBehaviour:
       click the Star Icon.'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - For more detail to DocType, please check the Doc Typies
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Display
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -285,6 +323,7 @@ MonoBehaviour:
       to display a page, use DocPageVisual.'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 6
     JsonData: '{"height":400,"url":"","mode":0}'
     TextData:
@@ -293,6 +332,7 @@ MonoBehaviour:
     ObjsData:
     - {fileID: 11400000, guid: 6c65fda3d2c00a846aef3b2237dc5012, type: 2}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 6
     JsonData: '{"height":400,"url":"","mode":0}'
     TextData:
@@ -301,6 +341,7 @@ MonoBehaviour:
     ObjsData:
     - {fileID: 11400000, guid: f9e26cfd6e9555c429e900160b18317e, type: 2}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

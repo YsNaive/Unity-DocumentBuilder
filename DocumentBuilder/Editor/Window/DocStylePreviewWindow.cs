@@ -27,7 +27,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             docPreview = AssetDatabase.LoadAssetAtPath<SODocPage>(AssetDatabase.GUIDToAssetPath("63540aec46af1414faabf82062162966"));
             root = rootVisualElement;
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
-            container = DocRuntime.NewScrollView();
+            container = new DocScrollView();
             container.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
             DocStyle.Current.BeginLabelWidth(ISLength.Pixel(60));
             selectStyle = DocEditor.NewObjectField<SODocStyle>("Style", e =>
@@ -54,25 +54,25 @@ namespace NaiveAPI_Editor.DocumentBuilder
             container.Clear();
 
             container.Add(DocRuntime.NewLabel("This is Label"));
-            container.Add(DocRuntime.NewTextElement("This is TextElement"));
-            container.Add(DocRuntime.NewTextField("TextField"));
+            container.Add(new DocTextElement("This is TextElement"));
+            container.Add(new DocTextField("TextField"));
             container.Add(DocRuntime.NewDropdownField("Unity Dropdown", new List<string>() { "Select A", "Select B", "Select C" }));
             container.Add(DocRuntime.NewDropdown("Custom Dropdown", new List<string>() { "Select A", "Select B", "Select C" }, (e) => { Debug.Log("Select " + e); }));
             container.Add(DocRuntime.NewButton("Button", () => { Debug.Log("Click !"); }));
             container.Add(DocRuntime.NewCheckButton("CheckButton", () => { Debug.Log("YES !"); }));
             var foldout = DocRuntime.NewFoldout("Foldout");
-            foldout.Add(DocRuntime.NewTextElement("Some contents..."));
+            foldout.Add(new DocTextElement("Some contents..."));
             container.Add(foldout);
-            var scrollview = DocRuntime.NewScrollView();
-            scrollview.Add(DocRuntime.NewTextElement("ScrollView line 1"));
-            scrollview.Add(DocRuntime.NewTextElement("ScrollView line 2"));
-            scrollview.Add(DocRuntime.NewTextElement("ScrollView line 3"));
-            scrollview.Add(DocRuntime.NewTextElement("ScrollView line 4"));
-            scrollview.Add(DocRuntime.NewTextElement("ScrollView line 5"));
-            scrollview.Add(DocRuntime.NewTextElement("ScrollView line 6"));
-            scrollview.Add(DocRuntime.NewTextElement("ScrollView line 7"));
-            scrollview.Add(DocRuntime.NewTextElement("ScrollView line 8"));
-            scrollview.Add(DocRuntime.NewTextElement("ScrollView line 9"));
+            var scrollview = new DocScrollView();
+            scrollview.Add(new DocTextElement("ScrollView line 1"));
+            scrollview.Add(new DocTextElement("ScrollView line 2"));
+            scrollview.Add(new DocTextElement("ScrollView line 3"));
+            scrollview.Add(new DocTextElement("ScrollView line 4"));
+            scrollview.Add(new DocTextElement("ScrollView line 5"));
+            scrollview.Add(new DocTextElement("ScrollView line 6"));
+            scrollview.Add(new DocTextElement("ScrollView line 7"));
+            scrollview.Add(new DocTextElement("ScrollView line 8"));
+            scrollview.Add(new DocTextElement("ScrollView line 9"));
             scrollview.style.height = 80;
             container.Add(scrollview);
             container.Add(new DocPageVisual(docPreview));
