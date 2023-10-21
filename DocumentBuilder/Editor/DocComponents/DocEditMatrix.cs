@@ -11,9 +11,10 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
-    public class DocEditMatrix : DocEditVisual
+    [CustomDocEditVisual("Charts/Matrix", 3)]
+    public class DocEditMatrix : DocEditVisual<DocMatrix.Data>
     {
-        public override string DisplayName => "Matrix";
+        [Obsolete] public override string DisplayName => "Matrix";
 
         public override string VisualID => "3";
 
@@ -23,13 +24,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             this.style.backgroundColor = DocStyle.Current.BackgroundColor;
             this.style.width = -1;
-            DocMatrix.Data data = setData(Target.JsonData, Target.TextData);
 
-            rowColVisual = generateRowCol(data);
+            init();
+            rowColVisual = generateRowCol(visualData);
             this.Add(rowColVisual);
-            anchorVisual = generateAnchors(data);
+            anchorVisual = generateAnchors(visualData);
             this.Add(anchorVisual);
-            matrixVisual = generateEditMatrixVisual(data, -1);
+            matrixVisual = generateEditMatrixVisual(visualData, -1);
             this.Add(matrixVisual);
         }
 
@@ -71,29 +72,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return stringBuilder.ToString();
         }
 
-        private DocMatrix.Data setData(string jsonData, List<string> texts)
+        private void init()
         {
-            DocMatrix.Data data = JsonUtility.FromJson<DocMatrix.Data>(jsonData);
-            if (data == null)
-                data = new DocMatrix.Data();
-            Target.JsonData = JsonUtility.ToJson(data);
-            data.contents = new string[data.row, data.col];
-            for (int i = 0;i < data.row; i++)
+            int length = visualData.row * visualData.col;
+            while (length > Target.TextData.Count)
             {
-                for (int j = 0;j < data.col; j++)
-                {
-                    int index = i * data.col + j;
-                    if (texts.Count > index)
-                        data.contents[i, j] = texts[index];
-                    else
-                    {
-                        data.contents[i, j] = string.Empty;
-                        Target.TextData.Add(string.Empty);
-                    }
-                }
+                Target.TextData.Add(string.Empty);
             }
 
-            return data;
+            visualData.SetContents(Target.TextData);
         }
 
         private void resetTargetData(DocMatrix.Data data)

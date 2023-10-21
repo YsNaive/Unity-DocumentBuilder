@@ -8,22 +8,20 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocSeeAlso : DocVisual
+    public class DocSeeAlso : DocVisual<DocSeeAlso.Data>
     {
         public override string VisualID => "6";
 
         protected override void OnCreateGUI()
         {
-            Data data = JsonUtility.FromJson<Data>(Target.JsonData);
-            if (data == null) return;
             VisualElement child = new VisualElement();
             child.style.SetIS_Style(ISFlex.Horizontal);
             child.style.paddingLeft = DocStyle.Current.MainTextSize;
             Action buttonClick = null;
-            if (data.mode == Mode.OpenPage)
+            if (visualData.mode == Mode.OpenPage)
             {
                 ScrollView scrollView = DocRuntime.NewScrollView();
-                scrollView.style.maxHeight = data.height;
+                scrollView.style.maxHeight = visualData.height;
                 scrollView.style.overflow = Overflow.Hidden;
                 scrollView.style.marginLeft = 2 * DocStyle.Current.MainTextSize;
                 VisualElement mask = DocRuntime.NewEmpty();
@@ -57,11 +55,11 @@ namespace NaiveAPI.DocumentBuilder
                     mask.style.height = scrollView.resolvedStyle.height;
                 });
             }
-            else if (data.mode == Mode.OpenUrl)
+            else if (visualData.mode == Mode.OpenUrl)
             {
                 buttonClick = () =>
                 {
-                    Application.OpenURL(data.url);
+                    Application.OpenURL(visualData.url);
                 };
             }
             Button button = DocRuntime.NewButton(buttonClick);

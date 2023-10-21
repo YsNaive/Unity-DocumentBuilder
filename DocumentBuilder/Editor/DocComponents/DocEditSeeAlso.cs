@@ -1,6 +1,7 @@
 using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -10,17 +11,18 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
-    public class DocEditSeeAlso : DocEditVisual
+    [CustomDocEditVisual("Advance/See Also")]
+    public class DocEditSeeAlso : DocEditVisual<DocSeeAlso.Data>
     {
-        public override string DisplayName => "Advance/See Also";
+        [Obsolete] public override string DisplayName => "Advance/See Also";
 
         public override string VisualID => "6";
 
         protected override void OnCreateGUI()
         {
-            DocSeeAlso.Data data = setData(Target.JsonData, Target.TextData);
-            this.Add(generateTextVisual(data));
-            this.Add(generateHeightModeVisual(data));
+            init();
+            this.Add(generateTextVisual(visualData));
+            this.Add(generateHeightModeVisual(visualData));
         }
 
         public override string ToMarkdown(string dstPath)
@@ -45,20 +47,17 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return stringBuilder.ToString();
         }
 
-        private DocSeeAlso.Data setData(string jsonData, List<string> texts)
+        private void init()
         {
-            DocSeeAlso.Data data = JsonUtility.FromJson<DocSeeAlso.Data>(jsonData);
-            if (data == null)
+            while (Target.TextData.Count < 2)
             {
-                data = new DocSeeAlso.Data();
-                Target.JsonData = JsonUtility.ToJson(data);
-                Target.TextData.Clear();
                 Target.TextData.Add("");
-                Target.TextData.Add("");
-                Target.ObjsData.Add(null);
             }
 
-            return data;
+            while (Target.TextData.Count < 2)
+            {
+                Target.TextData.Add("");
+            }
         }
 
         private VisualElement generateTextVisual(DocSeeAlso.Data data)

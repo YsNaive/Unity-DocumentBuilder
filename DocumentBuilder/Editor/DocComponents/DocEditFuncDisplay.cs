@@ -10,9 +10,10 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
+    [CustomDocEditVisual("Advance/FuncDisplay")]
     public class DocEditFuncDisplay : DocEditVisual
     {
-        public override string DisplayName => "FuncDisplay";
+        [Obsolete] public override string DisplayName => "FuncDisplay";
 
         public override string VisualID => "4";
 
