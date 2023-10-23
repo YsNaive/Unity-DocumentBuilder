@@ -29,6 +29,19 @@ namespace NaiveAPI.DocumentBuilder
         {
             public int Level = 1;
         }
+
+        public static DocComponent CreateComponent(string text, int level = 1)
+        {
+            DocComponent component = new DocComponent();
+            component.VisualID = "1";
+            component.TextData.Add(text);
+
+            Data data = new Data();
+            data.Level = level;
+            component.JsonData = JsonUtility.ToJson(data);
+
+            return component;
+        }
     }
 
 }

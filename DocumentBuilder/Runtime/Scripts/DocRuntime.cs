@@ -132,7 +132,7 @@ namespace NaiveAPI.DocumentBuilder
         }
         public static Foldout NewFoldout(string text = "")
         {
-            return new DocFoldout(text);
+            return new DSFoldout(text);
         }
         /// <summary>
         /// This will create Unity Dropdown Field

@@ -16,14 +16,17 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         var root = FindAnyObjectByType<UIDocument>().rootVisualElement;
-        var sc = new DocScrollView();
-        sc.Add(new DocPageMenuItem(page));
-        root.Add(sc);
+        var dd = new DSDropdown("Dropdown");
+        dd.choices = new List<string>() { "AAA", "BB", "CCCC" };
+        root.Add(dd);
     }
+
     //https://chart.apis.google.com/chart?cht=tx&chs=50&chf=bg,s,FFFFFF00&chl=
     // Update is called once per frame
     void Update()
     {
+
     }
 }

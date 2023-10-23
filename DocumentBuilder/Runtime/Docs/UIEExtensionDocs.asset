@@ -24,6 +24,7 @@ MonoBehaviour:
     - UI Elements Extension
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -31,6 +32,7 @@ MonoBehaviour:
       style contents.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: '{"Type":4}'
     TextData:
@@ -46,6 +48,7 @@ MonoBehaviour:
       any class in "IS class set" folder on docs'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

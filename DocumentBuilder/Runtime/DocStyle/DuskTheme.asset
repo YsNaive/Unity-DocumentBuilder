@@ -225,7 +225,7 @@ MonoBehaviour:
         FontAsset: {fileID: 0}
         FontStyle: 0
         FontSize: 12
-        Color: {r: 0.16037738, g: 0.13612625, b: 0.11407976, a: 1}
+        Color: {r: 0.16078432, g: 0.13725491, b: 0.11372549, a: 1}
         Align: 3
         Wrap: 0
     - rid: 8869985086138221427

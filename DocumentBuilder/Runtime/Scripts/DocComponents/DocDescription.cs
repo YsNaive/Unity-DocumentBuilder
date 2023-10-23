@@ -16,7 +16,7 @@ namespace NaiveAPI.DocumentBuilder
         protected override void OnCreateGUI()
         {
             if(Target.TextData.Count == 0)Target.TextData.Add("");
-            text = new DocTextElement(Target.TextData[0]);
+            text = new DSTextElement(Target.TextData[0]);
             text.style.SetIS_Style(DocStyle.Current.MainText);
             Add(text);
             if (text.text == "")
@@ -86,6 +86,18 @@ namespace NaiveAPI.DocumentBuilder
             if (type == DescriptionType.Success) return DocStyle.Current.SuccessTextColor;
             if (type == DescriptionType.Warning) return DocStyle.Current.WarningTextColor;
             return DocStyle.Current.DangerTextColor;
+        }
+        public static DocComponent CreateComponent(string text, DescriptionType type = DescriptionType.None)
+        {
+            DocComponent component = new DocComponent();
+            component.VisualID = "2";
+            component.TextData.Add(text);
+
+            Data data = new Data();
+            data.Type = type;
+            component.JsonData = JsonUtility.ToJson(data);
+
+            return component;
         }
     }
 

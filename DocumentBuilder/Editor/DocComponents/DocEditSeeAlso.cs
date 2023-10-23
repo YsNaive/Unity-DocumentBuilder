@@ -65,14 +65,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(40));
-            TextField descriptionField = new DocTextField("description", (value) =>
+            TextField descriptionField = new DSTextField("description", (value) =>
             {
                 Target.TextData[0] = value.newValue;
             });
             descriptionField.value = Target.TextData[0];
             descriptionField.style.width = Length.Percent(50);
             root.Add(descriptionField);
-            TextField buttonTextField = new DocTextField("buttonText", (value) =>
+            TextField buttonTextField = new DSTextField("buttonText", (value) =>
             {
                 Target.TextData[1] = value.newValue;
             });
@@ -119,7 +119,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             objectField.style.width = Length.Percent(50);
             objectField.style.paddingLeft = DocStyle.Current.MainTextSize;
             objectField.value = Target.ObjsData[0];
-            TextField urlTextField = new DocTextField("url", (value) =>
+            TextField urlTextField = new DSTextField("url", (value) =>
             {
                 data.url = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);

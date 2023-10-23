@@ -28,7 +28,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
-            TextField scaleField = new DocTextField("Scale", value =>
+            TextField scaleField = new DSTextField("Scale", value =>
             {
                 float.TryParse(value.newValue, out data.scale);
                 Target.JsonData = JsonUtility.ToJson(data);
@@ -105,7 +105,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private VisualElement generateUrlVisual(DocImage.Data data)
         {
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(10));
-            TextField urlField = new DocTextField("Url", value =>
+            TextField urlField = new DSTextField("Url", value =>
             {
                 data.url = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);

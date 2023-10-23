@@ -19,43 +19,51 @@ MonoBehaviour:
     - Usage
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - what this func do
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - API
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 4
     JsonData: '{"Name":"","Syntaxs":[""],"ReturnTypes":[],"Params":[],"isOn":false}'
     TextData:
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":3}'
     TextData:
     - Sample Code
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 7
     JsonData: '{"MaxHeight":300,"LineHeightPercent":125}'
     TextData:
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0

@@ -23,23 +23,27 @@ MonoBehaviour:
     - DocComponent
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - Basic data class for Document.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - Members
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 3
     JsonData: '{"row":10,"col":5,"anchors":[3,3,4,4,3],"mode":1}'
     TextData:
@@ -95,17 +99,20 @@ MonoBehaviour:
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - Methods
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 4
     JsonData: '{"Name":"Copy","Syntaxs":["public DocComponent Copy()"],"ReturnTypes":["DocComponent"],"Params":[],"isOn":false}'
     TextData:
@@ -113,6 +120,7 @@ MonoBehaviour:
     - the new DocComponent with same contents.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 4
     JsonData: '{"Name":"ContentsEqual","Syntaxs":["public Boolean ContentsEqual(DocComponent
       other)"],"ReturnTypes":["Boolean"],"Params":[{"ParamName":"other","Type":"DocComponent"}],"isOn":false}'
@@ -122,6 +130,7 @@ MonoBehaviour:
     - Is contents in target & this are same.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

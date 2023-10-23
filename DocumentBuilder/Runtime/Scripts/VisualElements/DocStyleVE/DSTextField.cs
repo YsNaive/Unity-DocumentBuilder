@@ -5,11 +5,11 @@ using UnityEngine.UIElements;
 using NaiveAPI_UI;
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocTextField : TextField
+    public class DSTextField : TextField
     {
-        public new class UxmlFactory : UxmlFactory<DocTextField, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<DSTextField, UxmlTraits> { }
         public new class UxmlTraits : TextField.UxmlTraits { }
-        public DocTextField()
+        public DSTextField()
         {
             style.ClearMarginPadding();
             style.minHeight = DocStyle.Current.LineHeight;
@@ -17,11 +17,22 @@ namespace NaiveAPI.DocumentBuilder
             this[0].style.paddingLeft = DocStyle.Current.MainTextSize / 2f;
             this[0].style.SetIS_Style(DocStyle.Current.InputFieldStyle);
         }
-        public DocTextField(string label) : this()
+        public new string label
+        {
+            get => base.label;
+            set
+            {
+                base.label = value;
+                labelElement.style.SetIS_Style(DocStyle.Current.MainTextStyle);
+                labelElement.style.width = DocStyle.Current.LabelWidth;
+                labelElement.style.minWidth = DocStyle.Current.LabelWidth;
+            }
+        }
+        public DSTextField(string label) : this()
         {
             this.label = label;
         }
-        public DocTextField(string label, EventCallback<ChangeEvent<string>> changeCallback) : this(label)
+        public DSTextField(string label, EventCallback<ChangeEvent<string>> changeCallback) : this(label)
         {
             this.RegisterValueChangedCallback(changeCallback);
         }

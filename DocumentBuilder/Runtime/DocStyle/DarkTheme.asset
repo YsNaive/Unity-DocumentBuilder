@@ -319,8 +319,8 @@ MonoBehaviour:
       type: {class: ISBackground, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Color: {r: 0, g: 0, b: 0, a: 0}
-        ImageTint: {r: 1, g: 1, b: 1, a: 1}
-        sprite: {fileID: 0}
+        ImageTint: {r: 0.2704165, g: 0.29024062, b: 0.33962262, a: 1}
+        sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
         texture: {fileID: 0}
         renderTexture: {fileID: 0}
         vectorImage: {fileID: 0}

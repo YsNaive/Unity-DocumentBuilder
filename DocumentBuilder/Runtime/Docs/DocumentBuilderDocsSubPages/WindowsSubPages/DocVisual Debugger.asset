@@ -21,33 +21,39 @@ MonoBehaviour:
     - DocVisual Debugger
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - Tools / Naive API / Document Builder / DocVisual Debugger
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/rJMwkLUjn.png","mode":0}'
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - Edit Mode
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -57,12 +63,14 @@ MonoBehaviour:
       DocEditVisual Display'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - View Mode
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -72,12 +80,14 @@ MonoBehaviour:
       ForceUpdate to auto repaint.'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: '{"Level":2}'
     TextData:
     - Data
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -87,22 +97,26 @@ MonoBehaviour:
       whether the data is saved, check here.'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - For example, DocLabel look like below
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/HyXoxUUjh.png","mode":0}'
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

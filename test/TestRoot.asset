@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: TestRoot
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 77fc49cad09df0142a9bbebdffc823a5, type: 3}
+  SubPages:
+  - {fileID: 11400000, guid: d5d172e3b34e69749bd81ce01dbe0a17, type: 2}
+  - {fileID: 11400000, guid: 5e35e2e044f0e0d4480d243b76180e78, type: 2}
+  Components:
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200

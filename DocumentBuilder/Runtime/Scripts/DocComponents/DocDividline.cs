@@ -16,5 +16,12 @@ namespace NaiveAPI.DocumentBuilder
             style.marginTop = style.height;
             style.marginBottom = style.height;
         }
+        public static DocComponent CreateComponent()
+        {
+            DocComponent component = new DocComponent();
+            component.VisualID = "0";
+
+            return component;
+        }
     }
 }

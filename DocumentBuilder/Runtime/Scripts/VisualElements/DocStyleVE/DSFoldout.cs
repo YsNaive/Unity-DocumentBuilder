@@ -6,9 +6,9 @@ using NaiveAPI_UI;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocFoldout : Foldout
+    public class DSFoldout : Foldout
     {
-        public new class UxmlFactory : UxmlFactory<DocFoldout, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<DSFoldout, UxmlTraits> { }
         public new class UxmlTraits : Foldout.UxmlTraits { }
         public Toggle ToggleElement;
         public Image IconImage;
@@ -24,7 +24,7 @@ namespace NaiveAPI.DocumentBuilder
                 IconImage.style.backgroundImage = value;
             }
         }
-        public DocFoldout() {
+        public DSFoldout() {
             style.SetIS_Style(DocStyle.Current.MainTextStyle);
             contentContainer.style.minHeight = DocStyle.Current.LineHeight;
             contentContainer.style.paddingLeft = DocStyle.Current.MainTextSize;
@@ -54,13 +54,13 @@ namespace NaiveAPI.DocumentBuilder
             });
             parent.Insert(1, IconImage);
         }
-        public DocFoldout(string text) : this()
+        public DSFoldout(string text) : this()
         {
             this.text = text;
             ToggleElement[0].Q<Label>().style.marginLeft = DocStyle.Current.MainTextSize / 2f;
         }
-        public DocFoldout(StyleBackground icon) : this() { Icon = icon; }
-        public DocFoldout(string text, StyleBackground icon) : this(text) { Icon = icon; }
+        public DSFoldout(StyleBackground icon) : this() { Icon = icon; }
+        public DSFoldout(string text, StyleBackground icon) : this(text) { Icon = icon; }
 
     }
 }

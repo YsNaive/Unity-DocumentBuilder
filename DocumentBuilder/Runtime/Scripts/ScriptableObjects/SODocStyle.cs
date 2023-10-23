@@ -13,23 +13,9 @@ namespace NaiveAPI.DocumentBuilder
         [SerializeField]
         private DocStyle DocStyle = new DocStyle();
 
-        // NonSerialized
-        private DocStyle instance;
-        private void OnEnable()
-        {
-            instance = null;
-        }
-        private void OnDisable()
-        {
-            instance = null;
-        }
         public DocStyle Get()
         {
-            if (instance == null)
-            {
-                instance = DocStyle.Copy();
-            }
-            return instance;
+            return DocStyle.Copy();
         }
 
         private static Texture2D m_whiteArrow;

@@ -8,9 +8,9 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocScroller : Scroller
+    public class DSScroller : Scroller
     {
-        public new class UxmlFactory : UxmlFactory<DocScroller, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<DSScroller, UxmlTraits> { }
         public new class UxmlTraits : Scroller.UxmlTraits
         {
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
@@ -19,7 +19,7 @@ namespace NaiveAPI.DocumentBuilder
                 ApplyStyle((Scroller)ve);
             }
         }
-        public DocScroller()
+        public DSScroller()
         {
             ApplyStyle(this);
         }

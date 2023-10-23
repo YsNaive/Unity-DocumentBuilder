@@ -21,12 +21,14 @@ MonoBehaviour:
     - SODocStyle
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - Use to save DocStyle data and solve different scale in Runtime/Editor
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -36,17 +38,20 @@ MonoBehaviour:
       / new DocStyle'
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Members
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 3
     JsonData: '{"row":4,"col":3,"anchors":[3,3,3],"mode":1}'
     TextData:
@@ -64,17 +69,20 @@ MonoBehaviour:
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Methods
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 4
     JsonData: '{"Name":"Get","Syntaxs":["public DocStyle Get()"],"ReturnTypes":["DocStyle"],"Params":[],"isOn":false}'
     TextData:
@@ -82,6 +90,7 @@ MonoBehaviour:
     - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

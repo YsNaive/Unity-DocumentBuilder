@@ -1,3 +1,4 @@
+using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocPageVisual : DocScrollView
+    public class DocPageVisual : DSScrollView
     {
         public SODocPage Target;
         List<DocVisual> visuals = new List<DocVisual>();
@@ -26,21 +27,16 @@ namespace NaiveAPI.DocumentBuilder
             foreach (var com in Target.Components)
             {
                 DocVisual docVisual = DocRuntime.CreateDocVisual(com);
-                if (docVisual.VisualID == "1")
-                {
-                    docVisual.style.marginLeft = DocStyle.Current.LabelTextSize;
-                    docVisual.style.marginTop = DocStyle.Current.ComponentSpace + docVisual.style.marginTop.value.value + 10;
-                }
+                if (docVisual.VisualID != "1")
+                    docVisual.style.marginLeft = DocStyle.Current.MainTextSize * 3f;
                 else
-                {
-                    docVisual.style.marginLeft = DocStyle.Current.LabelTextSize*2;
-                    docVisual.style.marginTop = DocStyle.Current.ComponentSpace + docVisual.style.marginTop.value.value;
-                }
+                    docVisual.style.marginLeft = DocStyle.Current.MainTextSize;
+                docVisual.style.marginTop = DocStyle.Current.MainTextSize;
                 Add(docVisual);
                 visuals.Add(docVisual);
             }
-            if(childCount!=0)
-                this[childCount - 1].style.marginBottom = 200;
+            if(!Target.IsComponentsEmpty)
+                visuals[^1].style.marginBottom = DocStyle.Current.MainTextSize*7f;
         }
         public void PlayIntro(Action callback = null)
         {

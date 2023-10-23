@@ -24,7 +24,7 @@ namespace NaiveAPI.DocumentBuilder
         DropdownField publicDrop, staticDrop;
         private void CreateGUI()
         {
-            show =new DocScrollView();
+            show =new DSScrollView();
             show.style.marginTop = 20;
             var root = rootVisualElement;
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
@@ -61,6 +61,7 @@ namespace NaiveAPI.DocumentBuilder
             Type targetType = ((MonoScript)selectScript.value).GetClass();
             List< DocFuncDisplay.Data > datas = new List< DocFuncDisplay.Data >();
             DocComponent com = new DocComponent();
+
             #region Methods
             foreach (var method in targetType.GetMethods(flag))
             {
@@ -143,6 +144,7 @@ namespace NaiveAPI.DocumentBuilder
                 show.Add(container);
             }
             #endregion
+
             #region get set
             com = new DocComponent();
             com.VisualID = new DocMatrix().VisualID;

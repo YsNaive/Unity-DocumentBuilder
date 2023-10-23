@@ -53,6 +53,13 @@ namespace NaiveAPI.DocumentBuilder
             }
             return true;
         }
+        public bool Contains(string value)
+        {
+            foreach (var text in TextData)
+                if (text.Contains(value)) return true;
+            return false;
+        }
+
 
         #region get set        
         public int IntroType

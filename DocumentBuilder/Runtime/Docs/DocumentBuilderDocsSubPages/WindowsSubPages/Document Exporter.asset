@@ -21,12 +21,14 @@ MonoBehaviour:
     - Exporter
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - Tools / Naive API / Document Builder / Exporter
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 8
     JsonData: '{"num":2}'
     TextData:
@@ -40,17 +42,20 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Char Table
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
@@ -58,23 +63,27 @@ MonoBehaviour:
       pages.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Markdown
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
     - Use to convert SODocPage to Markdown format.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 6
     JsonData: '{"height":400,"url":"","mode":0}'
     TextData:
@@ -83,6 +92,7 @@ MonoBehaviour:
     ObjsData:
     - {fileID: 11400000, guid: 9aca1cf9c868d8548b780f203300edf5, type: 2}
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

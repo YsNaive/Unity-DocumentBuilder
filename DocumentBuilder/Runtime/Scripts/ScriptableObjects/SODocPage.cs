@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace NaiveAPI.DocumentBuilder
 {
     [CreateAssetMenu(menuName ="Naive API/DocumentBuilder/Doc Page")]
-    public class SODocPage : ScriptableObject
+    public class SODocPage : ScriptableObject, ISerializationCallbackReceiver
     {
         public Texture2D Icon;
         public List<SODocPage> SubPages = new List<SODocPage>();
@@ -20,6 +21,47 @@ namespace NaiveAPI.DocumentBuilder
             Sametime,
             OneByOne,
             Flow,
+        }
+
+        public bool IsComponentsEmpty => Components.Count == 0;
+        public bool IsSubPageEmpty => SubPages.Count == 0;
+
+        public IEnumerable<SODocPage> Pages()
+        {
+            Queue<SODocPage> queue = new();
+            queue.Enqueue(this);
+            SODocPage current;
+            while (queue.TryDequeue(out current))
+            {
+                if (current == null) continue;
+                yield return current;
+                foreach(var page in current.SubPages)
+                    queue.Enqueue(page);
+            }
+        }
+
+        public void OnBeforeSerialize()
+        {
+            for(int i=0; i < SubPages.Count; i++)
+            {
+                if (SubPages[i] == null)
+                {
+                    SubPages.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
+            for (int i = 0; i < SubPages.Count; i++)
+            {
+                if (SubPages[i] == null)
+                {
+                    SubPages.RemoveAt(i);
+                    i--;
+                }
+            }
         }
     }
 }

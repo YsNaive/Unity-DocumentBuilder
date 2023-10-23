@@ -16,7 +16,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             string name;
             DocEditor.ID2Name.TryGetValue(property.FindPropertyRelative("VisualID").stringValue, out name);
-            EditorGUI.LabelField(position, label);
+            EditorGUI.LabelField(position, DocRuntime.VisualID_Dict[label.text].Name);
             position.x = position.width - 75;
             position.width = 75;
             if (GUI.Button(position, "edit"))

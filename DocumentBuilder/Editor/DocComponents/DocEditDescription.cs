@@ -20,7 +20,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         protected override Enum InitAniType => DocDescription.AniMode.Fade;
         protected override void OnCreateGUI()
         {
-            TextField textInput = new DocTextField();
+            TextField textInput = new DSTextField();
             if (Target.TextData.Count == 0)
                 Target.TextData.Add(string.Empty);
             textInput.value = Target.TextData[0];

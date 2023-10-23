@@ -5,9 +5,9 @@ using UnityEngine.UIElements;
 using NaiveAPI_UI;
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocScrollView : ScrollView
+    public class DSScrollView : ScrollView
     {
-        public new class UxmlFactory : UxmlFactory<DocScrollView, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<DSScrollView, UxmlTraits> { }
         public new class UxmlTraits : ScrollView.UxmlTraits
         {
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
@@ -17,16 +17,17 @@ namespace NaiveAPI.DocumentBuilder
                 ApplyStyle(scroller);
             }
         }
-        public DocScrollView()
+        public DSScrollView()
         {
+            contentContainer.style.width = StyleKeyword.Auto;
             style.minHeight = DocStyle.Current.LineHeight;
             ApplyStyle(this);
         }
         public static void ApplyStyle(ScrollView scrollView)
         {
             scrollView.style.ClearMarginPadding();
-            DocScroller.ApplyStyle(scrollView.verticalScroller);
-            DocScroller.ApplyStyle(scrollView.horizontalScroller);
+            DSScroller.ApplyStyle(scrollView.verticalScroller);
+            DSScroller.ApplyStyle(scrollView.horizontalScroller);
         }
     }
 

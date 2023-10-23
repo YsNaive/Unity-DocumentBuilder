@@ -48,7 +48,7 @@ namespace NaiveAPI.DocumentBuilder
         {
             labelWidth = DocStyle.Current.LabelWidth;
             style.ClearMarginPadding();
-            LabelElement = new DocTextElement("");
+            LabelElement = new DSTextElement("");
             LabelElement.style.minWidth = 0;
             PopupElement = CreatePopupElement();
             var hor = DocRuntime.NewHorizontalBar(LabelElement, PopupElement);
@@ -73,7 +73,7 @@ namespace NaiveAPI.DocumentBuilder
                 tempCover.style.width = Length.Percent(100);
                 tempCover.style.height = Length.Percent(100);
                 panel.visualTree.Add(tempCover);
-                ScrollView selectableContainer = new DocScrollView();
+                ScrollView selectableContainer = new DSScrollView();
                 selectableContainer.style.ClearMarginPadding();
                 selectableContainer.style.backgroundColor = DocStyle.Current.BackgroundColor;
                 selectableContainer.style.SetIS_Style(new ISBorder(DocStyle.Current.FrontgroundColor, DocStyle.Current.MainTextSize / 6f));

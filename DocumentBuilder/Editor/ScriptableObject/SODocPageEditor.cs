@@ -56,6 +56,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         Button addPage;
         CheckButton deletePage;
         ObjectField icon;
+        public ObjectField IconField => icon;
         List<string> buildinIconList = new List<string>(); 
         [SerializeField] private List<DocComponent> undoBuffer;
         void reCalHeigth()
@@ -72,6 +73,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             var styleTemp = DocStyle.Current.Copy();
             Target = target as SODocPage;
             root = new IMGUIContainer(OnInspectorGUI);
+            
             #region mod bar
             root.style.SetIS_Style(ISPadding.Pixel(10));
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
@@ -224,12 +226,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 header.Add(hor);
             });
             loadFromTemplate.style.width = Length.Percent(50);
-            var hint = new DocTextElement("Template name can not be empty.");
+            var hint = new DSTextElement("Template name can not be empty.");
             Button saveAsTemplate = DocRuntime.NewButton("Save As Template", () =>
             {
                 header.Remove(loadAndSave);
                 VisualElement hor = DocRuntime.NewEmptyHorizontal();
-                TextField name = new DocTextField("Name");
+                TextField name = new DSTextField("Name");
                 name.style.width = Length.Percent(70);
                 name[1].style.backgroundColor = DocStyle.Current.DangerColor;
                 List<string> templates = findAllTemplateName();
@@ -295,18 +297,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             saveAsTemplate.style.width = Length.Percent(50);
 
-            var imgui = new IMGUIContainer(() =>
-            {
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("SubPages"));
-            });
-
-            imgui.style.backgroundColor = new Color(.24f, .24f, .24f);
             header.Add(DocRuntime.NewHorizontalBar(introMode,introDurField));
             header.Add(DocRuntime.NewHorizontalBar(outroMode,outroDurField));
             header.Add(DocRuntime.NewHorizontalBar(icon,buildinIcon));
-            header.Add(DocRuntime.NewHorizontalBar(0.5f,addPage,null,null,null,null,deletePage));
-            header.Add(imgui);
-            loadAndSave = DocRuntime.NewHorizontalBar(1f,loadFromTemplate, saveAsTemplate);
+            // header.Add(DocRuntime.NewHorizontalBar(0.5f,addPage,null,null,null,null,deletePage));
+            //loadAndSave = DocRuntime.NewHorizontalBar(1f,loadFromTemplate, saveAsTemplate);
             header.Add(loadAndSave);
             foreach (var ve in header.Children())
             {
@@ -367,7 +362,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             var bar = addPage.parent;
             int addPageIndex = addPageParent.IndexOf(bar);
             addPageParent.RemoveAt(addPageIndex);
-            TextField inputName = new DocTextField("Page Name");
+            TextField inputName = new DSTextField("Page Name");
             Button create = DocRuntime.NewButton("Create", DocStyle.Current.SuccessColor, () =>
             {
                 string path = AssetDatabase.GetAssetPath(Target);

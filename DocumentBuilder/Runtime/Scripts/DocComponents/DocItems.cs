@@ -32,7 +32,7 @@ namespace NaiveAPI.DocumentBuilder
             icon.style.backgroundImage = texture;
             icon.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontgroundColor;
 
-            TextElement descriptionField = new DocTextElement(description);
+            TextElement descriptionField = new DSTextElement(description);
             descriptionField.style.paddingLeft = DocStyle.Current.MainTextSize;
 
             root.Add(icon);
