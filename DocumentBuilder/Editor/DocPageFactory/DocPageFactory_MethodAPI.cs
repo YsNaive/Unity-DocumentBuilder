@@ -23,6 +23,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             throw new System.NotImplementedException();
         }
+
+        public override string IsValid()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 }

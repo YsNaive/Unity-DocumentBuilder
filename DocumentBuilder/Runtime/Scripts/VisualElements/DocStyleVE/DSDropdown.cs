@@ -6,64 +6,107 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DSDropdown : NaiveAPI_UI.CustomDropdown<string>
+    public class DSDropdown : VisualElement, INotifyValueChanged<string>
     {
-        protected override VisualElement createMenuItem(string choice)
+        public string value
         {
-            var text = new DSTextElement(choice);
-            text.text = choice;
-
-            text.RegisterCallback<PointerEnterEvent>(evt => { text.style.backgroundColor = DocStyle.Current.SubBackgroundColor; });
-            text.RegisterCallback<PointerLeaveEvent>(evt => { text.style.backgroundColor = DocStyle.Current.BackgroundColor; });
-            text.style.paddingLeft = DocStyle.Current.MainTextSize;
-            text.style.height = DocStyle.Current.LineHeight;
-            text.style.borderBottomColor = DocStyle.Current.SubBackgroundColor;
-            text.style.borderBottomWidth = 1.5f;
-            return text;
+            get => m_value;
+            set
+            {
+                if (choices == null)
+                {
+                    Debug.LogWarning($"DSDropdown: choices list not exist");
+                    return;
+                }
+                if (panel != null)
+                {
+                    using (ChangeEvent<string> evt = ChangeEvent<string>.GetPooled(m_value, value))
+                    {
+                        evt.target = this;
+                        SetValueWithoutNotify(value);
+                        SendEvent(evt);
+                    }
+                }
+                else
+                {
+                    SetValueWithoutNotify(value);
+                    using var evt = ChangeEvent<string>.GetPooled(m_value, value);
+                }
+            }
+        }
+        public int index
+        {
+            get => m_choices.IndexOf(value);
+            set {
+                if(value >=0 && value < m_choices.Count)
+                {
+                    this.value = m_choices[value];
+                }
+                else
+                {
+                    this.value = "";
+                }
+            }
+        }
+        string m_value;
+        public void SetValueWithoutNotify(string newValue)
+        {
+            m_value = newValue;
+            ((INotifyValueChanged<string>)m_fieldElement).SetValueWithoutNotify(newValue.Substring(newValue.IndexOf('/') + 1));
         }
 
-        protected override VisualElement invokeDropdownElement => field;
-
-        public DSDropdown(string label = "")
+        public DSTextElement labelElement => m_labelElement;
+        DSTextElement m_labelElement, m_fieldElement;
+        public List<string> choices
         {
-            this.label.text = label;
+            get => m_choices;
+            set
+            {
+                if (value == m_choices) return;
+                popupMenu = DSStringMenu.CreatePopupMenu(value, (str) => { this.value = str; });
+                m_choices = value;
+            }
         }
-        DSTextElement label,field;
-        protected override void initLabelAndField()
+        List<string> m_choices;
+        PopupElement popupMenu;
+        public DSDropdown()
         {
-            var hor = DocRuntime.NewEmptyHorizontal();
-            label = new DSTextElement("");
-            label.style.width = DocStyle.Current.LabelWidth;
-            field = new DSTextElement("N/A");
-            field.style.SetIS_Style(DocStyle.Current.InputFieldStyle);
-            field.style.flexGrow = 1f;
-            hor.Add(label);
-            hor.Add(field);
-            Add(hor);
-            var arrow = new Image();
-            arrow.style.rotate = new Rotate(90);
-            arrow.style.backgroundImage = new StyleBackground(SODocStyle.WhiteArrow);
-            arrow.style.unityBackgroundImageTintColor = DocStyle.Current.FrontgroundColor;
+            var container = DocRuntime.NewEmptyHorizontal();
+            m_fieldElement = new DSTextElement();
+            m_labelElement = new DSTextElement();
+            container.Add(m_labelElement);
+            container.Add(m_fieldElement);
+            Add(container);
+
+            m_fieldElement.style.flexGrow = 1f;
+            m_fieldElement.style.SetIS_Style(DocStyle.Current.InputFieldStyle);
+            m_fieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.SubBackgroundColor;
+            var arrow = new VisualElement();
             arrow.style.width = DocStyle.Current.LineHeight;
             arrow.style.height = DocStyle.Current.LineHeight;
-            arrow.style.position = Position.Absolute;
-            arrow.style.right = DocStyle.Current.MainTextSize/2f;
-            field.Add(arrow);
+            arrow.style.backgroundImage = SODocStyle.WhiteArrow;
+            arrow.style.marginLeft = StyleKeyword.Auto;
+            arrow.style.marginRight = 0;
+            arrow.style.scale = new Scale(new Vector3(.7f, .7f, .7f));
+            arrow.style.unityBackgroundImageTintColor = DocStyle.Current.FrontgroundColor;
+            arrow.style.rotate = new Rotate(90);
+            m_fieldElement.Add(arrow);
 
+            m_fieldElement.RegisterCallback<PointerDownEvent>(evt =>
+            {
+                popupMenu.Open(this);
+                var worldBound = m_fieldElement.worldBound;
+                popupMenu.style.width = worldBound.width;
+                var pos = new Vector2(0,0);
+                pos = m_fieldElement.LocalToWorld(pos);
+                popupMenu.style.left = pos.x;
+                popupMenu.style.top = pos.y;
+            });
         }
-
-        protected override VisualElement createPopupContainer()
+        public DSDropdown(string label) : this()
         {
-            var scView = new VisualElement();
-            scView.style.backgroundColor = DocStyle.Current.BackgroundColor;
-            scView.style.SetIS_Style(new ISBorder(DocStyle.Current.FrontgroundColor, 2.5f));
-            return scView;
-        }
-
-        protected override void onValueChanged()
-        {
-            field.text = value;
+            m_labelElement.text = label;
+            m_labelElement.style.width = DocStyle.Current.LabelWidth;
         }
     }
-
 }

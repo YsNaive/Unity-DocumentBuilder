@@ -18,7 +18,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             var sysPath = AssetDatabase.GetAssetPath(page);
             sysPath = Application.dataPath + sysPath.Substring(6, sysPath.LastIndexOf('/') - 6);
             style.SetIS_Style(ISPadding.Pixel(DocStyle.Current.MainTextSize));
-            Add(new DSLabel("Delete Pages"));
+            Add(new DSLabel($"Delete Pages {page.name}"));
             Add(new DSLabel("### THIS CAN NOT BE UNDO ###"));
             var singleDelete = DocRuntime.NewButton("Delete this page");
             singleDelete.style.marginTop = DocStyle.Current.LabelTextSize;

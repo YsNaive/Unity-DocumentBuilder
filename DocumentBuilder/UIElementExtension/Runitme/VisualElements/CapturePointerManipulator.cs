@@ -9,16 +9,13 @@ namespace NaiveAPI_UI
     public class CapturePointerManipulator : PointerManipulator
     {
         protected bool m_Active;
-        public event EventCallback<PointerDownEvent> PointerDownEvent;
-        public event EventCallback<PointerUpEvent> PointerUpEvent;
         public event EventCallback<PointerMoveEvent> PointerMoveEvent;
         public event EventCallback<PointerMoveEvent> ActiveMoveEvent;
         public event Action OnHoverIN, OnHoverOUT;
+        public event Action OnEnable, OnDisable;
         public CapturePointerManipulator()
         {
             m_Active = false;
-            PointerDownEvent += OnPointerDown;
-            PointerUpEvent += OnPointerUp;
             PointerMoveEvent += OnPointerMove;
         }
         public CapturePointerManipulator(EventCallback<PointerMoveEvent> moveEvent) : this()
@@ -28,19 +25,19 @@ namespace NaiveAPI_UI
 
         protected override void RegisterCallbacksOnTarget()
         {
-            base.target.RegisterCallback(PointerDownEvent);
-            base.target.RegisterCallback(PointerUpEvent);
             base.target.RegisterCallback(PointerMoveEvent);
             base.target.RegisterCallback<PointerEnterEvent>(OnPointerEnter);
             base.target.RegisterCallback<PointerLeaveEvent>(OnPointerLeave);
+            base.target.RegisterCallback<PointerDownEvent>(OnPointerDown);
+            base.target.RegisterCallback<PointerUpEvent>(OnPointerUp);
         }
         protected override void UnregisterCallbacksFromTarget()
         {
-            base.target.UnregisterCallback(PointerDownEvent);
-            base.target.UnregisterCallback(PointerUpEvent);
             base.target.UnregisterCallback(PointerMoveEvent);
             base.target.UnregisterCallback<PointerEnterEvent>(OnPointerEnter);
             base.target.UnregisterCallback<PointerLeaveEvent>(OnPointerLeave);
+            base.target.UnregisterCallback<PointerDownEvent>(OnPointerDown);
+            base.target.UnregisterCallback<PointerUpEvent>(OnPointerUp);
         }
         protected void OnPointerDown(PointerDownEvent e)
         {
@@ -53,6 +50,7 @@ namespace NaiveAPI_UI
                 m_Active = true;
                 base.target.CapturePointer(e.pointerId);
                 e.StopPropagation();
+                OnEnable?.Invoke();
             }
         }
         protected void OnPointerMove(PointerMoveEvent e)
@@ -71,6 +69,7 @@ namespace NaiveAPI_UI
                 OnHoverOUT?.Invoke();
                 base.target.ReleasePointer(e.pointerId);
                 e.StopPropagation();
+                OnDisable?.Invoke();
             }
         }        
         protected void OnPointerEnter(PointerEnterEvent e)

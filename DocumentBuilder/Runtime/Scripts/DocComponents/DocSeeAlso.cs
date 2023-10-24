@@ -32,8 +32,13 @@ namespace NaiveAPI.DocumentBuilder
                 maskColor.a = 0.25f;
                 mask.style.backgroundColor = maskColor;
                 VisualElement docPage;
-                if (Target.ObjsData[0] != null)
-                    docPage = new DocPageVisual((SODocPage)Target.ObjsData[0]);
+                if (Target.ObjsData.Count > 0)
+                {
+                    if (Target.ObjsData[0] != null)
+                        docPage = new DocPageVisual((SODocPage)Target.ObjsData[0]);
+                    else
+                        docPage = new VisualElement();
+                }
                 else
                     docPage = new VisualElement();
                 scrollView.Add(docPage);

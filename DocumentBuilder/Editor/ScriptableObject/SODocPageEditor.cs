@@ -127,9 +127,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             icon.style.ClearMarginPadding();
             icon[0].style.unityTextAlign = TextAnchor.MiddleCenter;
             icon.style.width = Length.Percent(50);
-            var buildinIcon = DocRuntime.NewDropdownField("", buildinIconList, e =>
+            var buildinIcon = new DSDropdown() { choices = buildinIconList };
+            buildinIcon.RegisterValueChangedCallback(evt =>
             {
-                icon.value = DocEditorData.Instance.BuildinIcon[buildinIconList.IndexOf(e.newValue)];
+                icon.value = DocEditorData.Instance.BuildinIcon[buildinIconList.IndexOf(evt.newValue)];
             });
             buildinIcon.index = DocEditorData.Instance.BuildinIcon.IndexOf(Target.Icon);
             buildinIcon.style.width = Length.Percent(50);

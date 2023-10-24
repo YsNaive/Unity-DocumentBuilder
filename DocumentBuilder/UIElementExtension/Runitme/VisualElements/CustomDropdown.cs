@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -25,26 +24,13 @@ namespace NaiveAPI_UI
         protected DType m_value;
 
         public List<DType> choices;
+        PopupElement popup = new PopupElement();
         VisualElement popupContainer;
-        VisualElement popupMask = new();
         public CustomDropdown()
         {
             popupContainer = createPopupContainer();
-            popupContainer.style.maxHeight = Length.Percent(60);
+            popup.Add(popupContainer);
             initLabelAndField();
-
-            popupMask.Add(popupContainer);
-            popupMask.style.position = Position.Absolute;
-            popupMask.style.width = Length.Percent(100);
-            popupMask.style.height = Length.Percent(100);
-            popupContainer.style.position = Position.Absolute;
-            popupContainer.RegisterCallback<GeometryChangedEvent>(evt =>
-            {
-                if(popupContainer.worldBound.yMax > popupMask.worldBound.yMax)
-                    popupContainer.style.top = popupMask.worldBound.yMax - popupContainer.worldBound.height;
-            });
-
-
             invokeDropdownElement.RegisterCallback<PointerDownEvent>(evt =>
             {
                 if (this.parent == null) return;
@@ -61,16 +47,8 @@ namespace NaiveAPI_UI
                     });
                     popupContainer.Add(ve);
                 }
-                this.panel.visualTree[panel.visualTree.childCount-1].Add(popupMask);
-                var parentBound = popupMask.parent.worldBound;
-                popupContainer.style.left = invokeDropdownElement.worldBound.x - parentBound.x;
-                popupContainer.style.top = invokeDropdownElement.worldBound.yMax - parentBound.y;
-                popupContainer.style.width = invokeDropdownElement.worldBound.width;
-            });
-            popupMask.RegisterCallback<PointerDownEvent>(evt =>
-            {
-                if (popupMask.parent == null) return;
-                popupMask.parent.Remove(popupMask);
+                popup.Open(this);
+                popup.MoveBelow(invokeDropdownElement);
             });
         }
         protected abstract void initLabelAndField();

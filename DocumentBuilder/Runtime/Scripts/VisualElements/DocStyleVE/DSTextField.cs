@@ -9,13 +9,16 @@ namespace NaiveAPI.DocumentBuilder
     {
         public new class UxmlFactory : UxmlFactory<DSTextField, UxmlTraits> { }
         public new class UxmlTraits : TextField.UxmlTraits { }
+        public VisualElement InputFieldElement => inputFieldElement;
+        VisualElement inputFieldElement;
         public DSTextField()
         {
             style.ClearMarginPadding();
             style.minHeight = DocStyle.Current.LineHeight;
             style.SetIS_Style(DocStyle.Current.MainTextStyle);
-            this[0].style.paddingLeft = DocStyle.Current.MainTextSize / 2f;
-            this[0].style.SetIS_Style(DocStyle.Current.InputFieldStyle);
+            inputFieldElement = this[0];
+            inputFieldElement.style.paddingLeft = DocStyle.Current.MainTextSize / 2f;
+            inputFieldElement.style.SetIS_Style(DocStyle.Current.InputFieldStyle);
         }
         public new string label
         {

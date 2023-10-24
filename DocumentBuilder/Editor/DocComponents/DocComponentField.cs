@@ -128,7 +128,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
     {
         public event Action<DocComponentField> OnModify;
         public DocComponent Target;
-        public DropdownField SelectVisualType;
+        public DSDropdown SelectVisualType;
         public VisualElement ToolBar;
         public VisualElement EditView;
         public DocEditVisual DocEditVisual;
@@ -284,7 +284,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         private void createDropfield()
         {
-            SelectVisualType = DocRuntime.NewDropdownField("", null, null);
+            SelectVisualType = new DSDropdown();
             SelectVisualType[0].style.ClearMarginPadding();
             SelectVisualType.choices = DocEditor.NameList;
             string tName = string.Empty;

@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,9 +17,8 @@ public class Test : MonoBehaviour
     {
         
         var root = FindAnyObjectByType<UIDocument>().rootVisualElement;
-        var dd = new DSDropdown("Dropdown");
-        dd.choices = new List<string>() { "AAA", "BB", "CCCC" };
-        root.Add(dd);
+        var list = new List<string>() { "AAA/A1", "AAA/A2","AAA", "BB", "CCCC","L1/L2/L3/L4/L5" };
+        DSStringMenu.Open(root.panel, new Vector2(100, 100), list, val => { Debug.Log(val); });
     }
 
     //https://chart.apis.google.com/chart?cht=tx&chs=50&chf=bg,s,FFFFFF00&chl=

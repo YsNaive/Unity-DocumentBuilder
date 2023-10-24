@@ -57,9 +57,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         public override void AfterPageCreate(SODocPage createdPage)
         {
-            createdPage.Components[0].TextData[0] = DocumentBuilderParser.CalGenericTypeName(targetType);
+            createdPage.Components[0].TextData[0] = DocumentBuilderParser.CalGenericTypeName(typeField.value);
 
-            var instancePublicResult = new DocComponentsTypeInfoReader(targetType, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            var instancePublicResult = new DocComponentsTypeInfoReader(typeField.value, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             if (instancePublicResult.PropertiesMatrixComponents != null)
             {
                 createdPage.Components.Add(DocDividline.CreateComponent());
@@ -79,7 +79,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 createdPage.Components.Add(instancePublicResult.MethodListComponent);
             }
 
-            var staticPublicResult = new DocComponentsTypeInfoReader(targetType, BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+            var staticPublicResult = new DocComponentsTypeInfoReader(typeField.value, BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
             if (staticPublicResult.PropertiesMatrixComponents != null)
             {
                 createdPage.Components.Add(DocDividline.CreateComponent());
@@ -99,7 +99,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 createdPage.Components.Add(staticPublicResult.MethodListComponent);
             }
 
-            var inheritPublicResult = new DocComponentsTypeInfoReader(targetType, BindingFlags.Public | BindingFlags.Instance);
+            var inheritPublicResult = new DocComponentsTypeInfoReader(typeField.value, BindingFlags.Public | BindingFlags.Instance);
             var component = inheritPublicResult.MethodListComponent;
             if(component != null)
             {
@@ -133,50 +133,22 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
 
 
-        Type targetType;
+        DSTypeField typeField;
         public override VisualElement CreateEditGUI()
         {
             var root = DocRuntime.NewEmpty();
-            var searchField = new DSTextField("Type: ");
-            var selectContainer = new VisualElement();
-            selectContainer.style.paddingLeft = DocStyle.Current.LabelWidth;
-            searchField.RegisterValueChangedCallback(evt =>
-            {
-                selectContainer.Clear();
-                if (evt.newValue == "") return;
-                List<Type> matchedType = new();
-                foreach(var asmdef in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    foreach (var type in asmdef.GetTypes())
-                    {
-                        if (type.Name.Contains(evt.newValue))
-                        {
-                            matchedType.Add(type);
-                        }
-                    }
-                }
-                int i  = 0;
-                foreach (var type in matchedType.OrderBy(e => { return e.Name.Length; }))
-                {
-                    var btn = DocRuntime.NewButton(type.Name);
-                    btn.clicked += () =>
-                    {
-                        targetType = type;
-                        searchField.value = "";
-                        searchField.label = $"Type: {type.Name}";
-                    };
-                    selectContainer.Add(btn);
-                    if (i++ > 7) break;
-                }
-            });
-            root.Add(searchField);
-            root.Add(selectContainer);
-
-
+            typeField = new DSTypeField("Target Type");
+            root.Add(typeField);
             return root;
         }
-    
-        
+
+        public override string IsValid()
+        {
+            if (typeField.value == null)
+                return "* Missing target Type";
+            else
+                return "";
+        }
     }
 
 }

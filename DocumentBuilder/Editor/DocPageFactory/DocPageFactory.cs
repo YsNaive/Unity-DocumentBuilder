@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,6 +16,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public abstract Texture2D InitIcon { get; }
         public abstract VisualElement CreateEditGUI();
         public abstract void AfterPageCreate(SODocPage createdPage);
+        public abstract string IsValid();
         public SODocPage CreatePageAsset(SODocPage parent , string name)
         {
             var page = DocPageEditorUtils.CreatePageAsset(parent, name);
@@ -43,8 +45,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             })){
                 DocPageFactory factory = (DocPageFactory)Activator.CreateInstance(type);
                 name2Factory.Add(factory.DisplayName, factory);
-                choices.Add(factory.DisplayName);
+                if(factory.DisplayName != "Empty")
+                    choices.Add(factory.DisplayName);
             }
+            choices.Insert(0, "Empty");
         }
 
         DSDropdown factoryDropdown =new DSDropdown("Page Factory") { choices = choices };
@@ -66,6 +70,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             Add(factoryDropdown);
             Add(editGUIContainer);
+
+            factoryDropdown.value = "Empty";
+            selecting = name2Factory["Empty"];
         }
     }
 }

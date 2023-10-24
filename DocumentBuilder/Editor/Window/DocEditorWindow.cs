@@ -31,18 +31,33 @@ namespace NaiveAPI_Editor.DocumentBuilder
         static DocEditorWindow m_editorInstance;
         #endregion
 
+        class Data
+        {
+            public float SplitPercent1 = 30;
+            public float SplitPercent2 = 70;
+        }
+        Data cacheData;
+
         ObjectField rootPageSelector;
         VisualElement leftContainer, rightContainer;
         DSScrollView editorContainer;
         DocPageMenu pageMenu;
-        DSToggle forceRepaintToggle;
+        Button createPageBtn, deletePageBtn;
         private void OnEnable()
         {
+            cacheData = JsonUtility.FromJson<Data>(DocCache.LoadData("DocumentEditorWindowCache.json"));
+            cacheData ??= new();
             if (rootPageSelector != null)
                 rootPageSelector.value = DocEditorData.Instance.EditingDocPage;
         }
         private void OnDisable()
         {
+            if (splitView != null)
+            {
+                cacheData.SplitPercent1 = splitView.SplitPercent;
+                cacheData.SplitPercent2 = splitView2.SplitPercent;
+            }
+            DocCache.SaveData("DocumentEditorWindowCache.json", JsonUtility.ToJson(cacheData));
         }
         private void CreateGUI()
         {
@@ -52,31 +67,41 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             rootPageSelector.value = DocEditorData.Instance.EditingDocPage;
         }
-
+        SplitView splitView, splitView2;
         void initLayout()
         {
             rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
             leftContainer = new VisualElement();
             editorContainer = new DSScrollView();
             rightContainer = new VisualElement();
+            rightContainer.style.SetIS_Style(ISPadding.Pixel((int)(DocStyle.Current.MainTextSize / 2f)));
             rootPageSelector = new ObjectField() { objectType = typeof(SODocPage) };
-            forceRepaintToggle = new DSToggle("Force Repaint") { value = false};
             menuItemDragHintLine = new VisualElement();
             menuItemDragHintLine.style.height = 2f;
             menuItemDragHintLine.style.width = Length.Percent(100);
             menuItemDragHintLine.style.backgroundColor = DocStyle.Current.SubFrontgroundColor;
             menuItemDragHintLine.style.position = Position.Absolute;
 
-            leftContainer.Add(rootPageSelector);
-            rightContainer.Add(forceRepaintToggle);
+            createPageBtn = DocRuntime.NewButton("Create Page", DocStyle.Current.SuccessColor);
+            createPageBtn.clicked += createPage;
+            deletePageBtn = DocRuntime.NewButton("Delete Page", DocStyle.Current.DangerColor);
+            deletePageBtn.clicked += deletePage;
 
-            var splitView = new SplitView(30);
-            var splitView2 = new SplitView(FlexDirection.Row,75);
+            leftContainer.Add(rootPageSelector);
+            rightContainer.Add(createPageBtn);
+            rightContainer.Add(deletePageBtn);
+
+            splitView = new SplitView(cacheData.SplitPercent1);
+            splitView2 = new SplitView(FlexDirection.Row, cacheData.SplitPercent2);
             splitView.Add(leftContainer);
             splitView.Add(splitView2);
             splitView2.Add(editorContainer);
             splitView2.Add(rightContainer);
             rootVisualElement.Add(splitView);
+
+            emptySelectingWarning = DocRuntime.CreateDocVisual(DocDescription.CreateComponent
+            ("Please Select a Page first", DocDescription.DescriptionType.Danger));
+            emptySelectingWarning.style.SetIS_Style(ISPadding.Pixel(DocStyle.Current.MainTextSize));
         }
 
         void initRootPageSelector()
@@ -88,6 +113,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 editorContainer.Clear();
                 initPageMenu();
                 DocEditorData.Instance.EditingDocPage = (SODocPage)e.newValue;
+                EditorUtility.SetDirty(DocEditorData.Instance);
             });
         }
 
@@ -122,50 +148,48 @@ namespace NaiveAPI_Editor.DocumentBuilder
         void initPageMenuExtend()
         {
             foreach (var item in pageMenu.RootMenuItem.MenuItems())
-            {
                 item.TitleContainer.Add(createMenuItemDrager(item));
-
-                var createBtn = DocRuntime.NewButton("+",DocStyle.Current.SuccessColor);
-                createBtn.style.width = DocStyle.Current.LineHeight;
-                createBtn.style.height = DocStyle.Current.LineHeight;
-                createBtn.style.position = Position.Absolute;
-                createBtn.style.right = 6 + DocStyle.Current.LineHeight.Value;
-                createBtn.clicked += () => { createNewPagePopup(item); };
-                item.TitleContainer.Add(createBtn);
-
-                var deleteBtn = DocRuntime.NewButton("-", DocStyle.Current.DangerColor);
-                deleteBtn.style.width = DocStyle.Current.LineHeight;
-                deleteBtn.style.height = DocStyle.Current.LineHeight;
-                deleteBtn.style.position = Position.Absolute;
-                deleteBtn.style.right = 4;
-                deleteBtn.clicked += () => { deletePagePopup(item, item.ParentMenuItem); };
-                item.TitleContainer.Add(deleteBtn);
-            }
         }
-        void createNewPagePopup(DocPageMenuItem parentMenuItem)
+
+        DocVisual emptySelectingWarning;
+        void createPage()
         {
             editorContainer.Clear();
-            parentMenuItem.IsOpen = true;
+            if (pageMenu.Selecting == null)
+            {
+                editorContainer.Add(emptySelectingWarning);
+                return;
+            }
+            pageMenu.Selecting.IsOpen = true;
             pageMenu.SaveStateHierarchy();
-            editorContainer.Add(new DocPageCreator(parentMenuItem.TargetPage, val =>
+            var preSelect = pageMenu.Selecting;
+            editorContainer.Add(new DocPageCreator(pageMenu.Selecting.TargetPage, val =>
             {
                 if (val != null)
                 {
                     initPageMenu();
                 }
                 editorContainer.Clear();
-                pageMenu.TrySelect(val);
+                if (val != null)
+                    pageMenu.TrySelect(val);
+                else
+                    pageMenu.Selecting = preSelect;
             }));
         }
-        void deletePagePopup(DocPageMenuItem deleteItem, DocPageMenuItem parentItem)
+        void deletePage()
         {
             editorContainer.Clear();
-            editorContainer.Add(new DocPageDeleter(deleteItem.TargetPage, e =>
+            if (pageMenu.Selecting == null)
+            {
+                editorContainer.Add(emptySelectingWarning);
+                return;
+            }
+            editorContainer.Add(new DocPageDeleter(pageMenu.Selecting.TargetPage, e =>
             {
                 if (e.isDelete)
                 {
-                    if(parentItem != null)
-                        parentItem.TargetPage.SubPages.Remove(deleteItem.TargetPage);
+                    if (pageMenu.Selecting != null)
+                        pageMenu.Selecting.ParentMenuItem.TargetPage.SubPages.Remove(pageMenu.Selecting.TargetPage);
                     initPageMenu();
                     Debug.Log($"Delete {e.deletedPage.Length} Pages and {e.deletedFolder.Length} Folders");
                 }
@@ -183,14 +207,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
             moveBtn.style.width = DocStyle.Current.LineHeight;
             moveBtn.style.height = DocStyle.Current.LineHeight;
             moveBtn.style.position = Position.Absolute;
-            moveBtn.style.right = 7 + DocStyle.Current.LineHeight.Value * 2f;
+            moveBtn.style.right = 3;
             moveBtn.style.scale = new Scale(new Vector3(.9f, .9f, .9f));
             var manipulator = new CapturePointerManipulator();
             var posOffset = Vector2.zero;
             var stateBefore = false;
             int insertPlace = -1;
 
-            manipulator.PointerDownEvent += e =>
+            manipulator.OnEnable += () =>
             {
                 posOffset = leftContainer.worldBound.position;
                 leftContainer.Add(menuItemDragHintLine);
@@ -251,7 +275,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 }
             };
 
-            manipulator.PointerUpEvent += (evt) =>
+            manipulator.OnDisable += () =>
             {
                 if (leftContainer == menuItemDragHintLine.parent)
                     leftContainer.Remove(menuItemDragHintLine);

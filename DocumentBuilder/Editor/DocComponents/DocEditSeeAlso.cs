@@ -8,6 +8,7 @@ using System.Text;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
@@ -118,6 +119,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             objectField.style.width = Length.Percent(50);
             objectField.style.paddingLeft = DocStyle.Current.MainTextSize;
+            while (Target.ObjsData.Count < 1)
+                Target.ObjsData.Add(null); 
             objectField.value = Target.ObjsData[0];
             TextField urlTextField = new DSTextField("url", (value) =>
             {
