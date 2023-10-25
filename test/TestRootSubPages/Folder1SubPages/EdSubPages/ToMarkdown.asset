@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
-  m_Name: SetTarget
+  m_Name: ToMarkdown
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 116bd5b02a236df4d9e4d81f16c51c48, type: 3}
   SubPages: []
   Components:
   - VisualID: 1
-    JsonData: '{"Level":3}'
+    JsonData: '{"Level":1}'
     TextData:
-    - Usage
+    - ToMarkdown
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 2
-    JsonData: 
+    JsonData: '{"Type":0}'
     TextData:
-    - Base class of all DocType view mode
+    - description...
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
@@ -35,19 +35,12 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
-  - VisualID: 1
-    JsonData: '{"Level":3}'
-    TextData:
-    - API
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-    VisualVersion: 0
   - VisualID: 4
-    JsonData: '{"Name":"SetTarget","Syntaxs":["public void SetTarget(DocComponent
-      target)"],"ReturnTypes":[],"Params":[{"ParamName":"target","Type":"DocComponent"}],"isOn":false}'
+    JsonData: '{"Name":"ToMarkdown","Syntaxs":["public string ToMarkdown(string dstPath)"],"ReturnTypes":["string"],"Params":[{"ParamName":"dstPath","Type":"string"}],"isOn":false}'
     TextData:
     - 
-    - DocComponent to show
+    - 
+    - 
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0

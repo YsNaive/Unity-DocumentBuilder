@@ -10,15 +10,19 @@ namespace NaiveAPI.DocumentBuilder
 {
     public class DSTypeField : VisualElement, INotifyValueChanged<Type>
     {
-        public int MaxPopupCount = 10;
+        public int MaxPopupCount = 35;
 
         public Type value
         {
             get => m_value;
             set
             {
+                using var evt = ChangeEvent<Type>.GetPooled(m_value, value);
+                evt.target = this;
+                SendEvent(evt);
+
                 m_value = value;
-                searchField.value = DocumentBuilderParser.CalGenericTypeName(value);
+                ((INotifyValueChanged<string>)searchField).SetValueWithoutNotify(DocumentBuilderParser.CalGenericTypeName(value));
             }
         }
         Type m_value;
@@ -27,18 +31,27 @@ namespace NaiveAPI.DocumentBuilder
         public DSTypeField(string label = "")
         {
             popup = new PopupElement();
+            popup.style.SetIS_Style(new ISBorder(DocStyle.Current.FrontgroundColor, 1));
+            var container = new DSScrollView();
+            container.RegisterCallback<GeometryChangedEvent>(evt =>
+            {
+                container.style.maxHeight = container.panel.visualTree.worldBound.height * 0.75f;
+                container.style.maxWidth = container.panel.visualTree.worldBound.width * 0.75f;
+            });
+            popup.Add(container);
             searchField = new DSTextField(label);
             Add(searchField);
             searchField.RegisterValueChangedCallback(evt =>
             {
-                popup.Clear();
+                container.Clear();
                 if (evt.newValue == "") return;
                 List<Type> matchedType = new();
                 foreach (var asmdef in AppDomain.CurrentDomain.GetAssemblies())
                 {
                     foreach (var type in asmdef.GetTypes())
                     {
-                        if (type.Name.Contains(evt.newValue))
+                        string name = type.Name;
+                        if (name.Contains(evt.newValue))
                         {
                             matchedType.Add(type);
                         }
@@ -47,23 +60,11 @@ namespace NaiveAPI.DocumentBuilder
                 int i = 1;
                 foreach (var type in matchedType.OrderBy(e =>
                 {
-                    float w = e.Name.Length;
-                    int i = 0;
-                    while(i<e.Name.Length && i < searchField.value.Length)
-                    {
-                        if (e.Name[i] == searchField.value[i])
-                            w--;
-                        else
-                            break;
-                        i++;
-                    }
-                    return  w;
+                    return e.Name.Length;
                 })) 
                 {
                     if (i++ > MaxPopupCount) break;
-                    var choice = DocumentBuilderParser.CalGenericTypeName(type);
-                    var text = new DSTextElement(choice);
-                    text.text = choice;
+                    var text = new DSTextElement(DocumentBuilderParser.CalNestedTypeName(type));
                     text.style.backgroundColor = DocStyle.Current.BackgroundColor;
                     text.RegisterCallback<PointerEnterEvent>(evt => { text.style.backgroundColor = DocStyle.Current.SubBackgroundColor; });
                     text.RegisterCallback<PointerLeaveEvent>(evt => { text.style.backgroundColor = DocStyle.Current.BackgroundColor; });
@@ -72,7 +73,7 @@ namespace NaiveAPI.DocumentBuilder
                     text.style.borderBottomColor = DocStyle.Current.SubBackgroundColor;
                     text.style.borderBottomWidth = 1.5f;
                     text.RegisterCallback<PointerDownEvent>(evt => { value = type; });
-                    popup.Add(text);
+                    container.Add(text);
                 }
                 popup.Open(this);
                 popup.MoveBelow(searchField.InputFieldElement);

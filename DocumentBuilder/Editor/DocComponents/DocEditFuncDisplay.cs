@@ -126,6 +126,33 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             return doc;
         }
+        public static DocComponent LoadMethod(ConstructorInfo constructorInfo)
+        {
+            DocComponent doc = new DocComponent();
+            doc.VisualID = "4";
+            DocFuncDisplay.Data data = new DocFuncDisplay.Data();
+            List<string> texts = new List<string>();
+            data.Name = DocumentBuilderParser.CalGenericTypeName(constructorInfo.DeclaringType);
+            texts.Add("");
+            data.Syntaxs[0] = GetSignature(constructorInfo);
+            data.ReturnTypes.Add(data.Name);
+            data.Params = new List<DocFuncDisplay.ParamData>();
+            ParameterInfo[] parameters = constructorInfo.GetParameters();
+
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                DocFuncDisplay.ParamData param = new DocFuncDisplay.ParamData();
+                param.ParamName = parameters[i].Name;
+                param.Type = DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType);
+                data.Params.Add(param);
+                texts.Add("");
+            }
+
+            doc.JsonData = JsonUtility.ToJson(data);
+            doc.TextData = texts;
+
+            return doc;
+        }
 
         public static string GetSignature(MethodInfo methodInfo)
         {
@@ -153,8 +180,63 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             return stringBuilder.ToString();
         }
+        public static string GetSignature(ConstructorInfo constructorInfo)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.Append(getAccessLevel(constructorInfo));
+            if (constructorInfo.IsStatic)
+                stringBuilder.Append(" static");
+            stringBuilder.Append(" ");
+            stringBuilder.Append(DocumentBuilderParser.CalGenericTypeName(constructorInfo.DeclaringType));
+            stringBuilder.Append(" ");
+            stringBuilder.Append("_Constructor");
+            stringBuilder.Append('(');
+
+            ParameterInfo[] parameters = constructorInfo.GetParameters();
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                stringBuilder.Append(DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType));
+                stringBuilder.Append(" ");
+                stringBuilder.Append(parameters[i].Name);
+                if (i != parameters.Length - 1)
+                    stringBuilder.Append(", ");
+            }
+            stringBuilder.Append(")");
+
+            return stringBuilder.ToString();
+        }
 
         private static string getAccessLevel(MethodInfo methodInfo)
+        {
+            if (methodInfo.IsPublic)
+            {
+                return "public";
+            }
+            else if (methodInfo.IsFamily)
+            {
+                return "protected";
+            }
+            else if (methodInfo.IsPrivate)
+            {
+                return "private";
+            }
+            else if (methodInfo.IsAssembly)
+            {
+                return "internal";
+            }
+            else if (methodInfo.IsFamilyAndAssembly)
+            {
+                return "protected internal";
+            }
+            else if (methodInfo.IsFamilyOrAssembly)
+            {
+                return "protected internal";
+            }
+
+            return "";
+        }
+        private static string getAccessLevel(ConstructorInfo methodInfo)
         {
             if (methodInfo.IsPublic)
             {

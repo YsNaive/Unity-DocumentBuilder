@@ -130,6 +130,24 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     createdPage.Components.Add(component);
                 }
             }
+
+            DocPageFactory_MethodAPI factory = new DocPageFactory_MethodAPI();
+            if (instancePublicResult.ConstructorComponent != null)
+            {
+                var page = factory.CreatePageAsset(createdPage, "_Constructor");
+                page.Components.Add(DocLabel.CreateComponent($"{DocumentBuilderParser.CalGenericTypeName(instancePublicResult.TargetType)} Constructor"));
+                page.Components.Add(DocDividline.CreateComponent());
+                page.Components.Add(instancePublicResult.ConstructorComponent);
+            }
+            foreach(var item in instancePublicResult.MethodComponents)
+            {
+                var page = factory.CreatePageAsset(createdPage, item.name);
+                page.Components.Add(DocLabel.CreateComponent(item.name));
+                page.Components.Add(DocDescription.CreateComponent("description..."));
+                page.Components.Add(DocDividline.CreateComponent());
+                page.Components.Add(item.component);
+            }
+            AssetDatabase.Refresh();
         }
 
 

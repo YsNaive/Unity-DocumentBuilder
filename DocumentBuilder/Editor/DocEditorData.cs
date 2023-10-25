@@ -22,8 +22,17 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public DefaultAsset DocTemplateFolder;
         public List<Texture2D> BuildinIcon;
         public SODocPage DocumentBuilderDocsRoot;
-        public Texture2D WhiteStar=>whiteStar;
-        [SerializeField] Texture2D whiteStar;
+
+        [SerializeField] private Texture2D classIcon;
+        [SerializeField] private Texture2D structIcon;
+        [SerializeField] private Texture2D methodIcon;
+
+        public static class Icon
+        {
+            public static Texture2D ClassIcon => Instance.classIcon;
+            public static Texture2D StructIcon => Instance.structIcon;
+            public static Texture2D MethodIcon => Instance.methodIcon;
+        }
     }
 
 }

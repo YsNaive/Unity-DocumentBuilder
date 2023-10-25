@@ -218,7 +218,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         EditView.Add(editFavoriteRoot);
                     }
                 });
-                editFavorite.style.backgroundImage = DocEditorData.Instance.WhiteStar;
+                editFavorite.style.backgroundImage = SODocStyle.WhiteArrow;
                 editFavorite.style.unityBackgroundImageTintColor = new Color(.8f, .6f, .2f);
                 editFavorite.style.width = 18;
                 editFavorite.style.height = 18;

@@ -163,11 +163,11 @@ namespace NaiveAPI.DocumentBuilder
         /// <summary>
         /// This will create Custom String Field
         /// </summary>
-        public static StringDropdown NewDropdown(string label, List<string> choices, Action<string> valueCallback = null)
+        public static DSDropdown NewDropdown(string label, List<string> choices, Action<string> valueCallback = null)
         {
-            StringDropdown dropdown = new StringDropdown(label);
-            dropdown.Choices = choices;
-            dropdown.OnValueChanged += valueCallback;
+            DSDropdown dropdown = new DSDropdown(label);
+            dropdown.choices = choices;
+            dropdown.RegisterValueChangedCallback(evt => { valueCallback?.Invoke(evt.newValue); });
             dropdown.style.minHeight = DocStyle.Current.LineHeight;
             return dropdown;
         }

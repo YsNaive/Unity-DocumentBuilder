@@ -67,13 +67,13 @@ namespace NaiveAPI.DocumentBuilder
 
         private void repaintMatrix(GeometryChangedEvent e)
         {
-            Data data = JsonUtility.FromJson<Data>(Target.JsonData);
+            LoadDataFromTarget();
             VisualElement matrixRoot = this[0];
-            float[] maxWidth = new float[data.col];
-            float[] maxHeight = new float[data.row];
-            for (int i = 0; i < data.row; i++)
+            float[] maxWidth = new float[visualData.col];
+            float[] maxHeight = new float[visualData.row];
+            for (int i = 0; i < visualData.row; i++)
             {
-                for (int j = 0; j < data.col; j++)
+                for (int j = 0; j < visualData.col; j++)
                 {
                     if (maxWidth[j] < matrixRoot[i][j].layout.width)
                     {
@@ -89,42 +89,42 @@ namespace NaiveAPI.DocumentBuilder
             float sumWidth = 0;
             float sumHeight = 0;
 
-            for (int i = 0; i < data.col; i++)
+            for (int i = 0; i < visualData.col; i++)
             {
                 sumWidth += maxWidth[i];
                 //Debug.Log("width " + maxWidth[i]);
             }
 
-            for (int i = 0; i < data.row; i++)
+            for (int i = 0; i < visualData.row; i++)
             {
                 sumHeight += maxHeight[i];
                 //Debug.Log("height " + maxHeight[i]);
             }
-            float[] widthLength = new float[data.col];
-            float[] heightLength = new float[data.row];
+            float[] widthLength = new float[visualData.col];
+            float[] heightLength = new float[visualData.row];
 
-            for (int i = 0; i < data.col; i++)
+            for (int i = 0; i < visualData.col; i++)
             {
                 widthLength[i] = maxWidth[i] / sumWidth * 100;
             }
 
-            for (int i = 0; i < data.row; i++)
+            for (int i = 0; i < visualData.row; i++)
             {
                 heightLength[i] = maxHeight[i] / sumHeight * 100;
             }
-            sumWidth += (data.col * 5);
-            sumHeight += (data.row * 5);
+            sumWidth += (visualData.col * 5);
+            sumHeight += (visualData.row * 5);
 
             ISPosition position = new ISPosition();
             position.Position = Position.Absolute;
             position.Left = ISStyleLength.Percent(0);
             position.Top = ISStyleLength.Percent(0);
 
-            for (int i = 0; i < data.row; i++)
+            for (int i = 0; i < visualData.row; i++)
             {
                 matrixRoot[i].style.width = Length.Percent(100);
                 matrixRoot[i].style.height = Length.Percent(heightLength[i]);
-                for (int j = 0; j < data.col; j++)
+                for (int j = 0; j < visualData.col; j++)
                 {
                     matrixRoot[i][j].style.SetIS_Style(position);
                     matrixRoot[i][j].style.width = Length.Percent(widthLength[j]);
@@ -134,9 +134,9 @@ namespace NaiveAPI.DocumentBuilder
                 }
                 position.Left = ISStyleLength.Percent(0);
             }
-            if (data.mode == Mode.FixedWidth)
+            if (visualData.mode == Mode.FixedWidth)
                 matrixRoot.style.width = Length.Percent(100);
-            else if (data.mode == Mode.FixedText)
+            else if (visualData.mode == Mode.FixedText)
                 matrixRoot.style.width = sumWidth;
             matrixRoot.style.height = sumHeight;
             matrixRoot[matrixRoot.childCount - 1].UnregisterCallback<GeometryChangedEvent>(repaintMatrix);

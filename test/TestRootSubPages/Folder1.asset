@@ -14,9 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 323fcf14a6a8bd1488a8e68098322f7a, type: 3}
   SubPages:
-  - {fileID: 11400000, guid: 097c9bed00bf14d459cb0fadba07a136, type: 2}
   - {fileID: 11400000, guid: f945bd81f2021fc46ac03ea0f56e00ee, type: 2}
-  Components: []
+  Components:
+  - VisualID: 5
+    JsonData: '{"scale":1.0,"url":"","base64":"iVBORw0KGgoAAAANSUhEUgAAACQAAAAnCAYAAABnlOo2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAK1SURBVFhH7ZffS1pRHMDvHxPB3gIriH5ARQ9FS9ZsOLG0HBlriSsbbjCHkOGDg5VjtD0sqEEvLtrDiCLcqkmZtabMoTVrMq3WUuov+I7vF+7Bo5cugzEucR8+cM/3fO/Xzz3ne7wqlJdfAyWhCsmhCsmhCsmhPKGKigpQEoKmXQNKQhWSQxWS42oKxRNxSOwnGJEvEZicnpTMlUPosHRITvwNR8dH4PQ6YfDxIOF66iKxhaUFyfzLEHodvdAz3FMyYXlgoeL1uvqSuWJQyDHm4GKmYRNcXFxAs6GZixtsBhhyDYFuQMfFRYRoPArb0W0WwELJ70nYP9iH3a+7VNT7wsvdVIyUULW2mu7FejjW3tHCTmyHcsOfw3D6+xQWPyxy96BoyZalfqTA98rHxtaHVircdbeLyytESgjz8b5WUyuN5xfnYXl1mc3jyuG87YmNxg23GiCXy/FCOLmX2mNjkZX1FfBP+0viIig06hmFTmsn0TfaBxs7GxAMBSXzRXBnxp+P0zX23UH6gBfyvfRBPp+H2LcYR/Y4C3Pv5lheMSh0fn7OwPzA+wDU3qxlOVUdVVQfVymejEMun4OzszMmNPVmCpY+LvFC2Ctbu1vU5FKIecWIW1Z5vZKQylnbXKPaeBpxFet0dTQWhXAH1sPrvJB5xEz72qhvZDHE7rZDzY0aLlaIVA8VgpK4cli/MH6YPmRCA48G6LMF9zM3GO1GloT9srq5Ct33u6nxPH4PJfY7+1lOMXJCCJ7Y2bez0GJsgTZzG11njjJMCAl+CoKQyWboZIlBfJqZwAz1AR5NPKojYyNsXor0z7SskP6eno47PtzJrxOYeD0BoUiIE0L++7sMm1sqjjTdblLOyxUbHbdQUW97/B68mj8//iXKEyorKwMlobw/iu0aDSgJVUgOVehyNPAHaq7DrMB3PJIAAAAASUVORK5CYII=","mode":2}'
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

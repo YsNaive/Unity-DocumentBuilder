@@ -4,51 +4,53 @@ using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Text;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Debug = UnityEngine.Debug;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
     [CustomDocEditVisual("Charts/Image")]
-    public class DocEditImage : DocEditVisual
+    public class DocEditImage : DocEditVisual<DocImage.Data>
     {
         [Obsolete] public override string DisplayName => "Image";
 
         public override string VisualID => "5";
 
-        private VisualElement root, urlVisual, objVisual;
+        private VisualElement root, urlVisual, objVisual, base64Visual;
 
         protected override void OnCreateGUI()
         {
-            DocImage.Data data = JsonUtility.FromJson<DocImage.Data>(Target.JsonData);
-            if (data == null)
-                data = new DocImage.Data();
+            LoadDataFromTarget();
             root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
             TextField scaleField = new DSTextField("Scale", value =>
             {
-                float.TryParse(value.newValue, out data.scale);
-                Target.JsonData = JsonUtility.ToJson(data);
+                float.TryParse(value.newValue, out visualData.scale);
+                Target.JsonData = JsonUtility.ToJson(visualData);
             });
             DocStyle.Current.EndLabelWidth();
-            scaleField.value = data.scale + "";
+            scaleField.value = visualData.scale + "";
             scaleField.style.width = Length.Percent(39);
-            EnumField enumField = DocEditor.NewEnumField("", data.mode, value =>
+            EnumField enumField = DocEditor.NewEnumField("", visualData.mode, value =>
             {
-                data.mode = (DocImage.Mode)value.newValue;
-                Target.JsonData = JsonUtility.ToJson(data);
-                urlObjDisplay(data.mode);
+                visualData.mode = (DocImage.Mode)value.newValue;
+                Target.JsonData = JsonUtility.ToJson(visualData);
+                urlObjDisplay(visualData.mode);
             });
             enumField.style.width = Length.Percent(20);
-            urlVisual = generateUrlVisual(data);
-            objVisual = generateObjVisual(data);
+            urlVisual = generateUrlVisual(visualData);
+            objVisual = generateObjVisual(visualData);
+            base64Visual = generateBase64Visual(visualData);
             root.Add(scaleField);
             root.Add(enumField);
             this.Add(root);
-            urlObjDisplay(data.mode);
+            urlObjDisplay(visualData.mode);
         }
 
         public override string ToMarkdown(string dstPath)
@@ -70,17 +72,24 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         private void urlObjDisplay(DocImage.Mode mode)
         {
+            if (root.Contains(objVisual))
+                root.Remove(objVisual);
+            if (root.Contains(urlVisual))
+                root.Remove(urlVisual);
+            if (root.Contains(base64Visual))
+                root.Remove(base64Visual);
+
             if (mode == DocImage.Mode.Url)
             {
-                if (root.Contains(objVisual))
-                    root.Remove(objVisual);
                 root.Add(urlVisual);
             }
             else if (mode == DocImage.Mode.Object)
             {
-                if (root.Contains(urlVisual))
-                    root.Remove(urlVisual);
                 root.Add(objVisual);
+            }
+            else if (mode == DocImage.Mode.Base64)
+            {
+                root.Add(base64Visual);
             }
         }
 
@@ -102,6 +111,58 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return objectField;
         }
 
+        private VisualElement generateBase64Visual(DocImage.Data data)
+        {
+            var field = new DSTextField();
+            field.RegisterValueChangedCallback(evt => { data.base64 = evt.newValue; SaveDataToTarget(); });
+            field.style.width = Length.Percent(80);
+            field.SetValueWithoutNotify(data.base64);
+            var btn = DocRuntime.NewButton("Paste");
+            btn.clicked+=() =>
+            {
+#if UNITY_EDITOR_WIN
+                string command = "powershell";
+                string arguments = $"-command \"[Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.Clipboard]::GetImage().Save('{DocCache.DirectoryRoot}\\cache.png')\"";
+
+                ProcessStartInfo processStartInfo = new ProcessStartInfo
+                {
+                    FileName = command,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+                Process process = new Process { StartInfo = processStartInfo };
+                process.Start();
+                process.WaitForExit();
+                if(process.ExitCode == 0)
+                {
+                    Texture2D tex = new Texture2D(1, 1);
+                    var img = File.ReadAllBytes($"{DocCache.DirectoryRoot}\\cache.png");
+                    data.base64 = Convert.ToBase64String(img);
+                    SaveDataToTarget();
+                    File.Delete($"{DocCache.DirectoryRoot}\\cache.png");
+                    field.InputFieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.SuccessColor;
+                    field.SetValueWithoutNotify(data.base64);
+                }
+                else
+                {
+                    field.InputFieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.DangerColor;
+                    field.SetValueWithoutNotify("Load Failed");
+                }
+#else
+                Debug.Log("Paste image on DocImage is only support on Windows");
+#endif
+
+            };
+
+            btn.style.flexGrow = 1f;
+            var hor = DocRuntime.NewEmptyHorizontal();
+            hor.Add(field);
+            hor.Add(btn);
+            hor.style.flexGrow = 1f;
+            return hor;
+        }
         private VisualElement generateUrlVisual(DocImage.Data data)
         {
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(10));

@@ -40,6 +40,12 @@ namespace NaiveAPI.DocumentBuilder
             { typeof(long), "long" },
             { typeof(bool), "bool" }};
 
+        public static string CalNestedTypeName(Type type)
+        {
+            string name = type.FullName;
+            name = name.Substring(name.LastIndexOf('.') + 1).Replace('+', '.');
+            return name;
+        }
         public static string CalGenericTypeName(Type type)
         {
             string name = type.Name;

@@ -62,6 +62,14 @@ namespace NaiveAPI.DocumentBuilder
             popupElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
             popupElement.style.SetIS_Style(new ISBorder(DocStyle.Current.FrontgroundColor, 1));
             popupElement.style.minWidth = DocStyle.Current.LabelWidth;
+            var container = new DSScrollView();
+            container.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            container.RegisterCallback<GeometryChangedEvent>(evt =>
+            {
+                container.style.maxHeight = container.panel.visualTree.worldBound.height * 0.75f;
+                container.style.maxWidth = container.panel.visualTree.worldBound.width * 0.75f;
+            });
+            popupElement.Add(container);
             foreach (var choice in rootNode.choices)
             {
                 var textElement = new DSTextElement(choice);
@@ -77,14 +85,14 @@ namespace NaiveAPI.DocumentBuilder
                 textElement.RegisterCallback<PointerEnterEvent>(evt => { textElement.style.backgroundColor = DocStyle.Current.SubBackgroundColor; });
                 textElement.RegisterCallback<PointerLeaveEvent>(evt => { textElement.style.backgroundColor = Color.clear; });
                 textElement.RegisterCallback<PointerDownEvent>(evt => { textElement.style.backgroundColor = Color.clear; });
-                popupElement.Add(textElement);
+                container.Add(textElement);
             }
             if(rootNode.children != null)
             {
                 foreach (var node in rootNode.children)
                 {
                     var child = createChildMenu(node, callback, path);
-                    popupElement.Add(child.menu);
+                    container.Add(child.menu);
                     child.popup.OnClosed+= popupElement.Close;
                 }
             }
@@ -93,6 +101,7 @@ namespace NaiveAPI.DocumentBuilder
         {
             var childMenuContainer = new VisualElement();
             var childMenuTitle = new DSTextElement(node.value);
+            childMenuTitle.style.paddingLeft = DocStyle.Current.LineHeight.Value / 2f;
             var arrow = new VisualElement();
             arrow.style.width = DocStyle.Current.LineHeight;
             arrow.style.height = DocStyle.Current.LineHeight;
@@ -111,11 +120,13 @@ namespace NaiveAPI.DocumentBuilder
             childMenuContainer.Add(titleHor);
             var childPopup = new PopupElement();
             childPopup.OnOpend += e=> { titleHor.UnregisterCallback(clearColor); };
+            childPopup.OnClosed += () => { titleHor.RegisterCallback(clearColor); };
+            titleHor.RegisterCallback(clearColor);
             createMenu(node, callback, childPopup,$"{path}{(path==""?"":"/")}{node.value}");
             titleHor.RegisterCallback<PointerDownEvent>(evt =>
             {
                 childPopup.Open(childMenuTitle);
-                var pos = new Vector2(titleHor.worldBound.xMax, childMenuTitle.worldBound.y - 2);
+                var pos = new Vector2(titleHor.worldBound.xMax, childMenuTitle.worldBound.y - 1);
                 pos = childPopup.parent.WorldToLocal(pos);
                 childPopup.style.left = pos.x;
                 childPopup.style.top = pos.y;

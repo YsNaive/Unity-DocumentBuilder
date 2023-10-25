@@ -7,20 +7,20 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocImage : DocVisual
+    public class DocImage : DocVisual<DocImage.Data>
     {
         public override string VisualID => "5";
 
         protected override void OnCreateGUI()
         {
-            Data data = JsonUtility.FromJson<Data>(Target.JsonData);
-            if (data == null)
-                data = new Data();
+            LoadDataFromTarget();
 
-            if (data.mode == Mode.Object)
-                this.Add(generateObjectVisual(data));
-            else if (data.mode == Mode.Url)
-                this.Add(generateUrlVisual(data));
+            if (visualData.mode == Mode.Object)
+                this.Add(generateObjectVisual(visualData));
+            else if (visualData.mode == Mode.Url)
+                this.Add(generateUrlVisual(visualData));
+            else if (visualData.mode == Mode.Base64)
+                this.Add(generateBase64Visual(visualData));
         }
 
         public VisualElement generateObjectVisual(Data data)
@@ -107,16 +107,41 @@ namespace NaiveAPI.DocumentBuilder
             return root;
         }
 
+        public VisualElement generateBase64Visual(Data data)
+        {
+            VisualElement root = new VisualElement();
+            Texture2D img = new(1,1);
+            float width = 0;
+            img.LoadImage(Convert.FromBase64String(data.base64));
+            root.style.backgroundImage = img;
+            OnWidthChanged += newWidth =>
+            {
+                width = newWidth;
+                if (img != null)
+                {
+                    width = img.width * data.scale;
+                    if (width > newWidth || data.scale == -1)
+                        width = newWidth;
+                    root.style.width = width;
+                    root.style.height = img.height * (width / img.width);
+                }
+            };
+            return root;
+        }
+
         public class Data
         {
             public float scale = -1;
             public string url = "";
+            public string base64 = "";
             public Mode mode = Mode.Object;
         }
 
         public enum Mode
         {
-            Url, Object
+            Url, 
+            Object,
+            Base64
         }
     }
 }
