@@ -27,7 +27,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         [SerializeField] private List<DocComponent> undoBuffer;
         public override VisualElement CreateInspectorGUI()
         {
-            VisualElement root = DocRuntime.NewEmpty();
+            VisualElement root = new VisualElement();
             Target = target as SODocComponents;
             if(Target.Components == null) Target.Components = new List<DocComponent>();
             editField = new DocComponentsField(Target.Components);

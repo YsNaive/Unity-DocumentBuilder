@@ -92,12 +92,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         private VisualElement generateAddDeleteButton()
         {
-            VisualElement root = DocRuntime.NewEmptyHorizontal();
+            VisualElement root = new DSHorizontal();
 
-            Button addButton = DocRuntime.NewButton("+", DocStyle.Current.SuccessColor);
+            Button addButton = new DSButton("+", DocStyle.Current.SuccessColor);
             addButton.style.width = Length.Percent(50);
 
-            Button deleteButton = DocRuntime.NewButton("-", DocStyle.Current.DangerColor);
+            Button deleteButton = new DSButton("-", DocStyle.Current.DangerColor);
             deleteButton.style.width = Length.Percent(50);
 
             root.Add(addButton);
@@ -108,7 +108,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         private VisualElement generateItemVisual(DocItems.Data data, int i)
         {
-            VisualElement root = DocRuntime.NewEmptyHorizontal();
+            VisualElement root = new DSHorizontal();
 
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(10));
             TextField textField = new DSTextField(i.ToString(), (value) =>
@@ -143,7 +143,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         private VisualElement generateItemsVisual(DocItems.Data data)
         {
-            VisualElement root = DocRuntime.NewEmpty();
+            VisualElement root = new VisualElement();
 
             for (int i = 0;i < data.num; i++)
             {

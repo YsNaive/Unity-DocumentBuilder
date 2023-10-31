@@ -20,6 +20,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 72d4bc09e5fa38840825d9c4ac8a180a, type: 2}
   - {fileID: 11400000, guid: 82f49398804aed447b4be30090972fe2, type: 2}
   Components:
+  - VisualID: 2
+    JsonData: '{"Type":2}'
+    TextData:
+    - this document is write in 2.0.0
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:

@@ -38,6 +38,7 @@ namespace NaiveAPI.DocumentBuilder
         public bool EnableEmptySelecting { get => m_EnableEmptySelecting; set => m_EnableEmptySelecting = value; }
         public bool EnableDisplayingRootChange { get => m_EnableDisplayingRootChange; set => m_EnableDisplayingRootChange = value; }
         public bool EnableAutoHierarchySave { get => m_EnableAutoHierarchySave; set => m_EnableAutoHierarchySave = value; }
+        public bool LockSelect { get => m_LockSelect; set => m_LockSelect = value; }
         public bool EnableSerachField
         {
             get => m_EnableSerachField;
@@ -51,6 +52,7 @@ namespace NaiveAPI.DocumentBuilder
         bool m_EnableDisplayingRootChange = true;
         bool m_EnableSerachField = true;
         bool m_EnableAutoHierarchySave = false;
+        bool m_LockSelect = false;
 
         public string ID => menuId;
         string menuId;
@@ -79,7 +81,6 @@ namespace NaiveAPI.DocumentBuilder
 
             if (displayingRootOriginParentInfo.parent != null)
                 displayingRootOriginParentInfo.parent.SubItemContainer.Insert(displayingRootOriginParentInfo.index, DisplayingRootMenuItem);
-
             m_MenuItemContainer.Clear();
             foreach (var menuItem in item.ParentMenuItems())
             {
@@ -119,6 +120,7 @@ namespace NaiveAPI.DocumentBuilder
 
         void selectMenuItem(DocPageMenuItem item)
         {
+            if (m_LockSelect) return;
             var current = Selecting;
             while (current != null)
             {
@@ -147,9 +149,9 @@ namespace NaiveAPI.DocumentBuilder
             };
             item.TitleText.RegisterCallback<PointerDownEvent>(e =>
             {
-                if(((Time.time - lastClickTime) < 0.25) && !item.TargetPage.IsSubPageEmpty)
+                if(((Time.realtimeSinceStartup - lastClickTime) < 0.25) && !item.TargetPage.IsSubPageEmpty)
                     SetDisplayingRoot(item);
-                lastClickTime = Time.time;
+                lastClickTime = Time.realtimeSinceStartup;
                 // execute switch open if not allow empty select && target is empty
                 if (!m_EnableEmptySelecting && item.TargetPage.IsComponentsEmpty)
                 {

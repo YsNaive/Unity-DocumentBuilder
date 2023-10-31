@@ -47,11 +47,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.SetIS_Style(ISPadding.Pixel(5));
-            ComponentsVisualRoot = DocRuntime.NewEmpty();
+            ComponentsVisualRoot = new VisualElement();
             ComponentsVisualRoot.style.marginBottom = 15;
             Repaint(initComponents);
             Add(ComponentsVisualRoot);
-            Add(DocRuntime.NewButton("Add Component", () =>
+            Add(new DSButton("Add Component", () =>
             {
                 var doc = new DocComponentField(new DocComponent());
                 ComponentsVisualRoot.Add(doc);
@@ -177,8 +177,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             style.borderLeftColor = DocStyle.Current.SuccessColor;
             UnregisterCallback<PointerDownEvent>(enableEditMode);
-            EditView = DocRuntime.NewEmpty();
-            ToolBar = DocRuntime.NewEmptyHorizontal();
+            EditView = new VisualElement();
+            ToolBar = new DSHorizontal();
             if (!m_singleMode)
                 ToolBar.Add(insertBtn());
             createDropfield();
@@ -201,11 +201,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
             else
             {
-                VisualElement visualElement = DocRuntime.NewEmptyHorizontal();
+                VisualElement visualElement = new DSHorizontal();
                 visualElement.style.marginTop = 5;
                 visualElement.style.alignItems = Align.Center;
                 visualElement.style.flexWrap = Wrap.Wrap;
-                Button editFavorite = DocRuntime.NewButton("", () =>
+                Button editFavorite = new DSButton("", () =>
                 {
                     if (editFavoriteRoot != null)
                     {
@@ -235,7 +235,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         if (i != -1)
                             displayName = name.Substring(i + 1);
                         else displayName = name;
-                        Button button = DocRuntime.NewButton(displayName, () =>
+                        Button button = new DSButton(displayName, () =>
                         {
                             SelectVisualType.value = name;
                         });
@@ -321,7 +321,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         void createEditFavorite()
         {
-            editFavoriteRoot = DocRuntime.NewEmpty();
+            editFavoriteRoot = new VisualElement();
             foreach (var name in DocEditor.NameList)
             {
                 if (name == "None") continue;
@@ -369,7 +369,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         Button insertBtn()
         {
             Button button = null;
-            button = DocRuntime.NewButton("Insert", () =>
+            button = new DSButton("Insert", () =>
             {
                 DocComponentField doc = new DocComponentField(new DocComponent());
                 parent.Insert(Index, doc);
@@ -383,7 +383,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public Button CopyBtn()
         {
             Button button = null;
-            button = DocRuntime.NewButton("", () =>
+            button = new DSButton("", () =>
             {
                 copyBuffer = Target.Copy();
                 button.style.unityBackgroundImageTintColor = DocStyle.Current.SuccessTextColor;
@@ -401,7 +401,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public Button PasetBtn()
         {
             Button button = null;
-            button = DocRuntime.NewButton("", () =>
+            button = new DSButton("", () =>
             {
                 if (copyBuffer == null)
                 {
@@ -426,12 +426,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
         Button dragBtn()
         {
             Button button = null;
-            button = DocRuntime.NewButton("☰", () =>
+            button = new DSButton("☰", () =>
             {
                 IsDraging = true;
                 SetStatus(false);
                 style.borderLeftColor = DocStyle.Current.WarningColor;
-                VisualElement dragMask = DocRuntime.NewEmpty();
+                VisualElement dragMask = new VisualElement();
                 dragMask.style.width = parent.resolvedStyle.width;
                 dragMask.style.height = parent.resolvedStyle.height;
                 dragMask.style.position = Position.Absolute;
@@ -454,7 +454,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         Button duplicateBtn()
         {
             Button button = null;
-            button = DocRuntime.NewButton("", () =>
+            button = new DSButton("", () =>
             {
                 DocComponentField doc = new DocComponentField(Target.Copy());
                 parent.Insert(Index + 1, doc);
@@ -471,7 +471,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         Button deleteBtn()
         {
             Button button = null;
-            button = DocRuntime.NewButton("", () =>
+            button = new DSButton("", () =>
             {
                 OnModify?.Invoke(this);
                 parent.Remove(this);

@@ -9,80 +9,52 @@ namespace NaiveAPI.DocumentBuilder
 {
     public class DocBookVisual : VisualElement
     {
-        PageMenuVisual menuVisual;
-        public PageMenuHandler MenuHandler = new PageMenuHandler();
-        VisualElement divLineBar = new VisualElement();
-        ScrollView menuScrollView;
+        DocPageMenu pageMenu;
         public DocPageVisual DisplayingPage;
-        float menuWidthPercent;
-        float widthSpace = 15;
         public bool DontPlayAnimation = false;
         public bool IsPlayingAinmation { get; private set; }
-        private bool isChangingWidth = false;
         public VisualElement ChapterMenu;
-        public TextField SearchField;
-        VisualElement leftSide = DocRuntime.NewEmpty();
-        VisualElement searchView = DocRuntime.NewEmpty();
-        private List<PageMenuVisual> searchBuffer = new List<PageMenuVisual>();
+        VisualElement leftContainer, rightContainer;
+        SplitView splitView;
         public DocBookVisual(SODocPage rootPage)
         {
-            menuScrollView = new DSScrollView();
-            style.backgroundColor = DocStyle.Current.BackgroundColor;
-            menuWidthPercent = DocCache.Get().DocMenuWidth;
-            menuWidthPercent = Mathf.Clamp(menuWidthPercent, 0.01f, 1f);
-            if (rootPage == null) return;
-            style.SetIS_Style(ISFlex.Horizontal);
-            divLineBar.style.width = 5;
-            divLineBar.style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            divLineBar.RegisterCallback<PointerDownEvent>(e =>{isChangingWidth = true;});
-            RegisterCallback<PointerUpEvent>(e =>{isChangingWidth = false;});
-            RegisterCallback<PointerLeaveEvent>(e => { isChangingWidth = false; });
-            RegisterCallback<PointerMoveEvent>(e =>
-            {
-                if (isChangingWidth)
-                {
-                    menuWidthPercent = e.position.x/ layout.width;
-                    menuWidthPercent = Mathf.Clamp(menuWidthPercent, 0.01f, 1f);
-                    DocCache.Get().DocMenuWidth = menuWidthPercent;
-                    setMenuWidth();
-                }
-            });
-            
+            style.flexGrow = 1;
+            splitView = new(30);
+            leftContainer = new();
+            rightContainer = new();
+            splitView.Add(leftContainer);
+            splitView.Add(rightContainer);
 
-            MenuHandler.Root = rootPage;
-            menuVisual = new PageMenuVisual(rootPage, MenuHandler);
-            if (rootPage == MenuHandler.Root)
-                menuVisual.style.SetIS_Style(ISMargin.Pixel(10));
-            else
-                menuVisual.style.SetIS_Style(ISMargin.None);
-            menuVisual.style.SetIS_Style(ISPadding.None);
-            MenuHandler.OnChangeSelect += (oldVal, newVal) =>
+            style.backgroundColor = DocStyle.Current.BackgroundColor;
+
+            pageMenu = new DocPageMenu(rootPage);
+            pageMenu.EnableAutoHierarchySave = true;
+            pageMenu.OnSelected += newVal =>
             {
-                var newPage = new DocPageVisual(newVal.Target);
+                var newPage = new DocPageVisual(newVal.TargetPage);
                 newPage.style.SetIS_Style(ISMargin.None);
-                newPage.style.width = (layout.width - widthSpace) * (1f - menuWidthPercent);
                 newPage.style.position = Position.Relative;
                 if (DontPlayAnimation)
                 {
                     if (DisplayingPage != null)
-                        Remove(DisplayingPage);
+                        rightContainer.Remove(DisplayingPage);
                     DisplayingPage = newPage;
-                    Add(DisplayingPage);
+                    rightContainer.Add(DisplayingPage);
                     repaintChapter();
                 }
                 else if (DisplayingPage != null)
                 {
                     IsPlayingAinmation = true;
-                    MenuHandler.LockSelect = true;
+                    pageMenu.LockSelect = true;
                     DisplayingPage.PlayOuttro(() =>
                     {
-                        Remove(DisplayingPage);
+                        rightContainer.Remove(DisplayingPage);
                         DisplayingPage = newPage;
-                        Add(DisplayingPage);
+                        rightContainer.Add(DisplayingPage);
                         DisplayingPage.PlayIntro(() =>
                         {
                             IsPlayingAinmation = false;
-                            MenuHandler.LockSelect = false;
+                            pageMenu.LockSelect = false;
                             repaintChapter();
                         });
                     });
@@ -90,127 +62,20 @@ namespace NaiveAPI.DocumentBuilder
                 else
                 {
                     DisplayingPage = newPage;
-                    Add(DisplayingPage);
+                    rightContainer.Add(DisplayingPage);
                     IsPlayingAinmation = true;
-                    MenuHandler.LockSelect = true;
+                    pageMenu.LockSelect = true;
                     DisplayingPage.PlayIntro(() =>
                     {
                         IsPlayingAinmation = false;
-                        MenuHandler.LockSelect = false;
+                        pageMenu.LockSelect = false;
                         repaintChapter();
                     });
                 }
             };
-            MenuHandler.SetState(DocCache.Get().OpeningBookHierarchy);
-
-            SearchField = new DSTextField("",e =>
-            {
-                if(e.newValue == "")
-                {
-                    menuScrollView.style.display = DisplayStyle.Flex;
-                    searchView.style.display = DisplayStyle.None;
-                    return;
-                }
-                searchBuffer.Clear();
-                List<PageMenuVisual> searched = new List<PageMenuVisual>();
-                Queue<PageMenuVisual> inQueue = new Queue<PageMenuVisual>();
-                inQueue.Enqueue(menuVisual);
-                while (inQueue.Count != 0)
-                {
-                    var cur = inQueue.Dequeue();
-                    foreach (PageMenuVisual sub in cur.SubMenuVisual)
-                    {
-                        if(!searched.Contains(sub))
-                            inQueue.Enqueue(sub);
-                    }
-                    if (cur.Target.name.Contains(e.newValue))
-                    {
-                        searchBuffer.Add(cur);
-                    }
-                    else
-                    {
-                        bool isFound = false;
-                        foreach(var com in cur.Target.Components)
-                        {
-                            foreach (var str in com.TextData)
-                            {
-                                if (str.Contains(e.newValue))
-                                {
-                                    searchBuffer.Add(cur);
-                                    isFound = true;
-                                    break;
-                                }
-                            }
-                            if (isFound) break;
-                        }
-                    }
-                    searched.Add(cur);
-                }
-                menuScrollView.style.display = DisplayStyle.None;
-                searchView.style.display = DisplayStyle.Flex;
-                searchView.style.marginTop = DocStyle.Current.MainTextSize;
-                searchView.Clear();
-                foreach(var page in searchBuffer)
-                {
-                    var button = new DSTextElement(page.Target.name);
-                    button.style.marginLeft = DocStyle.Current.LabelTextSize;
-                    button.RegisterCallback<PointerDownEvent>(e =>
-                    {
-                        MenuHandler.Selecting = page;
-                    });
-                    button.RegisterCallback<PointerEnterEvent>(e =>
-                    {
-                        button.style.backgroundColor = DocStyle.Current.HintColor;
-                    });
-                    button.RegisterCallback<PointerLeaveEvent>(e =>
-                    {
-                        button.style.backgroundColor = Color.clear;
-                    });
-                    var icon = DocRuntime.NewEmpty();
-                    icon.style.backgroundImage = page.Target.Icon;
-                    icon.style.width = DocStyle.Current.MainTextSize;
-                    icon.style.height = DocStyle.Current.MainTextSize;
-                    button.style.height = DocStyle.Current.MainTextSize;
-                    icon.style.position = Position.Absolute;
-                    icon.style.left = -DocStyle.Current.MainTextSize*1.5f;
-                    button.style.marginLeft = DocStyle.Current.MainTextSize*3;
-                    button.Add(icon);
-                    searchView.Add(button);
-                }
-            });
-            SearchField.style.marginLeft = DocStyle.Current.MainTextSize/2;
-            SearchField.style.marginTop = DocStyle.Current.MainTextSize/2;
-            SearchField.style.marginRight = DocStyle.Current.MainTextSize/2;
-            menuScrollView.Add(menuVisual);
-            menuScrollView.mode = ScrollViewMode.VerticalAndHorizontal;
-            var leftSide = DocRuntime.NewEmpty();
-            leftSide.Add(SearchField);
-            leftSide.Add(searchView);
-            leftSide.Add(menuScrollView);
-            Add(leftSide);
-            Add(divLineBar);
-
-            RegisterCallback<GeometryChangedEvent>(e =>
-            {
-                if (e.oldRect.width != e.newRect.width)
-                {
-                    setMenuWidth();
-                }
-                if (e.oldRect.height != e.newRect.height)
-                {
-                    style.height = Screen.height;
-                }
-            });
-        }
-        void setMenuWidth()
-        {
-            //leftSide.style.width = (layout.width - widthSpace) * menuWidthPercent;
-            searchView.style.width = (layout.width - widthSpace) * menuWidthPercent;
-            menuScrollView.style.width = (layout.width - widthSpace) * menuWidthPercent;
-            if (DisplayingPage != null)
-            {
-                DisplayingPage.style.width = (layout.width - widthSpace) * (1f - menuWidthPercent);
-            }
+            pageMenu.LoadStateHierarchy();
+            leftContainer.Add(pageMenu);
+            Add(splitView);
         }
         void repaintChapter()
         {
@@ -246,7 +111,7 @@ namespace NaiveAPI.DocumentBuilder
             ve.style.right = Length.Percent(3.5f);
             ve.style.top = Length.Percent(1f);
             int comIndex = 0;
-            var chapInfo = DocRuntime.NewEmpty();
+            var chapInfo = new VisualElement();
             foreach (var com in DisplayingPage.Target.Components)
             {
                 if (com.VisualID == "1")

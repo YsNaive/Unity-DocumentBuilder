@@ -40,11 +40,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             intField.value = data.Level;
             intField.label = "Level";
             DocStyle.Current.EndLabelWidth();
-            var addBtn = DocRuntime.NewButton("+", DocStyle.Current.SuccessColor, () =>
+            var addBtn = new DSButton("+", DocStyle.Current.SuccessColor, () =>
             {
                 intField.value += 1;
             });
-            var subBtn = DocRuntime.NewButton("-", DocStyle.Current.DangerColor, () =>
+            var subBtn = new DSButton("-", DocStyle.Current.DangerColor, () =>
             {
                 intField.value -= 1;
             });
@@ -55,7 +55,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 subBtn.style.width = e.newRect.height;
                 subBtn.style.height = e.newRect.height;
             });
-            Add(DocRuntime.NewHorizontalBar(1f,labelInput,null,DocRuntime.NewHorizontalBar(intField,null,addBtn,subBtn)));
+            Add(new DSHorizontal(1f,labelInput,null,new DSHorizontal(intField,null,addBtn,subBtn)));
         }
         void save()
         {

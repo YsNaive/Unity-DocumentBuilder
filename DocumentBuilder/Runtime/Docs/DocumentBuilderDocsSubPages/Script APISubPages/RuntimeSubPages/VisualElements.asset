@@ -14,13 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 323fcf14a6a8bd1488a8e68098322f7a, type: 3}
   SubPages:
-  - {fileID: 11400000, guid: bc6631fc1b798d241aca52174ebc0be9, type: 2}
-  - {fileID: 11400000, guid: 1dd8d16c060c8434db4ea18caf835ad7, type: 2}
-  - {fileID: 11400000, guid: f5e5e99bcb2822d4ba79e414506b96d9, type: 2}
+  - {fileID: 11400000, guid: d78321ffcbab64b43bcaa0c1a2b46e2c, type: 2}
+  - {fileID: 11400000, guid: 44e1f16cf10cee5418a5e3ccc416281d, type: 2}
   - {fileID: 11400000, guid: 6c65fda3d2c00a846aef3b2237dc5012, type: 2}
   - {fileID: 11400000, guid: f9e26cfd6e9555c429e900160b18317e, type: 2}
-  - {fileID: 11400000, guid: 3a5049a920aebe54aa0cce3ed3b0e125, type: 2}
-  - {fileID: 11400000, guid: 8127169060357704db9dad12e339f150, type: 2}
   Components: []
   IntroMode: 1
   OuttroMode: 1

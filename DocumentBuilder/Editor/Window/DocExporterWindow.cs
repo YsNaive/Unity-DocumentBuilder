@@ -27,11 +27,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public static readonly List<string> Mode = new List<string> { "Char Table", "Markdown" };
         VisualElement Layout;
         ObjectField TargetFolder;
-        DropdownField ModeSelect;
+        DSDropdown ModeSelect;
         string exportPath;
         private void CreateGUI()
         {
-            ModeSelect = DocRuntime.NewDropdownField("Export Mode", Mode);
+            ModeSelect = new DSDropdown("Export Mode") { choices = Mode };
             ModeSelect.RegisterValueChangedCallback(e =>
             {
                 Layout.Clear();
@@ -41,7 +41,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     repaintMarkdown();
             }); ModeSelect.index = 0;
             rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
-            Layout = DocRuntime.NewEmpty();
+            Layout = new VisualElement();
             TargetFolder = DocEditor.NewObjectField<DefaultAsset>("Export Folder");
             rootVisualElement.Add(ModeSelect);
             rootVisualElement.Add(Layout);
@@ -73,11 +73,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         private void repaintCharTable()
         {
-            var container = DocRuntime.NewEmpty();
+            var container = new VisualElement();
             container.Add(createSODocPageSelectField());
             Layout.Add(TargetFolder);
             Layout.Add(container);
-            var btn = DocRuntime.NewButton("Export", () =>
+            var btn = new DSButton("Export", () =>
             {
                 Queue<SODocPage> queue = new Queue<SODocPage>();
                 List<SODocPage> pagelist = new List<SODocPage>();
@@ -141,12 +141,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Toggle includeSubPages = new Toggle();
             includeSubPages.label = "Include SubPages";
             includeSubPages.value = true;
-            DocRuntime.ApplyMarginPadding(includeSubPages);
             Layout.Add(includeSubPages);
-            var container = DocRuntime.NewEmpty();
+            var container = new VisualElement();
             container.Add(createSODocPageSelectField());
-            VisualElement info = DocRuntime.NewEmpty();
-            var btn = DocRuntime.NewButton("Export", () =>
+            VisualElement info = new VisualElement();
+            var btn = new DSButton("Export", () =>
             {
                 EditorUtility.DisplayProgressBar("Document Builder", "Exporting Markdown...", 1);
                 exportFailCount = 0;

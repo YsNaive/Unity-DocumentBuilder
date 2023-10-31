@@ -15,20 +15,18 @@ namespace NaiveAPI.Sample
         public SODocPage PreviewPage;
         void Start()
         {
-            //if (UsingStyle != null) DocStyle.Current = UsingStyle.Get();
+            if (UsingStyle != null) DocStyle.Current = UsingStyle.Get();
             UID = FindObjectOfType<UIDocument>();
             root = new DSScrollView();
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             UID.rootVisualElement.Add(root);
 
-            root.Add(DocRuntime.NewLabel("This is Label"));
+            root.Add(new DSLabel("This is Label"));
             root.Add(new DSTextElement("This is TextElement"));
             root.Add(new DSTextField("TextField"));
-            root.Add(DocRuntime.NewDropdownField("Unity Dropdown", new List<string>() { "Select A", "Select B", "Select C" }));
-            root.Add(DocRuntime.NewDropdown("Custom Dropdown", new List<string>() { "Select A", "Select B", "Select C" }, (e) => { Debug.Log("Select " + e); }));
-            root.Add(DocRuntime.NewButton("Button", () => { Debug.Log("Click !"); }));
-            root.Add(DocRuntime.NewCheckButton("CheckButton", () => { Debug.Log("YES !"); }));
-            var foldout = DocRuntime.NewFoldout("Foldout");
+            root.Add(new DSDropdown("Unity Dropdown") { choices = new List<string>() { "Select A", "Select B", "Select C" } });
+            root.Add(new DSButton("Button", () => { Debug.Log("Click !"); }));
+            var foldout = new DSFoldout("Foldout");
             foldout.Add(new DSTextElement("Some contents..."));
             root.Add(foldout);
             var scrollview = new DSScrollView();
@@ -45,7 +43,6 @@ namespace NaiveAPI.Sample
             root.Add(scrollview);
             foreach (var ve in root.Children())
                 ve.style.SetIS_Style(DocStyle.Current.ElementMarginPadding);
-            root.Add(new DocPageVisual(PreviewPage));
         }
     }
 }

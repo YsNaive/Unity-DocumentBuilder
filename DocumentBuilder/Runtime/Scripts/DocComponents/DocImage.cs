@@ -10,11 +10,10 @@ namespace NaiveAPI.DocumentBuilder
     public class DocImage : DocVisual<DocImage.Data>
     {
         public override string VisualID => "5";
-
+        static ISBorder border = new ISBorder(DocStyle.Current.SubBackgroundColor, 1f);
         protected override void OnCreateGUI()
         {
             LoadDataFromTarget();
-
             if (visualData.mode == Mode.Object)
                 this.Add(generateObjectVisual(visualData));
             else if (visualData.mode == Mode.Url)
@@ -73,6 +72,7 @@ namespace NaiveAPI.DocumentBuilder
                 }
             };
 
+            root.style.SetIS_Style(border);
             return root;
         }
 
@@ -104,6 +104,7 @@ namespace NaiveAPI.DocumentBuilder
                     root.style.height = img.height * (width / img.width);
                 }
             };
+            root.style.SetIS_Style(border);
             return root;
         }
 
@@ -126,6 +127,7 @@ namespace NaiveAPI.DocumentBuilder
                     root.style.height = img.height * (width / img.width);
                 }
             };
+            root.style.SetIS_Style(border);
             return root;
         }
 

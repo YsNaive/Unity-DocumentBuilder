@@ -71,7 +71,7 @@ namespace NaiveAPI.DocumentBuilder
         PopupElement popupMenu;
         public DSDropdown()
         {
-            var container = DocRuntime.NewEmptyHorizontal();
+            var container = new DSHorizontal();
             m_fieldElement = new DSTextElement();
             m_labelElement = new DSTextElement();
             container.Add(m_labelElement);
@@ -79,6 +79,7 @@ namespace NaiveAPI.DocumentBuilder
             Add(container);
 
             m_fieldElement.style.flexGrow = 1f;
+            m_fieldElement.style.whiteSpace = WhiteSpace.NoWrap;
             m_fieldElement.style.SetIS_Style(DocStyle.Current.InputFieldStyle);
             m_fieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.SubBackgroundColor;
             var arrow = new VisualElement();

@@ -23,6 +23,7 @@ namespace NaiveAPI.DocumentBuilder
             IntroAnimation = (callBack) => { this.Fade(0, 1, 200, 50, callBack); };
             OuttroAnimation = (callBack) => { this.Fade(1, 0, 200, 50, callBack); };
             codeScrollView =new DSScrollView();
+            codeScrollView.nestedInteractionKind = ScrollView.NestedInteractionKind.ForwardScrolling;
             if (Target.TextData.Count == 0) Target.TextData.Add("");
             ISPadding padding = ISPadding.Pixel(DocStyle.Current.MainTextSize / 2);
             codeContents = new DSTextElement($"<line-height={visualData.LineHeightPercent}%>"+DocumentBuilderParser.CSharpParser(Target.TextData[0]));
@@ -53,7 +54,7 @@ namespace NaiveAPI.DocumentBuilder
             numScrollView.style.position = Position.Absolute;
             lineNumber.style.unityTextAlign = TextAnchor.MiddleRight;
             Button copy = null;
-            copy = DocRuntime.NewButton("Copy", () =>
+            copy = new DSButton("Copy", () =>
             {
                 GUIUtility.systemCopyBuffer = Target.TextData[0];
                 copy.text = "Copied !";

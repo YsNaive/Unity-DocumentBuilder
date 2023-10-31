@@ -108,26 +108,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 integerField.RegisterValueChangedCallback(valueChange);
             return integerField;
         }
-        public static EnumField NewEnumField(string label, Enum initValue, EventCallback<ChangeEvent<Enum>> valueChange = null)
-        {
-            EnumField enumField = new EnumField();
-            enumField.style.ClearMarginPadding();
-            enumField[0].style.ClearMarginPadding();
-            enumField[0].style.backgroundColor = DocStyle.Current.SubBackgroundColor;
-            enumField.style.minHeight = 18;
-            enumField[0].Q<TextElement>().style.SetIS_Style(DocStyle.Current.MainText);
-            enumField[0].Q<TextElement>().style.paddingLeft = 5;
-            if (label != "")
-            {
-                enumField.label = label;
-                enumField[0].style.SetIS_Style(DocStyle.Current.MainText);
-            }
-            enumField.Init(initValue);
-            if(valueChange != null) 
-                enumField.RegisterValueChangedCallback(valueChange);
-            return enumField;
-        }
-
 
         static Texture2D copy;
         static Texture2D paste;

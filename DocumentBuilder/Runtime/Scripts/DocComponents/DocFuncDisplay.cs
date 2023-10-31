@@ -34,7 +34,7 @@ namespace NaiveAPI.DocumentBuilder
             if (data == null) return;
             TextElement nameText = new DSTextElement(data.Name);
             nameText.style.SetIS_Style(funcNameTextStyle);
-            VisualElement child = DocRuntime.NewEmpty();
+            VisualElement child = new VisualElement();
             this.Add(nameText);
             if (Target.TextData[0] != "")
             {

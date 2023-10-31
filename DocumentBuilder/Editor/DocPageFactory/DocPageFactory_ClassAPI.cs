@@ -154,7 +154,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         DSTypeField typeField;
         public override VisualElement CreateEditGUI()
         {
-            var root = DocRuntime.NewEmpty();
+            var root = new VisualElement();
             typeField = new DSTypeField("Target Type");
             root.Add(typeField);
             return root;

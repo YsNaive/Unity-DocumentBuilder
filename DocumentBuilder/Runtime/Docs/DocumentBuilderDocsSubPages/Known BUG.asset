@@ -22,6 +22,7 @@ MonoBehaviour:
       The unity may crash, remember to Ctrl^S to save before press "Play".
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

@@ -23,6 +23,7 @@ namespace NaiveAPI.DocumentBuilder
         }
         public void Repaint()
         {
+            var boundBefore = contentContainer.localBound;
             Clear();
             foreach (var com in Target.Components)
             {
@@ -37,6 +38,7 @@ namespace NaiveAPI.DocumentBuilder
             }
             if(!Target.IsComponentsEmpty)
                 visuals[^1].style.marginBottom = DocStyle.Current.MainTextSize*7f;
+            contentContainer.style.minHeight = boundBefore.height;
         }
         public void PlayIntro(Action callback = null)
         {

@@ -51,7 +51,7 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - while editing, what is the value means
+    - Level can set between [1, 6]
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0

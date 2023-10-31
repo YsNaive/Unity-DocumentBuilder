@@ -1,16 +1,2 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement>
-        <NaiveAPI.DocumentBuilder.DocTextElement text="321123" enable-rich-text="true" style="justify-content: flex-start; align-items: auto;" />
-        <NaiveAPI.DocumentBuilder.DocTextField text="Input..." multiline="false" password="false" label="Type Something..." />
-        <NaiveAPI.DocumentBuilder.DocFoldout text="aaaacccc" value="false">
-            <NaiveAPI.DocumentBuilder.DocTextElement text="321123" enable-rich-text="true" style="justify-content: flex-start; align-items: auto;" />
-            <NaiveAPI.DocumentBuilder.DocTextElement text="321123" enable-rich-text="true" style="justify-content: flex-start; align-items: auto;" />
-        </NaiveAPI.DocumentBuilder.DocFoldout>
-        <NaiveAPI.DocumentBuilder.DocScrollView style="height: 56px;">
-            <NaiveAPI.DocumentBuilder.DocTextElement text="321123" enable-rich-text="true" style="justify-content: flex-start; align-items: auto;" />
-            <NaiveAPI.DocumentBuilder.DocTextElement text="321123" enable-rich-text="true" style="justify-content: flex-start; align-items: auto;" />
-            <NaiveAPI.DocumentBuilder.DocTextElement text="321123777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777" enable-rich-text="true" style="justify-content: flex-start; align-items: auto;" />
-        </NaiveAPI.DocumentBuilder.DocScrollView>
-        <NaiveAPI.DocumentBuilder.DocScroller high-value="70.1" direction="Horizontal" value="134.8" low-value="0" />
-    </ui:VisualElement>
 </ui:UXML>

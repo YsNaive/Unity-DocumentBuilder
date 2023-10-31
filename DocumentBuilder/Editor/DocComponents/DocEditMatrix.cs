@@ -132,14 +132,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
             colTextField.style.width = Length.Percent(percent);
             DocStyle.Current.EndLabelWidth();
 
-            EnumField enumField = DocEditor.NewEnumField("", data.mode, value =>
+            var enumField = new DSEnumField("", data.mode, value =>
             {
                 data.mode = (DocMatrix.Mode)value.newValue;
                 Target.JsonData = JsonUtility.ToJson(data);
             });
             enumField.style.width = Length.Percent(percent);
 
-            return DocRuntime.NewHorizontalBar(1, rowTextField, colTextField, enumField);
+            return new DSHorizontal(1, rowTextField, colTextField, enumField);
         }
 
         private VisualElement generateAnchors(DocMatrix.Data data)
@@ -151,12 +151,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
             for (int i = 0;i < data.col; i++)
             {
                 int i1 = i;
-                addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
+                addButton = new DSButton("", DocStyle.Current.SuccessColor, () =>
                 {
                     data.AddCol(i1);
                     Target.JsonData = JsonUtility.ToJson(data);
                     ((TextField)rowColVisual[1]).value = data.col + "";
                 });
+                addButton.style.ClearMargin();
                 addButton.style.width = Length.Percent(percent / 2);
                 if (i == 0)
                 {
@@ -164,7 +165,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     addButton.style.width = Length.Percent(percent / 4);
                 }
                 root.Add(addButton);
-                EnumField field = DocEditor.NewEnumField("", data.anchors[i], (value =>
+                var field = new DSEnumField("", data.anchors[i], (value =>
                 {
                     data.anchors[i1] = (TextAnchor)value.newValue;
                     Target.JsonData = JsonUtility.ToJson(data);
@@ -173,13 +174,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 root.Add(field);
             }
 
-            addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
+            addButton = new DSButton("", DocStyle.Current.SuccessColor, () =>
             {
                 data.AddCol(data.col);
                 Target.JsonData = JsonUtility.ToJson(data);
                 ((TextField)rowColVisual[1]).value = data.col + "";
             });
             addButton.style.width = Length.Percent(percent / 4);
+            addButton.style.ClearMargin();
             root.Add(addButton);
 
             return root;
@@ -196,7 +198,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 VisualElement child = new VisualElement();
                 child.style.SetIS_Style(ISFlex.Horizontal);
                 int i1 = i;
-                addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
+                addButton = new DSButton("", DocStyle.Current.SuccessColor, () =>
                 {
                     data.AddRow(i1);
                     Target.JsonData = JsonUtility.ToJson(data);
@@ -218,10 +220,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     textField.style.width = Length.Percent(percent);
                     child.Add(textField);
                 }
-                Button deleteButton = new Button();
+                Button deleteButton = new DSButton("",DocStyle.Current.DangerColor);
                 deleteButton.style.SetIS_Style(ISMargin.None);
                 deleteButton.style.SetIS_Style(ISPadding.None);
-                deleteButton.style.backgroundColor = DocStyle.Current.DangerColor;
                 deleteButton.style.width = Length.Percent(5);
                 deleteButton.clicked += () =>
                 {
@@ -236,7 +237,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement deleteColButton = new VisualElement();
             deleteColButton.style.SetIS_Style(ISFlex.Horizontal);
 
-            addButton = DocRuntime.NewButton("", DocStyle.Current.SuccessColor, () =>
+            addButton = new DSButton("", DocStyle.Current.SuccessColor, () =>
             {
                 data.AddRow(data.row);
                 Target.JsonData = JsonUtility.ToJson(data);
@@ -249,13 +250,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
             for (int i = 0;i < data.col; i++)
             {
                 int i1 = i;
-                Button deleteButton = DocRuntime.NewButton(DocStyle.Current.DangerColor, () =>
+                Button deleteButton = new DSButton("",DocStyle.Current.DangerColor, () =>
                 {
                     data.DeleteCol(i1);
                     Target.JsonData = JsonUtility.ToJson(data);
                     ((TextField)rowColVisual[1]).value = data.col + "";
                 });
                 deleteButton.style.width = Length.Percent(percent);
+                deleteButton.style.ClearMarginPadding();
                 deleteColButton.Add(deleteButton);
             }
 

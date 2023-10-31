@@ -24,7 +24,7 @@ namespace NaiveAPI.DocumentBuilder
                 scrollView.style.maxHeight = visualData.height;
                 scrollView.style.overflow = Overflow.Hidden;
                 scrollView.style.marginLeft = 2 * DocStyle.Current.MainTextSize;
-                VisualElement mask = DocRuntime.NewEmpty();
+                VisualElement mask = new VisualElement();
                 mask.pickingMode = PickingMode.Ignore;
                 mask.style.position = Position.Absolute;
                 mask.style.marginLeft = 2 * DocStyle.Current.MainTextSize;
@@ -67,7 +67,7 @@ namespace NaiveAPI.DocumentBuilder
                     Application.OpenURL(visualData.url);
                 };
             }
-            Button button = DocRuntime.NewButton(buttonClick);
+            Button button = new DSButton("",buttonClick);
             button.text = Target.TextData[1];
             button.style.minWidth = Length.Percent(10);
             button.style.SetIS_Style(ISMargin.Pixel(DocStyle.Current.MainTextSize / 2));
@@ -76,7 +76,7 @@ namespace NaiveAPI.DocumentBuilder
             child.Add(textElement);
             child.Add(button);
             this.style.borderLeftWidth = DocStyle.Current.MainTextSize / 2f;
-            this.style.borderLeftColor = DocStyle.Current.FrontgroundColor;
+            this.style.borderLeftColor = DocStyle.Current.SubBackgroundColor;
             this.Add(child);
         }
 

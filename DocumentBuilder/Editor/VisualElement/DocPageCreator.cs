@@ -20,11 +20,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
         DocPageFactoryField factorySelector;
         VisualElement notValidMsgContainer;
         public DocPageCreator(SODocPage parentPage, Action<SODocPage> callback = null)
-        {
+        { 
+            style.SetIS_Style(ISPadding.Pixel(DocStyle.Current.MainTextSize));
             this.parentPage = parentPage;
             this.callback = callback;
-            style.SetIS_Style(ISPadding.Pixel(DocStyle.Current.MainTextSize));
-            var hor = DocRuntime.NewEmptyHorizontal();
+            var hor = new DSHorizontal();
             hor.style.marginBottom = DocStyle.Current.LineHeight;
             hor.style.marginBottom = DocStyle.Current.LineHeight * 0.5f;
             var title = new DSTextElement("Create Page in");
@@ -45,7 +45,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             notValidMsgContainer.style.marginTop = DocStyle.Current.LineHeight;
             Add(notValidMsgContainer);
 
-            var btnContainer = DocRuntime.NewEmptyHorizontal();
+            var btnContainer = new DSHorizontal();
             btnContainer.style.flexGrow = 1f;
             btnContainer.Add(createButton);
             btnContainer.Add(cancelButton);
@@ -58,7 +58,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         void initCreateButton()
         {
-            createButton = DocRuntime.NewButton("Create",DocStyle.Current.SuccessColor);
+            createButton = new DSButton("Create",DocStyle.Current.SuccessColor);
             createButton.style.flexGrow = 1f;
             createButton.clicked += () =>
             {
@@ -75,7 +75,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         void initCancelButton()
         {
-            cancelButton = DocRuntime.NewButton("Cancel");
+            cancelButton = new DSButton("Cancel");
             cancelButton.style.flexGrow = 1f;
             cancelButton.clicked += () =>
             {

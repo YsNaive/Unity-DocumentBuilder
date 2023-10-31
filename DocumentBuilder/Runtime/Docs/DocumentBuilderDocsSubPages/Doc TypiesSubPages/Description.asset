@@ -132,34 +132,6 @@ MonoBehaviour:
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
-  - VisualID: 2
-    JsonData: '{"Type":0,"IntroMode":1,"OutroMode":1,"IntroAniTime":250,"OutroAniTime":250}'
-    TextData:
-    - in & out is animation type, the number after is time, below is the animation
-      you can ues on this visual.
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-    VisualVersion: 0
-  - VisualID: 3
-    JsonData: '{"row":4,"col":3,"anchors":[3,3,3],"mode":1}'
-    TextData:
-    - 
-    - Usage
-    - Num means
-    - None
-    - dont play animation
-    - N/A
-    - Fade
-    - Fade in / out
-    - how long does it takes
-    - TextFade
-    - Text Fade in / out
-    - 'how long does one char appear
-
-      (total time = content length * num)'
-    ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
-    VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []

@@ -20,7 +20,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public TextField textInput;
         protected override void OnCreateGUI()
         {
-            var hor = DocRuntime.NewEmptyHorizontal();
+            var hor = new DSHorizontal();
             IntegerField maxHeightInput = DocEditor.NewIntField(" Max height", e =>
             {
                 visualData.MaxHeight = e.newValue;

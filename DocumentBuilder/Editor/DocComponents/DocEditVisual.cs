@@ -44,16 +44,16 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             Length typeWidth = Length.Percent(35);
             Length timeWidth = Length.Percent(15);
-            var bar = DocRuntime.NewEmptyHorizontal();
-            var introType = DocEditor.NewEnumField("in", initType, (e) =>
+            var bar = new DSHorizontal();
+            var introType = new DSEnumField("in", initType, (e) =>
             {
                 Target.IntroType = Convert.ToInt32(e.newValue);
             });introType.value = (Enum)Enum.ToObject(initType.GetType(), (byte)Target.IntroType);
             introType.style.width = typeWidth;
             introType.style.ClearMarginPadding();
-            introType[0].style.minWidth = 45;
-            introType[1].style.paddingLeft = 4;
-            introType[0].style.unityTextAlign = TextAnchor.MiddleCenter;
+            introType.labelElement.style.minWidth = 45;
+            introType.labelElement.style.width = 45;
+            introType.labelElement.style.unityTextAlign = TextAnchor.MiddleCenter;
             var introTime = DocEditor.NewIntField("", e =>
             {
                 Target.IntroTime = e.newValue;
@@ -61,15 +61,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
             introTime.style.width = timeWidth;
             introTime.style.ClearMarginPadding();
             introTime.style.paddingLeft = 4;
-            var outtroType = DocEditor.NewEnumField("out", initType, (e) =>
+            var outtroType = new DSEnumField("out", initType, (e) =>
             {
                 Target.OuttroType = Convert.ToInt32(e.newValue);
             }); outtroType.value = (Enum)Enum.ToObject(initType.GetType(), (byte)Target.OuttroType);
             outtroType.style.width = typeWidth;
             outtroType.style.ClearMarginPadding();
-            outtroType[0].style.minWidth = 45;
-            outtroType[1].style.paddingLeft = 4;
-            outtroType[0].style.unityTextAlign = TextAnchor.MiddleCenter;
+            outtroType.labelElement.style.minWidth = 45;
+            outtroType.labelElement.style.width = 45;
+            outtroType.labelElement.style.unityTextAlign = TextAnchor.MiddleCenter;
             var outtroTime = DocEditor.NewIntField("", e =>
             {
                 Target.OuttroTime = e.newValue;

@@ -131,9 +131,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
             urlTextField.style.paddingLeft = DocStyle.Current.MainTextSize;
             urlTextField.style.width = Length.Percent(50);
             DocStyle.Current.EndLabelWidth();
-            EnumField enumField = DocEditor.NewEnumField("Mode", data.mode, (value) =>
+            var enumField = new DSEnumField<DocSeeAlso.Mode>("Mode", data.mode, (value) =>
             {
-                data.mode = (DocSeeAlso.Mode)value.newValue;
+                data.mode = value.newValue;
                 if (data.mode == DocSeeAlso.Mode.OpenPage)
                 {
                     root.Remove(urlTextField);
@@ -147,8 +147,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.JsonData = JsonUtility.ToJson(data);
             });
             enumField.style.paddingLeft = DocStyle.Current.MainTextSize;
-            enumField[0].style.minWidth = Length.Percent(25);
-            enumField.style.width = Length.Percent(50);
+            enumField.labelElement.style.minWidth = Length.Percent(30);
+            enumField.labelElement.style.width = Length.Percent(30);
+            enumField.style.width = Length.Percent(44);
             root.Add(enumField);
             if (data.mode == DocSeeAlso.Mode.OpenPage)
             {

@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -35,14 +36,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             public float SplitPercent1 = 30;
             public float SplitPercent2 = 70;
+            public float SplitPercent3 = 30;
         }
         Data cacheData;
 
         ObjectField rootPageSelector;
-        VisualElement leftContainer, rightContainer;
-        DSScrollView editorContainer;
+        VisualElement leftContainer, rightTopContainer, rightBottomContainer;
+        VisualElement editorContainer;
         DocPageMenu pageMenu;
-        Button createPageBtn, deletePageBtn;
+        DSButton createPageBtn, deletePageBtn, openOnInspectorBtn;
         private void OnEnable()
         {
             cacheData = JsonUtility.FromJson<Data>(DocCache.LoadData("DocumentEditorWindowCache.json"));
@@ -56,6 +58,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 cacheData.SplitPercent1 = splitView.SplitPercent;
                 cacheData.SplitPercent2 = splitView2.SplitPercent;
+                cacheData.SplitPercent3 = splitView3.SplitPercent;
             }
             DocCache.SaveData("DocumentEditorWindowCache.json", JsonUtility.ToJson(cacheData));
         }
@@ -67,14 +70,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             rootPageSelector.value = DocEditorData.Instance.EditingDocPage;
         }
-        SplitView splitView, splitView2;
+        SplitView splitView, splitView2, splitView3;
         void initLayout()
         {
             rootVisualElement.style.backgroundColor = DocStyle.Current.BackgroundColor;
             leftContainer = new VisualElement();
-            editorContainer = new DSScrollView();
-            rightContainer = new VisualElement();
-            rightContainer.style.SetIS_Style(ISPadding.Pixel((int)(DocStyle.Current.MainTextSize / 2f)));
+            rightBottomContainer = new VisualElement();
+            editorContainer = new DSScrollView() { verticalScrollerVisibility = ScrollerVisibility.AlwaysVisible};
+            rightTopContainer = new VisualElement();
+            rightTopContainer.style.SetIS_Style(ISPadding.Pixel((int)(DocStyle.Current.MainTextSize / 2f)));
             rootPageSelector = new ObjectField() { objectType = typeof(SODocPage) };
             menuItemDragHintLine = new VisualElement();
             menuItemDragHintLine.style.height = 2f;
@@ -82,25 +86,31 @@ namespace NaiveAPI_Editor.DocumentBuilder
             menuItemDragHintLine.style.backgroundColor = DocStyle.Current.SubFrontgroundColor;
             menuItemDragHintLine.style.position = Position.Absolute;
 
-            createPageBtn = DocRuntime.NewButton("Create Page", DocStyle.Current.SuccessColor);
+            createPageBtn = new DSButton("Create Page", DocStyle.Current.SuccessColor);
             createPageBtn.clicked += createPage;
-            deletePageBtn = DocRuntime.NewButton("Delete Page", DocStyle.Current.DangerColor);
+            deletePageBtn = new DSButton("Delete Page", DocStyle.Current.DangerColor);
             deletePageBtn.clicked += deletePage;
+            openOnInspectorBtn = new DSButton("Open on Inspector", DocStyle.Current.HintColor);
+            openOnInspectorBtn.clicked += openOnInspector;
 
             leftContainer.Add(rootPageSelector);
-            rightContainer.Add(createPageBtn);
-            rightContainer.Add(deletePageBtn);
+            rightTopContainer.Add(createPageBtn);
+            rightTopContainer.Add(deletePageBtn);
+            rightTopContainer.Add(openOnInspectorBtn);
 
             splitView = new SplitView(cacheData.SplitPercent1);
-            splitView2 = new SplitView(FlexDirection.Row, cacheData.SplitPercent2);
+            splitView2 = new SplitView(cacheData.SplitPercent2);
+            splitView3 = new SplitView(FlexDirection.Column, cacheData.SplitPercent3);
             splitView.Add(leftContainer);
             splitView.Add(splitView2);
             splitView2.Add(editorContainer);
-            splitView2.Add(rightContainer);
+            splitView2.Add(splitView3);
+            splitView3.Add(rightTopContainer);
+            splitView3.Add(rightBottomContainer);
             rootVisualElement.Add(splitView);
 
-            emptySelectingWarning = DocRuntime.CreateDocVisual(DocDescription.CreateComponent
-            ("Please Select a Page first", DocDescription.DescriptionType.Danger));
+            emptySelectingWarning = DocVisual.Create(DocDescription.CreateComponent
+            ("Please Select a Page first", DocDescription.DescriptionType.Warning));
             emptySelectingWarning.style.SetIS_Style(ISPadding.Pixel(DocStyle.Current.MainTextSize));
         }
 
@@ -108,15 +118,40 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             rootPageSelector.RegisterValueChangedCallback(e =>
             {
-                if(pageMenu!=null)
-                    leftContainer.Remove(pageMenu);
+                if (pageMenu != null)
+                    if (leftContainer.Contains(pageMenu))
+                        leftContainer.Remove(pageMenu);
                 editorContainer.Clear();
                 initPageMenu();
                 DocEditorData.Instance.EditingDocPage = (SODocPage)e.newValue;
                 EditorUtility.SetDirty(DocEditorData.Instance);
             });
         }
-
+        DocPageVisual preview;
+        void rescale()
+        {
+            if (preview == null) return;
+            var scale = rightBottomContainer.worldBound.width / editorContainer.worldBound.width;
+            preview.style.minWidth = editorContainer.worldBound.width;
+            preview.style.width = editorContainer.worldBound.width;
+            var height = rightBottomContainer.worldBound.height / scale;
+            preview.style.minHeight = rightBottomContainer.worldBound.height / scale;
+            preview.style.height = rightBottomContainer.worldBound.height / scale;
+            preview.style.scale = new Scale(new Vector3(scale, scale, scale));
+            preview.style.transformOrigin = new TransformOrigin(0, 0);
+        }
+        void initPreview(SODocPage page)
+        {
+            preview = new DocPageVisual(page);
+            preview.schedule.Execute(() =>
+            {
+                preview.Repaint();
+            }).Every(1000);
+            preview.RegisterCallback<GeometryChangedEvent>(evt =>
+            {
+                rescale();
+            });
+        }
         void initPageMenu()
         {
             if (rootPageSelector.value == null) return;
@@ -130,16 +165,24 @@ namespace NaiveAPI_Editor.DocumentBuilder
             pageMenu.EnableEmptySelecting = true;
             pageMenu.EnableDisplayingRootChange = false;
             pageMenu.EnableAutoHierarchySave = true;
+
             pageMenu.OnSelected += e =>
             {
                 editorContainer.Clear();
-                var editor = (SODocPageEditor)Editor.CreateEditor(e.TargetPage);
+                Editor orgEditor = null;
+                Editor.CreateCachedEditor(e.TargetPage, typeof(SODocPageEditor),ref orgEditor);
+                var editor = orgEditor as SODocPageEditor;
                 var editorVisual = editor.CreateInspectorGUI();
                 editor.IconField.RegisterValueChangedCallback(e =>
                 {
                     pageMenu.Selecting.Repaint();
                 });
                 editorContainer.Add(editorVisual);
+                rightBottomContainer.Clear();
+                initPreview(e.TargetPage);
+                rightBottomContainer.Add(preview);
+                if (Selection.activeObject == e.TargetPage)
+                    Selection.activeObject = null;
             };
             leftContainer.Add(pageMenu);
             pageMenu.Selecting = lastSelect;
@@ -184,6 +227,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 editorContainer.Add(emptySelectingWarning);
                 return;
             }
+            if(pageMenu.Selecting == pageMenu.RootMenuItem)
+            {
+                editorContainer.Add(DocVisual.Create(DocDescription.CreateComponent(
+                    "<b>You can not delete the root page</b>", DocDescription.DescriptionType.Warning)));
+                return;
+            }
             editorContainer.Add(new DocPageDeleter(pageMenu.Selecting.TargetPage, e =>
             {
                 if (e.isDelete)
@@ -195,6 +244,20 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 }
                 editorContainer.Clear();
             }));
+        }
+        void openOnInspector()
+        {
+            if(pageMenu.Selecting != null)
+            {
+                editorContainer.Clear();
+                Selection.activeObject = pageMenu.Selecting.TargetPage;
+                var cur = pageMenu.Selecting;
+                while(cur !=null)
+                {
+                    cur.RepaintStyle(DocPageMenuItem.StyleType.None);
+                    cur = cur.ParentMenuItem;
+                }
+            }
         }
 
         VisualElement menuItemDragHintLine;

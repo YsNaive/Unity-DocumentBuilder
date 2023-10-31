@@ -24,9 +24,9 @@ namespace NaiveAPI.DocumentBuilder
 
         private VisualElement generateItemVisual(string description)
         {
-            VisualElement root = DocRuntime.NewEmptyHorizontal();
+            VisualElement root = new DSHorizontal();
 
-            VisualElement icon = DocRuntime.NewEmpty();
+            VisualElement icon = new VisualElement();
             if (Target.ObjsData[0] is Texture2D)
             texture = (Texture2D)Target.ObjsData[0];
             icon.style.backgroundImage = texture;
@@ -53,7 +53,7 @@ namespace NaiveAPI.DocumentBuilder
 
         private VisualElement generateItemsVisual(Data data)
         {
-            VisualElement root = DocRuntime.NewEmpty();
+            VisualElement root = new VisualElement();
 
             for (int i = 0;i < data.num; i++)
             {

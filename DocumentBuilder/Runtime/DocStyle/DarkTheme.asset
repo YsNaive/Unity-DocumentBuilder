@@ -320,7 +320,7 @@ MonoBehaviour:
       data:
         Color: {r: 0, g: 0, b: 0, a: 0}
         ImageTint: {r: 0.2704165, g: 0.29024062, b: 0.33962262, a: 1}
-        sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+        sprite: {fileID: 21300000, guid: cb4552108392d514a90029f434a5ca0b, type: 3}
         texture: {fileID: 0}
         renderTexture: {fileID: 0}
         vectorImage: {fileID: 0}

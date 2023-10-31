@@ -37,9 +37,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
             DocStyle.Current.EndLabelWidth();
             scaleField.value = visualData.scale + "";
             scaleField.style.width = Length.Percent(39);
-            EnumField enumField = DocEditor.NewEnumField("", visualData.mode, value =>
+            var enumField = new DSEnumField<DocImage.Mode>("", visualData.mode, value =>
             {
-                visualData.mode = (DocImage.Mode)value.newValue;
+                visualData.mode = value.newValue;
                 Target.JsonData = JsonUtility.ToJson(visualData);
                 urlObjDisplay(visualData.mode);
             });
@@ -114,10 +114,26 @@ namespace NaiveAPI_Editor.DocumentBuilder
         private VisualElement generateBase64Visual(DocImage.Data data)
         {
             var field = new DSTextField();
-            field.RegisterValueChangedCallback(evt => { data.base64 = evt.newValue; SaveDataToTarget(); });
+            field.SetValueWithoutNotify(data.base64 == "" ? "Empty" : "Value Assigned");
+            field.RegisterValueChangedCallback(evt =>
+            {
+                SaveDataToTarget();
+                if(Convert.TryFromBase64String(evt.newValue, null, out _))
+                {
+                    data.base64 = evt.newValue;
+                    field.SetValueWithoutNotify("Value Assigned");
+                    field.InputFieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.SuccessColor;
+                }
+                else
+                {
+                    data.base64 = "";
+                    field.SetValueWithoutNotify("Format Error");
+                    field.InputFieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.DangerColor;
+                }
+            });
             field.style.width = Length.Percent(80);
-            field.SetValueWithoutNotify(data.base64);
-            var btn = DocRuntime.NewButton("Paste");
+            field[0].style.textOverflow = TextOverflow.Ellipsis;
+            var btn = new DSButton("Paste");
             btn.clicked+=() =>
             {
 #if UNITY_EDITOR_WIN
@@ -143,7 +159,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     SaveDataToTarget();
                     File.Delete($"{DocCache.DirectoryRoot}\\cache.png");
                     field.InputFieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.SuccessColor;
-                    field.SetValueWithoutNotify(data.base64);
+                    field.SetValueWithoutNotify("Image Loaded");
                 }
                 else
                 {
@@ -157,7 +173,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             };
 
             btn.style.flexGrow = 1f;
-            var hor = DocRuntime.NewEmptyHorizontal();
+            var hor = new DSHorizontal();
             hor.Add(field);
             hor.Add(btn);
             hor.style.flexGrow = 1f;

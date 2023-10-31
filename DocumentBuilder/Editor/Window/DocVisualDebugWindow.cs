@@ -73,7 +73,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.style.paddingRight = 10;
             root.style.flexGrow = 1;
             root.Add(editText);
-            var comField = DocRuntime.NewEmpty();
+            var comField = new VisualElement();
             comField.Add(DocEditor.CreateComponentField(docComponent,true));
             root.Add(comField);
             root.schedule.Execute(() =>
@@ -87,13 +87,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     root.Insert(i, DocRuntime.CreateDocVisual(docComponent));
                 }
             }).Every(250);
-            var viewbar = DocRuntime.NewEmptyHorizontal();
+            var viewbar = new DSHorizontal();
             Toggle forceUpdate = new Toggle();
             forceUpdate.RegisterValueChangedCallback(e => { this.forceUpdate = e.newValue; });
             viewText.style.width = Length.Percent(50);
             forceUpdate.style.width = Length.Percent(25);
             forceUpdate.text = "Force Update";
-            Button repaint = DocRuntime.NewButton("Repaint", () =>
+            Button repaint = new DSButton("Repaint", () =>
             {
                 var ve = root.Q<DocVisual>();
                 int i = root.IndexOf(ve);

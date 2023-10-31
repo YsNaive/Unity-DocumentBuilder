@@ -169,5 +169,4 @@ namespace NaiveAPI.DocumentBuilder
             return docStyle;
         }
     }
-
 }

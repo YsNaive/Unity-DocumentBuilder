@@ -360,12 +360,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
 
-            Button addButton = DocRuntime.NewButton("+", DocStyle.Current.SuccessColor);
+            Button addButton = new DSButton("+", DocStyle.Current.SuccessColor);
             addButton.style.width = Length.Percent(10);
             addButton.style.ClearMarginPadding();
             addButton.style.SetIS_Style(new ISMargin(TextAnchor.MiddleRight));
 
-            Button deleteButton = DocRuntime.NewButton("-", DocStyle.Current.DangerColor);
+            Button deleteButton = new DSButton("-", DocStyle.Current.DangerColor);
             deleteButton.style.width = Length.Percent(10);
             deleteButton.style.marginRight = Length.Percent(1);
 
@@ -422,7 +422,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             VisualElement root = new VisualElement();
             VisualElement veSyntax = generateSyntax(data);
 
-            Label label = DocRuntime.NewLabel("Syntaxs");
+            Label label = new DSLabel("Syntaxs");
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
             root.Add(label);
@@ -474,7 +474,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             nameField.focusable = false;
             nameField.style.paddingLeft = Length.Percent(1);
             nameField.style.paddingRight = Length.Percent(1);
-            root.Add(DocRuntime.NewHorizontalBar(typeField, nameField));
+            root.Add(new DSHorizontal(typeField, nameField));
 
             TextField descriptionField = new DSTextField("", value =>
             {
@@ -511,7 +511,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             VisualElement veParams = generateParams(data);
 
-            Label label = DocRuntime.NewLabel("Params");
+            Label label = new DSLabel("Params");
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
             root.Add(label);
@@ -570,7 +570,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             if (data.ReturnTypes.Count == 0)
                 return root;
-            Label label = DocRuntime.NewLabel("ReturnTypes");
+            Label label = new DSLabel("ReturnTypes");
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
             root.Add(label);

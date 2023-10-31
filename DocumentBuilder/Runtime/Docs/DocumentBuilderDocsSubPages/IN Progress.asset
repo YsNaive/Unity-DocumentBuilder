@@ -23,12 +23,14 @@ MonoBehaviour:
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 8
-    JsonData: '{"num":3}'
+    JsonData: '{"num":1}'
     TextData:
-    - Codeblock to markdown
-    - Launguage translation
-    - Previous/Next page in DocBookVisual
+    - Code Cleaning
     ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
@@ -68,7 +70,7 @@ MonoBehaviour:
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 8
-    JsonData: '{"num":6}'
+    JsonData: '{"num":9}'
     TextData:
     - Other programming language parser
     - More default Theme
@@ -76,7 +78,13 @@ MonoBehaviour:
     - Imporve tutorial
     - Improve Search function
     - UIElement Extension Docs
+    - Launguage translation
+    - Codeblock to markdown
+    - Previous/Next page in DocBookVisual
     ObjsData:
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+    - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}

@@ -32,14 +32,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.TextData.Clear();
                 Target.TextData.Add(val.newValue);
             });
-            var typeField = DocEditor.NewEnumField("Type", visualData.Type, e =>
+            var typeField = new DSEnumField<DocDescription.DescriptionType>("Type", visualData.Type, e =>
             {
-                visualData.Type = (DocDescription.DescriptionType)e.newValue;
+                visualData.Type = e.newValue;
                 SaveDataToTarget();
             });
-            typeField[0].style.minWidth = 45;
-            typeField[1].style.paddingLeft = 4;
-            typeField[0].style.unityTextAlign = TextAnchor.MiddleCenter;
+            typeField.labelElement.style.minWidth = 45;
+            typeField.labelElement.style.width = 45;
+            typeField.labelElement.style.unityTextAlign = TextAnchor.MiddleCenter;
             Add(typeField);
             Add(textInput);
         }

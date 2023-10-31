@@ -56,6 +56,28 @@ namespace NaiveAPI.DocumentBuilder
             else if ((AniMode)type == AniMode.Fade)
                 OuttroAnimation = (callback) => { this.Fade(1, 0, Target.OuttroTime, 20, callback); };
         }
+
+        public static Dictionary<string, Type> VisualID_Dict = new Dictionary<string, Type>();
+
+        static DocVisual()
+        {
+            VisualID_Dict.Clear();
+            foreach (var type in DocRuntime.FindAllTypesWhere(t => { return (t.IsSubclassOf(typeof(DocVisual)) && !t.IsAbstract); }))
+                VisualID_Dict.Add(((DocVisual)Activator.CreateInstance(type)).VisualID, type);
+        }
+        public static DocVisual Create(DocComponent docComponent)
+        {
+            Type t;
+            if (!VisualID_Dict.TryGetValue(docComponent.VisualID, out t))
+            {
+                DocDescription textElement = new DocDescription();
+                textElement.SetTarget(new DocComponent { VisualID = "2", TextData = new List<string>() { $"Not Fount View for ID \"{docComponent.VisualID}\"" } });
+                return textElement;
+            }
+            DocVisual doc = (DocVisual)Activator.CreateInstance(t);
+            doc.SetTarget(docComponent);
+            return doc;
+        }
     }
     public abstract class DocVisual<DType> : DocVisual
         where DType : new()

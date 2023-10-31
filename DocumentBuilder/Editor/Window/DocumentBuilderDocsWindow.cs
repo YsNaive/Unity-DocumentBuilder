@@ -19,7 +19,7 @@ namespace NaiveAPI.DocumentBuilder
         private void CreateGUI()
         {
             SODocPage rootPage = DocEditorData.Instance.DocumentBuilderDocsRoot;
-            rootVisualElement.Add(new DocBookVisual(rootPage));
+            rootVisualElement.Add(new DocBookVisual(rootPage) { DontPlayAnimation = true});
         }
     }
 }

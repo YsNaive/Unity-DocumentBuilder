@@ -110,7 +110,7 @@ namespace NaiveAPI.DocumentBuilder
             arrow.style.backgroundImage = SODocStyle.WhiteArrow;
             arrow.style.marginRight = 1;
             arrow.style.marginLeft = StyleKeyword.Auto;
-            var titleHor = DocRuntime.NewEmptyHorizontal();
+            var titleHor = new DSHorizontal();
             EventCallback<PointerLeaveEvent> clearColor = evt => { titleHor.style.backgroundColor = Color.clear; };
             titleHor.RegisterCallback<PointerEnterEvent>(evt => { titleHor.style.backgroundColor = DocStyle.Current.SubBackgroundColor; });
             titleHor.Add(childMenuTitle);
