@@ -60,7 +60,6 @@ namespace NaiveAPI.DocumentBuilder
             Padding = new ISPadding { Left = ISStyleLength.Pixel(0) , Top = ISStyleLength.Pixel(0), Right = ISStyleLength.Auto, Bottom = ISStyleLength.Auto },
         };
 
-
         public Color BackgroundColor = new Color(0, 0, 0, 1);
         public Color SubBackgroundColor = new Color(0, 0, 0, 1);
         public Color FrontgroundColor = new Color(0, 0, 0, 1);
@@ -88,6 +87,10 @@ namespace NaiveAPI.DocumentBuilder
 
         public ISLength LineHeight = new ISLength { Unit = LengthUnit.Pixel, Value = 20 };
         public ISLength LabelWidth = new ISLength { Unit = LengthUnit.Pixel, Value = 120 };
+
+
+        public ISStyle ArrowIcon = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Background | ISStyleFlag.Size);
+
         public Length ContentWidth(VisualElement ve)
         {
             if (LabelWidth.Unit == LengthUnit.Percent)
@@ -165,6 +168,8 @@ namespace NaiveAPI.DocumentBuilder
             docStyle.ScrollerWidth = this.ScrollerWidth;
             docStyle.ComponentSpace = this.ComponentSpace;
             docStyle.GUIScale = this.GUIScale;
+
+            docStyle.ArrowIcon = this.ArrowIcon.Copy();
 
             return docStyle;
         }

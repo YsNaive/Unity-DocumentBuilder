@@ -30,7 +30,7 @@ namespace NaiveAPI_Editor.drawer
             index = keyword.enumValueIndex = GUI.SelectionGrid(rect, index, new string[] { "Px", "%", "Au", "In" }, 4);
             if (index <= 1)
             {
-                keyword.enumValueIndex = 3;
+                keyword.enumValueIndex = 0;
                 unit.enumValueIndex = index;
             }
             else
@@ -44,7 +44,7 @@ namespace NaiveAPI_Editor.drawer
 
             rect = position;
             rect.width = position.width - 125;
-            if(keyword.enumValueIndex != 3)
+            if(keyword.enumValueIndex != 0)
             {
                 EditorGUI.BeginDisabledGroup(true);
                     if (keyword.enumValueIndex == 2)

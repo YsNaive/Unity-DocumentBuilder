@@ -86,21 +86,35 @@ namespace NaiveAPI.DocumentBuilder
         public override void SetTarget(DocComponent target)
         {
             m_target = target;
-            LoadDataFromTarget();
+            LoadJsonData();
             Clear();
             OnCreateGUI();
             OnSelectIntroAni(Target.IntroType);
             OnSelectOuttroAni(Target.OuttroType);
         }
-        protected void LoadDataFromTarget()
+        /// <summary>
+        /// Load data from Target
+        /// </summary>
+        protected virtual void LoadJsonData()
         {
-            if(!string.IsNullOrEmpty(Target.JsonData))
-                visualData = JsonUtility.FromJson<DType>(Target.JsonData);
-            visualData ??= new DType();
+            visualData = LoadJsonData(Target);
         }
-        protected void SaveDataToTarget()
+        /// <summary>
+        /// Save data to Target
+        /// </summary>
+        protected virtual void SaveJsonData()
         {
-            Target.JsonData = JsonUtility.ToJson(visualData);
+            SaveJsonData(Target, visualData);
+        }
+        public static DType LoadJsonData(DocComponent component)
+        {
+            var data = JsonUtility.FromJson<DType>(component.JsonData);
+            data ??= new DType();
+            return data;
+        }
+        public static void SaveJsonData(DocComponent component, DType data)
+        {
+            component.JsonData = JsonUtility.ToJson(data);
         }
     }
 }

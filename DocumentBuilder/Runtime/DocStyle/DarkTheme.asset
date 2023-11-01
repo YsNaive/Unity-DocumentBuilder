@@ -161,6 +161,30 @@ MonoBehaviour:
     LabelWidth:
       Unit: 0
       Value: 120
+    ArrowIcon:
+      EnableMask: 673
+      Display:
+        rid: -2
+      Position:
+        rid: -2
+      Flex:
+        rid: -2
+      Align:
+        rid: -2
+      Size:
+        rid: 79920231271366656
+      Margin:
+        rid: -2
+      Padding:
+        rid: 79920231271366670
+      Text:
+        rid: -2
+      Background:
+        rid: 79920231271366669
+      Border:
+        rid: -2
+      Radius:
+        rid: -2
     ScrollerWidth:
       Unit: 0
       Value: 12
@@ -173,6 +197,52 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 79920231271366656
+      type: {class: ISSize, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Width:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 16
+        Height:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 16
+    - rid: 79920231271366669
+      type: {class: ISBackground, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Color: {r: 0, g: 0, b: 0, a: 0}
+        ImageTint: {r: 1, g: 1, b: 1, a: 1}
+        sprite: {fileID: 21300000, guid: 439f66e45eaca4a43b7f48fc334f7254, type: 3}
+        texture: {fileID: 0}
+        renderTexture: {fileID: 0}
+        vectorImage: {fileID: 0}
+        ScaleMode: 0
+    - rid: 79920231271366670
+      type: {class: ISPadding, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Left:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Top:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Right:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
+        Bottom:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 2
     - rid: 8869985085687332875
       type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
@@ -319,7 +389,7 @@ MonoBehaviour:
       type: {class: ISBackground, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Color: {r: 0, g: 0, b: 0, a: 0}
-        ImageTint: {r: 0.2704165, g: 0.29024062, b: 0.33962262, a: 1}
+        ImageTint: {r: 0.2831257, g: 0.29118145, b: 0.31132078, a: 1}
         sprite: {fileID: 21300000, guid: cb4552108392d514a90029f434a5ca0b, type: 3}
         texture: {fileID: 0}
         renderTexture: {fileID: 0}

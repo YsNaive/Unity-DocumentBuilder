@@ -15,7 +15,6 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         var root = FindAnyObjectByType<UIDocument>().rootVisualElement;
         var list = new List<string>() { "AAA/A1", "AAA/A2","AAA", "BB", "CCCC","L1/L2/L3/L4/L5" };
         DSStringMenu.Open(root.panel, new Vector2(600, 100), list, val => { Debug.Log(val); });

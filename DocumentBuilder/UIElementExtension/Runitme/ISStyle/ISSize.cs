@@ -4,8 +4,8 @@ namespace NaiveAPI_UI
     [System.Serializable]
     public class ISSize
     {
-        public ISStyleLength Width = ISStyleLength.Pixel(100);
-        public ISStyleLength Height = ISStyleLength.Pixel(100);
+        public ISStyleLength Width;
+        public ISStyleLength Height;
 
 
         public ISSize Copy()

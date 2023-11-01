@@ -67,7 +67,7 @@ namespace NaiveAPI.DocumentBuilder
 
         private void repaintMatrix(GeometryChangedEvent e)
         {
-            LoadDataFromTarget();
+            LoadJsonData();
             VisualElement matrixRoot = this[0];
             float[] maxWidth = new float[visualData.col];
             float[] maxHeight = new float[visualData.row];

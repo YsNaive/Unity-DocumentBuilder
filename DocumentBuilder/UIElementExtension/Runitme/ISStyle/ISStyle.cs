@@ -25,21 +25,11 @@ namespace NaiveAPI_UI
     [System.Serializable]
     public class ISStyle : ISerializationCallbackReceiver
     {
-        public ISStyle()
-        {
-            EnableMask = 4095;
-        }
-        /// <summary>
-        /// If you don't know what it's means, check the docs first.
-        /// </summary>
+        public ISStyle() : this(4095) { }
+        public ISStyle(ISStyleFlag flag) : this((int)flag) { }
         public ISStyle(int enableMask)
         {
             EnableMask = enableMask;
-            initByMask();
-        }
-        public ISStyle(ISStyleFlag flag)
-        {
-            EnableMask = (int)flag;
             initByMask();
         }
 

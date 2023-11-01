@@ -12,17 +12,17 @@ namespace NaiveAPI_UI
         public bool AutoClose = true;
         public event Action<IPanel> OnOpend;
         public event Action OnClosed;
-        VisualElement mask;
+        protected VisualElement mask;
 
         bool newOpened = false;
         public PopupElement(bool autoClose = true)
         {
-            mask = new VisualElement();
+            mask = new();
             mask.style.width = Length.Percent(100);
             mask.style.height = Length.Percent(100);
             mask.style.position = Position.Absolute;
-            style.position = Position.Absolute;
             mask.Add(this);
+            style.position = Position.Absolute;
             RegisterCallback<GeometryChangedEvent>(evt =>
             {
                 if (panel == null) return;

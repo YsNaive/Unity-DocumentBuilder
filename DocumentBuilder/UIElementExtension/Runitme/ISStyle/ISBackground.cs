@@ -30,7 +30,7 @@ namespace NaiveAPI_UI
                     background.renderTexture = renderTexture;
                     return new StyleBackground(background);
                 }
-                if(sprite!=null)
+                if(vectorImage != null)
                     return new  StyleBackground(vectorImage);
 
                 return null;

@@ -7,128 +7,51 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class DocImage : DocVisual<DocImage.Data>
+    public sealed class DocImage : DocVisual<DocImage.Data>
     {
+        public enum Mode
+        {
+            Url,
+            Object,
+            Base64
+        }
         public override string VisualID => "5";
         static ISBorder border = new ISBorder(DocStyle.Current.SubBackgroundColor, 1f);
         protected override void OnCreateGUI()
         {
-            LoadDataFromTarget();
+            MakeValid(Target);
             if (visualData.mode == Mode.Object)
-                this.Add(generateObjectVisual(visualData));
+                this.Add(new ObjVisual(this));
             else if (visualData.mode == Mode.Url)
-                this.Add(generateUrlVisual(visualData));
+                this.Add(new UrlVisual(this));
             else if (visualData.mode == Mode.Base64)
-                this.Add(generateBase64Visual(visualData));
+                this.Add(new Base64Visual(this));
         }
 
-        public VisualElement generateObjectVisual(Data data)
+        public static void MakeValid(DocComponent component)
         {
-            Label label = new Label();
-            label.style.width = Length.Percent(30);
-            label.style.height = Length.Percent(20);
-            float imageWidth, height;
-            Texture2D texture = null;
+            var data = LoadJsonData(component);
+            while(component.ObjsData.Count < 1)
+                component.ObjsData.Add(null);
+            while (component.ObjsData.Count > 1)
+                component.ObjsData.RemoveAt(component.ObjsData.Count - 1);
 
-            VisualElement root = new VisualElement();
-
-            if (Target.ObjsData.Count > 0 && Target.ObjsData[0] != null)
+            if(data.mode == Mode.Url)
             {
-                texture = (Texture2D)Target.ObjsData[0];
-                root.style.backgroundImage = texture;
-                if (-1 < texture.width * data.scale || data.scale == -1)
-                    imageWidth = -1;
-                else
-                    imageWidth = texture.width * data.scale;
-                height = texture.height * (imageWidth / texture.width);
-                label.visible = false;
+                data.base64 = "";
+                component.ObjsData[0] = null;    
             }
-            else
+            else if(data.mode == Mode.Object)
             {
-                root.style.backgroundColor = Color.black;
-                label.text = "No Image";
-                imageWidth = -1;
-                height = imageWidth * 0.6f;
+                data.base64 = "";
+                data.url = "";
             }
-            ISPosition position = new ISPosition();
-            root.style.width = imageWidth;
-            root.style.height = height;
-            position.Left = ISStyleLength.Percent(35);
-            position.Top = ISStyleLength.Percent(40);
-            label.style.SetIS_Style(DocStyle.Current.LabelText);
-            label.style.unityTextAlign = TextAnchor.MiddleCenter;
-            label.style.SetIS_Style(position);
-            root.Add(label);
-
-            OnWidthChanged += (newWidth) =>
+            else if(data.mode == Mode.Base64)
             {
-                if (texture != null)
-                {
-                    float width = texture.width * data.scale;
-                    if (width > newWidth || data.scale == -1)
-                        width = newWidth;
-                    root.style.width = width * 0.99f;
-                    root.style.height = (texture.height * (width / texture.width)) * 0.99f;
-                }
-            };
-
-            root.style.SetIS_Style(border);
-            return root;
-        }
-
-        public VisualElement generateUrlVisual(Data data)
-        {
-            VisualElement root = new VisualElement();
-            Texture2D img = null;
-            float width = 0;
-            URLImage urlImage = new URLImage(data.url, (image) => {
-                img = image;
-                float imageWidth = img.width * data.scale;
-                if (imageWidth > width || data.scale == -1)
-                    imageWidth = width;
-                root.style.width = imageWidth;
-                root.style.height = img.height * (imageWidth / image.width);
-            });
-            urlImage.style.height = Length.Percent(100);
-            root.Add(urlImage);
-
-            OnWidthChanged += newWidth =>
-            {
-                width = newWidth;
-                if (img != null)
-                {
-                    width = img.width * data.scale;
-                    if (width > newWidth || data.scale == -1)
-                        width = newWidth;
-                    root.style.width = width;
-                    root.style.height = img.height * (width / img.width);
-                }
-            };
-            root.style.SetIS_Style(border);
-            return root;
-        }
-
-        public VisualElement generateBase64Visual(Data data)
-        {
-            VisualElement root = new VisualElement();
-            Texture2D img = new(1,1);
-            float width = 0;
-            img.LoadImage(Convert.FromBase64String(data.base64));
-            root.style.backgroundImage = img;
-            OnWidthChanged += newWidth =>
-            {
-                width = newWidth;
-                if (img != null)
-                {
-                    width = img.width * data.scale;
-                    if (width > newWidth || data.scale == -1)
-                        width = newWidth;
-                    root.style.width = width;
-                    root.style.height = img.height * (width / img.width);
-                }
-            };
-            root.style.SetIS_Style(border);
-            return root;
+                data.url = "";
+                component.ObjsData[0] = null;
+            }
+            SaveJsonData(component, data);
         }
 
         public class Data
@@ -136,14 +59,101 @@ namespace NaiveAPI.DocumentBuilder
             public float scale = -1;
             public string url = "";
             public string base64 = "";
-            public Mode mode = Mode.Object;
+            public Mode mode = Mode.Base64;
         }
 
-        public enum Mode
+        private class ObjVisual : VisualElement
         {
-            Url, 
-            Object,
-            Base64
+            public ObjVisual(DocImage docImage)
+            {
+                if (docImage.Target.ObjsData[0] != null)
+                {
+                    var texture = (Texture2D)docImage.Target.ObjsData[0];
+                    style.backgroundImage = texture;
+                    docImage.OnWidthChanged += (newWidth) =>
+                    {
+                        float width = texture.width * docImage.visualData.scale;
+                        if (width > newWidth || docImage.visualData.scale == -1)
+                            width = newWidth;
+                        style.width = width * 0.99f;
+                        style.height = (texture.height * (width / texture.width)) * 0.99f;
+                    };
+                }
+                else
+                {
+                    style.height = DocStyle.Current.LineHeight * 3f;
+                    style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+                    var label = new DSLabel("No Image");
+                    label.style.flexGrow = 1f;
+                    label.style.unityTextAlign = TextAnchor.MiddleCenter;
+                    Add(label);
+                }
+                style.SetIS_Style(border);
+            }
+        }
+        private class UrlVisual : VisualElement
+        {
+            public UrlVisual(DocImage docImage)
+            {
+                Texture2D img = null;
+                float width = 0;
+                URLImage urlImage = new URLImage(docImage.visualData.url, (image) => {
+                    img = image;
+                    float imageWidth = img.width * docImage.visualData.scale;
+                    if (imageWidth > width || docImage.visualData.scale == -1)
+                        imageWidth = width;
+                    style.width = imageWidth;
+                    style.height = img.height * (imageWidth / image.width);
+                });
+                urlImage.style.flexGrow = 1f;
+                Add(urlImage);
+
+                docImage.OnWidthChanged += newWidth =>
+                {
+                    width = newWidth;
+                    if (img != null)
+                    {
+                        width = img.width * docImage.visualData.scale;
+                        if (width > newWidth || docImage.visualData.scale == -1)
+                            width = newWidth;
+                        style.width = width;
+                        style.height = img.height * (width / img.width);
+                    }
+                };
+                style.SetIS_Style(border);
+            }
+        }
+        private class Base64Visual : VisualElement
+        {
+            public Base64Visual(DocImage docImage)
+            {
+                if(docImage.visualData.base64 != "")
+                {
+                    Texture2D img = new(1, 1);
+                    img.LoadImage(Convert.FromBase64String(docImage.visualData.base64));
+                    style.backgroundImage = img;
+                    docImage.OnWidthChanged += newWidth =>
+                    {
+                        if (img != null)
+                        {
+                            var width = img.width * docImage.visualData.scale;
+                            if (width > newWidth || docImage.visualData.scale == -1)
+                                width = newWidth;
+                            style.width = width;
+                            style.height = img.height * (width / img.width);
+                        }
+                    };
+                }
+                else
+                {
+                    style.height = DocStyle.Current.LineHeight * 3f;
+                    style.backgroundColor = DocStyle.Current.SubBackgroundColor;
+                    var label = new DSLabel("No Image");
+                    label.style.flexGrow = 1f;
+                    label.style.unityTextAlign = TextAnchor.MiddleCenter;
+                    Add(label);
+                }
+            }
         }
     }
 }
