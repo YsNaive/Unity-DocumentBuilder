@@ -8,7 +8,16 @@ namespace NaiveAPI_UI
         public StyleKeyword Keyword;
         public ISLength Value;
 
-        public StyleLength Get => new StyleLength(Value.Get) { keyword = Keyword };
+        public StyleLength Get
+        {
+            get
+            {
+                if(Keyword == StyleKeyword.Auto || Keyword == StyleKeyword.Initial)
+                    return Keyword;
+                else
+                    return new StyleLength(Value.Get) { keyword = StyleKeyword.Undefined };
+            }
+        }
         public override string ToString()
         {
             return $"{Keyword}, {Value}";

@@ -12,7 +12,7 @@ namespace NaiveAPI.DocumentBuilder
             public DescriptionType Type = DescriptionType.None;
         }
         public override string VisualID => "2";
-        TextElement text;
+        DSTextElement text;
         protected override void OnCreateGUI()
         {
             if(Target.TextData.Count == 0)Target.TextData.Add("");
@@ -28,7 +28,7 @@ namespace NaiveAPI.DocumentBuilder
             {
                 text.style.backgroundColor = getTypeColor(visualData.Type);
                 text.style.color = getTypeTextColor(visualData.Type);
-                text.style.SetIS_Style(ISPadding.Percent(5));
+                text.style.SetIS_Style(ISPadding.Pixel(DocStyle.Current.MainTextSize/2));
             }
         }
         protected override void OnSelectIntroAni(int type)

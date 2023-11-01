@@ -83,13 +83,9 @@ namespace NaiveAPI.DocumentBuilder
             m_fieldElement.style.SetIS_Style(DocStyle.Current.InputFieldStyle);
             m_fieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.SubBackgroundColor;
             var arrow = new VisualElement();
-            arrow.style.width = DocStyle.Current.LineHeight;
-            arrow.style.height = DocStyle.Current.LineHeight;
-            arrow.style.backgroundImage = SODocStyle.WhiteArrow;
+            arrow.style.SetIS_Style(DocStyle.Current.ArrowIcon);
             arrow.style.marginLeft = StyleKeyword.Auto;
             arrow.style.marginRight = 0;
-            arrow.style.scale = new Scale(new Vector3(.7f, .7f, .7f));
-            arrow.style.unityBackgroundImageTintColor = DocStyle.Current.FrontgroundColor;
             arrow.style.rotate = new Rotate(90);
             m_fieldElement.Add(arrow);
 

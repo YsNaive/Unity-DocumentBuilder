@@ -161,6 +161,30 @@ MonoBehaviour:
     LabelWidth:
       Unit: 0
       Value: 120
+    ArrowIcon:
+      EnableMask: 545
+      Display:
+        rid: -2
+      Position:
+        rid: -2
+      Flex:
+        rid: -2
+      Align:
+        rid: -2
+      Size:
+        rid: 79920231271366676
+      Margin:
+        rid: -2
+      Padding:
+        rid: -2
+      Text:
+        rid: -2
+      Background:
+        rid: 79920231271366677
+      Border:
+        rid: -2
+      Radius:
+        rid: -2
     ScrollerWidth:
       Unit: 0
       Value: 14
@@ -173,6 +197,29 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 79920231271366676
+      type: {class: ISSize, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Width:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 100
+        Height:
+          Keyword: 3
+          Value:
+            Unit: 0
+            Value: 100
+    - rid: 79920231271366677
+      type: {class: ISBackground, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+      data:
+        Color: {r: 0, g: 0, b: 0, a: 0}
+        ImageTint: {r: 1, g: 1, b: 1, a: 1}
+        sprite: {fileID: 0}
+        texture: {fileID: 0}
+        renderTexture: {fileID: 0}
+        vectorImage: {fileID: 0}
+        ScaleMode: 0
     - rid: 8869985086138221424
       type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:

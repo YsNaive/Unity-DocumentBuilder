@@ -10,11 +10,11 @@ namespace NaiveAPI_UI
     {
         public bool IsOpend => panel != null;
         public bool AutoClose = true;
+        private bool isHoverOnPopup = false;
         public event Action<IPanel> OnOpend;
         public event Action OnClosed;
         protected VisualElement mask;
 
-        bool newOpened = false;
         public PopupElement(bool autoClose = true)
         {
             mask = new();
@@ -37,13 +37,9 @@ namespace NaiveAPI_UI
                 if (self.yMax > area.yMax)
                     style.top = area.height - self.height;
             });
-            mask.RegisterCallback<PointerUpEvent>(evt =>
+            mask.RegisterCallback<PointerDownEvent>(evt =>
             {
-                if (newOpened)
-                {
-                    newOpened = false;
-                    return;
-                }
+                if (evt.target != mask) return;
                 if (AutoClose)
                     Close();
             });
@@ -53,7 +49,6 @@ namespace NaiveAPI_UI
         public void Open(VisualElement openFrom)
         {
             if (openFrom.panel == null) return;
-            newOpened = true;
             VisualElement root = null;
 #if UNITY_EDITOR
             root = openFrom.panel.visualTree[openFrom.panel.visualTree.childCount - 1];

@@ -33,10 +33,7 @@ namespace NaiveAPI.DocumentBuilder
             ToggleElement.style.backgroundColor = DocStyle.Current.BackgroundColor * 0.65f;
             ToggleElement[0].focusable = false;
             var img = ToggleElement[0][0];
-            img.style.backgroundImage = SODocStyle.WhiteArrow;
-            img.style.unityBackgroundImageTintColor = DocStyle.Current.SubFrontgroundColor;
-            img.style.ClearMarginPadding();
-            img.style.scale = new Scale(new Vector3(.7f, .7f, .7f));
+            img.style.SetIS_Style(DocStyle.Current.ArrowIcon);
             ToggleElement.RegisterValueChangedCallback(e =>
             {
                 img.style.rotate = new Rotate(e.newValue ? 90 : 0);

@@ -17,7 +17,6 @@ namespace NaiveAPI.DocumentBuilder
             style.minHeight = DocStyle.Current.LineHeight;
             style.SetIS_Style(DocStyle.Current.MainTextStyle);
             inputFieldElement = this[0];
-            inputFieldElement.style.paddingLeft = DocStyle.Current.MainTextSize / 2f;
             inputFieldElement.style.SetIS_Style(DocStyle.Current.InputFieldStyle);
         }
         public new string label

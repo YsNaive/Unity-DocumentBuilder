@@ -104,7 +104,6 @@ namespace NaiveAPI.DocumentBuilder
         public float PaddingHor => ElementMarginPadding.Padding.Top.Value.Value;
         public ISLength ScrollerWidth = ISLength.Pixel(14);
         public ISLength ComponentSpace = ISLength.Pixel(10);
-        public float GUIScale = 1;
 
         private Stack<ISLength> m_ISLengthBuffer = new Stack<ISLength>();
         public void BeginLabelWidth(ISLength width)
@@ -167,7 +166,6 @@ namespace NaiveAPI.DocumentBuilder
             
             docStyle.ScrollerWidth = this.ScrollerWidth;
             docStyle.ComponentSpace = this.ComponentSpace;
-            docStyle.GUIScale = this.GUIScale;
 
             docStyle.ArrowIcon = this.ArrowIcon.Copy();
 

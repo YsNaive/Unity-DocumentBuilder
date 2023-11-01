@@ -30,9 +30,10 @@ MonoBehaviour:
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://drive.google.com/uc?id=135flwh2lTftow6tz-3X4HIfEhRgrbNLR","mode":0}'
+    JsonData: '{"scale":-1.0,"url":"https://drive.google.com/uc?id=135flwh2lTftow6tz-3X4HIfEhRgrbNLR","base64":"","mode":0}'
     TextData: []
-    ObjsData: []
+    ObjsData:
+    - {fileID: 0}
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 6

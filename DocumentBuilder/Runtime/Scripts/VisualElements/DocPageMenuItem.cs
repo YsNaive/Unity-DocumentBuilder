@@ -62,7 +62,7 @@ namespace NaiveAPI.DocumentBuilder
             if (mode == InitMode.Tree)
             {
                 if (page.SubPages.Count != 0)
-                    arrowImage.style.backgroundImage = new StyleBackground(SODocStyle.WhiteArrow);
+                    arrowImage.style.backgroundImage = DocStyle.Current.ArrowIcon.Background.StyleBackground;
                 foreach (var p in page.SubPages)
                 {
                     var newItem = new DocPageMenuItem(p);

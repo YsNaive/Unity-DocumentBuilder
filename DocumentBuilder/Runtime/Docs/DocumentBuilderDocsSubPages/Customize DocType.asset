@@ -103,9 +103,10 @@ MonoBehaviour:
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 5
-    JsonData: '{"scale":0.5,"url":"https://hackmd.io/_uploads/B1Sx_BUsh.png","mode":0}'
+    JsonData: '{"scale":0.5,"url":"https://hackmd.io/_uploads/B1Sx_BUsh.png","base64":"","mode":0}'
     TextData: []
-    ObjsData: []
+    ObjsData:
+    - {fileID: 0}
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 0
@@ -122,9 +123,10 @@ MonoBehaviour:
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 5
-    JsonData: '{"scale":0.5,"url":"https://hackmd.io/_uploads/rJNrOBIjn.png","mode":0}'
+    JsonData: '{"scale":0.5,"url":"https://hackmd.io/_uploads/rJNrOBIjn.png","base64":"","mode":0}'
     TextData: []
-    ObjsData: []
+    ObjsData:
+    - {fileID: 0}
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   IntroMode: 1

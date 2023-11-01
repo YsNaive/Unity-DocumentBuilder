@@ -12,10 +12,10 @@ namespace NaiveAPI_UI
         [SerializeField] private RenderTexture renderTexture = null;
         [SerializeField] private VectorImage vectorImage = null;
         public ScaleMode ScaleMode = ScaleMode.StretchToFill;
-        public Sprite Sprite { set => sprite = value; }
-        public Texture2D Texture2D { set => texture = value; }
-        public RenderTexture RenderTexture { set => renderTexture = value; }
-        public VectorImage VectorImage { set => vectorImage = value; }
+        public Sprite Sprite { get => sprite; set => sprite = value; }
+        public Texture2D Texture2D { get => Texture2D; set => texture = value; }
+        public RenderTexture RenderTexture { get => RenderTexture; set => renderTexture = value; }
+        public VectorImage VectorImage { get => VectorImage; set => vectorImage = value; }
         public StyleBackground StyleBackground
         {
             get

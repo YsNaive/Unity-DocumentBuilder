@@ -73,6 +73,7 @@ namespace NaiveAPI.DocumentBuilder
                 arrow.style.SetIS_Style(DocStyle.Current.ArrowIcon);
                 arrow.style.marginRight = DocStyle.Current.MainTextSize / 2f;
                 arrow.style.marginLeft = StyleKeyword.Auto;
+                arrow.style.marginTop = arrow.style.marginBottom = 0;
                 title.RegisterCallback<PointerEnterEvent>(evt => { title.style.backgroundColor = DocStyle.Current.SubBackgroundColor; });
                 title.RegisterCallback<PointerLeaveEvent>(evt => { title.style.backgroundColor = Color.clear; });
                 title.RegisterCallback<PointerDownEvent>(evt => { title.style.backgroundColor = Color.clear; });

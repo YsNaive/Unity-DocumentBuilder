@@ -86,7 +86,7 @@ MonoBehaviour:
       Radius:
         rid: -2
     InputFieldStyle:
-      EnableMask: 705
+      EnableMask: 641
       Display:
         rid: -2
       Position:
@@ -98,7 +98,7 @@ MonoBehaviour:
       Size:
         rid: -2
       Margin:
-        rid: 8869985085687332953
+        rid: -2
       Padding:
         rid: 8869985085687332882
       Text:
@@ -162,7 +162,7 @@ MonoBehaviour:
       Unit: 0
       Value: 120
     ArrowIcon:
-      EnableMask: 673
+      EnableMask: 609
       Display:
         rid: -2
       Position:
@@ -172,15 +172,15 @@ MonoBehaviour:
       Align:
         rid: -2
       Size:
-        rid: 79920231271366656
+        rid: 79920231271366673
       Margin:
-        rid: -2
+        rid: 79920231271366678
       Padding:
-        rid: 79920231271366670
+        rid: -2
       Text:
         rid: -2
       Background:
-        rid: 79920231271366669
+        rid: 79920231271366674
       Border:
         rid: -2
       Radius:
@@ -191,63 +191,62 @@ MonoBehaviour:
     ComponentSpace:
       Unit: 0
       Value: 10
-    GUIScale: 1
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 79920231271366656
+    - rid: 79920231271366673
       type: {class: ISSize, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Width:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
-            Value: 16
+            Value: 14
         Height:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
-            Value: 16
-    - rid: 79920231271366669
+            Value: 14
+    - rid: 79920231271366674
       type: {class: ISBackground, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Color: {r: 0, g: 0, b: 0, a: 0}
-        ImageTint: {r: 1, g: 1, b: 1, a: 1}
+        ImageTint: {r: 0.54901963, g: 0.54901963, b: 0.6, a: 1}
         sprite: {fileID: 21300000, guid: 439f66e45eaca4a43b7f48fc334f7254, type: 3}
         texture: {fileID: 0}
         renderTexture: {fileID: 0}
         vectorImage: {fileID: 0}
         ScaleMode: 0
-    - rid: 79920231271366670
-      type: {class: ISPadding, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
+    - rid: 79920231271366678
+      type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Left:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
-            Value: 2
+            Value: 3
         Top:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
-            Value: 2
+            Value: 3
         Right:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
-            Value: 2
+            Value: 3
         Bottom:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
-            Value: 2
+            Value: 3
     - rid: 8869985085687332875
       type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Left:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
@@ -257,7 +256,7 @@ MonoBehaviour:
             Unit: 0
             Value: 0
         Right:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
@@ -270,7 +269,7 @@ MonoBehaviour:
       type: {class: ISPadding, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Left:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
@@ -280,7 +279,7 @@ MonoBehaviour:
             Unit: 0
             Value: 0
         Right:
-          Keyword: 3
+          Keyword: 2
           Value:
             Unit: 0
             Value: 0
@@ -302,17 +301,17 @@ MonoBehaviour:
       type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Left:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
         Top:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 4
         Right:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 4
@@ -325,22 +324,22 @@ MonoBehaviour:
       type: {class: ISPadding, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Left:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 2
         Top:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 4
         Right:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 2
         Bottom:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 4
@@ -366,7 +365,7 @@ MonoBehaviour:
       type: {class: ISPadding, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Left:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 6
@@ -376,7 +375,7 @@ MonoBehaviour:
             Unit: 0
             Value: 0
         Right:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 6
@@ -399,22 +398,22 @@ MonoBehaviour:
       type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Left:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 10
         Top:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 2
         Right:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 10
         Bottom:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 2
@@ -422,45 +421,22 @@ MonoBehaviour:
       type: {class: ISPadding, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Left:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
         Top:
-          Keyword: 3
+          Keyword: 0
           Value:
             Unit: 0
             Value: 0
         Right:
           Keyword: 2
           Value:
-            Unit: 0
+            Unit: 1
             Value: 0
         Bottom:
           Keyword: 2
           Value:
-            Unit: 0
-            Value: 0
-    - rid: 8869985085687332953
-      type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
-      data:
-        Left:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Top:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Right:
-          Keyword: 3
-          Value:
-            Unit: 0
-            Value: 0
-        Bottom:
-          Keyword: 3
-          Value:
-            Unit: 0
+            Unit: 1
             Value: 0
