@@ -26,12 +26,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
         [SerializeField] private Texture2D classIcon;
         [SerializeField] private Texture2D structIcon;
         [SerializeField] private Texture2D methodIcon;
+        [SerializeField] private Texture2D starIcon;
 
         public static class Icon
         {
             public static Texture2D ClassIcon => Instance.classIcon;
             public static Texture2D StructIcon => Instance.structIcon;
             public static Texture2D MethodIcon => Instance.methodIcon;
+            public static Texture2D StarIcon => Instance.starIcon;
         }
     }
 

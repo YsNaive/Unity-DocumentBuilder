@@ -74,7 +74,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.style.flexGrow = 1;
             root.Add(editText);
             var comField = new VisualElement();
-            comField.Add(DocEditor.CreateComponentField(docComponent,true));
+            comField.Add(new DocComponentField(docComponent,true));
             root.Add(comField);
             root.schedule.Execute(() =>
             {

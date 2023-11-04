@@ -59,6 +59,8 @@ namespace NaiveAPI.DocumentBuilder
 
         public static Dictionary<string, Type> VisualID_Dict = new Dictionary<string, Type>();
 
+        #region static
+
         static DocVisual()
         {
             VisualID_Dict.Clear();
@@ -78,6 +80,8 @@ namespace NaiveAPI.DocumentBuilder
             doc.SetTarget(docComponent);
             return doc;
         }
+
+        #endregion
     }
     public abstract class DocVisual<DType> : DocVisual
         where DType : new()

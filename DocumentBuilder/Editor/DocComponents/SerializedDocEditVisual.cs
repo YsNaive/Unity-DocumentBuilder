@@ -19,7 +19,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             json = sp.FindPropertyRelative("JsonData");
             texts = sp.FindPropertyRelative("TextData");
             objs = sp.FindPropertyRelative("ObjsData");
-            Add(DocEditor.CreateComponentField(fromSO(), true));
+            Add(new DocComponentField(fromSO(), true));
         }
         DocComponent fromSO()
         {

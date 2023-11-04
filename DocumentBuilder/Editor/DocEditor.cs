@@ -14,62 +14,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public static class DocEditor
     {
-        static DocEditor()
-        {
-            Reload();
-        }
-        public static List<string> NameList = new List<string>();
-        public static Dictionary<string, string> Name2ID = new Dictionary<string, string>();
-        public static Dictionary<string, string> Name2Path = new Dictionary<string, string>();
-        public static Dictionary<string, string> ID2Name = new Dictionary<string, string>();
-        public static Dictionary<string, Type> ID2Type = new Dictionary<string, Type>();
-
-        public static void Reload()
-        {
-            ID2Type.Clear();
-            Name2ID.Clear();
-            Name2Path.Clear();
-            ID2Name.Clear();
-            NameList.Clear();
-            NameList.Add("None");
-            Dictionary<string, List<(CustomDocEditVisualAttribute attr, Type docType)>> dir2Types = new() { { "", new() } };
-            foreach (var type in DocRuntime.FindAllTypesWhere((t) =>
-            {
-                if(t.IsAbstract)
-                    return false;
-                if(!t.IsSubclassOf(typeof(DocEditVisual)))
-                    return false;
-                if(!t.IsDefined(typeof(CustomDocEditVisualAttribute)))
-                    return false;
-                return true;
-            }))
-            {
-                var attr = type.GetCustomAttribute<CustomDocEditVisualAttribute>();
-                var path = attr.MenuPath;
-                int index = Math.Max(path.LastIndexOf('\\'), path.LastIndexOf('/'));
-                var dir = (index == -1) ? "" : path.Substring(0, index);
-                var name = path.Substring(index + 1);
-                if (!dir2Types.ContainsKey(dir))
-                    dir2Types.Add(dir, new ());
-                dir2Types[dir].Add((attr, type));
-            }
-            foreach(var list in dir2Types.Values)
-            {
-                foreach (var pair in list.OrderBy((obj) => { return obj.attr.Priority; }))
-                {
-                    DocEditVisual doc = (DocEditVisual)Activator.CreateInstance(pair.docType);
-                    NameList.Add(pair.attr.MenuPath);
-                    Name2ID.Add(pair.attr.MenuPath, doc.VisualID);
-                    ID2Type.Add(doc.VisualID, pair.docType);
-                    ID2Name.Add(doc.VisualID, pair.attr.MenuPath);
-                }
-            }
-        }
-        public static DocComponentField CreateComponentField(DocComponent docComponent, bool singleMode = false)
-        {
-            return new DocComponentField(docComponent, singleMode);
-        }
-
         public static ObjectField NewObjectField<T>(EventCallback<ChangeEvent<UnityEngine.Object>> valueChange = null) { return NewObjectField<T>("", valueChange); }
         public static ObjectField NewObjectField<T>(string label = "", EventCallback<ChangeEvent<UnityEngine.Object>> valueChange = null)
         {

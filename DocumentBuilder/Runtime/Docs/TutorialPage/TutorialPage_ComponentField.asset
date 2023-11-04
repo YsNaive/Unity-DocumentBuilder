@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: TutorialPage_ComponentField
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 0}
+  SubPages: []
+  Components:
+  - VisualID: 5
+    JsonData: '{"scale":1.0,"url":"","base64":"iVBORw0KGgoAAAANSUhEUgAAAEUAAAAjCAYAAADCIMduAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANYSURBVGhD7Zn/S1NRFMD7a2xzTV3gpkunZAWiUIEIooiQDjeXX5jpNBtaOa0JImYkZiTIWjMk8EtoOr8liYJfAg0T7KcNQwX9C047V+7L546zYkyfvh8+8N7Oufe98+Gee8d2KSpKCTJiZCkEshQCWQqBLIXgr6UoFFdAqVRLCnxnqpaTOFFKTIwGNBrkqkTRsBqo2o4jpBS1+kCITpcECQkGSaLVXmNy/kVMSCk4GU5KPUxKaLV6VgtVI0VIKXFxceRDpAjWQtVIIUshkKUQ/LeUxMQU8vOzSkSkzM3NQ3v7SzIWaczmUigrs5IxzoWT0tX1BoaHP5ExzqlIsVptkJ2dC3l5BdDY2AyVlTZRPsdkKoXmZifU1Dwi4zk5+eBwPIOGhqeQkXFHFKuufghVVbWQlZUDTmcrlJSUQW2tXZCC10ZjiWgM51SkbG39Aru9AVZX12BszAv7+/swPT0jGjM+7oWNjQ3o7//Ixq+sfIOkpOtCvLPzNezt7cHIyGeYnJxmc6AEHne7PdDT0ws+nx9mZr4w8YODwzA/v8DmGh0dA5utTsg/zKlJGRr6s4RzcwtYUUajmd2bTPdhZ2cHUlJuCjkoz25/zK6Liy0sjiuNx+vrn4Df7xc2dZSCQjIz7wo5yJltH5RitVaLctbWvrPC8Do//x6TdDSH43b3gcvlDvocx2CbHOR4oK+vPyjnTEuxWCpEOdhKXArS0fEKtre3WaHYSrhH8NjExBRrnd3dXRGYi3sF5qAUj+eDMIYjaSkcXDVtbS9Ywbx9sJW6u99CevrtIPi+c+6kFBaa2Eo5HB8YGGJtg9ctLa2wuLgkiuNegtIMhhvs/txJsVjK2cpwOJ5DUZEZmpqc7J63kF6fKpwgFRUPoLy8ErzeSTYHn+84KTiXz+cLHPN17Eg/GkciImV29qtIyvLySpAUPCoPtw8el3hMb27+DBy5U6I9BUlNvcWO3KWlZTZfb+87SEtLF+LHSUFcrvewvv6DfQei4hGRIjVkKQSyFIIwS0kOeoDU0OmSwycFf9eMj08gHyQlsIaw/UarUsVAdHQ0xMaiHL0kwXdXqVSsFqpGipBSEIUCJ1QH5OAfS5clBb4zylAqVYF7uj6KE6VcRGQpBLIUAllKEEr4DRI5wCZKR6YYAAAAAElFTkSuQmCC","mode":2}'
+    TextData: []
+    ObjsData:
+    - {fileID: 0}
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This button can insert a new component above.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 5
+    JsonData: '{"scale":1.0,"url":"","base64":"iVBORw0KGgoAAAANSUhEUgAAAMYAAAAdCAYAAADxYhOxAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAQFSURBVHhe7Zr9S1NRGMf7a4L+gCKZKeliZSURFr1aYGTE0mxmTlMT0VmKZm8k1CgIxCjsxewHW0Vm2guVlrYoDDKxlYr+BU/7nrh35+wet5wjZPf54YP3Ps9zDv7w/Wz3XF22fPkKYhhGhcVgGA0sBsNo+CcxVq10hElnmBTFYcl8XDH+SsFiMKmMkfGIICwGwyxEDHkYrF6dwTApSXTWkf8YYkSM0m3GMKmEnHfkP2ExMjKclJW1XtsDsXoMs9SQ8478JyzG1avXaHZ2lrZt22XpeTwnaHJy0lJnmGSRlpZJpaU1CwJrdHsBOe/I/6LEmJubo76+fksPYvz69dtSZ5hk4fFUUXNz+4LAGt1eQM478r8oMfr7X9D37+PU2npO6c0nhttdQm1tF6i+vpGczhyl5/VWUVVVLWVmrhP9lpY22rNnvzJjUFlZQ+fPXxI/dX0m9cGnv893QSuADsz+t28MiHHsWJn45sjPLzB7OjF6eh7SxMQE3b7dRYHAE5qamqLCQrfZhzC9vY/o48cR6u7uCe89IPYtLvaYMzk5W2hoaJjevn1HN2/eovfvh2h4+IOoGzOMfTh4sFgrgY5Dh0q0exjIeUf+Fy0Grjs6OkVIjV60GA0NZ2hs7Bu5XJvNGkQIBj8r9xBh5858s3bnzn3lUe3Bg4d07163eQ96ewPU2XlLqTH2odLboBVBBjO6tTJy3pH/pIjhcKyl0dFP1N5+RdxHi4FwX7x42bw3gAgFBYXiGmIMDr5U+qdO1dHIyKh5j/kdO/ZSenqWSVlZBY2P/1DWMfYhL28vnTl9SSsEQA8zurUyct6R/6SIAQ4fLhLBxeNRtBjBYFB7Hvjy5SuVl58U1xCjr++50seZA8LhOjc3T+w/PT1t4efPkLKOsRd446STAqCnWxONnHfkP2liGDV8wkeLgcesxsYmZRYg0EeO/H32iydGdvYGIcb27bvDB3SnBXkdYz9OHK+1SIGablaHnHfkP6liAByMccCWxfD7r1tmi4o8Iuhr1mSL+3hiAOyNOXmmuro2LGK5UmPsh8uVS6elRypco6ab1SHnHflPuhj79h0QgZfFcLk2iccmHJxLS8vJ52uiUCikvOb9FzHc7qNib7//mvhWam5upZmZGcvrYsaelBw9aYqBa93MfMh5R/4XJcbTp8+0PfyNYWBgUKnhleqNGx3hA/YrCgQek9er/uIQA3W5BjGi5cNhvavrLr1+/Ua83q2oqFb6jL2pqzsr0PViIecd+U9YDIZZimzcuFWg68VCzjvyz2IwTBg578h/DDHU/1HXbcYwqUB01pH/ecUwiCyIGMUwqYUqBYgrBmAxmNQmIoQBi8EwiYrBMHaDxWAYDSwGw1hYQX8Aw5uWsGHG2k0AAAAASUVORK5CYII=","mode":2}'
+    TextData: []
+    ObjsData:
+    - {fileID: 0}
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Use dropdown to select component type.
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 5
+    JsonData: '{"scale":1.0,"url":"","base64":"iVBORw0KGgoAAAANSUhEUgAAAK8AAAAgCAYAAABkdCh4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASnSURBVHhe7ZxNbhNBEIU5TYgdGf8kxPkDIlggIVbhjAkB9iFCnCDXCMo+JxhSjko8lV//VE872NCLT/RMV71+rnlE9sJ+trU16BqNTaSFt7GxtPA2NpZoeIfDF93OTn9E5/nzIT0jB+ldFy9Cmwvnqb3Q8I7Hs24ymXSz2W41RE902XkxmhdO80LCOx5PF80HB6+6Dx8/VWM+P1noir49M8QfL6+pZin9vKzXXGrSdy7vXh5VI8fLUnin0+mikQ26L/v7xw/6+f+zH70cU62+lHlZr7mwAPaldC4sgH1JeVkKr/y5lhfBhqzc3NxkYftEV/TtmSFiXnLOi1HTS19KvayKEi8sfH1JeaHhZQNWUiHR/VCgvIPRPtVDUDe1zyj1IrDzUmC/xesFw1YbrxcWPOXn2VkS1qfEvKwsvLq29d7BWC2m6alBSr0IuWcoqVqvFxa6w8M33dHRaTZSz3S8XmzgWEBzsVoxL1nh1QcVIlWL+97BWF1cM2xtjFIvQo6+B68XFrrLy6/d/f19NlLPdLxebOBYKHOxWjEvyfBqEFJgj+3Fe97BxLRC5NaWehFQX8/zgFqC1wsL3bqEV2DBTMF0Yl6ywovXltRDsfe8g0Edps/IrS31IqC+x5vA6r1eWOjOzz8/BPJbNlLPdLxeWOhYOFMwnZiXKuHVf1lt34eEOky/D6VeBPQS8hbza/e8XljoauH1wkIXC6Tlr4dX17a+70NCHavF0DqGrS31Ilg9dkboXN3Da68XFrpaeL2w0GEgMZhsjbWWmJfe4bWwB4jX3sGgTo6XUA3rL/UioJau9QyG1toexeuFhU7ew97d3WXzFO95dY337RprLTEv2eHFBxEC622/4h0M6lgtRqzGapR6US27Vv0QWo89itcLC906fmDTNd63a6y1xLz8s395tR577HWpF9XCtV7rmqH1WofXXi8sdPIB7OrqezZP8YFN13jfrrHWEvPy37xtEKxGqRfVwrU9V++xPd3Ha68XFrpaeL2w0GEgMZhsjbWWmJeVhdf+q3gHo32ik+MFzw2htaVeUN+uQzVsD6+9XljoauH1wkKHgcRgsjXWWmJeVhpeBfe9g9E+poXoXqoG90u9WC2rizX2nmL3vF5Y6OQ97O3tr2zaBzaA1auO4h2M9qleDK3THgvWCaVeLFY3B1vv9cJCt64f2FKsNLyeB5Oq9Q6GacSInW9fSy0vVjcFq/d6YaG7uPjSXV//yEbqmY7XCwudBjIV4FRdzEt2eD1gv8U7GKYRg/mxaG0tL+yMHFDD64WFrhZeLyx0GMpcmE7MCw2vvAAcLBt8COyzlAzGeknBPCFaV9sLOysG9pZ6WRUlXljwWEBDsP6UFxJe+VpH3e9pKaIr+vbMEKv1crJGXsrmgoGrRelcWPj6kprLUnjlO0N7eweLF8IGXYroia7v+1HNCwO91KaPFxbAUnK8LIV3OBx1g8GgG40m3e7ufMHp2/fFSP9sNl/oDQaPvzNgzwyxCi/CunipOZca1PJyPN0rRvpz57IUXkF+8OHxByBG3fb2oDeiIya2t/0/atG8cJqXQHgbjU2ghbexsbTwNjaUQfcb/n0IiHpLDY0AAAAASUVORK5CYII=","mode":2}'
+    TextData: []
+    ObjsData:
+    - {fileID: 0}
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'And those are: Copy, Paste, Dup, Move, Delete'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - For more detail about edit different component type, you can check in Docs
+      or try it yourself !
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  IntroMode: 1
+  OuttroMode: 1
+  IntroDuration: 200
+  OuttroDuration: 200

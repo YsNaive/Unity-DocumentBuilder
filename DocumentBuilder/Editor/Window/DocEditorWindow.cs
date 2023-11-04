@@ -10,10 +10,11 @@ using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
-    public class DocEditorWindow : EditorWindow
+    public class DocEditorWindow : EditorWindow, IHasCustomMenu
     {
         #region get window
         [MenuItem("Tools/NaiveAPI/DocumentBuilder/Document Editor", priority = 1)]
@@ -31,12 +32,18 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         static DocEditorWindow m_editorInstance;
         #endregion
+        void IHasCustomMenu.AddItemsToMenu(GenericMenu menu)
+        {
+            GUIContent content = new GUIContent("Tutorial");
+            menu.AddItem(content, false, beginTutorial);
+        }
 
         class Data
         {
             public float SplitPercent1 = 30;
             public float SplitPercent2 = 70;
             public float SplitPercent3 = 30;
+            public bool isFirstOpen = true;
         }
         Data cacheData;
 
@@ -44,7 +51,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         VisualElement leftContainer, rightTopContainer, rightBottomContainer;
         VisualElement editorContainer;
         DocPageMenu pageMenu;
-        DSButton createPageBtn, deletePageBtn, openOnInspectorBtn;
+        DSButton createPageBtn, deletePageBtn;
         private void OnEnable()
         {
             cacheData = JsonUtility.FromJson<Data>(DocCache.LoadData("DocumentEditorWindowCache.json"));
@@ -69,6 +76,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
             initPageMenu();
 
             rootPageSelector.value = DocEditorData.Instance.EditingDocPage;
+
+            if (cacheData.isFirstOpen)
+                beginTutorial();
         }
         SplitView splitView, splitView2, splitView3;
         void initLayout()
@@ -90,13 +100,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             createPageBtn.clicked += createPage;
             deletePageBtn = new DSButton("Delete Page", DocStyle.Current.DangerColor);
             deletePageBtn.clicked += deletePage;
-            openOnInspectorBtn = new DSButton("Open on Inspector", DocStyle.Current.HintColor);
-            openOnInspectorBtn.clicked += openOnInspector;
 
             leftContainer.Add(rootPageSelector);
             rightTopContainer.Add(createPageBtn);
             rightTopContainer.Add(deletePageBtn);
-            rightTopContainer.Add(openOnInspectorBtn);
 
             splitView = new SplitView(cacheData.SplitPercent1);
             splitView2 = new SplitView(cacheData.SplitPercent2);
@@ -247,20 +254,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 editorContainer.Clear();
             }));
         }
-        void openOnInspector()
-        {
-            if(pageMenu.Selecting != null)
-            {
-                editorContainer.Clear();
-                Selection.activeObject = pageMenu.Selecting.TargetPage;
-                var cur = pageMenu.Selecting;
-                while(cur !=null)
-                {
-                    cur.RepaintStyle(DocPageMenuItem.StyleType.None);
-                    cur = cur.ParentMenuItem;
-                }
-            }
-        }
 
         VisualElement menuItemDragHintLine;
         VisualElement createMenuItemDrager(DocPageMenuItem item)
@@ -376,5 +369,227 @@ namespace NaiveAPI_Editor.DocumentBuilder
             moveBtn.AddManipulator(manipulator);
             return moveBtn;
         }
+
+        #region Tutorial
+        void beginTutorial()
+        {
+            rootPageSelector.value = null;
+            leftContainer.SetEnabled(false);
+            editorContainer.SetEnabled(false);
+            rightTopContainer.SetEnabled(false);
+
+            var container = _tutorialCoverMask();
+            var title = new DSLabel("Welcome to DocumentEditor");
+            title.style.unityTextAlign = TextAnchor.MiddleCenter;
+            var subtitle = new DSTextElement("Do you need tutorial ?");
+            subtitle.style.unityTextAlign = TextAnchor.MiddleCenter;
+            var btnWidth = DocStyle.Current.MainTextSize * 10;
+            var startBtn = new DSButton("Let's GO", DocStyle.Current.SuccessColor, () =>
+            { rootVisualElement.Remove(container); _tutorialCreateBookRoot(); });
+            startBtn.style.width = btnWidth;
+            var skipBtn = new DSButton("Skip", DocStyle.Current.DangerColor, () =>
+            {
+                rootVisualElement.Remove(container);
+                leftContainer.SetEnabled(true);
+                editorContainer.SetEnabled(true);
+                rightTopContainer.SetEnabled(true);
+                rightBottomContainer.SetEnabled(true);
+                cacheData.isFirstOpen = false;
+            });
+            skipBtn.style.width = btnWidth;
+            var buttons = new DSHorizontal();
+            buttons.Add(skipBtn);
+            buttons.Add(startBtn);
+            buttons.style.justifyContent = Justify.Center;
+            buttons.style.marginTop = DocStyle.Current.LineHeight;
+            buttons.style.marginBottom = DocStyle.Current.LineHeight;
+            container.Add(title);
+            container.Add(subtitle);
+            container.Add(buttons);
+
+            rootVisualElement.Add(container);
+        }
+        VisualElement _tutorialCoverMask()
+        {
+            var container = new VisualElement();
+            container.style.width = Length.Percent(100);
+            container.style.height = Length.Percent(100);
+            container.style.position = Position.Absolute;
+            container.style.justifyContent = Justify.Center;
+            container.style.alignItems = Align.Center;
+            container.style.backgroundColor = Color.black * 0.45f;
+            return container;
+        }
+        VisualElement _tutorialMsgContainer(string msg)
+        {
+            var arrow = new VisualElement();
+            arrow.style.SetIS_Style(DocStyle.Current.ArrowIcon);
+            arrow.style.marginLeft = StyleKeyword.Auto;
+            arrow.style.marginRight = StyleKeyword.Auto;
+            arrow.style.rotate = new Rotate(-90);
+            var selectMsgContainer = new VisualElement();
+            selectMsgContainer.Add(arrow);
+            selectMsgContainer.style.opacity = 0f;
+            selectMsgContainer.Add(DocDescription.Create(msg, DocDescription.DescriptionType.Hint));
+            return selectMsgContainer;
+        }
+        void _tutorialCreateBookRoot()
+        {
+            editorContainer.SetEnabled(true);
+            leftContainer.SetEnabled(true);
+            var page = AssetDatabase.LoadAssetAtPath<SODocPage>(AssetDatabase.GUIDToAssetPath("39afb8bcc6cde314baadbe99f5d69e4b"));
+            var pageVisual = new DocPageVisual(page);
+            editorContainer.Add(pageVisual);
+
+            var msg = _tutorialMsgContainer("Select your DocPage as BookRoot here.");
+            leftContainer.Add(msg);
+            var animation = new VisualElementAnimation.GotoTransformPositionBackAndForth(msg, 0.75f, new Vector2(0, 7));
+
+            pageVisual.PlayIntro(() =>
+            {
+                pageVisual.panel.visualTree.schedule.Execute(() =>
+                {
+                    msg.Fade(1, 750);
+                    animation.Start();
+                }).ExecuteLater(2000);
+            });
+
+            EventCallback<ChangeEvent<Object>> next = null;
+            next = evt =>
+            {
+                animation.Stop();
+                leftContainer.Remove(msg);
+                _tutorialSelectPage();
+                rootPageSelector.SetEnabled(false);
+                rootPageSelector.UnregisterCallback(next);
+            };  rootPageSelector.RegisterValueChangedCallback(next);
+
+        }
+        void _tutorialSelectPage()
+        {
+            var msg = _tutorialMsgContainer("Click here to select editing page.");
+            pageMenu.RootMenuItem.Add(msg);
+            var animation = new VisualElementAnimation.GotoTransformPositionBackAndForth(msg, 0.75f, new Vector2(0, 7));
+            animation.Start();
+            msg.Fade(1, 750);
+
+            Action<DocPageMenuItem> next = null;
+            next = evt =>
+            {
+                animation.Stop();
+                pageMenu.RootMenuItem.Remove(msg);
+                _tutorialEditContent();
+                pageMenu.OnSelected -= next;
+            };  pageMenu.OnSelected += next;
+        }
+
+        void _tutorialEditContent()
+        {
+            leftContainer.SetEnabled(false);
+            var field = editorContainer.Q<DocComponentsField>();
+            var msg = _tutorialMsgContainer("Click here to add new content.");
+            field.Add(msg);
+            var animation = new VisualElementAnimation.GotoTransformPositionBackAndForth(msg, 0.75f, new Vector2(0, 7));
+            animation.Start();
+            msg.Fade(1, 750);
+            editorContainer[0][0].SetEnabled(false);
+            var readMoreBtn = new DSButton("Read More", () =>
+            {
+                var container = _tutorialCoverMask();
+                var page = AssetDatabase.LoadAssetAtPath<SODocPage>(AssetDatabase.GUIDToAssetPath("a08211148927d0f46a8f15c2cc30f33d"));
+                var pageVisual = new DocPageVisual(page);
+                container.Add(pageVisual);
+                var backBtn = new DSButton("Back",DocStyle.Current.HintColor, () =>
+                {
+                    rootVisualElement.Remove(container);
+                });
+                pageVisual.style.marginLeft = Length.Percent(18);
+                pageVisual.style.width = Length.Percent(60);
+                backBtn.style.marginLeft = Length.Percent(18);
+                backBtn.style.width = Length.Percent(60);
+                pageVisual.style.backgroundColor = DocStyle.Current.BackgroundColor;
+                container.Add(backBtn);
+                rootVisualElement.Add(container);
+            });
+
+            var nextBtn = new DSButton("Next", DocStyle.Current.SuccessColor, () =>
+            {
+                field.Remove(msg);
+                _tutorialAddPage();
+            });
+
+            Action created = null; created = () =>
+            {
+                msg[0].style.rotate = new Rotate(90);
+                var hor = new DSHorizontal();
+                hor.Add(msg[1]);
+                hor.Add(readMoreBtn);
+                hor.Add(nextBtn);
+                hor[0].style.flexGrow = 1f;
+                msg.Insert(0,hor);
+                msg.Q<DSTextElement>().text = "Modify setting of Component here";
+                field.Insert(field.childCount-3, msg);
+
+                msg.Fade(1, 750);
+                field.Q<Button>().clicked -= created;
+            };
+            field.Q<Button>().clicked+= created;  
+        }
+
+        void _tutorialAddPage()
+        {
+            leftContainer.SetEnabled(false);
+            editorContainer.SetEnabled(false);
+            rightTopContainer.SetEnabled(true);
+            rightTopContainer[1].SetEnabled(false);
+            var msg = _tutorialMsgContainer("Let add new page !");
+            msg.style.position = Position.Absolute;
+            msg.style.top = rightTopContainer[0].worldBound.height + 5;
+            msg.style.left = DocStyle.Current.LineHeight;
+            rightTopContainer.Add( msg);
+            var animation = new VisualElementAnimation.GotoTransformPositionBackAndForth(msg, 0.75f, new Vector2(0, 7));
+            animation.Start();
+            msg.Fade(1, 750);
+            var addBtn = (Button)rightTopContainer[0];
+            addBtn.clicked += () =>
+            {
+                rightTopContainer.Remove(msg);
+                addBtn.SetEnabled(false);
+                var btnHor = editorContainer[0][editorContainer[0].childCount - 1];
+                editorContainer.SetEnabled(true);
+                btnHor[1].SetEnabled(false);
+                editorContainer.Q<DocPageCreator>().callback += (val) =>
+                {
+
+                    editorContainer.Clear();
+                    var container = _tutorialCoverMask();
+                    var title = DocLabel.Create("Congratulations !");
+                    title.style.unityTextAlign = TextAnchor.MiddleCenter;
+                    var subtitle = DocDescription.Create("Now you know the basic of DocumentEditor. There still are many thing you can try, enjoy !");
+                    subtitle.style.unityTextAlign = TextAnchor.MiddleCenter;
+                    container.Add(title);
+                    container.Add(subtitle);
+                    container.Add(new DSButton("Start Editing", () =>
+                    {
+                        leftContainer.SetEnabled(true);
+                        editorContainer.SetEnabled(true);
+                        rootPageSelector.SetEnabled(true);
+                        rightTopContainer.SetEnabled(true);
+                        rightTopContainer[0].SetEnabled(true);
+                        rightTopContainer[1].SetEnabled(true);
+                        rootVisualElement.Remove(container);
+                        cacheData.isFirstOpen = false;
+                    }));
+                    container[2].style.width = Length.Percent(25);
+                    container[2].style.marginTop = DocStyle.Current.LineHeight;
+                    container[2].style.marginBottom = DocStyle.Current.LineHeight;
+                    rootVisualElement.Add(container);
+                };
+            };
+
+
+        }
+
+        #endregion
     }
 }

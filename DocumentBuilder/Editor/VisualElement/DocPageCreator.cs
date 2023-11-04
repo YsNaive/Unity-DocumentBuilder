@@ -16,7 +16,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         Button createButton, cancelButton;
         SODocPage parentPage;
         DSTextField nameField;
-        Action<SODocPage> callback;
+        public event Action<SODocPage> callback;
         DocPageFactoryField factorySelector;
         VisualElement notValidMsgContainer;
         public DocPageCreator(SODocPage parentPage, Action<SODocPage> callback = null)

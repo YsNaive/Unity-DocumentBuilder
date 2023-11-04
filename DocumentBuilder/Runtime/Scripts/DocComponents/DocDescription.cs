@@ -89,7 +89,7 @@ namespace NaiveAPI.DocumentBuilder
         }
         public static DocComponent CreateComponent(string text, DescriptionType type = DescriptionType.None)
         {
-            DocComponent component = new DocComponent();
+            DocComponent component = new ();
             component.VisualID = "2";
             component.TextData.Add(text);
 
@@ -98,6 +98,10 @@ namespace NaiveAPI.DocumentBuilder
             component.JsonData = JsonUtility.ToJson(data);
 
             return component;
+        }
+        public static DocVisual Create(string text, DescriptionType type = DescriptionType.None)
+        {
+            return Create(CreateComponent(text, type));
         }
     }
 

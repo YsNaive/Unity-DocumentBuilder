@@ -8,17 +8,12 @@ using UnityEngine.UIElements;
 namespace NaiveAPI_Editor.DocumentBuilder
 {
     [CustomDocEditVisual("Label", 1)]
-    public class DocEditLabel : DocEditVisual
+    public class DocEditLabel : DocEditVisual<DocLabel.Data>
     {
         [Obsolete] public override string DisplayName => "Label";
         public override string VisualID => "1";
-
-        DocLabel.Data data;
         protected override void OnCreateGUI()
         {
-            data = JsonUtility.FromJson<DocLabel.Data>(Target.JsonData);
-            data ??= new DocLabel.Data();
-
             TextField labelInput = new DSTextField("", (val) =>
             {
                 Target.TextData.Clear();
@@ -32,12 +27,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
             DocStyle.Current.BeginLabelWidth(ISLength.Pixel(36));
             intField = DocEditor.NewIntField("Level", e =>
             {
-                data.Level = Mathf.Clamp(e.newValue, 1, 6);
-                if (e.newValue != data.Level)
-                    intField.value = data.Level;
-                save();
+                visualData.Level = Mathf.Clamp(e.newValue, 1, 6);
+                if (e.newValue != visualData.Level)
+                    intField.value = visualData.Level;
+                SaveDataToTarget();
             });
-            intField.value = data.Level;
+            intField.value = visualData.Level;
             intField.label = "Level";
             DocStyle.Current.EndLabelWidth();
             var addBtn = new DSButton("+", DocStyle.Current.SuccessColor, () =>
@@ -57,15 +52,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             Add(new DSHorizontal(1f,labelInput,null,new DSHorizontal(intField,null,addBtn,subBtn)));
         }
-        void save()
-        {
-            Target.JsonData = JsonUtility.ToJson(data);
-        }
 
         public override string ToMarkdown(string dstPath)
         {
             string output = "";
-            for(int i=0;i<data.Level;i++)
+            for(int i=0;i<visualData.Level;i++)
                 output += "#";
             output +=' '+ Target.TextData[0];
             return output;

@@ -15,7 +15,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             string name;
-            DocEditor.ID2Name.TryGetValue(property.FindPropertyRelative("VisualID").stringValue, out name);
+            DocEditVisual.Dict.ID2Name.TryGetValue(property.FindPropertyRelative("VisualID").stringValue, out name);
             EditorGUI.LabelField(position, DocRuntime.VisualID_Dict[label.text].Name);
             position.x = position.width - 75;
             position.width = 75;

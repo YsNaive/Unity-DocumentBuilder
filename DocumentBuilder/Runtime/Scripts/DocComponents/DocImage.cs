@@ -9,6 +9,18 @@ namespace NaiveAPI.DocumentBuilder
 {
     public sealed class DocImage : DocVisual<DocImage.Data>
     {
+        private int m_val;
+        public int Value
+        {
+            get
+            {
+                return m_val;
+            }
+            set
+            {
+                m_val = value;
+            }
+        }
         public enum Mode
         {
             Url,
@@ -153,6 +165,7 @@ namespace NaiveAPI.DocumentBuilder
                     label.style.unityTextAlign = TextAnchor.MiddleCenter;
                     Add(label);
                 }
+                style.SetIS_Style(border);
             }
         }
     }

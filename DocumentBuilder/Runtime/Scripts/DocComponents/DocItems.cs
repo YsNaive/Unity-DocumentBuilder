@@ -1,5 +1,4 @@
 using NaiveAPI_UI;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -55,6 +54,21 @@ namespace NaiveAPI.DocumentBuilder
                 textElement.style.paddingLeft = iconWidth * 2f;
                 Add(textElement);
             }
+        }
+
+        public static DocComponent CreateComponent(IEnumerable<string> items, Mode mode = Mode.Disorder)
+        {
+            DocComponent component = new()
+            {
+                VisualID = "8",
+                TextData = new(items),
+            };
+            SaveJsonData(component, new Data() { Mode = mode });
+            return component;
+        }
+        public static DocVisual Create(IEnumerable<string> items, Mode mode = Mode.Disorder)
+        {
+            return Create(CreateComponent(items, mode));
         }
     }
 }

@@ -15,6 +15,21 @@ MonoBehaviour:
   Icon: {fileID: 2800000, guid: 3543eaffc785cee4a879a77c6b51fede, type: 3}
   SubPages: []
   Components:
+  - VisualID: 2
+    JsonData: '{"Type":4}'
+    TextData:
+    - '<b>This Chapter is write in 2.0.1, you can go to DocumentEditor  for a quick
+      tutorial now, but you still can found more information here.</b>
+
+
+      open
+      DocumentEditor from:
+
+      Tools / NaiveAPI / Document Builder / Document
+      Editor'
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:

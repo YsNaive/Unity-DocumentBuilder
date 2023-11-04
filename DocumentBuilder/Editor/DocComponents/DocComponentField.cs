@@ -1,13 +1,14 @@
-﻿using NaiveAPI;
-using NaiveAPI.DocumentBuilder;
+﻿using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static NaiveAPI_Editor.DocumentBuilder.DocEditVisual;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
@@ -193,7 +194,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
             EditView.Add(ToolBar);
             Type docType = null;
-            if (DocEditor.ID2Type.TryGetValue(Target.VisualID, out docType))
+            if (Dict.ID2Type.TryGetValue(Target.VisualID, out docType))
             {
                 DocEditVisual = (DocEditVisual)Activator.CreateInstance(docType);
                 DocEditVisual.SetTarget(Target);
@@ -218,7 +219,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         EditView.Add(editFavoriteRoot);
                     }
                 });
-                editFavorite.style.backgroundImage = DocStyle.Current.ArrowIcon.Background.StyleBackground;
+                editFavorite.style.backgroundImage = DocEditorData.Icon.StarIcon;
                 editFavorite.style.unityBackgroundImageTintColor = new Color(.8f, .6f, .2f);
                 editFavorite.style.width = 18;
                 editFavorite.style.height = 18;
@@ -226,7 +227,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 foreach (var id in DocCache.Get().FavoriteDocVisualID)
                 {
                     string name;
-                    if (DocEditor.ID2Name.TryGetValue(id, out name))
+                    if (Dict.ID2Name.TryGetValue(id, out name))
                     {
                         if (name == "None") continue;
 
@@ -286,10 +287,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             SelectVisualType = new DSDropdown();
             SelectVisualType[0].style.ClearMarginPadding();
-            SelectVisualType.choices = DocEditor.NameList;
+            SelectVisualType.choices = Dict.NameList;
             string tName = string.Empty;
-            DocEditor.ID2Name.TryGetValue(Target.VisualID, out tName);
-            SelectVisualType.index = DocEditor.NameList.FindIndex(0, (str) => { return str == tName; });
+            Dict.ID2Name.TryGetValue(Target.VisualID, out tName);
+            SelectVisualType.index = Dict.NameList.FindIndex(0, (str) => { return str == tName; });
             if (SelectVisualType.index == -1) SelectVisualType.index = 0;
             SelectVisualType.RegisterValueChangedCallback((val) =>
             {
@@ -301,11 +302,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 if (val.newValue == "None")
                     Target.VisualID = string.Empty;
                 else
-                    Target.VisualID = DocEditor.Name2ID[val.newValue];
+                    Target.VisualID = Dict.Name2ID[val.newValue];
                 OnModify?.Invoke(this);
                 Repaint();
             });
-            SelectVisualType.value = DocEditor.NameList[SelectVisualType.index];
+            SelectVisualType.value = Dict.NameList[SelectVisualType.index];
             SelectVisualType[0].style.paddingLeft = 5;
             SelectVisualType.style.height = 20;
             SelectVisualType.style.width = 160;
@@ -322,7 +323,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         void createEditFavorite()
         {
             editFavoriteRoot = new VisualElement();
-            foreach (var name in DocEditor.NameList)
+            foreach (var name in Dict.NameList)
             {
                 if (name == "None") continue;
                 Toggle toggle = new Toggle();
@@ -332,7 +333,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 foreach (var id in DocCache.Get().FavoriteDocVisualID)
                 {
                     string tName;
-                    if (DocEditor.ID2Name.TryGetValue(id, out tName))
+                    if (Dict.ID2Name.TryGetValue(id, out tName))
                     {
                         if (tName == name)
                             toggle.value = true;
@@ -343,7 +344,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     string t;
                     if (e.newValue)
                     {
-                        if (DocEditor.Name2ID.TryGetValue(name, out t))
+                        if (Dict.Name2ID.TryGetValue(name, out t))
                         {
                             DocCache.Get().FavoriteDocVisualID.Add(t);
                             DocCache.Save();
@@ -351,7 +352,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     }
                     else
                     {
-                        if (DocEditor.Name2ID.TryGetValue(name, out t))
+                        if (Dict.Name2ID.TryGetValue(name, out t))
                         {
 
                             DocCache.Get().FavoriteDocVisualID.Remove(t);
@@ -492,7 +493,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     if (ve != this) ((DocComponentField)ve).SetStatus(false);
                 }
-                    
             }
         }
 
