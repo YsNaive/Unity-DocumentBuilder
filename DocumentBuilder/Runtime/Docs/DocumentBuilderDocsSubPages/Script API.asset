@@ -14,10 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 2800000, guid: 323fcf14a6a8bd1488a8e68098322f7a, type: 3}
   SubPages:
-  - {fileID: 11400000, guid: d30a593ffd5c34347a4ddf8211b854e6, type: 2}
   - {fileID: 11400000, guid: 50d562cc75c6c434d86c7b7c36ee6349, type: 2}
   - {fileID: 11400000, guid: 8a99fb15887a33645a6141ce1ffd8a41, type: 2}
-  Components: []
+  Components:
+  - VisualID: 2
+    JsonData: '{"Type":3}'
+    TextData:
+    - <b>Most of API here is Obsolete. It will be update as soon as possible in minor
+      updata.</b>
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: '{"Type":3}'
+    TextData:
+    - <b>Most of API here is Obsolete. It will be update as soon as possible in minor
+      updata.</b>
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: '{"Type":3}'
+    TextData:
+    - <b>Most of API here is Obsolete. It will be update as soon as possible in minor
+      updata.</b>
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
   IntroMode: 1
   OuttroMode: 1
   IntroDuration: 200

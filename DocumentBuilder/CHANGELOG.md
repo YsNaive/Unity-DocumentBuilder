@@ -1,11 +1,14 @@
 # Changelog
 
-## [2.1.0]
+## [2.1.0] -2023-11-05
 ### This version change some API about create DocStyle VisualElement
+Refactored. DocEditorWindow
 Refactored. DocRuntime.NewSomething() -> Group of DocVisualElement class
 Improve. DocStyle layout
 Add. Component version
 Add. DocVisual Attribute
+Add. DocPageFactory (old DocTemplate)
+Add. DocumentEditor quick tutorial
 
 
 ## [2.0.1] -2023-09-01

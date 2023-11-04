@@ -18,8 +18,8 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: '{"Type":3}'
     TextData:
-    - If your are editing the SODocPage and press the "Play" without saving ScriptableObject,
-      The unity may crash, remember to Ctrl^S to save before press "Play".
+    - DocumentEditor might crash Unity with pressing "Play" while using it, reinstall
+      libs may solve the problem. (works for me)
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0

@@ -23,18 +23,16 @@ MonoBehaviour:
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 2
-    JsonData: '{"Type":2}'
+    JsonData: '{"Type":3}'
     TextData:
-    - This version change some API about create DocStyle VisualElement
+    - Most of API Docs is Obsulete, will be updata as soon as possible.
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 2
-    JsonData: 
+    JsonData: '{"Type":2}'
     TextData:
-    - "Refactored. DocEditorWindow\nRefactored. DocRuntime.NewSomething() \n\t->
-      Group of DocVisualElement class\r\nImprove. DocStyle layout\r\nAdd. Component
-      version\r\nAdd. DocVisual Attribute\nAdd. DocPageFactory"
+    - This version change some API about create DocStyle VisualElement
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
@@ -47,7 +45,23 @@ MonoBehaviour:
   - VisualID: 2
     JsonData: 
     TextData:
-    - Let Class design more reasonable and improve lot of feture
+    - "Remove. DocStyle scale, use unity panel settings instead\nRefactored. DocEditorWindow\nRefactored.
+      DocRuntime.NewSomething() \n\t-> Group of DocVisualElement class\r\nImprove.
+      DocStyle layout\r\nAdd. Component version\r\nAdd. DocVisual Attribute\nAdd.
+      DocPageFactory\nAdd. DocumentEditor quick tutorial"
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 0
+    JsonData: 
+    TextData: []
+    ObjsData: []
+    AniSettings: 01000000fa00000001000000fa000000
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - Make Class design more reasonable and improve lot of feture
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0

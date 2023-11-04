@@ -254,7 +254,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 editorContainer.Clear();
             }));
         }
-
+        
         VisualElement menuItemDragHintLine;
         VisualElement createMenuItemDrager(DocPageMenuItem item)
         {

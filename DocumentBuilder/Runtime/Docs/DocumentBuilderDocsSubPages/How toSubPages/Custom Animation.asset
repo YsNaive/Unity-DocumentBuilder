@@ -122,9 +122,10 @@ MonoBehaviour:
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 5
-    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/SJiN5PIs2.png","mode":0}'
+    JsonData: '{"scale":-1.0,"url":"https://hackmd.io/_uploads/SJiN5PIs2.png","base64":"","mode":0}'
     TextData: []
-    ObjsData: []
+    ObjsData:
+    - {fileID: 0}
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 1
