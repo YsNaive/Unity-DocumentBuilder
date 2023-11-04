@@ -167,7 +167,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 com = new DocComponent();
                 com.VisualID = new DocItems().VisualID;
                 var itemData = new DocItems.Data();
-                itemData.num = datas.Count;
                 com.JsonData = JsonUtility.ToJson(itemData);
                 com.ObjsData.Add(DocEditorData.Instance.BuildinIcon.Find((match) =>
                 {

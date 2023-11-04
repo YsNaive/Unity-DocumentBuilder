@@ -122,7 +122,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     component.TextData.Remove(text);
                 }
-                component.JsonData = JsonUtility.ToJson(new DocItems.Data() { num = component.TextData.Count }) ;
                 if (component.TextData.Count > 0)
                 {
                     createdPage.Components.Add(DocDividline.CreateComponent());

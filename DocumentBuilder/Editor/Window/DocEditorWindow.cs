@@ -131,6 +131,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         void rescale()
         {
             if (preview == null) return;
+            if (rightBottomContainer.worldBound.width >= editorContainer.worldBound.width) return;
             var scale = rightBottomContainer.worldBound.width / editorContainer.worldBound.width;
             preview.style.minWidth = editorContainer.worldBound.width;
             preview.style.width = editorContainer.worldBound.width;
@@ -147,10 +148,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 preview.Repaint();
             }).Every(1000);
-            preview.RegisterCallback<GeometryChangedEvent>(evt =>
+            rightBottomContainer.RegisterCallback<GeometryChangedEvent>(evt =>
             {
                 rescale();
             });
+            rescale();
         }
         void initPageMenu()
         {
