@@ -22,25 +22,24 @@ namespace NaiveAPI_Editor.DocumentBuilder
         protected override void OnCreateGUI()
         {
             init();
-            this.Add(generateTextVisual(visualData));
-            this.Add(generateHeightModeVisual(visualData));
+            this.Add(generateTextVisual());
+            this.Add(generateHeightModeVisual());
         }
 
         public override string ToMarkdown(string dstPath)
         {
-            DocSeeAlso.Data data = JsonUtility.FromJson<DocSeeAlso.Data>(Target.JsonData);
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(Target.TextData[0]);
             if (Target.TextData[0] != "")
                 stringBuilder.Append("\t");
-            switch (data.mode)
+            switch (visualData.mode)
             {
                 case DocSeeAlso.Mode.OpenPage:
                     stringBuilder.Append("See Also : ");
                     stringBuilder.Append(Target.ObjsData[0].name);
                     break;
                 case DocSeeAlso.Mode.OpenUrl:
-                    string strLink = $"[{Target.TextData[1]}]({data.url})";
+                    string strLink = $"[{Target.TextData[1]}]({visualData.url})";
                     stringBuilder.Append(strLink);
                     break;
             }
@@ -61,10 +60,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
         }
 
-        private VisualElement generateTextVisual(DocSeeAlso.Data data)
+        private VisualElement generateTextVisual()
         {
-            VisualElement root = new VisualElement();
-            root.style.SetIS_Style(ISFlex.Horizontal);
+            VisualElement root = new DSHorizontal();
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(40));
             TextField descriptionField = new DSTextField("description", (value) =>
             {
@@ -87,28 +85,27 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return root;
         }
 
-        private VisualElement generateHeightModeVisual(DocSeeAlso.Data data)
+        private VisualElement generateHeightModeVisual()
         {
-            VisualElement root = new VisualElement();
-            root.style.SetIS_Style(ISFlex.Horizontal);
+            VisualElement root = new DSHorizontal();
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(30));
             IntegerField integerField = DocEditor.NewIntField("height", (value) =>
             {
-                data.height = value.newValue;
-                Target.JsonData = JsonUtility.ToJson(data);
+                visualData.height = value.newValue;
+                SaveDataToTarget();
             });
-            integerField.value = data.height;
+            integerField.value = visualData.height;
             integerField.style.width = Length.Percent(30);
             root.Add(integerField);
             DocStyle.Current.EndLabelWidth();
-            VisualElement veMode = generateModeVisual(data);
+            VisualElement veMode = generateModeVisual();
             veMode.style.width = Length.Percent(70);
             root.Add(veMode);
 
             return root;
         }
 
-        private VisualElement generateModeVisual(DocSeeAlso.Data data)
+        private VisualElement generateModeVisual()
         {
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
@@ -124,17 +121,17 @@ namespace NaiveAPI_Editor.DocumentBuilder
             objectField.value = Target.ObjsData[0];
             TextField urlTextField = new DSTextField("url", (value) =>
             {
-                data.url = value.newValue;
-                Target.JsonData = JsonUtility.ToJson(data);
+                visualData.url = value.newValue;
+                SaveDataToTarget();
             });
-            urlTextField.value = data.url;
+            urlTextField.value = visualData.url;
             urlTextField.style.paddingLeft = DocStyle.Current.MainTextSize;
             urlTextField.style.width = Length.Percent(50);
             DocStyle.Current.EndLabelWidth();
-            var enumField = new DSEnumField<DocSeeAlso.Mode>("Mode", data.mode, (value) =>
+            var enumField = new DSEnumField<DocSeeAlso.Mode>("Mode", visualData.mode, (value) =>
             {
-                data.mode = value.newValue;
-                if (data.mode == DocSeeAlso.Mode.OpenPage)
+                visualData.mode = value.newValue;
+                if (visualData.mode == DocSeeAlso.Mode.OpenPage)
                 {
                     root.Remove(urlTextField);
                     root.Add(objectField);
@@ -144,14 +141,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     root.Remove(objectField);
                     root.Add(urlTextField);
                 }
-                Target.JsonData = JsonUtility.ToJson(data);
+                SaveDataToTarget();
             });
             enumField.style.paddingLeft = DocStyle.Current.MainTextSize;
             enumField.labelElement.style.minWidth = Length.Percent(30);
             enumField.labelElement.style.width = Length.Percent(30);
             enumField.style.width = Length.Percent(44);
             root.Add(enumField);
-            if (data.mode == DocSeeAlso.Mode.OpenPage)
+            if (visualData.mode == DocSeeAlso.Mode.OpenPage)
             {
                 if (root.Contains(urlTextField))
                     root.Remove(urlTextField);

@@ -22,7 +22,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             if (typeField.value == null) return;
             TargetMethod = typeField.value.GetMethod(methodDropdown.value);
             if (TargetMethod == null) return;
-            createdPage.Components.Add(DocEditFuncDisplay.LoadMethod(TargetMethod)); 
+            createdPage.Components.Add(DocFuncDisplay.CreateComponent(TargetMethod)); 
         }
 
         DSTypeField typeField = new DSTypeField("Target Type");

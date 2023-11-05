@@ -26,46 +26,45 @@ namespace NaiveAPI_Editor.DocumentBuilder
             this.style.width = -1;
 
             init();
-            rowColVisual = generateRowCol(visualData);
+            rowColVisual = generateRowCol();
             this.Add(rowColVisual);
-            anchorVisual = generateAnchors(visualData);
+            anchorVisual = generateAnchors();
             this.Add(anchorVisual);
-            matrixVisual = generateEditMatrixVisual(visualData, -1);
+            matrixVisual = generateEditMatrixVisual();
             this.Add(matrixVisual);
         }
 
         public override string ToMarkdown(string dstPath)
         {
-            DocMatrix.Data data = JsonUtility.FromJson<DocMatrix.Data>(Target.JsonData);
             StringBuilder stringBuilder = new StringBuilder();
             StringBuilder align = new StringBuilder();
             align.Append("|");
-            for (int i = 0;i < data.col; i++)
+            for (int i = 0;i < visualData.col; i++)
             { 
-                if (data.anchors[i] == TextAnchor.UpperLeft ||
-                    data.anchors[i] == TextAnchor.MiddleLeft ||
-                    data.anchors[i] == TextAnchor.LowerLeft)
+                if (visualData.anchors[i] == TextAnchor.UpperLeft ||
+                    visualData.anchors[i] == TextAnchor.MiddleLeft ||
+                    visualData.anchors[i] == TextAnchor.LowerLeft)
                     align.Append(":-");
-                else if (data.anchors[i] == TextAnchor.UpperCenter ||
-                    data.anchors[i] == TextAnchor.MiddleCenter ||
-                    data.anchors[i] == TextAnchor.LowerCenter)
+                else if (visualData.anchors[i] == TextAnchor.UpperCenter ||
+                    visualData.anchors[i] == TextAnchor.MiddleCenter ||
+                    visualData.anchors[i] == TextAnchor.LowerCenter)
                     align.Append(":-:");
                 else
                     align.Append("-:");
                 align.Append("|");
             }
-            for (int i = 0;i < data.row; i++)
+            for (int i = 0;i < visualData.row; i++)
             {
                 if (i == 1)
-                    stringBuilder.Append(align.ToString()).AppendLine();
+                    stringBuilder.AppendLine(align.ToString());
                 stringBuilder.Append("|");
-                for (int j = 0;j < data.col; j++)
+                for (int j = 0;j < visualData.col; j++)
                 {
-                    int index = i * data.col + j;
+                    int index = i * visualData.col + j;
                     stringBuilder.Append(Target.TextData[index]);
                     stringBuilder.Append('|');
                 }
-                if (i != data.row - 1)
+                if (i != visualData.row - 1)
                     stringBuilder.AppendLine();
             }
 
@@ -83,20 +82,20 @@ namespace NaiveAPI_Editor.DocumentBuilder
             visualData.SetContents(Target.TextData);
         }
 
-        private void resetTargetData(DocMatrix.Data data)
+        private void resetTargetData()
         {
-            Target.JsonData = JsonUtility.ToJson(data);
+            SaveDataToTarget();
             Target.TextData.Clear();
-            for (int i = 0; i < data.row; i++)
+            for (int i = 0; i < visualData.row; i++)
             {
-                for (int j = 0; j < data.col; j++)
+                for (int j = 0; j < visualData.col; j++)
                 {
-                    Target.TextData.Add(data.contents[i, j]);
+                    Target.TextData.Add(visualData.contents[i, j]);
                 }
             }
         }
 
-        private VisualElement generateRowCol(DocMatrix.Data data)
+        private VisualElement generateRowCol()
         {
             float percent = 100f / 3;
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
@@ -105,13 +104,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 if (int.TryParse(value.newValue, out int rowNum))
                 {
                     this.Remove(matrixVisual);
-                    data.ResizeContent(rowNum, data.col);
-                    resetTargetData(data);
-                    matrixVisual = generateEditMatrixVisual(data, -1);
+                    visualData.ResizeContent(rowNum, visualData.col);
+                    resetTargetData();
+                    matrixVisual = generateEditMatrixVisual();
                     this.Add(matrixVisual);
                 }
             });
-            rowTextField.value = data.row + "";
+            rowTextField.value = visualData.row + "";
             rowTextField.style.width = Length.Percent(percent);
 
             TextField colTextField = new DSTextField("col", (value) =>
@@ -120,42 +119,42 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     this.Remove(anchorVisual);
                     this.Remove(matrixVisual);
-                    data.ResizeContent(data.row, colNum);
-                    resetTargetData(data);
-                    matrixVisual = generateEditMatrixVisual(data, -1);
-                    anchorVisual = generateAnchors(data);
+                    visualData.ResizeContent(visualData.row, colNum);
+                    resetTargetData();
+                    matrixVisual = generateEditMatrixVisual();
+                    anchorVisual = generateAnchors();
                     this.Add(anchorVisual);
                     this.Add(matrixVisual);
                 }
             });
-            colTextField.value = data.col + "";
+            colTextField.value = visualData.col.ToString();
             colTextField.style.width = Length.Percent(percent);
             DocStyle.Current.EndLabelWidth();
 
-            var enumField = new DSEnumField("", data.mode, value =>
+            var enumField = new DSEnumField<DocMatrix.Mode>("", visualData.mode, value =>
             {
-                data.mode = (DocMatrix.Mode)value.newValue;
-                Target.JsonData = JsonUtility.ToJson(data);
+                visualData.mode = value.newValue;
+                SaveDataToTarget();
             });
             enumField.style.width = Length.Percent(percent);
 
             return new DSHorizontal(1, rowTextField, colTextField, enumField);
         }
 
-        private VisualElement generateAnchors(DocMatrix.Data data)
+        private VisualElement generateAnchors()
         {
             VisualElement root = new VisualElement();
             root.style.SetIS_Style(ISFlex.Horizontal);
-            float percent = 89f / data.col;
+            float percent = 89f / visualData.col;
             Button addButton;
-            for (int i = 0;i < data.col; i++)
+            for (int i = 0;i < visualData.col; i++)
             {
                 int i1 = i;
                 addButton = new DSButton("", DocStyle.Current.SuccessColor, () =>
                 {
-                    data.AddCol(i1);
-                    Target.JsonData = JsonUtility.ToJson(data);
-                    ((TextField)rowColVisual[1]).value = data.col + "";
+                    visualData.AddCol(i1);
+                    SaveDataToTarget();
+                    ((TextField)rowColVisual[1]).value = visualData.col.ToString();
                 });
                 addButton.style.ClearMargin();
                 addButton.style.width = Length.Percent(percent / 2);
@@ -165,10 +164,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     addButton.style.width = Length.Percent(percent / 4);
                 }
                 root.Add(addButton);
-                var field = new DSEnumField("", data.anchors[i], (value =>
+                var field = new DSEnumField<TextAnchor>("", visualData.anchors[i], (value =>
                 {
-                    data.anchors[i1] = (TextAnchor)value.newValue;
-                    Target.JsonData = JsonUtility.ToJson(data);
+                    visualData.anchors[i1] = value.newValue;
+                    SaveDataToTarget();
                 }));
                 field.style.width = Length.Percent(percent / 2);
                 root.Add(field);
@@ -176,9 +175,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             addButton = new DSButton("", DocStyle.Current.SuccessColor, () =>
             {
-                data.AddCol(data.col);
-                Target.JsonData = JsonUtility.ToJson(data);
-                ((TextField)rowColVisual[1]).value = data.col + "";
+                visualData.AddCol(visualData.col);
+                SaveDataToTarget();
+                ((TextField)rowColVisual[1]).value = visualData.col.ToString();
             });
             addButton.style.width = Length.Percent(percent / 4);
             addButton.style.ClearMargin();
@@ -187,74 +186,70 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return root;
         }
 
-        private VisualElement generateEditMatrixVisual(DocMatrix.Data data, float width)
+        private VisualElement generateEditMatrixVisual()
         {
             VisualElement root = new VisualElement();
-            root.style.width = width;
-            float percent = 89f / data.col;
+            float percent = 89f / visualData.col;
             Button addButton;
-            for (int i = 0; i < data.row; i++)
+            for (int i = 0; i < visualData.row; i++)
             {
-                VisualElement child = new VisualElement();
-                child.style.SetIS_Style(ISFlex.Horizontal);
+                VisualElement child = new DSHorizontal();
                 int i1 = i;
                 addButton = new DSButton("", DocStyle.Current.SuccessColor, () =>
                 {
-                    data.AddRow(i1);
-                    Target.JsonData = JsonUtility.ToJson(data);
-                    ((TextField)rowColVisual[0]).value = data.row + "";
+                    visualData.AddRow(i1);
+                    SaveDataToTarget();
+                    ((TextField)rowColVisual[0]).value = visualData.row.ToString();
                 });
                 addButton.style.ClearMarginPadding();
                 addButton.style.width = Length.Percent(5);
                 child.Add(addButton);
-                for (int j = 0; j < data.col; j++)
+                for (int j = 0; j < visualData.col; j++)
                 {
                     int j1 = j;
                     TextField textField = new DSTextField("", value =>
                     {
-                        Target.TextData[i1 * data.col + j1] = value.newValue;
-                        data.contents[i1, j1] = value.newValue;
+                        Target.TextData[i1 * visualData.col + j1] = value.newValue;
+                        visualData.contents[i1, j1] = value.newValue;
                     });
                     textField.multiline = true;
-                    textField.value = data.contents[i, j];
+                    textField.value = visualData.contents[i, j];
                     textField.style.width = Length.Percent(percent);
                     child.Add(textField);
                 }
                 Button deleteButton = new DSButton("",DocStyle.Current.DangerColor);
-                deleteButton.style.SetIS_Style(ISMargin.None);
-                deleteButton.style.SetIS_Style(ISPadding.None);
+                deleteButton.style.ClearMarginPadding();
                 deleteButton.style.width = Length.Percent(5);
                 deleteButton.clicked += () =>
                 {
-                    data.DeleteRow(i1);
-                    Target.JsonData = JsonUtility.ToJson(data);
-                    ((TextField)rowColVisual[0]).value = data.row + "";
+                    visualData.DeleteRow(i1);
+                    SaveDataToTarget();
+                    ((TextField)rowColVisual[0]).value = visualData.row.ToString();
                 };
                 child.Add(deleteButton);
                 root.Add(child);
             }
 
-            VisualElement deleteColButton = new VisualElement();
-            deleteColButton.style.SetIS_Style(ISFlex.Horizontal);
+            VisualElement deleteColButton = new DSHorizontal();
 
             addButton = new DSButton("", DocStyle.Current.SuccessColor, () =>
             {
-                data.AddRow(data.row);
-                Target.JsonData = JsonUtility.ToJson(data);
-                ((TextField)rowColVisual[0]).value = data.row + "";
+                visualData.AddRow(visualData.row);
+                SaveDataToTarget();
+                ((TextField)rowColVisual[0]).value = visualData.row.ToString();
             });
             addButton.style.ClearMarginPadding();
             addButton.style.width = Length.Percent(5);
             deleteColButton.Add(addButton);
 
-            for (int i = 0;i < data.col; i++)
+            for (int i = 0;i < visualData.col; i++)
             {
                 int i1 = i;
                 Button deleteButton = new DSButton("",DocStyle.Current.DangerColor, () =>
                 {
-                    data.DeleteCol(i1);
-                    Target.JsonData = JsonUtility.ToJson(data);
-                    ((TextField)rowColVisual[1]).value = data.col + "";
+                    visualData.DeleteCol(i1);
+                    SaveDataToTarget();
+                    ((TextField)rowColVisual[1]).value = visualData.col.ToString();
                 });
                 deleteButton.style.width = Length.Percent(percent);
                 deleteButton.style.ClearMarginPadding();

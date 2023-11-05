@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 namespace NaiveAPI_Editor.DocumentBuilder
 {
     [CustomDocEditVisual("Advance/FuncDisplay")]
-    public class DocEditFuncDisplay : DocEditVisual
+    public class DocEditFuncDisplay : DocEditVisual<DocFuncDisplay.Data>
     {
         [Obsolete] public override string DisplayName => "FuncDisplay";
 
@@ -25,284 +25,101 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             this.style.backgroundColor = DocStyle.Current.BackgroundColor;
             this.style.width = -1;
-            DocFuncDisplay.Data data = setData(Target.JsonData, Target.TextData);
+
+            init();
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
             nameTextField = new DSTextField("Name", value =>
             {
-                data.Name = value.newValue;
-                Target.JsonData = JsonUtility.ToJson(data);
+                visualData.Name = value.newValue;
+                SaveDataToTarget();
             });
-            nameTextField.label = "Name";
-            nameTextField.value = data.Name + "";
+            nameTextField.value = visualData.Name;
             nameTextField.style.paddingLeft = Length.Percent(1);
             nameTextField.style.paddingRight = Length.Percent(1);
             TextField descriptionTextField = new DSTextField("Description", value =>
             {
                 Target.TextData[0] = value.newValue;
             });
-            descriptionTextField.label = "Description";
             descriptionTextField.multiline = true;
-            descriptionTextField.value = Target.TextData[0] + "";
+            descriptionTextField.value = Target.TextData[0];
             descriptionTextField.style.paddingLeft = Length.Percent(1);
             descriptionTextField.style.paddingRight = Length.Percent(1);
             this.Add(nameTextField);
             this.Add(descriptionTextField);
             DocStyle.Current.EndLabelWidth();
-            syntaxContainer = generateSyntaxContainer(data);
+            syntaxContainer = generateSyntaxContainer();
             this.Add(syntaxContainer);
-            paramsContainer = generateParamsContainer(data);
+            paramsContainer = generateParamsContainer();
             this.Add(paramsContainer);
-            returnTypeContainer = generateReturnTypeContainer(data);
+            returnTypeContainer = generateReturnTypeContainer();
             this.Add(returnTypeContainer);
         }
 
         public override string ToMarkdown(string dstPath)
         {
-            DocFuncDisplay.Data data = JsonUtility.FromJson<DocFuncDisplay.Data>(Target.JsonData);
             StringBuilder stringBuilder = new StringBuilder();
-            string strName = $"<font color=#{ColorUtility.ToHtmlStringRGB(DocStyle.Current.FuncColor)}>{data.Name}</font>";
+            string strName = $"<font color=#{ColorUtility.ToHtmlStringRGB(DocStyle.Current.FuncColor)}>{visualData.Name}</font>";
             stringBuilder.Append(strName).AppendLine("<br>");
             stringBuilder.Append(Target.TextData[0]).AppendLine("<br>");
             stringBuilder.Append("Syntaxs").AppendLine("<br>");
-            foreach (string str in data.Syntaxs)
+            foreach (string str in visualData.Syntaxs)
                 stringBuilder.Append("&emsp;").Append(DocumentBuilderParser.FunctionParser(str, true)).AppendLine("<br>");
-            if (data.Params.Count > 0)
+            if (visualData.Params.Count > 0)
                 stringBuilder.AppendLine("Parameters<br>");
-            for (int i = 0;i < data.Params.Count; i++)
+            for (int i = 0;i < visualData.Params.Count; i++)
             {
                 string strParam = 
-                    $"<font color=#{ColorUtility.ToHtmlStringRGB(DocStyle.Current.TypeColor)}>{data.Params[i].Type}</font>&emsp;{data.Params[i].ParamName}";
+                    $"<font color=#{ColorUtility.ToHtmlStringRGB(DocStyle.Current.TypeColor)}>{visualData.Params[i].Type}</font>&emsp;{visualData.Params[i].ParamName}";
                 stringBuilder.Append("&emsp;").Append(strParam).AppendLine("<br>");
                 stringBuilder.Append("&emsp;&emsp;").Append(Target.TextData[1 + i]).AppendLine("<br>");
             }
-            if (data.ReturnTypes.Count > 0)
+            if (visualData.ReturnTypes.Count > 0)
                 stringBuilder.Append("Return Values").AppendLine("<br>");
-            for (int i = 0; i < data.ReturnTypes.Count; i++)
+            for (int i = 0; i < visualData.ReturnTypes.Count; i++)
             {
-                string strReturnType = $"<font color=#{ColorUtility.ToHtmlStringRGB(DocStyle.Current.TypeColor)}>{data.ReturnTypes[i]}</font>";
+                string strReturnType = $"<font color=#{ColorUtility.ToHtmlStringRGB(DocStyle.Current.TypeColor)}>{visualData.ReturnTypes[i]}</font>";
                 stringBuilder.Append("&emsp;Type : ").Append(strReturnType).AppendLine("<br>");
-                if (i == data.ReturnTypes.Count - 1)
-                    stringBuilder.Append("&emsp;&emsp;").Append(Target.TextData[1 + data.Params.Count + i]);
+                if (i == visualData.ReturnTypes.Count - 1)
+                    stringBuilder.Append("&emsp;&emsp;").Append(Target.TextData[1 + visualData.Params.Count + i]);
                 else
-                    stringBuilder.Append("&emsp;&emsp;").Append(Target.TextData[1 + data.Params.Count + i]).AppendLine("<br>");
+                    stringBuilder.Append("&emsp;&emsp;").Append(Target.TextData[1 + visualData.Params.Count + i]).AppendLine("<br>");
             }
 
             return stringBuilder.ToString();
         }
 
-        public static DocComponent LoadMethod(MethodInfo methodInfo)
+        private void init()
         {
-            DocComponent doc = new DocComponent();
-            doc.VisualID = "4";
-            DocFuncDisplay.Data data = new DocFuncDisplay.Data();
-            List<string> texts = new List<string>();
-            data.Name = methodInfo.Name;
-            texts.Add("");
-            data.Syntaxs[0] = GetSignature(methodInfo);
-            string typeName = DocumentBuilderParser.CalGenericTypeName(methodInfo.ReturnType);
-            if (typeName != "void")
+            if (visualData.Syntaxs.Count == 0)
             {
-                data.ReturnTypes.Add(DocumentBuilderParser.CalGenericTypeName(methodInfo.ReturnType));
-                texts.Add("");
+                Target.TextData = visualData.GetTexts();
             }
             else
             {
-                data.ReturnTypes.Clear();
+                visualData.SetParamsDescription(Target.TextData, 1, visualData.Params.Count + 1);
+                visualData.SetReturnTypesDescription(Target.TextData, 1 + visualData.Params.Count, 1 + visualData.Params.Count + visualData.ReturnTypes.Count);
             }
-            data.Params = new List<DocFuncDisplay.ParamData>();
-            ParameterInfo[] parameters = methodInfo.GetParameters();
-
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                DocFuncDisplay.ParamData param = new DocFuncDisplay.ParamData();
-                param.ParamName = parameters[i].Name;
-                param.Type = DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType);
-                data.Params.Add(param);
-                texts.Add("");
-            }
-
-            doc.JsonData = JsonUtility.ToJson(data);
-            doc.TextData = texts;
-
-            return doc;
-        }
-        public static DocComponent LoadMethod(ConstructorInfo constructorInfo)
-        {
-            DocComponent doc = new DocComponent();
-            doc.VisualID = "4";
-            DocFuncDisplay.Data data = new DocFuncDisplay.Data();
-            List<string> texts = new List<string>();
-            data.Name = DocumentBuilderParser.CalGenericTypeName(constructorInfo.DeclaringType);
-            texts.Add("");
-            data.Syntaxs[0] = GetSignature(constructorInfo);
-            data.ReturnTypes.Add(data.Name);
-            data.Params = new List<DocFuncDisplay.ParamData>();
-            ParameterInfo[] parameters = constructorInfo.GetParameters();
-
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                DocFuncDisplay.ParamData param = new DocFuncDisplay.ParamData();
-                param.ParamName = parameters[i].Name;
-                param.Type = DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType);
-                data.Params.Add(param);
-                texts.Add("");
-            }
-
-            doc.JsonData = JsonUtility.ToJson(data);
-            doc.TextData = texts;
-
-            return doc;
-        }
-
-        public static string GetSignature(MethodInfo methodInfo)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.Append(getAccessLevel(methodInfo));
-            if (methodInfo.IsStatic)
-                stringBuilder.Append(" static");
-            stringBuilder.Append(" ");
-            stringBuilder.Append(DocumentBuilderParser.CalGenericTypeName(methodInfo.ReturnType));
-            stringBuilder.Append(" ");
-            stringBuilder.Append(methodInfo.Name);
-            stringBuilder.Append('(');
-
-            ParameterInfo[] parameters = methodInfo.GetParameters();
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                stringBuilder.Append(DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType));
-                stringBuilder.Append(" ");
-                stringBuilder.Append(parameters[i].Name);
-                if (i != parameters.Length - 1)
-                    stringBuilder.Append(", ");
-            }
-            stringBuilder.Append(")");
-
-            return stringBuilder.ToString();
-        }
-        public static string GetSignature(ConstructorInfo constructorInfo)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.Append(getAccessLevel(constructorInfo));
-            if (constructorInfo.IsStatic)
-                stringBuilder.Append(" static");
-            stringBuilder.Append(" ");
-            stringBuilder.Append(DocumentBuilderParser.CalGenericTypeName(constructorInfo.DeclaringType));
-            stringBuilder.Append(" ");
-            stringBuilder.Append("_Constructor");
-            stringBuilder.Append('(');
-
-            ParameterInfo[] parameters = constructorInfo.GetParameters();
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                stringBuilder.Append(DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType));
-                stringBuilder.Append(" ");
-                stringBuilder.Append(parameters[i].Name);
-                if (i != parameters.Length - 1)
-                    stringBuilder.Append(", ");
-            }
-            stringBuilder.Append(")");
-
-            return stringBuilder.ToString();
-        }
-
-        private static string getAccessLevel(MethodInfo methodInfo)
-        {
-            if (methodInfo.IsPublic)
-            {
-                return "public";
-            }
-            else if (methodInfo.IsFamily)
-            {
-                return "protected";
-            }
-            else if (methodInfo.IsPrivate)
-            {
-                return "private";
-            }
-            else if (methodInfo.IsAssembly)
-            {
-                return "internal";
-            }
-            else if (methodInfo.IsFamilyAndAssembly)
-            {
-                return "protected internal";
-            }
-            else if (methodInfo.IsFamilyOrAssembly)
-            {
-                return "protected internal";
-            }
-
-            return "";
-        }
-        private static string getAccessLevel(ConstructorInfo methodInfo)
-        {
-            if (methodInfo.IsPublic)
-            {
-                return "public";
-            }
-            else if (methodInfo.IsFamily)
-            {
-                return "protected";
-            }
-            else if (methodInfo.IsPrivate)
-            {
-                return "private";
-            }
-            else if (methodInfo.IsAssembly)
-            {
-                return "internal";
-            }
-            else if (methodInfo.IsFamilyAndAssembly)
-            {
-                return "protected internal";
-            }
-            else if (methodInfo.IsFamilyOrAssembly)
-            {
-                return "protected internal";
-            }
-
-            return "";
-        }
-
-        private DocFuncDisplay.Data setData(string jsonData, List<string> texts)
-        {
-            DocFuncDisplay.Data data = JsonUtility.FromJson<DocFuncDisplay.Data>(jsonData);
-            if (data == null)
-            {
-                data = new DocFuncDisplay.Data();
-                Target.TextData.Clear();
-                Target.TextData.Add("");
-                Target.TextData.AddRange(data.getTexts());
-            }
-            else
-            {
-                data.SetParamsDescription(texts, 1, data.Params.Count + 1);
-                data.SetReturnTypesDescription(texts, 1 + data.Params.Count, 1 + data.Params.Count + data.ReturnTypes.Count);
-            }
-            for (int i = 0; i < data.Syntaxs.Count; i++)
+            for (int i = 0; i < visualData.Syntaxs.Count; i++)
                 funcDatas.Add(new DocumentBuilderParser.FuncData());
-            Target.JsonData = JsonUtility.ToJson(data);
-            return data;
+            SaveDataToTarget();
         }
 
-        private void setFuncData(DocFuncDisplay.Data data)
+        private void setFuncData()
         {
             List<string> paramNames = new List<string>();
             List<string> returnNames = new List<string>();
-            for (int i = 0; i < data.Params.Count; i++)
-                paramNames.Add(data.Params[i].ParamName);
-            for (int i = 0; i < data.ReturnTypes.Count; i++)
-                returnNames.Add(data.ReturnTypes[i]);
+            for (int i = 0; i < visualData.Params.Count; i++)
+                paramNames.Add(visualData.Params[i].ParamName);
+            for (int i = 0; i < visualData.ReturnTypes.Count; i++)
+                returnNames.Add(visualData.ReturnTypes[i]);
             string description = Target.TextData[0];
             Target.TextData.Clear();
             Target.TextData.Add(description);
-            data.Params.Clear();
-            data.ReturnTypes.Clear();
+            visualData.Params.Clear();
+            visualData.ReturnTypes.Clear();
             if (funcDatas.Count > 0)
             {
-                data.Name = funcDatas[0].Name;
+                visualData.Name = funcDatas[0].Name;
                 nameTextField.value = funcDatas[0].Name;
             }
             for (int i = 0; i < funcDatas.Count; i++)
@@ -311,47 +128,47 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 for (int j = 0; j < funcDatas[i].paramsName.Count; j++)
                 {
                     paramData = new DocFuncDisplay.ParamData(funcDatas[i].paramsName[j], funcDatas[i].paramsType[j]);
-                    if (data.Params.Contains(paramData))
+                    if (visualData.Params.Contains(paramData))
                     {
                         continue;
                     }
                     if (paramNames.Contains(paramData.ParamName))
                     {
-                        data.Params.Add(paramData);
-                        Target.TextData.Add(data.ParamsDescription[paramNames.IndexOf(paramData.ParamName)]);
+                        visualData.Params.Add(paramData);
+                        Target.TextData.Add(visualData.ParamsDescription[paramNames.IndexOf(paramData.ParamName)]);
                     }
                     else
                     {
-                        data.Params.Add(paramData);
+                        visualData.Params.Add(paramData);
                         Target.TextData.Add("");
                     }
                 }
             }
             for (int i = 0; i < funcDatas.Count; i++)
             {
-                if (funcDatas[i].ReturnType == "" || funcDatas[i].ReturnType == "void" || 
-                    data.ReturnTypes.Contains(funcDatas[i].ReturnType))
+                if (funcDatas[i].ReturnType == "" || funcDatas[i].ReturnType == "void" ||
+                    visualData.ReturnTypes.Contains(funcDatas[i].ReturnType))
                     continue;
                 if (returnNames.Contains(funcDatas[i].ReturnType))
                 {
-                    data.ReturnTypes.Add(funcDatas[i].ReturnType);
-                    Target.TextData.Add(data.ReturnTypesDescription[returnNames.IndexOf(funcDatas[i].ReturnType)]);
+                    visualData.ReturnTypes.Add(funcDatas[i].ReturnType);
+                    Target.TextData.Add(visualData.ReturnTypesDescription[returnNames.IndexOf(funcDatas[i].ReturnType)]);
                 }
                 else
                 {
-                    data.ReturnTypes.Add(funcDatas[i].ReturnType);
+                    visualData.ReturnTypes.Add(funcDatas[i].ReturnType);
                     Target.TextData.Add("");
                 }
             }
-            data.ParamsDescription.Clear();
-            for (int i = 0; i < data.Params.Count; i++)
+            visualData.ParamsDescription.Clear();
+            for (int i = 0; i < visualData.Params.Count; i++)
             {
-                data.ParamsDescription.Add(Target.TextData[1 + i]);
+                visualData.ParamsDescription.Add(Target.TextData[1 + i]);
             }
-            data.ReturnTypesDescription.Clear();
-            for (int i = 0; i < data.ReturnTypes.Count; i++)
+            visualData.ReturnTypesDescription.Clear();
+            for (int i = 0; i < visualData.ReturnTypes.Count; i++)
             {
-                data.ReturnTypesDescription.Add(Target.TextData[1 + data.Params.Count + i]);
+                visualData.ReturnTypesDescription.Add(Target.TextData[1 + visualData.Params.Count + i]);
             }
         }
 
@@ -375,26 +192,26 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return root;
         }
 
-        private VisualElement generateSyntaxVisual(DocFuncDisplay.Data data, int index)
+        private VisualElement generateSyntaxVisual(int index)
         {
             TextField syntaxField = new DSTextField("", value =>
             {
-                data.Syntaxs[index] = value.newValue;
+                visualData.Syntaxs[index] = value.newValue;
                 DocumentBuilderParser.FuncData funcData = new DocumentBuilderParser.FuncData(value.newValue);
                 funcDatas[index] = funcData;
-                setFuncData(data);
+                setFuncData();
                 if (this.Contains(paramsContainer))
                     this.Remove(paramsContainer);
                 if (this.Contains(returnTypeContainer))
                     this.Remove(returnTypeContainer);
-                paramsContainer = generateParamsContainer(data);
+                paramsContainer = generateParamsContainer();
                 this.Add(paramsContainer);
-                returnTypeContainer = generateReturnTypeContainer(data);
+                returnTypeContainer = generateReturnTypeContainer();
                 this.Add(returnTypeContainer);
-                Target.JsonData = JsonUtility.ToJson(data);
+                SaveDataToTarget();
             });
-            syntaxField.value = data.Syntaxs[index];
-            DocumentBuilderParser.FuncData funcData = new DocumentBuilderParser.FuncData(data.Syntaxs[index]);
+            syntaxField.value = visualData.Syntaxs[index];
+            DocumentBuilderParser.FuncData funcData = new DocumentBuilderParser.FuncData(visualData.Syntaxs[index]);
             funcDatas[index] = funcData;
             syntaxField.style.paddingLeft = Length.Percent(1);
             syntaxField.style.paddingRight = Length.Percent(1);
@@ -402,27 +219,27 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return syntaxField;
         }
 
-        private VisualElement generateSyntax(DocFuncDisplay.Data data)
+        private VisualElement generateSyntax()
         {
             VisualElement root = new VisualElement();
 
-            for (int i = 0; i < data.Syntaxs.Count; i++)
+            for (int i = 0; i < visualData.Syntaxs.Count; i++)
             {
-                VisualElement syntaxField = generateSyntaxVisual(data, i);
+                VisualElement syntaxField = generateSyntaxVisual(i);
                 root.Add(syntaxField);
             }
 
-            setFuncData(data);
+            setFuncData();
 
             return root;
         }
 
-        private VisualElement generateSyntaxContainer(DocFuncDisplay.Data data)
+        private VisualElement generateSyntaxContainer()
         {
             VisualElement root = new VisualElement();
-            VisualElement veSyntax = generateSyntax(data);
+            VisualElement veSyntax = generateSyntax();
 
-            Label label = new DSLabel("Syntaxs");
+            DSTextElement label = new DSTextElement("Syntaxs");
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
             root.Add(label);
@@ -431,19 +248,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             ((Button)veAddDelete[0]).clicked += () =>
             {
-                data.Syntaxs.Add("");
+                visualData.Syntaxs.Add("");
                 funcDatas.Add(new DocumentBuilderParser.FuncData());
-                VisualElement ve = generateSyntaxVisual(data, data.Syntaxs.Count - 1);
+                VisualElement ve = generateSyntaxVisual(visualData.Syntaxs.Count - 1);
                 veSyntax.Add(ve);
-                Target.JsonData = JsonUtility.ToJson(data);
+                SaveDataToTarget();
             };
             ((Button)veAddDelete[1]).clicked += () =>
             {
-                if (data.Syntaxs.Count == 0)
+                if (visualData.Syntaxs.Count == 0)
                     return;
-                data.Syntaxs.RemoveAt(data.Syntaxs.Count - 1);
+                visualData.Syntaxs.RemoveAt(visualData.Syntaxs.Count - 1);
                 veSyntax.RemoveAt(veSyntax.childCount - 1);
-                Target.JsonData = JsonUtility.ToJson(data);
+                SaveDataToTarget();
             };
 
 
@@ -453,24 +270,24 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return root;
         }
 
-        private VisualElement generateParamsVisual(DocFuncDisplay.Data data, int index)
+        private VisualElement generateParamsVisual(int index)
         {
             VisualElement root = new VisualElement();
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
             TextField typeField = new DSTextField("Type", value =>
             {
-                data.Params[index].Type = value.newValue;
-                Target.JsonData = JsonUtility.ToJson(data);
+                visualData.Params[index].Type = value.newValue;
+                SaveDataToTarget();
             });
-            typeField.value = data.Params[index].Type + "";
+            typeField.value = visualData.Params[index].Type;
             typeField.focusable = false;
             typeField.style.paddingLeft = Length.Percent(1);
             TextField nameField = new DSTextField("Name", value =>
             {
-                data.Params[index].ParamName = value.newValue;
-                Target.JsonData = JsonUtility.ToJson(data);
+                visualData.Params[index].ParamName = value.newValue;
+                SaveDataToTarget();
             });
-            nameField.value = data.Params[index].ParamName + "";
+            nameField.value = visualData.Params[index].ParamName;
             nameField.focusable = false;
             nameField.style.paddingLeft = Length.Percent(1);
             nameField.style.paddingRight = Length.Percent(1);
@@ -478,10 +295,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
             TextField descriptionField = new DSTextField("", value =>
             {
-                data.ParamsDescription[index] = value.newValue;
+                visualData.ParamsDescription[index] = value.newValue;
                 Target.TextData[1 + index] = value.newValue;
             });
-            descriptionField.value = data.ParamsDescription[index] + "";
+            descriptionField.value = visualData.ParamsDescription[index];
             descriptionField.multiline = true;
             descriptionField.style.paddingLeft = Length.Percent(1);
             descriptionField.style.paddingRight = Length.Percent(1);
@@ -489,27 +306,27 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return root;
         }
 
-        private VisualElement generateParams(DocFuncDisplay.Data data)
+        private VisualElement generateParams()
         {
             VisualElement root = new VisualElement();
 
-            for (int i = 0; i < data.Params.Count; i++)
+            for (int i = 0; i < visualData.Params.Count; i++)
             {
-                VisualElement ve = generateParamsVisual(data, i);
+                VisualElement ve = generateParamsVisual(i);
                 root.Add(ve);
             }
 
             return root;
         }
 
-        private VisualElement generateParamsContainer(DocFuncDisplay.Data data)
+        private VisualElement generateParamsContainer()
         {
             VisualElement root = new VisualElement();
 
-            if (data.Params.Count == 0)
+            if (visualData.Params.Count == 0)
                 return root;
 
-            VisualElement veParams = generateParams(data);
+            VisualElement veParams = generateParams();
 
             Label label = new DSLabel("Params");
             label.style.paddingLeft = Length.Percent(1);
@@ -521,26 +338,26 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return root;
         }
 
-        private VisualElement generateReturnTypeVisual(DocFuncDisplay.Data data, int index)
+        private VisualElement generateReturnTypeVisual(int index)
         {
             VisualElement root = new VisualElement();
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
             TextField typeField = new DSTextField("ReturnType", value =>
             {
-                data.ReturnTypes[index] = value.newValue;
-                Target.JsonData = JsonUtility.ToJson(data);
+                visualData.ReturnTypes[index] = value.newValue;
+                SaveDataToTarget();
             });
             typeField.style.height = 20;
-            typeField.value = data.ReturnTypes[index] + "";
+            typeField.value = visualData.ReturnTypes[index];
             typeField.focusable = false;
             typeField.style.paddingLeft = Length.Percent(1);
             typeField.style.paddingRight = Length.Percent(1);
             TextField descriptionField = new DSTextField("", value =>
             {
-                data.ReturnTypesDescription[index] = value.newValue;
-                Target.TextData[1 + data.Params.Count + index] = value.newValue;
+                visualData.ReturnTypesDescription[index] = value.newValue;
+                Target.TextData[1 + visualData.Params.Count + index] = value.newValue;
             });
-            descriptionField.value = data.ReturnTypesDescription[index] + "";
+            descriptionField.value = visualData.ReturnTypesDescription[index];
             descriptionField.multiline = true;
             descriptionField.style.paddingLeft = Length.Percent(1);
             descriptionField.style.paddingRight = Length.Percent(1);
@@ -551,31 +368,31 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return root;
         }
 
-        private VisualElement generateReturnType(DocFuncDisplay.Data data)
+        private VisualElement generateReturnType()
         {
             VisualElement root = new VisualElement();
 
-            for (int i = 0; i < data.ReturnTypes.Count; i++)
+            for (int i = 0; i < visualData.ReturnTypes.Count; i++)
             {
-                VisualElement ve = generateReturnTypeVisual(data, i);
+                VisualElement ve = generateReturnTypeVisual(i);
                 root.Add(ve);
             }
 
             return root;
         }
 
-        private VisualElement generateReturnTypeContainer(DocFuncDisplay.Data data)
+        private VisualElement generateReturnTypeContainer()
         {
             VisualElement root = new VisualElement();
 
-            if (data.ReturnTypes.Count == 0)
+            if (visualData.ReturnTypes.Count == 0)
                 return root;
             Label label = new DSLabel("ReturnTypes");
             label.style.paddingLeft = Length.Percent(1);
             label.style.paddingRight = Length.Percent(1);
             root.Add(label);
 
-            VisualElement veReturnTypes = generateReturnType(data);
+            VisualElement veReturnTypes = generateReturnType();
 
             root.Add(veReturnTypes);
 

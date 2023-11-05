@@ -2,9 +2,12 @@ using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static PlasticPipe.Client.InvokeMethodRetry;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -169,6 +172,103 @@ namespace NaiveAPI.DocumentBuilder
 
             return root;
         }
+        public static DocComponent CreateComponent(MethodBase methodInfo)
+        {
+            DocComponent doc = new DocComponent();
+            doc.VisualID = "4";
+            Data data = new Data();
+            List<string> texts = new List<string>();
+            data.Name = methodInfo.Name;
+            texts.Add("");
+            data.Syntaxs[0] = DocumentBuilderParser.GetSignature(methodInfo);
+            string typeName = "";
+            if (methodInfo is MethodInfo)
+            {
+                typeName = DocumentBuilderParser.CalGenericTypeName(((MethodInfo)methodInfo).ReturnType);
+            }
+            else if (methodInfo is ConstructorInfo)
+            {
+                typeName = DocumentBuilderParser.CalGenericTypeName(((ConstructorInfo)methodInfo).DeclaringType);
+            }
+
+            if (typeName != "void")
+            {
+                data.ReturnTypes.Add(typeName);
+                texts.Add("");
+            }
+            else
+            {
+                data.ReturnTypes.Clear();
+            }
+            data.Params = new List<ParamData>();
+            ParameterInfo[] parameters = methodInfo.GetParameters();
+
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                ParamData param = new ParamData();
+                param.ParamName = parameters[i].Name;
+                param.Type = DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType);
+                data.Params.Add(param);
+                texts.Add("");
+            }
+
+            doc.JsonData = JsonUtility.ToJson(data);
+            doc.TextData = texts;
+
+            return doc;
+        }
+
+        public static DocComponent CreateComponent(IEnumerable<MethodBase> methodInfos)
+        {
+            DocComponent doc = new DocComponent();
+            doc.VisualID = "4";
+            Data data = new Data();
+            data.Syntaxs.Clear();
+            bool first = true;
+            foreach (MethodBase methodBase in methodInfos)
+            {
+                if (first)
+                {
+                    data.Name = methodBase.Name;
+                    first = false;
+                }
+                else if (methodBase.Name != data.Name)
+                {
+                    Debug.LogException(new Exception("DocEditFuncDisplay: Cannot create docComponent with different named method."));
+                    return DocDescription.CreateComponent("DocEditFuncDisplay: Cannot create docComponent with different named method.", DocDescription.DescriptionType.Danger);
+                }
+                data.Syntaxs.Add(DocumentBuilderParser.GetSignature(methodBase));
+                string typeName = "";
+                if (methodBase is MethodInfo)
+                {
+                    typeName = DocumentBuilderParser.CalGenericTypeName(((MethodInfo)methodBase).ReturnType);
+                }
+                else if (methodBase is ConstructorInfo)
+                {
+                    typeName = DocumentBuilderParser.CalGenericTypeName(((ConstructorInfo)methodBase).DeclaringType);
+                }
+
+                if (typeName != "void")
+                {
+                    data.AddNewReturnType(typeName);
+                }
+                ParameterInfo[] parameters = methodBase.GetParameters();
+                foreach (var parameter in parameters)
+                {
+                    ParamData param = new ParamData();
+                    param.ParamName = parameter.Name;
+                    param.Type = DocumentBuilderParser.CalGenericTypeName(parameter.ParameterType);
+                    data.AddNewParams(param);
+                }
+            }
+
+
+            doc.JsonData = JsonUtility.ToJson(data);
+            doc.TextData = data.GetTexts();
+
+            return doc;
+        }
+
 
         public class Data
         {
@@ -205,22 +305,11 @@ namespace NaiveAPI.DocumentBuilder
                 }
             }
 
-            public void AddNewParams()
-            {
-                Params.Add(new ParamData());
-                ParamsDescription.Add("");
-            }
-
             public void AddNewParams(ParamData paramData)
             {
+                if (Params.Contains(paramData)) return;
                 Params.Add(paramData);
                 ParamsDescription.Add("");
-            }
-
-            public void RemoveLastParams()
-            {
-                Params.RemoveAt(Params.Count - 1);
-                ParamsDescription.RemoveAt(ParamsDescription.Count - 1);
             }
 
             public void RemoveLastReturnType()
@@ -229,21 +318,16 @@ namespace NaiveAPI.DocumentBuilder
                 ReturnTypesDescription.RemoveAt(ReturnTypesDescription.Count - 1);
             }
 
-            public void AddNewReturnType()
-            {
-                ReturnTypes.Add("");
-                ReturnTypesDescription.Add("");
-            }
-
             public void AddNewReturnType(string returnType)
             {
+                if (ReturnTypes.Contains(returnType)) return;
                 ReturnTypes.Add(returnType);
                 ReturnTypesDescription.Add("");
             }
 
-            public List<string> getTexts()
+            public List<string> GetTexts()
             {
-                List<string> texts = new List<string>();
+                List<string> texts = new List<string> { "" };
                 for (int i = 0;i < ParamsDescription.Count; i++)
                 {
                     texts.Add(ParamsDescription[i]);

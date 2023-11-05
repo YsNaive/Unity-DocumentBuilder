@@ -10,8 +10,6 @@ namespace NaiveAPI.DocumentBuilder
     {
         public override string VisualID => "3";
 
-        private static ISMargin margin = ISMargin.None;
-        private static ISPadding padding = ISPadding.None;
         private VisualElement matrixVisual;
 
         protected override void OnCreateGUI()
@@ -52,11 +50,9 @@ namespace NaiveAPI.DocumentBuilder
                         label.style.borderRightWidth = 1;
                         label.style.borderRightColor = DocStyle.Current.SubFrontgroundColor;
                     }
-                    label.style.SetIS_Style(margin);
-                    label.style.SetIS_Style(padding);
+                    label.style.ClearMarginPadding();
                     label.style.paddingLeft = 5;
                     label.style.paddingRight = 5;
-                    label.style.SetIS_Style(DocStyle.Current.MainText);
                     label.style.unityTextAlign = data.anchors[j];
                     child.Add(label);
                 }
@@ -364,6 +360,41 @@ namespace NaiveAPI.DocumentBuilder
             public List<string> test()
             {
                 return null;
+            }
+        }
+
+        public class Builder
+        {
+            public List<List<string>> contents;
+            public string this[int row, int col]
+            {
+                get => contents[row][col];
+                set => contents[row][col] = value;
+            }
+
+            public void InsertRow(int index)
+            {
+
+            }
+            public void InsertCol(int index)
+            {
+
+            }
+            public void AddRow()
+            {
+
+            }
+            public void AddCol()
+            {
+
+            }
+            public void RemoveRowAt()
+            {
+
+            }
+            public void RemoveColAt()
+            {
+
             }
         }
 

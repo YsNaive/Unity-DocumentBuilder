@@ -26,27 +26,26 @@ namespace NaiveAPI_Editor.DocumentBuilder
         protected override void OnCreateGUI()
         {
             LoadDataFromTarget();
-            root = new VisualElement();
-            root.style.SetIS_Style(ISFlex.Horizontal);
+            root = new DSHorizontal();
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(20));
             TextField scaleField = new DSTextField("Scale", value =>
             {
                 float.TryParse(value.newValue, out visualData.scale);
-                Target.JsonData = JsonUtility.ToJson(visualData);
+                SaveDataToTarget();
             });
             DocStyle.Current.EndLabelWidth();
-            scaleField.value = visualData.scale + "";
+            scaleField.value = visualData.scale.ToString();
             scaleField.style.width = Length.Percent(39);
             var enumField = new DSEnumField<DocImage.Mode>("", visualData.mode, value =>
             {
                 visualData.mode = value.newValue;
-                Target.JsonData = JsonUtility.ToJson(visualData);
+                SaveDataToTarget();
                 urlObjDisplay(visualData.mode);
             });
             enumField.style.width = Length.Percent(20);
-            urlVisual = generateUrlVisual(visualData);
-            objVisual = generateObjVisual(visualData);
-            base64Visual = generateBase64Visual(visualData);
+            urlVisual = generateUrlVisual();
+            objVisual = generateObjVisual();
+            base64Visual = generateBase64Visual();
             root.Add(scaleField);
             root.Add(enumField);
             this.Add(root);
@@ -55,12 +54,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         public override string ToMarkdown(string dstPath)
         {
-            DocImage.Data data = JsonUtility.FromJson<DocImage.Data>(Target.JsonData);
             StringBuilder stringBuilder = new StringBuilder();
-            switch (data.mode)
+            switch (visualData.mode)
             {
                 case DocImage.Mode.Url:
-                    string strImage = $"![]({data.url})";
+                    string strImage = $"![]({visualData.url})";
                     stringBuilder.Append(strImage);
                     break;
                 case DocImage.Mode.Object:
@@ -93,7 +91,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
         }
 
-        private VisualElement generateObjVisual(DocImage.Data data)
+        private VisualElement generateObjVisual()
         {
             Texture2D texture;
             if (Target.ObjsData.Count != 0)
@@ -111,22 +109,22 @@ namespace NaiveAPI_Editor.DocumentBuilder
             return objectField;
         }
 
-        private VisualElement generateBase64Visual(DocImage.Data data)
+        private VisualElement generateBase64Visual()
         {
             var field = new DSTextField();
-            field.SetValueWithoutNotify(data.base64 == "" ? "Empty" : "Value Assigned");
+            field.SetValueWithoutNotify(visualData.base64 == "" ? "Empty" : "Value Assigned");
             field.RegisterValueChangedCallback(evt =>
             {
                 SaveDataToTarget();
                 if(Convert.TryFromBase64String(evt.newValue, null, out _))
                 {
-                    data.base64 = evt.newValue;
+                    visualData.base64 = evt.newValue;
                     field.SetValueWithoutNotify("Value Assigned");
                     field.InputFieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.SuccessColor;
                 }
                 else
                 {
-                    data.base64 = "";
+                    visualData.base64 = "";
                     field.SetValueWithoutNotify("Format Error");
                     field.InputFieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.DangerColor;
                 }
@@ -155,7 +153,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     Texture2D tex = new Texture2D(1, 1);
                     var img = File.ReadAllBytes($"{DocCache.DirectoryRoot}\\cache.png");
-                    data.base64 = Convert.ToBase64String(img);
+                    visualData.base64 = Convert.ToBase64String(img);
                     SaveDataToTarget();
                     File.Delete($"{DocCache.DirectoryRoot}\\cache.png");
                     field.InputFieldElement.style.unityBackgroundImageTintColor = DocStyle.Current.SuccessColor;
@@ -179,16 +177,16 @@ namespace NaiveAPI_Editor.DocumentBuilder
             hor.style.flexGrow = 1f;
             return hor;
         }
-        private VisualElement generateUrlVisual(DocImage.Data data)
+        private VisualElement generateUrlVisual()
         {
             DocStyle.Current.BeginLabelWidth(ISLength.Percent(10));
             TextField urlField = new DSTextField("Url", value =>
             {
-                data.url = value.newValue;
-                Target.JsonData = JsonUtility.ToJson(data);
+                visualData.url = value.newValue;
+                SaveDataToTarget();
             });
             DocStyle.Current.EndLabelWidth();
-            urlField.value = data.url + "";
+            urlField.value = visualData.url;
             urlField.style.width = Length.Percent(40);
 
             return urlField;

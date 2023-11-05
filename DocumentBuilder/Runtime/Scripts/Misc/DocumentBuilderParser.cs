@@ -1,6 +1,7 @@
 using NaiveAPI_UI;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -83,6 +84,70 @@ namespace NaiveAPI.DocumentBuilder
             }
 
             return type.Name + postfix;
+        }
+
+        public static string GetSignature(MethodBase methodInfo)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.Append(GetAccessLevel(methodInfo));
+            if (methodInfo.IsStatic)
+                stringBuilder.Append(" static");
+            stringBuilder.Append(" ");
+            if (methodInfo is MethodInfo)
+            {
+                stringBuilder.Append(CalGenericTypeName(((MethodInfo)methodInfo).ReturnType)).Append(" ");
+                stringBuilder.Append(methodInfo.Name);
+            }
+            else if (methodInfo is ConstructorInfo)
+            {
+                stringBuilder.Append(CalGenericTypeName(((ConstructorInfo)methodInfo).DeclaringType)).Append(" ");
+                stringBuilder.Append(CalGenericTypeName(methodInfo.DeclaringType));
+            }
+            stringBuilder.Append('(');
+
+            ParameterInfo[] parameters = methodInfo.GetParameters();
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                stringBuilder.Append(CalGenericTypeName(parameters[i].ParameterType));
+                stringBuilder.Append(" ");
+                stringBuilder.Append(parameters[i].Name);
+                if (i != parameters.Length - 1)
+                    stringBuilder.Append(", ");
+            }
+            stringBuilder.Append(")");
+
+            return stringBuilder.ToString();
+        }
+
+        public static string GetAccessLevel(MethodBase methodInfo)
+        {
+            if (methodInfo.IsPublic)
+            {
+                return "public";
+            }
+            else if (methodInfo.IsFamily)
+            {
+                return "protected";
+            }
+            else if (methodInfo.IsPrivate)
+            {
+                return "private";
+            }
+            else if (methodInfo.IsAssembly)
+            {
+                return "internal";
+            }
+            else if (methodInfo.IsFamilyAndAssembly)
+            {
+                return "protected internal";
+            }
+            else if (methodInfo.IsFamilyOrAssembly)
+            {
+                return "protected internal";
+            }
+
+            return "";
         }
 
         public static string ParseSyntax(string synatx)
@@ -442,6 +507,48 @@ namespace NaiveAPI.DocumentBuilder
                 this.type = type;
                 this.color = color;
             }
+        }
+
+        public static List<Token> Tokenize(string source, List<string> expression, List<TokenType> type)
+        {
+            SortedDictionary<int, Token> table = new SortedDictionary<int, Token>();
+            for (int i = 0; i < expression.Count; i++)
+            {
+                var matches = Regex.Matches(source, expression[i]);
+                foreach (Match match in matches)
+                {
+                    table.Add(match.Index, new Token(match.Value, type[i]));
+                }
+            }
+
+            List<Token> tokens = new List<Token>();
+            int index = 0;
+            foreach (int key in table.Keys)
+            {
+                if (key < index) continue;
+                Token token = table[key];
+                index = key + token.value.Length;
+                tokens.Add(token);
+            }
+
+            return tokens;
+        }
+
+        public class Token
+        {
+            public string value;
+            public TokenType type;
+
+            public Token(string value, TokenType type)
+            {
+                this.value = value;
+                this.type = type;
+            }
+        }
+
+        public enum TokenType
+        {
+            Hello, World
         }
     }
 }

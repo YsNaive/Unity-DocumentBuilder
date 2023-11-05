@@ -121,7 +121,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             DocComponent com = new DocComponent();
             foreach (var method in Methods)
             {
-                com = DocEditFuncDisplay.LoadMethod(method);
+                com = DocFuncDisplay.CreateComponent(method);
                 com.TextData.Add("");
                 var data = JsonUtility.FromJson<DocFuncDisplay.Data>(com.JsonData);
                 int index = datas.FindIndex(0, m => { return m.Name == data.Name; });
@@ -182,8 +182,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             foreach(var item in GetSetMethods)
             {
                 GetSetComponents.Add((item.name,
-                    (item.getter != null) ? DocEditFuncDisplay.LoadMethod(item.setter) : null,
-                    (item.setter != null) ? DocEditFuncDisplay.LoadMethod(item.getter) : null));
+                    (item.getter != null) ? DocFuncDisplay.CreateComponent(item.setter) : null,
+                    (item.setter != null) ? DocFuncDisplay.CreateComponent(item.getter) : null));
             }
         }
         private void constructor2Components()
@@ -193,7 +193,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             DocComponent com = new DocComponent();
             foreach (var method in Constructors)
             {
-                com = DocEditFuncDisplay.LoadMethod(method);
+                com = DocFuncDisplay.CreateComponent(method);
                 com.TextData.Add("");
                 com.TextData.Add("");
                 var data = JsonUtility.FromJson<DocFuncDisplay.Data>(com.JsonData);
