@@ -27,6 +27,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
         [SerializeField] private Texture2D structIcon;
         [SerializeField] private Texture2D methodIcon;
         [SerializeField] private Texture2D starIcon;
+        [SerializeField] private Texture2D eyeIcon;
+        [SerializeField] private Texture2D closeEyeIcon;
+        [SerializeField] private Texture2D penIcon;
 
         public static class Icon
         {
@@ -34,6 +37,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
             public static Texture2D StructIcon => Instance.structIcon;
             public static Texture2D MethodIcon => Instance.methodIcon;
             public static Texture2D StarIcon => Instance.starIcon;
+            public static Texture2D EyeIcon => Instance.eyeIcon;
+            public static Texture2D CloseEyeIcon => Instance.closeEyeIcon;
+            public static Texture2D PenIcon => Instance.penIcon;
         }
     }
 

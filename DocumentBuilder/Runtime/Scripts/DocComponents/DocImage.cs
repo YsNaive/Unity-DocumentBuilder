@@ -168,5 +168,23 @@ namespace NaiveAPI.DocumentBuilder
                 style.SetIS_Style(border);
             }
         }
+
+        public static DocVisual Create(Texture2D texture, float scale = -1) { return Create(CreateComponent(texture, scale)); }
+        public static DocComponent CreateComponent(Texture2D texture, float scale = -1)
+        {
+            DocComponent component = new DocComponent();
+            component.VisualID = "5";
+            component.ObjsData.Add(texture);
+            SaveJsonData(component, new Data { mode = Mode.Object, scale = scale });
+            return component;
+        }
+        public static DocVisual Create(string url, float scale = -1) { return Create(CreateComponent(url, scale)); }
+        public static DocComponent CreateComponent(string url, float scale = -1)
+        {
+            DocComponent component = new DocComponent();
+            component.VisualID = "5";
+            SaveJsonData(component, new Data { mode = Mode.Url, url = url, scale = scale });
+            return component;
+        }
     }
 }

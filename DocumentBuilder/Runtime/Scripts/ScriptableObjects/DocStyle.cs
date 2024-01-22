@@ -68,6 +68,7 @@ namespace NaiveAPI.DocumentBuilder
         public Color FuncColor = new Color(.89f, .79f, .35f);
         public Color ArgsColor = new Color(.65f, .85f, .95f);
         public Color TypeColor = new Color(.35f, .7f, .65f);
+        public Color ValueTypeColor = new Color(.55f, .8f, .75f);
         public Color PrefixColor = new Color(.4f, .56f, .82f);
         public Color StringColor = new Color(.79f, .56f, .36f);
         public Color NumberColor = new Color(.6f, .8f, .6f);
@@ -143,6 +144,7 @@ namespace NaiveAPI.DocumentBuilder
             docStyle.FuncColor = this.FuncColor;
             docStyle.ArgsColor = this.ArgsColor;
             docStyle.TypeColor = this.TypeColor;
+            docStyle.ValueTypeColor = this.ValueTypeColor;
             docStyle.PrefixColor = this.PrefixColor;
             docStyle.StringColor = this.StringColor;  
             docStyle.NumberColor = this.NumberColor;  

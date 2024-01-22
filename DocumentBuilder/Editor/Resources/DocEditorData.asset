@@ -28,3 +28,6 @@ MonoBehaviour:
   structIcon: {fileID: 0}
   methodIcon: {fileID: 2800000, guid: 116bd5b02a236df4d9e4d81f16c51c48, type: 3}
   starIcon: {fileID: 2800000, guid: 077f59a9c993b4943a6b58f954f18e4c, type: 3}
+  eyeIcon: {fileID: 2800000, guid: 0a3b7d6e07be92f4f86841bb7168e88d, type: 3}
+  closeEyeIcon: {fileID: 2800000, guid: 7a4cc5c7e103c30439f671eba6ad0a8f, type: 3}
+  penIcon: {fileID: 2800000, guid: 4a9b103d05befef499c32c93dab5d89d, type: 3}

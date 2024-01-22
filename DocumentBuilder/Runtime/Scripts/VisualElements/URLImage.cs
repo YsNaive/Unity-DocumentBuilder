@@ -31,11 +31,11 @@ namespace NaiveAPI.DocumentBuilder
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.unityTextAlign = TextAnchor.MiddleCenter;
             string path = Application.temporaryCachePath + "/imgCache";
-            cachePath =url;
-            foreach (char c in Path.GetInvalidPathChars())
-                cachePath = cachePath.Replace(c, '_');
-            foreach (char c in "/\\?!:.")
-                cachePath = cachePath.Replace(c, '_');
+            Hash128 hash128 = new();
+            
+            hash128.Append(url);
+            cachePath = hash128.ToString();
+
             cachePath = path + "/" + cachePath;
             if (File.Exists(cachePath))
             {
@@ -78,7 +78,7 @@ namespace NaiveAPI.DocumentBuilder
                     style.backgroundImage = LoadedTexture;
                     onTextureLoaded?.Invoke(LoadedTexture);
                     if (!IsLoadFromCache)
-                    {
+                    { 
                         File.WriteAllBytes(cachePath, LoadedTexture.EncodeToPNG());
                     }
                     ramCache.TryAdd(cachePath, LoadedTexture);

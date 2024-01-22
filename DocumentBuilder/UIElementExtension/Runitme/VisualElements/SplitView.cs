@@ -38,7 +38,7 @@ namespace NaiveAPI_UI
         }
         FlexDirection m_Direction;
         float dragLineWidth = 3.5f;
-        float minViewWidth = 50;
+        public float MinViewWidthPx = 50;
         float m_SplitPercent;
         public Color DragLineColor = new Color(.2f, .2f, .2f);
         public Color DragLineHoverColor = new Color(.65f, .65f, .65f);
@@ -129,13 +129,13 @@ namespace NaiveAPI_UI
                 max = worldBound.yMax;
                 pos = position.y;
             }
-            if ((max - min) < minViewWidth * 2f) 
+            if ((max - min) < MinViewWidthPx * 2f) 
             {
                 m_SplitPercent = 50;
             }
             else
             {
-                pos = Mathf.Clamp(pos, min + minViewWidth, max - minViewWidth);
+                pos = Mathf.Clamp(pos, min + MinViewWidthPx, max - MinViewWidthPx);
                 m_SplitPercent = ((pos - min - dragLineWidth * 0.5f) / (max - min)) * 100f;
             }
             setDragLinePercent(m_SplitPercent);

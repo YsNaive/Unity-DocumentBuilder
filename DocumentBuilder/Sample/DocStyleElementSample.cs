@@ -24,7 +24,7 @@ namespace NaiveAPI.Sample
             root.Add(new DSLabel("This is Label"));
             root.Add(new DSTextElement("This is TextElement"));
             root.Add(new DSTextField("TextField"));
-            root.Add(new DSDropdown("Unity Dropdown") { choices = new List<string>() { "Select A", "Select B", "Select C" } });
+            root.Add(new DSDropdown("Dropdown") { choices = new List<string>() { "Select A", "Select B", "Select C", "Sub Menu/Item 1", "Sub Menu/Item 2", "Sub Menu/Item 3" } });
             root.Add(new DSButton("Button", () => { Debug.Log("Click !"); }));
             var foldout = new DSFoldout("Foldout");
             foldout.Add(new DSTextElement("Some contents..."));

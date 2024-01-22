@@ -29,7 +29,7 @@ namespace NaiveAPI.DocumentBuilder
         public const string reservedWordPattern = @"\b(?:var|in|get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
         public const string methodPattern = @"\b" + type + @"\(";
         public const string numberPattern = @"[+-]?\b(\d+(?:\.\d+)?(?:[fFLlDdBb]|[Xx]\d+)?)";
-        public const string pattern1 = @"\b(?<var>" + variable + @")\b(?(<)(?:(?'Open'<)|" + 
+        public const string pattern1 = @"\b(?<var>" + variable + @")\b(?(<)(?:(?'Open'<)|" +
                 @"(?<var>" + variable + @")|(?'Close-Open'>)|(?:,\s*(?<var>" + variable + @")))*)(?(Open)(?!))";
         public static readonly Dictionary<Type, string> typeNameTable = new Dictionary<Type, string> {
             { typeof(string) , "string"},
@@ -43,12 +43,14 @@ namespace NaiveAPI.DocumentBuilder
 
         public static string CalNestedTypeName(Type type)
         {
+            if (type == null) return "";
             string name = type.FullName;
             name = name.Substring(name.LastIndexOf('.') + 1).Replace('+', '.');
             return name;
         }
         public static string CalGenericTypeName(Type type)
         {
+            if (type == null) return "";
             string name = type.Name;
             int i = name.IndexOf('`');
             if (i != -1)
@@ -65,9 +67,9 @@ namespace NaiveAPI.DocumentBuilder
             name += ">";
             return name;
         }
-
         public static string GetTypeName(Type type)
         {
+            if (type == null) return "";
             string postfix = "";
 
             int index = type.Name.IndexOf("[");
@@ -85,9 +87,9 @@ namespace NaiveAPI.DocumentBuilder
 
             return type.Name + postfix;
         }
-
         public static string GetSignature(MethodBase methodInfo)
         {
+            if (methodInfo == null) return "";
             StringBuilder stringBuilder = new StringBuilder();
 
             stringBuilder.Append(GetAccessLevel(methodInfo));
@@ -119,9 +121,9 @@ namespace NaiveAPI.DocumentBuilder
 
             return stringBuilder.ToString();
         }
-
         public static string GetAccessLevel(MethodBase methodInfo)
         {
+            if (methodInfo == null) return "";
             if (methodInfo.IsPublic)
             {
                 return "public";
@@ -149,7 +151,36 @@ namespace NaiveAPI.DocumentBuilder
 
             return "";
         }
+        public static string GetAccessLevel(FieldInfo fieldInfo)
+        {
+            if (fieldInfo == null) return "";
+            if (fieldInfo.IsPublic)
+            {
+                return "public";
+            }
+            else if (fieldInfo.IsFamily)
+            {
+                return "protected";
+            }
+            else if (fieldInfo.IsPrivate)
+            {
+                return "private";
+            }
+            else if (fieldInfo.IsAssembly)
+            {
+                return "internal";
+            }
+            else if (fieldInfo.IsFamilyAndAssembly)
+            {
+                return "protected internal";
+            }
+            else if (fieldInfo.IsFamilyOrAssembly)
+            {
+                return "protected internal";
+            }
 
+            return "";
+        }
         public static string ParseSyntax(string synatx)
         {
             try

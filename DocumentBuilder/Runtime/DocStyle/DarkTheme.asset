@@ -133,13 +133,14 @@ MonoBehaviour:
         rid: -2
       Radius:
         rid: -2
-    BackgroundColor: {r: 0.15, g: 0.15, b: 0.16, a: 1}
+    BackgroundColor: {r: 0.13, g: 0.13, b: 0.15, a: 1}
     SubBackgroundColor: {r: 0.22, g: 0.22, b: 0.245, a: 1}
     FrontgroundColor: {r: 0.55, g: 0.55, b: 0.6, a: 1}
     SubFrontgroundColor: {r: 0.68, g: 0.71, b: 0.71, a: 1}
     FuncColor: {r: 0.89, g: 0.79, b: 0.35, a: 1}
     ArgsColor: {r: 0.65, g: 0.85, b: 0.95, a: 1}
     TypeColor: {r: 0.35, g: 0.7, b: 0.65, a: 1}
+    ValueTypeColor: {r: 0.6, g: 0.8, b: 0.6, a: 1}
     PrefixColor: {r: 0.4, g: 0.56, b: 0.82, a: 1}
     StringColor: {r: 0.79, g: 0.56, b: 0.36, a: 1}
     NumberColor: {r: 0.6, g: 0.8, b: 0.6, a: 1}

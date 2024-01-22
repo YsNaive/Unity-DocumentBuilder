@@ -32,17 +32,15 @@ namespace NaiveAPI.DocumentBuilder
         public DSButton(string text, Color color, Action clicked = null) : this(text, color, Color.clear, clicked) { }
         public DSButton(string text, Color color, Color hoverColor, Action clicked = null)
         {
-            m_BackgroundColor = color;
-            m_HoverColor = hoverColor;
             if(clicked != null)
                 this.clicked += clicked;
 
             if(m_HoverColor == Color.clear)
+                SetColor(color);
+            else
             {
-                float h, s, v;
-                Color.RGBToHSV(color, out h, out s, out v);
-                v += (v > 0.5f) ? -0.1f : 0.055f;
-                m_HoverColor = Color.HSVToRGB(h, s, v);
+                m_BackgroundColor = color;
+                m_HoverColor = hoverColor;
             }
 
             this.text = text;   
@@ -52,6 +50,15 @@ namespace NaiveAPI.DocumentBuilder
             RegisterCallback<PointerEnterEvent>(e => { style.backgroundColor = m_HoverColor; });
             RegisterCallback<PointerLeaveEvent>(e => { style.backgroundColor = m_BackgroundColor; });
             style.minHeight = DocStyle.Current.LineHeight;
+        }
+
+        public void SetColor(Color color)
+        {
+            m_BackgroundColor = color;
+            float h, s, v;
+            Color.RGBToHSV(color, out h, out s, out v);
+            v += (v > 0.5f) ? -0.1f : 0.055f;
+            m_HoverColor = Color.HSVToRGB(h, s, v);
         }
     }
 }

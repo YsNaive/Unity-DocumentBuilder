@@ -13,21 +13,21 @@ namespace NaiveAPI_UI
         private bool isHoverOnPopup = false;
         public event Action<IPanel> OnOpend;
         public event Action OnClosed;
-        protected VisualElement mask;
+        public VisualElement CoverMask;
 
         public PopupElement(bool autoClose = true)
         {
-            mask = new();
-            mask.style.width = Length.Percent(100);
-            mask.style.height = Length.Percent(100);
-            mask.style.position = Position.Absolute;
-            mask.Add(this);
+            CoverMask = new();
+            CoverMask.style.width = Length.Percent(100);
+            CoverMask.style.height = Length.Percent(100);
+            CoverMask.style.position = Position.Absolute;
+            CoverMask.Add(this);
             style.position = Position.Absolute;
             RegisterCallback<GeometryChangedEvent>(evt =>
             {
                 if (panel == null) return;
                 var self = worldBound;
-                var area = mask.worldBound;
+                var area = CoverMask.worldBound;
                 if (self.x < area.x)
                     style.left = area.x;
                 if (self.y < area.y)
@@ -37,9 +37,9 @@ namespace NaiveAPI_UI
                 if (self.yMax > area.yMax)
                     style.top = area.height - self.height;
             });
-            mask.RegisterCallback<PointerDownEvent>(evt =>
+            CoverMask.RegisterCallback<PointerDownEvent>(evt =>
             {
-                if (evt.target != mask) return;
+                if (evt.target != CoverMask) return;
                 if (AutoClose)
                     Close();
             });
@@ -55,20 +55,20 @@ namespace NaiveAPI_UI
 #else
             root = openFrom.panel.visualTree;
 #endif
-            root.Add(mask);
+            root.Add(CoverMask);
             OnOpend?.Invoke(openFrom.panel);
         }
         public void Close()
         {
-            if (mask.parent != null)
+            if (CoverMask.parent != null)
             {
-                mask.parent.Remove(mask);
+                CoverMask.parent.Remove(CoverMask);
                 OnClosed?.Invoke();
             }
         }
         public void MoveBelow(VisualElement ve)
         {
-            var parentBound = mask.worldBound;
+            var parentBound = CoverMask.worldBound;
             style.left = ve.worldBound.x - parentBound.x;
             style.top = ve.worldBound.yMax - parentBound.y;
             style.width = ve.worldBound.width;

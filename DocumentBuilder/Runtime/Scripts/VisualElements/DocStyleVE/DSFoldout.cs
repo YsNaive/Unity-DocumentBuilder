@@ -34,6 +34,10 @@ namespace NaiveAPI.DocumentBuilder
             ToggleElement[0].focusable = false;
             var img = ToggleElement[0][0];
             img.style.SetIS_Style(DocStyle.Current.ArrowIcon);
+            img.style.unitySliceBottom = 0;
+            img.style.unitySliceLeft = 0;
+            img.style.unitySliceRight = 0;
+            img.style.unitySliceTop = 0;
             ToggleElement.RegisterValueChangedCallback(e =>
             {
                 img.style.rotate = new Rotate(e.newValue ? 90 : 0);
@@ -41,15 +45,6 @@ namespace NaiveAPI.DocumentBuilder
             schedule.Execute(() => { img.style.rotate = new Rotate(value ? 90 : 0); });
 
             var parent = ToggleElement[0];
-            IconImage = new Image();
-            IconImage.style.scale = new Scale(new Vector3(.85f, .85f, .85f));
-            IconImage.style.display = DisplayStyle.None;
-            parent.RegisterCallback<GeometryChangedEvent>(e =>
-            {
-                IconImage.style.width = e.newRect.height;
-                IconImage.style.height = e.newRect.height;
-            });
-            parent.Insert(1, IconImage);
         }
         public DSFoldout(string text) : this()
         {

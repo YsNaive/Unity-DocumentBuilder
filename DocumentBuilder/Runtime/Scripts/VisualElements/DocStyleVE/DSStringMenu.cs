@@ -1,13 +1,8 @@
 using NaiveAPI_UI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UIElements;
-using static PlasticGui.LaunchDiffParameters;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -30,7 +25,6 @@ namespace NaiveAPI.DocumentBuilder
                 EventCallback<GeometryChangedEvent> registerMaxSize = null; registerMaxSize = evt =>
                 {
                     container.style.maxHeight = container.panel.visualTree.worldBound.height * 0.75f;
-                    container.style.maxWidth = container.panel.visualTree.worldBound.width * 0.75f;
                     container.UnregisterCallback(registerMaxSize);
                 };  container.RegisterCallback(registerMaxSize);
 
@@ -79,7 +73,7 @@ namespace NaiveAPI.DocumentBuilder
                 title.RegisterCallback<PointerDownEvent>(evt => { title.style.backgroundColor = Color.clear; });
                 title.Add(arrow);
                 var childMenu = new MenuContainer(node, OnSelected);
-                childMenu.mask.pickingMode = PickingMode.Ignore;
+                childMenu.CoverMask.pickingMode = PickingMode.Ignore;
                 OnClosed += childMenu.Close;
                 bool isInside = false;
                 title.RegisterCallback<PointerEnterEvent>(evt =>

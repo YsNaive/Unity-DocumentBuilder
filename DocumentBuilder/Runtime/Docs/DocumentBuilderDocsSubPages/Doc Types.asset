@@ -23,6 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b6a4e42c13e85c34f909956eea2635a0, type: 2}
   - {fileID: 11400000, guid: 7272e166669a7a14cbcfeb8aa779c038, type: 2}
   - {fileID: 11400000, guid: 9e039ac7f0c870640b6a086f1ab32aee, type: 2}
+  - {fileID: 11400000, guid: 42db9c2203a7e1840967551bafb7c4e1, type: 2}
   Components:
   - VisualID: 2
     JsonData: 
@@ -38,7 +39,7 @@ MonoBehaviour:
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 3
-    JsonData: '{"row":10,"col":3,"anchors":[3,4,4],"mode":1}'
+    JsonData: '{"row":11,"col":3,"anchors":[3,4,4],"mode":1}'
     TextData:
     - Name
     - ID
@@ -70,6 +71,9 @@ MonoBehaviour:
     - Items
     - 8
     - YES
+    - GoogleChart
+    - 9
+    - NO
     ObjsData: []
     AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0

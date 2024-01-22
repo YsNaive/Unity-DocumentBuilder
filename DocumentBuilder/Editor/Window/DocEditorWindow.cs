@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
-using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -455,32 +454,31 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
 
             EventCallback<ChangeEvent<Object>> next = null;
+            VisualElement msg2 = _tutorialMsgContainer("Click here to select editing page.");
+            var animation2 = new VisualElementAnimation.GotoTransformPositionBackAndForth(msg2, 0.75f, new Vector2(0, 7));
+            msg2.Fade(1, 750);
             next = evt =>
             {
-                animation.Stop();
-                leftContainer.Remove(msg);
-                _tutorialSelectPage();
-                rootPageSelector.SetEnabled(false);
-                rootPageSelector.UnregisterCallback(next);
+                if (leftContainer.Contains(msg))
+                {
+                    leftContainer.Remove(msg);
+                    animation.Stop();
+                }
+                pageMenu.RootMenuItem.Add(msg2);
+                animation2.Stop();
+                animation2.Start();
+                Action<DocPageMenuItem> next2 = null;
+                next2 = evt =>
+                {
+                    animation2.Stop();
+                    pageMenu.RootMenuItem.Remove(msg2);
+                    _tutorialEditContent();
+                    rootPageSelector.SetEnabled(false);
+                    rootPageSelector.UnregisterCallback(next);
+                    pageMenu.OnSelected -= next2;
+                }; pageMenu.OnSelected += next2;
+
             };  rootPageSelector.RegisterValueChangedCallback(next);
-
-        }
-        void _tutorialSelectPage()
-        {
-            var msg = _tutorialMsgContainer("Click here to select editing page.");
-            pageMenu.RootMenuItem.Add(msg);
-            var animation = new VisualElementAnimation.GotoTransformPositionBackAndForth(msg, 0.75f, new Vector2(0, 7));
-            animation.Start();
-            msg.Fade(1, 750);
-
-            Action<DocPageMenuItem> next = null;
-            next = evt =>
-            {
-                animation.Stop();
-                pageMenu.RootMenuItem.Remove(msg);
-                _tutorialEditContent();
-                pageMenu.OnSelected -= next;
-            };  pageMenu.OnSelected += next;
         }
 
         void _tutorialEditContent()

@@ -495,7 +495,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 }
             }
         }
-
         void whileDraging(PointerMoveEvent e)
         {
             int i = calDragingIndex(e.localPosition.y);
@@ -520,6 +519,5 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             SetStatus(true);
         }
-
     }
 }

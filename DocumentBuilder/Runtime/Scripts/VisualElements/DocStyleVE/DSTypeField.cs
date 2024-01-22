@@ -30,6 +30,7 @@ namespace NaiveAPI.DocumentBuilder
         DSTextField searchField;
         public DSTypeField(string label = "")
         {
+            style.minHeight = DocStyle.Current.LineHeight;
             popup = new PopupElement();
             popup.style.SetIS_Style(new ISBorder(DocStyle.Current.FrontgroundColor, 1));
             var container = new DSScrollView();
