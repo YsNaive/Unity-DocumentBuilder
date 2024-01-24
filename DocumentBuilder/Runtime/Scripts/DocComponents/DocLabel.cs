@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static NaiveAPI.DocumentBuilder.DocDescription;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -19,8 +18,6 @@ namespace NaiveAPI.DocumentBuilder
             text.style.SetIS_Style(DocStyle.Current.LabelText);
             text.style.fontSize = Mathf.Clamp(text.style.fontSize.value.value - (2 * (visualData.Level - 1)), DocStyle.Current.MainTextSize, float.MaxValue);
             Add(text);
-            IntroAnimation = (callBack) => { this.Fade(0,1, 500, 50, callBack); };
-            OuttroAnimation = (callBack) => { this.Fade(1,0, 500, 50, callBack); };
         }
 
         public class Data

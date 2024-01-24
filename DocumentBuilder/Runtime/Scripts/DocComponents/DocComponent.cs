@@ -11,7 +11,6 @@ namespace NaiveAPI.DocumentBuilder
         public string JsonData = string.Empty;
         public List<string> TextData = new List<string>();
         public List<Object> ObjsData = new List<Object>();
-        public int[] AniSettings = new int[] { 1, 250, 1, 250 }; // {intro type, intro time, outtro type, outtro time}
         public ushort VisualVersion = 0;
         public DocComponent Copy()
         {
@@ -27,7 +26,7 @@ namespace NaiveAPI.DocumentBuilder
             VisualID = string.Empty;
             JsonData = string.Empty;
             TextData = new();
-            AniSettings = new int[] { 1, 250, 1, 250 };
+            ObjsData = new();
             VisualVersion = 0;
         }
         public bool ContentsEqual(DocComponent other)
@@ -37,11 +36,6 @@ namespace NaiveAPI.DocumentBuilder
             if(TextData.Count != other.TextData.Count) return false;
             if (ObjsData.Count != other.ObjsData.Count) return false;
             int i = 0;
-            foreach(int val in AniSettings) { 
-                if(val != other.AniSettings[i])return false;
-                i++;
-            }
-            i = 0;
             foreach(string text in TextData) { 
                 if(text != other.TextData[i])return false;
                 i++;
@@ -59,30 +53,6 @@ namespace NaiveAPI.DocumentBuilder
                 if (text.Contains(value)) return true;
             return false;
         }
-
-
-        #region get set        
-        public int IntroType
-        {
-            get => AniSettings[0];
-            set => AniSettings[0] = value;
-        }
-        public int IntroTime
-        {
-            get => AniSettings[1];
-            set => AniSettings[1] = value;
-        }
-        public int OuttroType
-        {
-            get => AniSettings[2];
-            set => AniSettings[2] = value;
-        }
-        public int OuttroTime
-        {
-            get => AniSettings[3];
-            set => AniSettings[3] = value;
-        }
-        #endregion
     }
 }
 

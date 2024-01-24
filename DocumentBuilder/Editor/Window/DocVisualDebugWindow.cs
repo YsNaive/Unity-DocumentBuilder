@@ -1,8 +1,10 @@
 using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
+using NaiveAPI_UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,123 +17,95 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             GetWindow<DocVisualDebugWindow>("DocVisual Debugger");
         }
-        private float previousWidth;
-        private void OnEnable()
-        {
-            previousWidth = position.width;
-            EditorApplication.update += OnEditorUpdate;
-        }
-
-        private void OnDisable()
-        {
-            EditorApplication.update -= OnEditorUpdate;
-        }
-
-        private void OnEditorUpdate()
-        {
-            if ((docEditView != null) && (previousWidth != position.width))
-            {
-                rootVisualElement.Remove(docEditView);
-                docEditView = null;
-                docEditView = createView();
-                rootVisualElement.Add(docEditView);
-                previousWidth = position.width;
-            }
-        }
-
-        VisualElement docEditView = null;
-        DocComponent docComponent;
+        VisualElement root;
+        SplitView splitView;
+        float propertyChangeTime;
         private void CreateGUI()
         {
-            editText = new TextElement();
-            editText.text = " Edit Mode";
-            editText.style.borderBottomColor = Color.gray;
-            editText.style.borderBottomWidth = 2f;
-            viewText = new TextElement();
-            viewText.text = " View Mode";
-            dataText = new TextElement();
-            dataText.text = " Data";
-            dataText.style.borderBottomColor = Color.gray;
-            dataText.style.borderBottomWidth = 2f;
-            dataText.style.marginTop = 30;
-
-            docComponent = new DocComponent();
-            ScrollView scrollView = new ScrollView();
-            scrollView.style.flexGrow = 1;
-            scrollView.contentContainer.style.minHeight = Length.Percent(100);
-            scrollView.Add(createView());
-            rootVisualElement.Add(scrollView);
-        }
-
-        TextElement editText, viewText, dataText;
-        bool forceUpdate = false;
-        private VisualElement createView()
-        {
-            VisualElement root = new VisualElement();
+            root = rootVisualElement;
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
-            root.style.paddingLeft = 10;
-            root.style.paddingRight = 10;
-            root.style.flexGrow = 1;
-            root.Add(editText);
-            var comField = new VisualElement();
-            comField.Add(new DocComponentField(docComponent,true));
-            root.Add(comField);
-            root.schedule.Execute(() =>
-            {
-                if (this.forceUpdate)
+
+            DSScrollView left = new(), rightTop = new(), rightBottom = new();
+            var padding = ISPadding.Pixel(10);
+            left.style.SetIS_Style(padding);
+            rightTop.style.SetIS_Style(padding);
+            rightBottom.style.SetIS_Style(padding);
+            var rightSplitView = new SplitView(FlexDirection.Column, 50);
+            rightSplitView.Add(rightTop);
+            rightSplitView.Add(rightBottom);
+            splitView = new();
+            splitView.Add(left);
+            splitView.Add(rightSplitView);
+            root.Add(splitView);
+            float percent;
+            if (!float.TryParse(DocCache.LoadData("DocVisualDebugger.txt"), out percent))
+                percent = 80f;
+            splitView.SplitPercent = percent;
+            left.mode = ScrollViewMode.Vertical;
+            left.Add(new DSTextElement("Edit Mode"));
+            left.Add(DocVisual.Create(DocDividline.CreateComponent()));
+            var component = new DocComponent();
+            var field = new DocComponentField(component, true);
+            field.style.marginBottom = 15;
+            left.Add(field);
+            left.Add(new DSTextElement("ViewMode"));
+            left.Add(DocVisual.Create(DocDividline.CreateComponent()));
+            var visual = DocVisual.Create(component);
+            left.Add(visual);
+
+            rightTop.Add(new DSTextElement("Serialized Data"));
+            rightTop.Add(DocVisual.Create(DocDividline.CreateComponent()));
+            var menuPathText = new DSTextField("MenuPath: ");
+            var idText = new DSTextField("ID:");
+            var verText = new DSTextField("Version:");
+            var jsonText = new DSTextField("JsonData:") { multiline = true };
+            var textContainer = new VisualElement();
+            var objsContainer = new VisualElement();
+            rightTop.Add(idText);
+            rightTop.Add(verText);
+            rightTop.Add(jsonText);
+            rightTop.Add(new DSTextElement("TextData:"));
+            rightTop.Add(textContainer);
+            rightTop.Add(new DSTextElement("ObjsData:"));
+            rightTop.Add(objsContainer);
+            rightTop.SetEnabled(false);
+
+            var propertyChangeContainer = new VisualElement();
+            propertyChangeContainer.SetEnabled(false);
+            rightBottom.Add(new DSTextElement("Property Change"));
+            rightBottom.Add(propertyChangeContainer);
+
+            field.OnPropertyChanged += (info) => {
+                left.Remove(visual);
+                visual = DocVisual.Create(component);
+                left.Add(visual);
+                if(info.Contains("VisualID"))
+                    idText.value = component.VisualID;
+                if (info.Contains("VisualVersion"))
+                    verText.value = component.VisualVersion.ToString();
+                if (info.Contains("JsonData"))
+                    jsonText.value = component.JsonData;
+                if (info.Contains("TextData"))
                 {
-                    var ve = root.Q<DocVisual>();
-                    int i = root.IndexOf(ve);
-                    if (i == -1) return;
-                    root.Remove(ve);
-                    root.Insert(i, DocRuntime.CreateDocVisual(docComponent));
+                    textContainer.Clear();
+                    foreach (var text in component.TextData)
+                        textContainer.Add(new DSTextField() { value = text });
                 }
-            }).Every(250);
-            var viewbar = new DSHorizontal();
-            Toggle forceUpdate = new Toggle();
-            forceUpdate.RegisterValueChangedCallback(e => { this.forceUpdate = e.newValue; });
-            viewText.style.width = Length.Percent(50);
-            forceUpdate.style.width = Length.Percent(25);
-            forceUpdate.text = "Force Update";
-            Button repaint = new DSButton("Repaint", () =>
-            {
-                var ve = root.Q<DocVisual>();
-                int i = root.IndexOf(ve);
-                if (ve != null)
-                    root.Remove(ve);
-                root.Insert(i, DocRuntime.CreateDocVisual(docComponent));
-            });
-            repaint.style.width = Length.Percent(25);
-            viewbar.Add(viewText);
-            viewbar.Add(forceUpdate);
-            viewbar.Add(repaint);
-            viewbar.style.marginTop = 30;
-            viewbar.style.borderBottomColor = Color.gray;
-            viewbar.style.borderBottomWidth = 2f;
-            root.Add(viewbar);
-            root.Add(DocRuntime.CreateDocVisual(docComponent));
-            root.Add(dataText);
-            root.Add(new IMGUIContainer(() =>
-            {
-                EditorGUI.BeginDisabledGroup(true);
-                EditorGUILayout.LabelField("ID: "+docComponent.VisualID);
-                EditorGUILayout.LabelField("Text:");
-                foreach(var str in docComponent.TextData)
-                    EditorGUILayout.TextArea(str);
-                EditorGUILayout.LabelField("Json:");
-                GUI.skin.textArea.wordWrap = true;
-                EditorGUILayout.TextArea(docComponent.JsonData);
-                GUI.skin.textArea.wordWrap = false;
-                EditorGUILayout.LabelField("Objs:");
-                foreach (var obj in docComponent.ObjsData)
+                if (info.Contains("ObjsData"))
                 {
-                    EditorGUILayout.ObjectField(obj, typeof(Object), false);
+                    objsContainer.Clear();
+                    foreach (var obj in component.ObjsData)
+                        objsContainer.Add(new ObjectField() { value = obj });
                 }
-                EditorGUILayout.LabelField($"AniSettings Intro: {docComponent.IntroType}, {docComponent.IntroTime}    Outtro: {docComponent.OuttroType}, {docComponent.OuttroTime}");
-                EditorGUILayout.LabelField($"Version: {docComponent.VisualVersion}");
-                EditorGUI.EndDisabledGroup();
-            }));
-            return root;
+                if(Time.realtimeSinceStartup - propertyChangeTime > 0.5f)
+                    propertyChangeContainer.Clear();
+                propertyChangeContainer.Add(new DSTextElement($"- {info}"));
+                propertyChangeTime = Time.realtimeSinceStartup;
+            };
+        }
+        private void OnDisable()
+        {
+            DocCache.SaveData("DocVisualDebugger.txt", splitView.SplitPercent.ToString());
         }
     }
 }

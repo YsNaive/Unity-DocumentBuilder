@@ -79,7 +79,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 Target.TextData.Add(string.Empty);
             }
 
-            visualData.SetContents(Target.TextData);
+            visualData.SetContents(Target.TextData.ToList());
         }
 
         private void resetTargetData()

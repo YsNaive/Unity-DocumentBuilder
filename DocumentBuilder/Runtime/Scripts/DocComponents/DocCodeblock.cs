@@ -20,8 +20,6 @@ namespace NaiveAPI.DocumentBuilder
         ScrollView codeScrollView;
         protected override void OnCreateGUI()
         {
-            IntroAnimation = (callBack) => { this.Fade(0, 1, 200, 50, callBack); };
-            OuttroAnimation = (callBack) => { this.Fade(1, 0, 200, 50, callBack); };
             codeScrollView =new DSScrollView();
             codeScrollView.nestedInteractionKind = ScrollView.NestedInteractionKind.ForwardScrolling;
             if (Target.TextData.Count == 0) Target.TextData.Add("");
@@ -88,7 +86,7 @@ namespace NaiveAPI.DocumentBuilder
 
             RegisterCallback<GeometryChangedEvent>(e =>
             {
-                if (e.oldRect.width == e.newRect.width) return;
+                if (Mathf.Abs(e.oldRect.width - e.newRect.width) < 7) return;
                 codeScrollView.style.width = e.newRect.width;
                 codeContents.style.paddingLeft = lineNumber.layout.width*1.5f;
                 codeScrollView.style.marginLeft = 6;

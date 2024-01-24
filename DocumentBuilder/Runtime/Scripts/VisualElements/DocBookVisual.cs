@@ -46,18 +46,6 @@ namespace NaiveAPI.DocumentBuilder
                 {
                     IsPlayingAinmation = true;
                     pageMenu.LockSelect = true;
-                    DisplayingPage.PlayOuttro(() =>
-                    {
-                        rightContainer.Remove(DisplayingPage);
-                        DisplayingPage = newPage;
-                        rightContainer.Add(DisplayingPage);
-                        DisplayingPage.PlayIntro(() =>
-                        {
-                            IsPlayingAinmation = false;
-                            pageMenu.LockSelect = false;
-                            repaintChapter();
-                        });
-                    });
                 }
                 else
                 {
@@ -65,12 +53,6 @@ namespace NaiveAPI.DocumentBuilder
                     rightContainer.Add(DisplayingPage);
                     IsPlayingAinmation = true;
                     pageMenu.LockSelect = true;
-                    DisplayingPage.PlayIntro(() =>
-                    {
-                        IsPlayingAinmation = false;
-                        pageMenu.LockSelect = false;
-                        repaintChapter();
-                    });
                 }
             };
             pageMenu.LoadStateHierarchy();

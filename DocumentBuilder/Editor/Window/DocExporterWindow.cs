@@ -208,7 +208,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             {
                 foreach (DocComponent doc in page.Components)
                 {
-                    var field = new DocComponentField(doc);
+                    var field = new DocComponentField(new DocComponentProperty(doc));
                     field.SetStatus(true);
                     sb.Append(field.DocEditVisual.ToMarkdown(path));
                     sb.AppendLine();

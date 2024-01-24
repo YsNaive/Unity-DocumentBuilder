@@ -3,6 +3,7 @@ using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -15,24 +16,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
     public class DocComponentsField : VisualElement
     {
         public VisualElement ComponentsVisualRoot;
-        private event Action<DocComponentField> m_onModify;
-        public event Action<DocComponentField> OnModify
-        {
-            add
-            {
-                m_onModify += value;
-                if (ComponentsVisualRoot != null)
-                    foreach (DocComponentField doc in ComponentsVisualRoot.Children())
-                        doc.OnModify += value;
-            }
-            remove
-            {
-                m_onModify -= value;
-                if (ComponentsVisualRoot != null)
-                    foreach (DocComponentField doc in ComponentsVisualRoot.Children())
-                        doc.OnModify -= value;
-            }
-        }
+        public event Action<DocComponentField, string> OnPropertyChanged;
         public bool IsDraging
         {
             get
@@ -44,36 +28,85 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 }return false;
             }
         }
-        public DocComponentsField(List<DocComponent> initComponents)
+        private bool m_IsSerializedProperty = false;
+        public bool IsSerializedProperty => m_IsSerializedProperty;
+        private SerializedProperty SerializedComponents;
+        public DocComponentsField(IEnumerable<DocComponent> initComponents)
+            : this(initComponents.Select(component => { return new DocComponentProperty(component); })) { }
+        public DocComponentsField(SerializedProperty serializedProperty, bool autoSave = true)
+            : this(DocComponentProperty.LoadArrayProperty(serializedProperty))
+        {
+            SerializedComponents = serializedProperty;
+            m_IsSerializedProperty = true;
+            OnPropertyChanged += (_, info) =>
+            {
+                if (info == "Drag" ||
+                    info == "Insert" ||
+                    info == "Remove" ||
+                    info == "Add")
+                { reSerializeComponents(); }
+            };
+            if (autoSave)
+                OnPropertyChanged += (_, _) =>
+                { serializedProperty.serializedObject.ApplyModifiedProperties(); };
+            Undo.undoRedoPerformed += rePaintUndoRedoComponents;
+        }
+        public DocComponentsField(IEnumerable<DocComponentProperty> initComponents)
         {
             style.backgroundColor = DocStyle.Current.BackgroundColor;
             style.SetIS_Style(ISPadding.Pixel(5));
             ComponentsVisualRoot = new VisualElement();
-            ComponentsVisualRoot.style.marginBottom = 15;
             Repaint(initComponents);
             Add(ComponentsVisualRoot);
             Add(new DSButton("Add Component", () =>
             {
-                var doc = new DocComponentField(new DocComponent());
+                var doc = new DocComponentField(new DocComponentProperty(new DocComponent()));
                 ComponentsVisualRoot.Add(doc);
                 doc.SetStatus(true);
-                doc.OnModify += m_onModify;
-                m_onModify?.Invoke(doc);
+                doc.OnPropertyChanged += info => { OnPropertyChanged?.Invoke(doc, info); };
+                OnPropertyChanged?.Invoke(doc, "Add");
             }));
         }
-        public void Repaint(List<DocComponent> components)
+        ~DocComponentsField()
+        {
+            Undo.undoRedoPerformed -= rePaintUndoRedoComponents;
+        }
+        void rePaintUndoRedoComponents()
+        {
+            if (panel == null) return;
+            SerializedComponents.serializedObject.Update();
+            if (SerializedComponents.arraySize != ComponentsVisualRoot.childCount)
+            {
+                Repaint(DocComponentProperty.LoadArrayProperty(SerializedComponents));
+            }
+        }
+        void reSerializeComponents()
+        {
+            var coms = ToComponentsList();
+            SerializedComponents.ClearArray();
+            int i = 0;
+            List<DocComponentProperty> props = new();
+            foreach (var component in coms)
+            {
+                SerializedComponents.InsertArrayElementAtIndex(i);
+                var prop = new DocComponentProperty(SerializedComponents.GetArrayElementAtIndex(i));
+                prop.FromDocComponent(component);
+                props.Add(prop);
+                i++;
+            };
+            SerializedComponents.serializedObject.ApplyModifiedProperties();
+            Repaint(props);
+        }
+        public void Repaint(IEnumerable<DocComponentProperty> components)
         {
             ComponentsVisualRoot.Clear();
             if (components != null)
             {
-                if(components.Count != 0)
+                foreach (var component in components)
                 {
-                    foreach (var component in components)
-                    {
-                        var doc = new DocComponentField(component);
-                        ComponentsVisualRoot.Add(doc);
-                        doc.OnModify += m_onModify;
-                    }
+                    var doc = new DocComponentField(component);
+                    ComponentsVisualRoot.Add(doc);
+                    doc.OnPropertyChanged += info => { OnPropertyChanged?.Invoke(doc, info); };
                 }
             }
         }
@@ -93,7 +126,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         if (i != 0)
                         {
                             ComponentsVisualRoot.Insert(i - 1, ComponentsVisualRoot[i]);
-                            m_onModify?.Invoke((DocComponentField)ComponentsVisualRoot[i-1]);
+                            OnPropertyChanged?.Invoke((DocComponentField)ComponentsVisualRoot[i-1], "MoveUp");
                         }
                         break;
                     }
@@ -108,7 +141,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         if (i != ComponentsVisualRoot.childCount - 1)
                         {
                             ComponentsVisualRoot.Insert(i + 1, ComponentsVisualRoot[i]);
-                            m_onModify?.Invoke((DocComponentField)ComponentsVisualRoot[i + 1]);
+                            OnPropertyChanged?.Invoke((DocComponentField)ComponentsVisualRoot[i + 1], "MoveDown");
                         }
                         break;
                     }
@@ -120,15 +153,15 @@ namespace NaiveAPI_Editor.DocumentBuilder
             var output = new List<DocComponent>();
             foreach (DocComponentField ve in ComponentsVisualRoot.Children())
             {
-                output.Add(ve.Target);
+                output.Add(ve.Target.ToDocComponent());
             }
             return output;
         }
     }
     public class DocComponentField : VisualElement
     {
-        public event Action<DocComponentField> OnModify;
-        public DocComponent Target;
+        public event Action<string> OnPropertyChanged;
+        public DocComponentProperty Target;
         public DSDropdown SelectVisualType;
         public VisualElement ToolBar;
         public VisualElement EditView;
@@ -152,24 +185,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
             if (IsEditing == isEditing) return;
             IsEditing = isEditing;
             if (IsEditing)
-            {
                 closeOther();
-                startEditingStatus = Target.Copy();
-            }
-            else
-            {
-                if (!startEditingStatus.ContentsEqual(Target))
-                {
-                    OnModify?.Invoke(this);
-                }
-            }
             Repaint();
         }
         VisualElement createPreview()
         {
             style.borderLeftColor = DocStyle.Current.HintColor;
             RegisterCallback<PointerDownEvent>(enableEditMode);
-            VisualElement ve = DocRuntime.CreateDocVisual(Target);
+            VisualElement ve = DocRuntime.CreateDocVisual(Target.ToDocComponent());
             foreach (var child in ve.Children())
                 child.SetEnabled(false);
             return ve;
@@ -180,6 +203,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             UnregisterCallback<PointerDownEvent>(enableEditMode);
             EditView = new VisualElement();
             ToolBar = new DSHorizontal();
+            ToolBar.style.flexGrow = 1;
             if (!m_singleMode)
                 ToolBar.Add(insertBtn());
             createDropfield();
@@ -192,6 +216,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 ToolBar.Add(dragBtn());
                 ToolBar.Add(deleteBtn());
             }
+            ToolBar.Add(closeBtn());
             EditView.Add(ToolBar);
             Type docType = null;
             if (Dict.ID2Type.TryGetValue(Target.VisualID, out docType))
@@ -250,7 +275,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
             return EditView;
         }
+        public DocComponentField(SerializedProperty serializedProperty, bool singleMode = false)
+            : this(new DocComponentProperty(serializedProperty), singleMode) { }
         public DocComponentField(DocComponent docComponent, bool singleMode = false)
+            : this(new DocComponentProperty(docComponent), singleMode) { }
+        public DocComponentField(DocComponentProperty docComponent, bool singleMode = false)
         {
             m_singleMode = singleMode;
             style.borderTopWidth = 6;
@@ -260,6 +289,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             style.borderLeftColor = DocStyle.Current.HintColor;
             style.marginBottom = 1;
             Target = docComponent;
+            Target.OnPropertyChanged += (info) => { OnPropertyChanged?.Invoke(info); };
             RegisterCallback<GeometryChangedEvent>(e =>
             {
                 if (e.oldRect.y == 0) return;
@@ -282,6 +312,23 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 style.borderLeftColor = DocStyle.Current.HintColor;
             });
             Repaint();
+            if (Target.IsSerializedProperty)
+            {
+                Undo.undoRedoPerformed += undoRedoRepaint;
+            }
+        }
+        ~DocComponentField()
+        {
+            if (Target.IsSerializedProperty)
+            {
+                Undo.undoRedoPerformed -= undoRedoRepaint;
+            }
+        }
+        void undoRedoRepaint()
+        {
+            if (panel == null) return;
+            Target?.SerializedProperty?.serializedObject?.Update();
+            Repaint();
         }
         private void createDropfield()
         {
@@ -295,15 +342,12 @@ namespace NaiveAPI_Editor.DocumentBuilder
             SelectVisualType.RegisterValueChangedCallback((val) =>
             {
                 Target.Clear();
-                Target.TextData.Clear();
-                Target.JsonData = string.Empty;
-                Target.ObjsData.Clear();
                 EditView.RemoveAt(1);
                 if (val.newValue == "None")
                     Target.VisualID = string.Empty;
                 else
                     Target.VisualID = Dict.Name2ID[val.newValue];
-                OnModify?.Invoke(this);
+                OnPropertyChanged?.Invoke("VisualType");
                 Repaint();
             });
             SelectVisualType.value = Dict.NameList[SelectVisualType.index];
@@ -367,15 +411,29 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
         }
 
+        Button closeBtn()
+        {
+            Button button = null;
+            button = new DSButton("-", DocStyle.Current.HintColor, () =>
+            {
+                SetStatus(false);
+            });
+            button.style.width = 20;
+            button.style.height = 20;
+            button.style.marginLeft = StyleKeyword.Auto;
+            button.style.unityFontStyleAndWeight = FontStyle.Bold;
+            return button;
+        }
         Button insertBtn()
         {
             Button button = null;
             button = new DSButton("Insert", () =>
             {
-                DocComponentField doc = new DocComponentField(new DocComponent());
+                DocComponentField doc = new DocComponentField(new DocComponentProperty(new DocComponent()));
                 parent.Insert(Index, doc);
                 doc.SetStatus(true);
-                doc.OnModify += this.OnModify;
+                doc.OnPropertyChanged += this.OnPropertyChanged;
+                OnPropertyChanged?.Invoke("Insert");
             });
             button.style.width = 41;
             button.style.height = 20;
@@ -386,7 +444,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button button = null;
             button = new DSButton("", () =>
             {
-                copyBuffer = Target.Copy();
+                copyBuffer = Target.ToDocComponent();
                 button.style.unityBackgroundImageTintColor = DocStyle.Current.SuccessTextColor;
                 button.schedule.Execute(() =>
                 {
@@ -414,7 +472,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 }
                 else
                 {
-                    Target = copyBuffer.Copy();
+                    Target.FromDocComponent(copyBuffer);
                     Repaint();
                 }
             });
@@ -443,7 +501,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     style.borderLeftColor = DocStyle.Current.HintColor;
                     IsDraging = false;
                     SetStatus(true);
-                    OnModify?.Invoke(this);
+                    OnPropertyChanged?.Invoke("Drag");
                 });
                 parent.Add(dragMask);
             });
@@ -457,11 +515,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button button = null;
             button = new DSButton("", () =>
             {
-                DocComponentField doc = new DocComponentField(Target.Copy());
+                DocComponentField doc = new DocComponentField(new DocComponentProperty(Target.ToDocComponent()));
                 parent.Insert(Index + 1, doc);
                 doc.SetStatus(true);
-                doc.OnModify += this.OnModify;
-                OnModify?.Invoke(this);
+                doc.OnPropertyChanged += this.OnPropertyChanged;
+                OnPropertyChanged?.Invoke("Duplicate");
             });
             button.style.backgroundImage = DocEditor.Icon.Duplicate;
             button.style.height = 20;
@@ -474,8 +532,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             Button button = null;
             button = new DSButton("", () =>
             {
-                OnModify?.Invoke(this);
-                parent.Remove(this);
+                parent?.Remove(this);
+                OnPropertyChanged?.Invoke("Remove");
             });
             button.style.backgroundImage = DocEditor.Icon.Delete;
             button.style.height = 20;

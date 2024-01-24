@@ -10,11 +10,6 @@ namespace NaiveAPI.DocumentBuilder
 {
     public abstract class DocVisual : VisualElement
     {
-        public enum AniMode
-        {
-            None = 0,
-            Fade = 1,
-        }
         public DocVisual()
         {
             RegisterCallback<GeometryChangedEvent>(e =>
@@ -28,8 +23,6 @@ namespace NaiveAPI.DocumentBuilder
         public abstract string VisualID { get; }
         public Action<float> OnHeightChanged;
         public Action<float> OnWidthChanged;
-        public Action<Action> IntroAnimation;
-        public Action<Action> OuttroAnimation;
         public DocComponent Target => m_target;
 
         protected DocComponent m_target;
@@ -38,24 +31,8 @@ namespace NaiveAPI.DocumentBuilder
             m_target = target;
             Clear();
             OnCreateGUI();
-            OnSelectIntroAni(Target.IntroType);
-            OnSelectOuttroAni(Target.OuttroType);
         }
         protected abstract void OnCreateGUI();
-        protected virtual void OnSelectIntroAni(int type)
-        {
-            if ((AniMode)type == AniMode.None)
-                return;
-            else if ((AniMode)type == AniMode.Fade)
-                IntroAnimation = (callback) => { this.Fade(0, 1, Target.IntroTime, 20, callback); };
-        }
-        protected virtual void OnSelectOuttroAni(int type)
-        {
-            if ((AniMode)type == AniMode.None)
-                return;
-            else if ((AniMode)type == AniMode.Fade)
-                OuttroAnimation = (callback) => { this.Fade(1, 0, Target.OuttroTime, 20, callback); };
-        }
 
         public static Dictionary<string, Type> VisualID_Dict = new Dictionary<string, Type>();
 
@@ -93,8 +70,6 @@ namespace NaiveAPI.DocumentBuilder
             LoadJsonData();
             Clear();
             OnCreateGUI();
-            OnSelectIntroAni(Target.IntroType);
-            OnSelectOuttroAni(Target.OuttroType);
         }
         /// <summary>
         /// Load data from Target

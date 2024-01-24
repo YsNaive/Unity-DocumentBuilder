@@ -177,9 +177,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             pageMenu.OnSelected += e =>
             {
                 editorContainer.Clear();
-                Editor orgEditor = null;
-                Editor.CreateCachedEditor(e.TargetPage, typeof(SODocPageEditor),ref orgEditor);
-                var editor = orgEditor as SODocPageEditor;
+                var editor = Editor.CreateEditor(e.TargetPage) as SODocPageEditor;
                 var editorVisual = editor.CreateInspectorGUI();
                 editor.IconField.RegisterValueChangedCallback(e =>
                 {
@@ -444,14 +442,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
             leftContainer.Add(msg);
             var animation = new VisualElementAnimation.GotoTransformPositionBackAndForth(msg, 0.75f, new Vector2(0, 7));
 
-            pageVisual.PlayIntro(() =>
+            pageVisual.panel.visualTree.schedule.Execute(() =>
             {
-                pageVisual.panel.visualTree.schedule.Execute(() =>
-                {
-                    msg.Fade(1, 750);
-                    animation.Start();
-                }).ExecuteLater(2000);
-            });
+                msg.Fade(1, 750);
+                animation.Start();
+            }).ExecuteLater(2000);
 
             EventCallback<ChangeEvent<Object>> next = null;
             VisualElement msg2 = _tutorialMsgContainer("Click here to select editing page.");

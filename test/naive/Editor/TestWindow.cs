@@ -30,9 +30,6 @@ public class TestWindow : EditorWindow
         root.style.SetIS_Style(ISPadding.Pixel(10));
         var sc = new DSScrollView();
 
-        var component = new DocComponent();
-        var field = new DocComponentField(component);
-        root.Add(field);
-        root.Add(new DSTextField("TX"));
+        root.Add(sc);
     }
 }

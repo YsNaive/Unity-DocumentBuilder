@@ -27,6 +27,8 @@ namespace NaiveAPI.DocumentBuilder
             root.style.width = width;
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             List<string> texts = Target.TextData;
+            while (Target.TextData.Count < visualData.row * visualData.col)
+                Target.TextData.Add("");
             for (int i = 0; i < data.row; i++)
             {
                 VisualElement child = new VisualElement();

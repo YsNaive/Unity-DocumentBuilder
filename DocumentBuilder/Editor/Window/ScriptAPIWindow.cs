@@ -3,24 +3,22 @@ using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
-    public class ScriptAPIEditorWindow : EditorWindow
+    public class ScriptAPIWindow : EditorWindow
     {
-        [MenuItem("Tools/NaiveAPI/Script API Editor", priority = 100)]
+        [MenuItem("Tools/NaiveAPI/Script API", priority = 99)]
         public static void GetWindow()
         {
-            GetWindow<ScriptAPIEditorWindow>("Script API Editor");
+            GetWindow<ScriptAPIWindow>("Script API");
         }
         Queue<Type> History = new();
         DSTypeField typeField;
-        VisualElement LeftPanel, MidPanel;
+        DSScrollView LeftPanel, MidPanel;
         private void CreateGUI()
         {
             LeftPanel = new();
@@ -40,7 +38,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 if (evt.newValue == null) return;
                 History.Enqueue(evt.newValue);
                 MidPanel.Clear();
-                MidPanel.Add(new ScriptAPIField(evt.newValue));
+                MidPanel.Add(new TypeElement(evt.newValue));
             });
             LeftPanel.Add(typeField);
         }

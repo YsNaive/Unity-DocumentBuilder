@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -28,64 +29,21 @@ namespace NaiveAPI_Editor.DocumentBuilder
         public abstract string VisualID { get; }
         public Action<float> OnHeightChanged;
         public Action<float> OnWidthChanged;
-        public DocComponent Target => m_target;
-        protected DocComponent m_target;
-        public virtual void SetTarget(DocComponent target)
+        public DocComponentProperty Target => m_target;
+        protected DocComponentProperty m_target;
+        public virtual void SetTarget(DocComponent target) { SetTarget(new DocComponentProperty(target)); }
+        public virtual void SetTarget(SerializedProperty target) { SetTarget(new DocComponentProperty(target)); }
+        public virtual void SetTarget(DocComponentProperty target)
         {
             m_target = target;
             if (target.VisualVersion != Version)
                 VersionConflict();
-            OnCreateAniGUI(InitAniType);
             OnCreateGUI();
         }
         /// <summary>
         /// Call after Target is set
         /// </summary>
         protected abstract void OnCreateGUI();
-        protected virtual Enum InitAniType => DocVisual.AniMode.Fade;
-        protected virtual void OnCreateAniGUI(Enum initType)
-        {
-            Length typeWidth = Length.Percent(35);
-            Length timeWidth = Length.Percent(15);
-            var bar = new DSHorizontal();
-            var introType = new DSEnumField("in", initType, (e) =>
-            {
-                Target.IntroType = Convert.ToInt32(e.newValue);
-            });introType.value = (Enum)Enum.ToObject(initType.GetType(), (byte)Target.IntroType);
-            introType.style.width = typeWidth;
-            introType.style.ClearMarginPadding();
-            introType.labelElement.style.minWidth = 45;
-            introType.labelElement.style.width = 45;
-            introType.labelElement.style.unityTextAlign = TextAnchor.MiddleCenter;
-            var introTime = DocEditor.NewIntField("", e =>
-            {
-                Target.IntroTime = e.newValue;
-            }); introTime.value = Target.IntroTime;
-            introTime.style.width = timeWidth;
-            introTime.style.ClearMarginPadding();
-            introTime.style.paddingLeft = 4;
-            var outtroType = new DSEnumField("out", initType, (e) =>
-            {
-                Target.OuttroType = Convert.ToInt32(e.newValue);
-            }); outtroType.value = (Enum)Enum.ToObject(initType.GetType(), (byte)Target.OuttroType);
-            outtroType.style.width = typeWidth;
-            outtroType.style.ClearMarginPadding();
-            outtroType.labelElement.style.minWidth = 45;
-            outtroType.labelElement.style.width = 45;
-            outtroType.labelElement.style.unityTextAlign = TextAnchor.MiddleCenter;
-            var outtroTime = DocEditor.NewIntField("", e =>
-            {
-                Target.OuttroTime = e.newValue;
-            }); outtroTime.value = Target.OuttroTime;
-            outtroTime.style.width = timeWidth;
-            outtroTime.style.ClearMarginPadding();
-            outtroTime.style.paddingLeft = 4;
-            bar.Add(introType);
-            bar.Add(introTime);
-            bar.Add(outtroType);
-            bar.Add(outtroTime);
-            Add(bar);
-        }
         protected virtual void VersionConflict()
         {
             Debug.LogWarning($"DocEditVisual: VersionConflict NOT Implement in type [{GetType()}]");
@@ -150,11 +108,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
     where DType : new()
     {
         protected DType visualData;
-        public override void SetTarget(DocComponent target)
+        public override void SetTarget(DocComponentProperty target)
         {
             m_target = target;
             LoadDataFromTarget();
-            base.SetTarget(target);
+            if (target.VisualVersion != Version)
+                VersionConflict();
+            OnCreateGUI();
         }
         protected void LoadDataFromTarget()
         {

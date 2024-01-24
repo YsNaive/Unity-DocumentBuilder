@@ -14,7 +14,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
     [CustomEditor(typeof(SODocComponents))]
     public class SODocComponentsEditor : Editor
     {
-        SODocComponents Target;
         DocComponentsField editField;
         public override void OnInspectorGUI()
         {
@@ -24,36 +23,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     editField.CtrlHotKeyAction(Event.current.keyCode);
             }
         }
-        [SerializeField] private List<DocComponent> undoBuffer;
         public override VisualElement CreateInspectorGUI()
         {
+            var so = new SerializedObject(target);
             VisualElement root = new VisualElement();
-            Target = target as SODocComponents;
-            if(Target.Components == null) Target.Components = new List<DocComponent>();
-            editField = new DocComponentsField(Target.Components);
-
-            editField.OnModify += (doc) => {
-                Undo.IncrementCurrentGroup();
-                Undo.RegisterCompleteObjectUndo(this, "DocComponentsField");
-                undoBuffer = editField.ToComponentsList();
-            };
-            Undo.undoRedoPerformed += ()=> { editField.Repaint(undoBuffer); };
+            editField = new DocComponentsField(so.FindProperty("Components"));
             root.Add(new IMGUIContainer(OnInspectorGUI));
             root.Add(editField);
             return root;
-        }
-        void save()
-        {
-            if (editField == null) return;
-            if (editField[0].childCount == 0)
-                Target.Components.Clear();
-            else
-                Target.Components = editField.ToComponentsList();
-            EditorUtility.SetDirty(target);
-        }
-        private void OnDisable()
-        {
-            save();
         }
     }
 }

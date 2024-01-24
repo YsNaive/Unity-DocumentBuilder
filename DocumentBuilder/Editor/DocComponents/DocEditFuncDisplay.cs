@@ -92,12 +92,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             if (visualData.Syntaxs.Count == 0)
             {
-                Target.TextData = visualData.GetTexts();
+                Target.TextData.FromList(visualData.GetTexts());
             }
             else
             {
-                visualData.SetParamsDescription(Target.TextData, 1, visualData.Params.Count + 1);
-                visualData.SetReturnTypesDescription(Target.TextData, 1 + visualData.Params.Count, 1 + visualData.Params.Count + visualData.ReturnTypes.Count);
+                var list = Target.TextData.ToList();
+                visualData.SetParamsDescription(list, 1, visualData.Params.Count + 1);
+                visualData.SetReturnTypesDescription(list, 1 + visualData.Params.Count, 1 + visualData.Params.Count + visualData.ReturnTypes.Count);
             }
             for (int i = 0; i < visualData.Syntaxs.Count; i++)
                 funcDatas.Add(new DocumentBuilderParser.FuncData());

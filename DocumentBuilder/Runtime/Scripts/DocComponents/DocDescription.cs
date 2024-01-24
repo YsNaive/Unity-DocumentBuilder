@@ -31,40 +31,6 @@ namespace NaiveAPI.DocumentBuilder
                 text.style.SetIS_Style(ISPadding.Pixel(DocStyle.Current.MainTextSize/2));
             }
         }
-        protected override void OnSelectIntroAni(int type)
-        {
-            switch ((AniMode)type)
-            {
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    IntroAnimation = (callBack) => { this.Fade(0, 1, Target.IntroTime, 50, callBack); };
-                    break;
-                case AniMode.TextFade:
-                    IntroAnimation = (callBack) => { text.TextFadeIn(Target.TextData[0], Target.IntroTime, 1, callBack); };
-                    break;
-            }
-        }
-        protected override void OnSelectOuttroAni(int type)
-        {
-            switch ((AniMode)type)
-            {
-                case AniMode.None:
-                    break;
-                case AniMode.Fade:
-                    OuttroAnimation = (callBack) => { this.Fade(1, 0, Target.OuttroTime, 20, callBack); };
-                    break;
-                case AniMode.TextFade:
-                    OuttroAnimation = (callBack) => { text.TextFadeOut(Target.OuttroTime, 1, callBack); };
-                    break;
-            }
-        }
-        public new enum AniMode
-        {
-            None,
-            Fade,
-            TextFade,
-        }
         public enum DescriptionType
         {
             None,

@@ -1,0 +1,228 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee828d8e285f9245b396faeebb269ae, type: 3}
+  m_Name: Vector3
+  m_EditorClassIdentifier: 
+  s_type: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  Tooltip:
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - This is repersent to 3 dim vector (x, y, z)
+    ObjsData: []
+    VisualVersion: 0
+  Description:
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'x is x
+
+      y is y
+
+      z is z
+
+
+      very powerful.'
+    ObjsData: []
+    VisualVersion: 0
+  Tutorial:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - How to use this ?
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - just like how you use in math.
+    ObjsData: []
+    VisualVersion: 0
+  m_MemberInfoKeys:
+  - x
+  - y
+  - z
+  - Item
+  - normalized
+  - magnitude
+  - sqrMagnitude
+  - get_Item(int)
+  - set_Item(int,float)
+  - Set(float,float,float)
+  - Scale(Vector3)
+  - GetHashCode()
+  - Equals(Object)
+  - Equals(Vector3)
+  - Normalize()
+  - get_normalized()
+  - get_magnitude()
+  - get_sqrMagnitude()
+  - ToString()
+  - ToString(string)
+  - ToString(string,IFormatProvider)
+  - .ctor(float,float,float)
+  - .ctor(float,float)
+  - .ctor.Single.x
+  - .ctor.Single.y
+  - Set.Single.newX
+  - .ctor.Single.z
+  - Set.Single.newY
+  - Set.Single.newZ
+  - Scale.Vector3.scale
+  m_MemberInfos:
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - map index (1,2,3) into (x,y,z)
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - return it scale as length = 1
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - return value as below
+      ObjsData: []
+      VisualVersion: 0
+    - VisualID: 9
+      JsonData: '{"ChType":0,"ChHeightPx":25,"Contents":"x^2+y^2","Scale":1.0}'
+      TextData: []
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - return value as below
+      ObjsData: []
+      VisualVersion: 0
+    - VisualID: 9
+      JsonData: '{"ChType":0,"ChHeightPx":30,"Contents":"\\sqrt{x^2+y^2}","Scale":0.8500000238418579}'
+      TextData: []
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - 'this.x *= scale.x
+
+        this.y *= scale.y
+
+        this.z *= scale.z'
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - same as its normalized property
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - Construct with x,y,z
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []

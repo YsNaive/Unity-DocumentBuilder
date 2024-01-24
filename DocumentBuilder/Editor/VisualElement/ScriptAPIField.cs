@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
@@ -21,6 +20,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         DSScrollView EditPanelContainer;
         DSScrollView TypeFieldScrollView;
         List<ScriptAPIElement> scriptAPIElements = new();
+        SerializedObject serializedObject;
         public ScriptAPIField(Type type)
         {
             style.flexDirection = FlexDirection.Column;
@@ -64,6 +64,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         void init()
         {
             Clear();
+            serializedObject = new SerializedObject(target);
             EditPanelContainer = new DSScrollView();
             EditPanelContainer.style.SetIS_Style(ISPadding.Pixel(DocStyle.Current.MainTextSize / 2));
             EditPanelContainer.style.backgroundColor = DocStyle.Current.BackgroundColor;
@@ -79,8 +80,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             leftCover.RegisterCallback<PointerDownEvent>(evt =>
             {
                 EditSplitView.parent.Remove(EditSplitView);
-                EditorUtility.SetDirty(target);
-                AssetDatabase.SaveAssetIfDirty(target);
+                serializedObject.ApplyModifiedProperties();
             });
             EditSplitView.Add(leftCover);
             EditSplitView.Add(EditPanelContainer);
@@ -92,12 +92,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             TypeFieldScrollView.Clear();
             TypeFieldScrollView.Add(new DSTextElement("Type Tooltip"));
-            TooltipField = new DocComponentsField(target.Tooltip);
-            TooltipField.OnModify += evt => { target.Tooltip = TooltipField.ToComponentsList(); EditorUtility.SetDirty(target); };
+            TooltipField = new DocComponentsField(serializedObject.FindProperty("Tooltip"));
             TypeFieldScrollView.Add(TooltipField);
             TypeFieldScrollView.Add(new DSTextElement("Type Description"));
-            DescriptionField = new DocComponentsField(target.Description);
-            DescriptionField.OnModify += evt => { target.Tooltip = DescriptionField.ToComponentsList(); EditorUtility.SetDirty(target); };
+            DescriptionField = new DocComponentsField(serializedObject.FindProperty("Description"));
             TypeFieldScrollView.Add(DescriptionField);
             var ctors = target.TargetType.GetConstructors();
             if (ctors.Length != 0)
@@ -159,8 +157,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 }
             }
             TypeFieldScrollView.Add(new DSTextElement("Type Tutorial"));
-            TutorialField = new DocComponentsField(target.Description);
-            TutorialField.OnModify += evt => { target.Tooltip = TutorialField.ToComponentsList(); EditorUtility.SetDirty(target); };
+            TutorialField = new DocComponentsField(serializedObject.FindProperty("Tutorial"));
             TypeFieldScrollView.Add(TutorialField);
             var highlight = new ISBorder(DocStyle.Current.SubFrontgroundColor, 0) { Left = DocStyle.Current.MainTextSize / 6 };
             var clear = new ISBorder(Color.clear, 0);
@@ -181,24 +178,23 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     Add(EditSplitView);
                     EditPanelContainer.Clear();
                     EditPanelContainer.Add(getTitle(pair.memberInfo));
-                    EditPanelContainer.Add(new ScriptAPIMemberField(target.GetMemberInfo(pair.id)));
+                    EditPanelContainer.Add(new ScriptAPIMemberField(SOScriptAPIInfo.GetMemberInfo(serializedObject, pair.id)));
                 });
             }
         }
         void addMemberInfo(MemberInfo info)
         {
-            var targetMemberInfo = target.GetMemberInfo(info);
+            var targetMemberInfo = SOScriptAPIInfo.GetMemberInfo(serializedObject,SOScriptAPIInfo.GetMemberID(info));
             VisualElement container = new DSHorizontal();
             ScriptAPIElement title = getTitle(info);
             scriptAPIElements.Add(title);
             DSToggle displayToggle = new DSToggle();
             displayToggle.style.alignItems = Align.FlexStart;
-            displayToggle.value = targetMemberInfo.IsDisplay;
+            displayToggle.value = targetMemberInfo.FindPropertyRelative("IsDisplay").boolValue;
             displayToggle.RegisterValueChangedCallback(evt =>
             {
-                targetMemberInfo.IsDisplay = evt.newValue;
+                targetMemberInfo.FindPropertyRelative("IsDisplay").boolValue = evt.newValue;
                 title.SetEnabled(evt.newValue); 
-                EditorUtility.SetDirty(target);
             });
             title.SetEnabled(displayToggle.value);
             container.Add(displayToggle);

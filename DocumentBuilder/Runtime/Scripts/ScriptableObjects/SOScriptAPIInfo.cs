@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Unity.VisualScripting.YamlDotNet.Core.Tokens;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -17,7 +18,6 @@ namespace NaiveAPI.DocumentBuilder
             set
             {
                 m_TargetType = value;
-                ClearAll();
             }
         }
         private Type m_TargetType;
@@ -25,9 +25,8 @@ namespace NaiveAPI.DocumentBuilder
         public List<DocComponent> Tooltip = new();
         public List<DocComponent> Description = new();
         public List<DocComponent> Tutorial = new();
-        public List<string> s_memberInfoKeys = new();
-        public List<ScriptAPIMemberInfo> s_memberInfos = new();
-        public Dictionary<string, ScriptAPIMemberInfo> MemberInfos = new();
+        [SerializeField] private List<string> m_MemberInfoKeys = new();
+        [SerializeField] private List<ScriptAPIMemberInfo> m_MemberInfos = new();
         
         public void MakeValid()
         {
@@ -36,26 +35,38 @@ namespace NaiveAPI.DocumentBuilder
             foreach (var field in TargetType.GetFields(TypeReader.DeclaredPublicInstance))
             {
                 var id = GetMemberID(field);
-                if (!MemberInfos.ContainsKey(id))
-                    MemberInfos.Add(id, new ScriptAPIMemberInfo() { IsDisplay = true });
+                if (!m_MemberInfoKeys.Contains(id))
+                {
+                    m_MemberInfoKeys.Add(id);
+                    m_MemberInfos.Add(new ScriptAPIMemberInfo() { IsDisplay = true });
+                }
             }
             foreach (var field in TargetType.GetFields(TypeReader.DeclaredPrivateInstance))
             {
                 var id = GetMemberID(field);
-                if (!MemberInfos.ContainsKey(id))
-                    MemberInfos.Add(id, new ScriptAPIMemberInfo() { IsDisplay = false });
+                if (!m_MemberInfoKeys.Contains(id))
+                {
+                    m_MemberInfoKeys.Add(id);
+                    m_MemberInfos.Add(new ScriptAPIMemberInfo() { IsDisplay = false });
+                }
             }
             foreach (var prop in TargetType.GetProperties(TypeReader.DeclaredPublicInstance))
             {
                 var id = GetMemberID(prop);
-                if (!MemberInfos.ContainsKey(id))
-                    MemberInfos.Add(id, new ScriptAPIMemberInfo() { IsDisplay = true });
+                if (!m_MemberInfoKeys.Contains(id))
+                {
+                    m_MemberInfoKeys.Add(id);
+                    m_MemberInfos.Add(new ScriptAPIMemberInfo() { IsDisplay = true });
+                }
             }
             foreach (var prop in TargetType.GetProperties(TypeReader.DeclaredPrivateInstance))
             {
                 var id = GetMemberID(prop);
-                if (!MemberInfos.ContainsKey(id))
-                    MemberInfos.Add(id, new ScriptAPIMemberInfo() { IsDisplay = false });
+                if (!m_MemberInfoKeys.Contains(id))
+                {
+                    m_MemberInfoKeys.Add(id);
+                    m_MemberInfos.Add(new ScriptAPIMemberInfo() { IsDisplay = false });
+                }
             }
             foreach (var method in TargetType.GetMethods(TypeReader.DeclaredPublicInstance))
             {
@@ -64,79 +75,105 @@ namespace NaiveAPI.DocumentBuilder
                 if      (id.StartsWith("Equals("))      display = false;
                 else if (id.StartsWith("GetHashCode(")) display = false;
                 else if (id.StartsWith("ToString("))    display = false;
-                if (!MemberInfos.ContainsKey(id))
-                    MemberInfos.Add(id, new ScriptAPIMemberInfo() { IsDisplay = display });
+                if (!m_MemberInfoKeys.Contains(id))
+                {
+                    m_MemberInfoKeys.Add(id);
+                    m_MemberInfos.Add(new ScriptAPIMemberInfo() { IsDisplay = display });
+                }
             }
             foreach (var method in TargetType.GetMethods(TypeReader.DeclaredPrivateInstance))
             {
                 var id = GetMemberID(method);
-                if (!MemberInfos.ContainsKey(id))
-                    MemberInfos.Add(id, new ScriptAPIMemberInfo() { IsDisplay = false });
+                if (!m_MemberInfoKeys.Contains(id))
+                {
+                    m_MemberInfoKeys.Add(id);
+                    m_MemberInfos.Add(new ScriptAPIMemberInfo() { IsDisplay = false });
+                }
             }
             foreach (var ctor in TargetType.GetConstructors(TypeReader.DeclaredPublicInstance))
             {
                 var id = GetMemberID(ctor);
-                if (!MemberInfos.ContainsKey(id))
-                    MemberInfos.Add(id, new ScriptAPIMemberInfo() { IsDisplay = true });
+                if (!m_MemberInfoKeys.Contains(id))
+                {
+                    m_MemberInfoKeys.Add(id);
+                    m_MemberInfos.Add(new ScriptAPIMemberInfo() { IsDisplay = true });
+                }
             }
             foreach (var ctor in TargetType.GetConstructors(TypeReader.DeclaredPrivateInstance))
             {
                 var id = GetMemberID(ctor);
-                if (!MemberInfos.ContainsKey(id))
-                    MemberInfos.Add(id, new ScriptAPIMemberInfo() { IsDisplay = false });
+                if (!m_MemberInfoKeys.Contains(id))
+                {
+                    m_MemberInfoKeys.Add(id);
+                    m_MemberInfos.Add(new ScriptAPIMemberInfo() { IsDisplay = false });
+                }
             }
         }
         public void ClearNonUsing()
         {
-            SDictionary<string, ScriptAPIMemberInfo> newDict = new();
-            foreach(var pair in MemberInfos)
+            List<int> deleteIndex = new();
+            for(int i = 0; i < m_MemberInfos.Count; i++)
             {
-                if(!pair.Value.IsEmpty)
-                    newDict.Add(pair.Key, pair.Value);
+                if (m_MemberInfos[i].IsEmpty)
+                    deleteIndex.Add(i);
             }
-            MemberInfos = newDict;
+            deleteIndex.Reverse();
+            foreach (var i in deleteIndex)
+            {
+                m_MemberInfoKeys.RemoveAt(i);
+                m_MemberInfos.RemoveAt(i);
+            }
         }
         public void ClearAll()
         {
-            MemberInfos.Clear();
+            m_MemberInfoKeys.Clear();
+            m_MemberInfos.Clear();
             Description = new();
             Tutorial = new();
+        }
+        public ScriptAPIMemberInfo GetMemberInfo(ICustomAttributeProvider info) { 
+            if(typeof(ParameterInfo).IsAssignableFrom(info.GetType()))
+                return GetMemberInfo(GetMemberID(info as ParameterInfo));
+            else
+                return GetMemberInfo(GetMemberID(info as MemberInfo));
         }
         public ScriptAPIMemberInfo GetMemberInfo(ParameterInfo info) { return GetMemberInfo(GetMemberID(info)); }
         public ScriptAPIMemberInfo GetMemberInfo(MemberInfo info) { return GetMemberInfo(GetMemberID(info)); }
         public ScriptAPIMemberInfo GetMemberInfo(string id)
         {
-            if (MemberInfos.ContainsKey(id))
-                return MemberInfos[id];
+            var i = m_MemberInfoKeys.IndexOf(id);
+            if (i != -1)
+                return m_MemberInfos[i];
             ScriptAPIMemberInfo newInfo = new();
-            MemberInfos.Add(id, newInfo);
+            m_MemberInfoKeys.Add(id);
+            m_MemberInfos.Add(newInfo);
             return newInfo;
+        }
+        public static SerializedProperty GetMemberInfo(SerializedObject so, string id)
+        {
+            var keys = so.FindProperty("m_MemberInfoKeys");
+            var vals = so.FindProperty("m_MemberInfos");
+            for (int i = 0, imax = keys.arraySize; i < imax; i++)
+            {
+                if (keys.GetArrayElementAtIndex(i).stringValue == id)
+                {
+                    return vals.GetArrayElementAtIndex(i);
+                }
+            }
+            int j = keys.arraySize;
+            keys.InsertArrayElementAtIndex(j);
+            keys.GetArrayElementAtIndex(j).stringValue = id;
+            vals.InsertArrayElementAtIndex(j);
+            return vals.GetArrayElementAtIndex(j);
         }
 
         public void OnAfterDeserialize()
         {
-            MemberInfos.Clear();
-            var s_keys = s_memberInfoKeys;
-            var s_values = s_memberInfos;
-            for (int i = 0, imax = s_keys.Count; i < imax; i++)
-                MemberInfos.Add(s_keys[i], s_values[i]);
-
-            s_keys = null;
-            s_values = null;
             TargetType = Type.GetType(s_type);
             s_type = null;
         }
         public void OnBeforeSerialize()
         {
-            var s_keys = s_memberInfoKeys;
-            var s_values = s_memberInfos;
-            s_keys = new ();
-            s_values = new ();
-            foreach (var pair in MemberInfos)
-            {
-                s_keys.Add(pair.Key);
-                s_values.Add(pair.Value);
-            }
             if (TargetType == null)
                 s_type = "";
             else

@@ -16,7 +16,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
         [Obsolete] public override string DisplayName => "Description";
         public override string VisualID => "2";
         public override ushort Version => 0;
-        protected override Enum InitAniType => DocDescription.AniMode.Fade;
         protected override void OnCreateGUI()
         {
             TextField textInput = new DSTextField();
@@ -27,8 +26,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             textInput.style.whiteSpace = WhiteSpace.Normal;
             textInput.RegisterValueChangedCallback((val) =>
             {
-                Target.TextData.Clear();
-                Target.TextData.Add(val.newValue);
+                if(Target.TextData.Count == 0)
+                    Target.TextData.Add(val.newValue);
+                else
+                    Target.TextData[0] = val.newValue;
             });
             var typeField = new DSEnumField<DocDescription.DescriptionType>("Type", visualData.Type, e =>
             {

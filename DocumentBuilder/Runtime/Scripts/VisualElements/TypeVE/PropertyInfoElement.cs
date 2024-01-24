@@ -57,7 +57,7 @@ namespace NaiveAPI.DocumentBuilder
 
         public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element, string id)> VisitMember()
         {
-            yield return (Target, this, SOScriptAPIInfo.GetMemberID(Target));
+            yield return (Target, NameText, SOScriptAPIInfo.GetMemberID(Target));
         }
     }
 }
