@@ -359,45 +359,6 @@ namespace NaiveAPI.DocumentBuilder
 
                 this.anchors = newAnchors;
             }
-            public List<string> test()
-            {
-                return null;
-            }
-        }
-
-        public class Builder
-        {
-            public List<List<string>> contents;
-            public string this[int row, int col]
-            {
-                get => contents[row][col];
-                set => contents[row][col] = value;
-            }
-
-            public void InsertRow(int index)
-            {
-
-            }
-            public void InsertCol(int index)
-            {
-
-            }
-            public void AddRow()
-            {
-
-            }
-            public void AddCol()
-            {
-
-            }
-            public void RemoveRowAt()
-            {
-
-            }
-            public void RemoveColAt()
-            {
-
-            }
         }
 
         public enum Mode
