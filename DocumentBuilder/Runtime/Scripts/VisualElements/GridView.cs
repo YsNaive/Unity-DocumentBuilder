@@ -40,22 +40,56 @@ public class GridView : VisualElement
         this.RegisterCallback<GeometryChangedEvent>(repaintMatrix);
     }
 
+    public void ResolveLayout(GeometryChangedEvent e)
+    {
+        ResolveLayout();
+    }
+    public void ResolveLayout()
+    {
+        freeForExpand();
+    }
+
+    private void freeForExpand()
+    {
+        if (Mode != AlignMode.FixedWidth)
+            this.style.width = StyleKeyword.Auto;
+        this.style.height = StyleKeyword.Auto;
+        for (int i = 0; i < Row; i++)
+        {
+            //base[i].style.width = StyleKeyword.Auto;
+            base[i].style.height = StyleKeyword.Auto;
+            for (int j = 0; j < Col; j++)
+            {
+                childs[i, j].style.top = StyleKeyword.Auto;
+                childs[i, j].style.right = StyleKeyword.Auto;
+                childs[i, j].style.left = StyleKeyword.Auto;
+                childs[i, j].style.bottom = StyleKeyword.Auto;
+                if (Mode != AlignMode.FixedWidth)
+                    childs[i, j].style.width = StyleKeyword.Auto;
+                childs[i, j].style.height = StyleKeyword.Auto;
+            }
+        }
+        this.MarkDirtyRepaint();
+        this.RegisterCallback<GeometryChangedEvent>(repaintMatrix);
+    }
+
     private void repaintMatrix(GeometryChangedEvent e)
     {
-        VisualElement matrixRoot = this;
+        this.UnregisterCallback<GeometryChangedEvent>(repaintMatrix);
+
         float[] maxWidth = new float[Col];
         float[] maxHeight = new float[Row];
         for (int i = 0; i < Row; i++)
         {
             for (int j = 0; j < Col; j++)
             {
-                if (maxWidth[j] < matrixRoot[i][j].layout.width)
+                if (maxWidth[j] < childs[i, j].layout.width)
                 {
-                    maxWidth[j] = matrixRoot[i][j].layout.width;
+                    maxWidth[j] = childs[i, j].layout.width;
                 }
-                if (maxHeight[i] < matrixRoot[i][j].layout.height)
+                if (maxHeight[i] < childs[i, j].layout.height)
                 {
-                    maxHeight[i] = matrixRoot[i][j].layout.height;
+                    maxHeight[i] = childs[i, j].layout.height;
                 }
             }
         }
@@ -66,13 +100,11 @@ public class GridView : VisualElement
         for (int i = 0; i < Col; i++)
         {
             sumWidth += maxWidth[i];
-            //Debug.Log("width " + maxWidth[i]);
         }
 
         for (int i = 0; i < Row; i++)
         {
             sumHeight += maxHeight[i];
-            //Debug.Log("height " + maxHeight[i]);
         }
         float[] widthLength = new float[Col];
         float[] heightLength = new float[Row];
@@ -86,8 +118,8 @@ public class GridView : VisualElement
         {
             heightLength[i] = maxHeight[i] / sumHeight * 100;
         }
-        sumWidth += (Col * 5);
-        sumHeight += (Row * 5);
+        //sumWidth += (Col * 5);
+        //sumHeight += (Row * 5);
 
         ISPosition position = new ISPosition();
         position.Position = Position.Absolute;
@@ -96,22 +128,23 @@ public class GridView : VisualElement
 
         for (int i = 0; i < Row; i++)
         {
-            matrixRoot[i].style.width = Length.Percent(100);
-            matrixRoot[i].style.height = Length.Percent(heightLength[i]);
+            base[i].style.width = Length.Percent(100);
+            base[i].style.height = Length.Percent(heightLength[i]);
             for (int j = 0; j < Col; j++)
             {
-                matrixRoot[i][j].style.SetIS_Style(position);
-                matrixRoot[i][j].style.width = Length.Percent(widthLength[j]);
+                childs[i, j].style.SetIS_Style(position);
+                childs[i, j].style.width = Length.Percent(widthLength[j]);
                 position.Left += widthLength[j];
             }
             position.Left = ISStyleLength.Percent(0);
         }
-        if (Mode == AlignMode.FixedWidth)
-            matrixRoot.style.width = Length.Percent(100);
-        else if (Mode == AlignMode.FixedContent)
-            matrixRoot.style.width = sumWidth;
-        matrixRoot.style.height = sumHeight;
-        matrixRoot.UnregisterCallback<GeometryChangedEvent>(repaintMatrix);
+        this.style.width = Mode switch
+        {
+            AlignMode.FixedWidth => Length.Percent(100),
+            AlignMode.FixedContent => sumWidth,
+            _ => throw new System.NotImplementedException(),
+        };
+        this.style.height = sumHeight;
     }
 
     private void veBorderLine(VisualElement ve, int i, int j)
