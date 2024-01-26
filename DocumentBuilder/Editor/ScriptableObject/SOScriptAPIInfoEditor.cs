@@ -44,7 +44,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             public FieldEdit(SOScriptAPIInfo target, FieldInfo field)
             {
-                Add(new FieldInfoElement(field));
+                Add(new DSFieldInfoElement(field));
                 var toggle = new DSToggle("Hide");
                 Add(toggle);
                 var tooltip = new DSTextField("Tooltips");

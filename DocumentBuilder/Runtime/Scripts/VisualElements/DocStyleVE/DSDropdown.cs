@@ -92,10 +92,9 @@ namespace NaiveAPI.DocumentBuilder
             m_fieldElement.RegisterCallback<PointerDownEvent>(evt =>
             {
                 popupMenu.Open(this);
-                var worldBound = m_fieldElement.worldBound;
-                popupMenu.style.width = worldBound.width;
-                var pos = new Vector2(0,0);
+                var pos = new Vector2(0, m_fieldElement.localBound.height);
                 pos = m_fieldElement.LocalToWorld(pos);
+                pos = popupMenu.CoverMask.WorldToLocal(pos);
                 popupMenu.style.left = pos.x;
                 popupMenu.style.top = pos.y;
             });

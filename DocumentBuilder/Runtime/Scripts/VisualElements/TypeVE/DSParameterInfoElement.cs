@@ -6,21 +6,21 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class ParameterInfoElement : ScriptAPIElement
+    public class DSParameterInfoElement : DSScriptAPIElement
     {
         public ParameterInfo Target => m_Target;
         private ParameterInfo m_Target;
-        public TypeNameElement TypeText => m_TypeText;
-        private TypeNameElement m_TypeText;
+        public DSTypeNameElement TypeText => m_TypeText;
+        private DSTypeNameElement m_TypeText;
         public DSTextElement NameText => m_NameText;
         private DSTextElement m_NameText;
-        public ParameterInfoElement(ParameterInfo paramInfo)
+        public DSParameterInfoElement(ParameterInfo paramInfo)
             : base()
         {
             m_Target = paramInfo;
             var padding = DocStyle.Current.MainTextSize / 2f;
 
-            m_TypeText = new TypeNameElement(paramInfo.ParameterType);
+            m_TypeText = new DSTypeNameElement(paramInfo.ParameterType);
 
             m_NameText = new DSTextElement(paramInfo.Name);
             m_NameText.style.color = DocStyle.Current.ArgsColor;
@@ -42,19 +42,20 @@ namespace NaiveAPI.DocumentBuilder
             Add(m_NameText);
         }
 
-        public override IEnumerable<TypeNameElement> VisitTypeName()
+        public override IEnumerable<DSTypeNameElement> VisitTypeName()
         {
-            yield return m_TypeText;
+            foreach (var ve in m_TypeText.VisitTypeName())
+                yield return ve;
         }
 
-        public override IEnumerable<ParameterInfoElement> VisitParameter()
+        public override IEnumerable<DSParameterInfoElement> VisitParameter()
         {
             yield return this;
         }
 
         public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element, string id)> VisitMember()
         {
-            yield return (Target, this, SOScriptAPIInfo.GetMemberID(Target));
+            yield return (Target, m_NameText, SOScriptAPIInfo.GetMemberID(Target));
         }
     }
 

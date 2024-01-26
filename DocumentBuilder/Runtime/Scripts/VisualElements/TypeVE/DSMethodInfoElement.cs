@@ -7,17 +7,17 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class MethodInfoElement : ScriptAPIElement
+    public class DSMethodInfoElement : DSScriptAPIElement
     {
         public MethodBase Target => m_Target;
         private MethodBase m_Target;
-        public TypeNameElement ReturnTypeText => m_ReturnTypeText;
-        private TypeNameElement m_ReturnTypeText;
+        public DSTypeNameElement ReturnTypeText => m_ReturnTypeText;
+        private DSTypeNameElement m_ReturnTypeText;
         public DSTextElement NameText => m_NameText;
         private DSTextElement m_NameText;
-        public ParameterInfoElement[] ParamTexts => m_ParamTexts;
-        private ParameterInfoElement[] m_ParamTexts;
-        public MethodInfoElement(MethodBase info)
+        public DSParameterInfoElement[] ParamTexts => m_ParamTexts;
+        private DSParameterInfoElement[] m_ParamTexts;
+        public DSMethodInfoElement(MethodBase info)
             : base()
         {
             m_Target = info;
@@ -26,7 +26,7 @@ namespace NaiveAPI.DocumentBuilder
             var areaText = new DSTextElement(TypeReader.GetAccessLevel(info));
             areaText.style.color = DocStyle.Current.PrefixColor;
 
-            m_ReturnTypeText = new TypeNameElement(info switch
+            m_ReturnTypeText = new DSTypeNameElement(info switch
             {
                 MethodInfo asMethod => asMethod.ReturnType,
                 ConstructorInfo asConstructor => asConstructor.ReflectedType,
@@ -36,9 +36,9 @@ namespace NaiveAPI.DocumentBuilder
 
 
             var paramInfos = info.GetParameters();
-            m_ParamTexts = new ParameterInfoElement[paramInfos.Length];
+            m_ParamTexts = new DSParameterInfoElement[paramInfos.Length];
             for (int i = 0; i < paramInfos.Length; i++)
-                m_ParamTexts[i] = new ParameterInfoElement(paramInfos[i]);
+                m_ParamTexts[i] = new DSParameterInfoElement(paramInfos[i]);
 
             Add(areaText);
             Add(m_ReturnTypeText);
@@ -65,12 +65,21 @@ namespace NaiveAPI.DocumentBuilder
             Add(new DSTextElement(")"));
         }
 
-        public override IEnumerable<TypeNameElement> VisitTypeName()
+        public override IEnumerable<DSTypeNameElement> VisitTypeName()
         {
-            yield return m_ReturnTypeText;
+            if (!m_Target.IsConstructor)
+            {
+                foreach (var ve in m_ReturnTypeText.VisitTypeName())
+                    yield return ve;
+            }
+            foreach(var param in m_ParamTexts)
+            {
+                foreach (var ve in param.VisitTypeName())
+                    yield return ve;
+            }
         }
 
-        public override IEnumerable<ParameterInfoElement> VisitParameter()
+        public override IEnumerable<DSParameterInfoElement> VisitParameter()
         {
             foreach(var param in m_ParamTexts)
                 yield return param;
@@ -80,8 +89,10 @@ namespace NaiveAPI.DocumentBuilder
         {
             yield return (Target, (Target.IsConstructor ? m_ReturnTypeText : m_NameText), SOScriptAPIInfo.GetMemberID(Target));
             foreach (var param in m_ParamTexts)
-                yield return (param.Target, param, SOScriptAPIInfo.GetMemberID(param.Target));
-
+            {
+                foreach (var it in param.VisitMember())
+                    yield return it;
+            }
         }
     }
 }

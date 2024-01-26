@@ -84,10 +84,11 @@ namespace NaiveAPI.DocumentBuilder
 
             return "";
         }
-        public static string CalNestedName(Type type)
+        public static string GetNestedName(Type type)
         {
             if (type == null) return "";
             string name = type.FullName;
+            if (string.IsNullOrEmpty(name)) return "";
             name = name.Substring(name.LastIndexOf('.') + 1).Replace('+', '.');
             return name;
         }
@@ -95,16 +96,16 @@ namespace NaiveAPI.DocumentBuilder
         {
             if (type == null) return "";
             string name = type.Name;
-            int i = name.IndexOf('`');
-            if (i != -1)
-                name = name.Substring(0, i);
+            var index = name.IndexOf('`');
+            if (index != -1)
+                name = name.Substring(0, index);
             else
-                return GetName(type);
-            i = 0;
+                return name;
+            int i = 0;
             name += "<";
             foreach (var arg in type.GetGenericArguments())
             {
-                name += ((i != 0) ? ", " : "") + GetName(arg);
+                name = $"{name}{((i != 0) ? ", " : "")}{GetName(arg)}";
                 i++;
             }
             name += ">";
@@ -113,6 +114,9 @@ namespace NaiveAPI.DocumentBuilder
         public static string GetName(Type type)
         {
             if (type == null) return "";
+            if(type.IsGenericParameter)return type.Name;
+            if(type.IsGenericType)return GetGenericName(type);
+            if(type.IsNested) return GetNestedName(type);
             string postfix = "";
 
             int index = type.Name.IndexOf("[");

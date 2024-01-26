@@ -57,7 +57,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         public override void AfterPageCreate(SODocPage createdPage)
         {
-            createdPage.Components[0].TextData[0] = DocumentBuilderParser.CalGenericTypeName(typeField.value);
+            createdPage.Components[0].TextData[0] = TypeReader.GetName(typeField.value);
 
             var instancePublicResult = new DocComponentsTypeInfoReader(typeField.value, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             if (instancePublicResult.PropertiesMatrixComponents != null)
@@ -134,7 +134,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             if (instancePublicResult.ConstructorComponent != null)
             {
                 var page = factory.CreatePageAsset(createdPage, "_Constructor");
-                page.Components.Add(DocLabel.CreateComponent($"{DocumentBuilderParser.CalGenericTypeName(instancePublicResult.TargetType)} Constructor"));
+                page.Components.Add(DocLabel.CreateComponent($"{TypeReader.GetName(instancePublicResult.TargetType)} Constructor"));
                 page.Components.Add(DocDividline.CreateComponent());
                 page.Components.Add(instancePublicResult.ConstructorComponent);
             }

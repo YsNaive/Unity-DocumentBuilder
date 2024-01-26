@@ -45,7 +45,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             foreach (var prop in type.GetProperties(bindingFlags))
             {
                 matrixData.row++;
-                com.TextData.Add(DocumentBuilderParser.CalGenericTypeName(prop.PropertyType));
+                com.TextData.Add(TypeReader.GetName(prop.PropertyType));
                 com.TextData.Add(prop.Name);
                 com.TextData.Add(prop.CanRead ? "―" : "ー");
                 com.TextData.Add(prop.CanWrite ? "―" : "ー");
@@ -70,7 +70,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             foreach (var field in type.GetFields(bindingFlags))
             {
                 matrixData.row++;
-                com.TextData.Add(DocumentBuilderParser.CalGenericTypeName(field.FieldType));
+                com.TextData.Add(TypeReader.GetName(field.FieldType));
                 com.TextData.Add(field.Name);
                 com.TextData.Add("");
             }

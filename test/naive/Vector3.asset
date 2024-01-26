@@ -35,17 +35,10 @@ MonoBehaviour:
       very powerful.'
     ObjsData: []
     VisualVersion: 0
-  Tutorial:
-  - VisualID: 1
-    JsonData: 
-    TextData:
-    - How to use this ?
-    ObjsData: []
-    VisualVersion: 0
   - VisualID: 2
     JsonData: 
     TextData:
-    - just like how you use in math.
+    - 
     ObjsData: []
     VisualVersion: 0
   m_MemberInfoKeys:
@@ -94,7 +87,7 @@ MonoBehaviour:
     - VisualID: 2
       JsonData: 
       TextData:
-      - map index (1,2,3) into (x,y,z)
+      - map index (0,1,2) into (x,y,z)
       ObjsData: []
       VisualVersion: 0
     Description: []
@@ -108,54 +101,34 @@ MonoBehaviour:
       VisualVersion: 0
     Description: []
   - IsDisplay: 1
-    Tooltip:
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description:
     - VisualID: 2
       JsonData: 
       TextData:
-      - return value as below
+      - why even this method exist ?
       ObjsData: []
       VisualVersion: 0
-    - VisualID: 9
-      JsonData: '{"ChType":0,"ChHeightPx":25,"Contents":"x^2+y^2","Scale":1.0}'
+    - VisualID: 5
+      JsonData: '{"scale":1.0,"url":"","base64":"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","mode":2}'
       TextData: []
-      ObjsData: []
+      ObjsData:
+      - {fileID: 0}
       VisualVersion: 0
-    Description: []
-  - IsDisplay: 1
-    Tooltip:
-    - VisualID: 2
-      JsonData: 
-      TextData:
-      - return value as below
-      ObjsData: []
-      VisualVersion: 0
-    - VisualID: 9
-      JsonData: '{"ChType":0,"ChHeightPx":30,"Contents":"\\sqrt{x^2+y^2}","Scale":0.8500000238418579}'
-      TextData: []
-      ObjsData: []
-      VisualVersion: 0
-    Description: []
   - IsDisplay: 1
     Tooltip: []
-    Description: []
-  - IsDisplay: 1
-    Tooltip: []
-    Description: []
-  - IsDisplay: 1
-    Tooltip: []
-    Description: []
-  - IsDisplay: 1
-    Tooltip:
-    - VisualID: 2
-      JsonData: 
-      TextData:
-      - 'this.x *= scale.x
-
-        this.y *= scale.y
-
-        this.z *= scale.z'
-      ObjsData: []
-      VisualVersion: 0
     Description: []
   - IsDisplay: 0
     Tooltip: []
@@ -206,13 +179,25 @@ MonoBehaviour:
     Tooltip: []
     Description: []
   - IsDisplay: 0
-    Tooltip: []
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - just x, you know.
+      ObjsData: []
+      VisualVersion: 0
     Description: []
   - IsDisplay: 0
     Tooltip: []
     Description: []
   - IsDisplay: 0
-    Tooltip: []
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - good x
+      ObjsData: []
+      VisualVersion: 0
     Description: []
   - IsDisplay: 0
     Tooltip: []

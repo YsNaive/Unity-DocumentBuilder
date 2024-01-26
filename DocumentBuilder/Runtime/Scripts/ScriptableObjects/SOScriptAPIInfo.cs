@@ -24,7 +24,6 @@ namespace NaiveAPI.DocumentBuilder
         [SerializeField] private string s_type = "";
         public List<DocComponent> Tooltip = new();
         public List<DocComponent> Description = new();
-        public List<DocComponent> Tutorial = new();
         [SerializeField] private List<string> m_MemberInfoKeys = new();
         [SerializeField] private List<ScriptAPIMemberInfo> m_MemberInfos = new();
         
@@ -129,7 +128,6 @@ namespace NaiveAPI.DocumentBuilder
             m_MemberInfoKeys.Clear();
             m_MemberInfos.Clear();
             Description = new();
-            Tutorial = new();
         }
         public ScriptAPIMemberInfo GetMemberInfo(ICustomAttributeProvider info) { 
             if(typeof(ParameterInfo).IsAssignableFrom(info.GetType()))
@@ -203,7 +201,7 @@ namespace NaiveAPI.DocumentBuilder
             var parameters = info.GetParameters();
             var result = $"{info.Name}(";
             for (int i = 0, imax = parameters.Length; i < imax; i++)
-                result += ((i == 0) ? "" : ",") + DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType);
+                result += ((i == 0) ? "" : ",") + TypeReader.GetName(parameters[i].ParameterType);
             result += ")";
             return result;
         }

@@ -22,7 +22,7 @@ namespace NaiveAPI.DocumentBuilder
                 SendEvent(evt);
 
                 m_value = value;
-                ((INotifyValueChanged<string>)searchField).SetValueWithoutNotify(DocumentBuilderParser.CalGenericTypeName(value));
+                ((INotifyValueChanged<string>)searchField).SetValueWithoutNotify(TypeReader.GetName(value));
             }
         }
         Type m_value;
@@ -65,14 +65,15 @@ namespace NaiveAPI.DocumentBuilder
                 })) 
                 {
                     if (i++ > MaxPopupCount) break;
-                    var text = new DSTextElement(DocumentBuilderParser.CalNestedTypeName(type));
+                    var text = new DSTextElement(TypeReader.GetName(type));
                     text.style.backgroundColor = DocStyle.Current.BackgroundColor;
                     text.RegisterCallback<PointerEnterEvent>(evt => { text.style.backgroundColor = DocStyle.Current.SubBackgroundColor; });
                     text.RegisterCallback<PointerLeaveEvent>(evt => { text.style.backgroundColor = DocStyle.Current.BackgroundColor; });
                     text.style.paddingLeft = DocStyle.Current.MainTextSize;
-                    text.style.height = DocStyle.Current.LineHeight;
+                    text.style.minHeight = DocStyle.Current.LineHeight;
                     text.style.borderBottomColor = DocStyle.Current.SubBackgroundColor;
                     text.style.borderBottomWidth = 1.5f;
+                    text.style.flexShrink = 0;
                     text.RegisterCallback<PointerDownEvent>(evt => { value = type; });
                     container.Add(text);
                 }
@@ -82,7 +83,7 @@ namespace NaiveAPI.DocumentBuilder
             searchField.RegisterCallback<FocusOutEvent>(evt =>
             {
                 if (value != null)
-                    searchField.SetValueWithoutNotify(DocumentBuilderParser.CalGenericTypeName(value));
+                    searchField.SetValueWithoutNotify(TypeReader.GetName(value));
                 else
                     searchField.SetValueWithoutNotify("");
                 popup.Close();

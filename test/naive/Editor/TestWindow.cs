@@ -22,14 +22,14 @@ public class TestWindow : EditorWindow
     public void OnDestroy()
     {
     }
-
     private void CreateGUI()
     {
         var root = rootVisualElement;
         root.style.backgroundColor = DocStyle.Current.BackgroundColor;
         root.style.SetIS_Style(ISPadding.Pixel(10));
-        var sc = new DSScrollView();
-
+        var sc = new VisualElement();
+        var field = new DSAssetFolderField();
+        sc.Add(field);
         root.Add(sc);
     }
 }

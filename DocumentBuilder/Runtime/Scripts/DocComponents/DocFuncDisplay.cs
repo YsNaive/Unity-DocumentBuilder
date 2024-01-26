@@ -176,15 +176,15 @@ namespace NaiveAPI.DocumentBuilder
             List<string> texts = new List<string>();
             data.Name = methodInfo.Name;
             texts.Add("");
-            data.Syntaxs[0] = DocumentBuilderParser.GetSignature(methodInfo);
+            data.Syntaxs[0] = TypeReader.GetSignature(methodInfo);
             string typeName = "";
             if (methodInfo is MethodInfo)
             {
-                typeName = DocumentBuilderParser.CalGenericTypeName(((MethodInfo)methodInfo).ReturnType);
+                typeName = TypeReader.GetName(((MethodInfo)methodInfo).ReturnType);
             }
             else if (methodInfo is ConstructorInfo)
             {
-                typeName = DocumentBuilderParser.CalGenericTypeName(((ConstructorInfo)methodInfo).DeclaringType);
+                typeName = TypeReader.GetName(((ConstructorInfo)methodInfo).DeclaringType);
             }
 
             if (typeName != "void")
@@ -203,7 +203,7 @@ namespace NaiveAPI.DocumentBuilder
             {
                 ParamData param = new ParamData();
                 param.ParamName = parameters[i].Name;
-                param.Type = DocumentBuilderParser.CalGenericTypeName(parameters[i].ParameterType);
+                param.Type = TypeReader.GetName(parameters[i].ParameterType);
                 data.Params.Add(param);
                 texts.Add("");
             }
@@ -233,15 +233,15 @@ namespace NaiveAPI.DocumentBuilder
                     Debug.LogException(new Exception("DocEditFuncDisplay: Cannot create docComponent with different named method."));
                     return DocDescription.CreateComponent("DocEditFuncDisplay: Cannot create docComponent with different named method.", DocDescription.DescriptionType.Danger);
                 }
-                data.Syntaxs.Add(DocumentBuilderParser.GetSignature(methodBase));
+                data.Syntaxs.Add(TypeReader.GetSignature(methodBase));
                 string typeName = "";
                 if (methodBase is MethodInfo)
                 {
-                    typeName = DocumentBuilderParser.CalGenericTypeName(((MethodInfo)methodBase).ReturnType);
+                    typeName = TypeReader.GetName(((MethodInfo)methodBase).ReturnType);
                 }
                 else if (methodBase is ConstructorInfo)
                 {
-                    typeName = DocumentBuilderParser.CalGenericTypeName(((ConstructorInfo)methodBase).DeclaringType);
+                    typeName = TypeReader.GetName(((ConstructorInfo)methodBase).DeclaringType);
                 }
 
                 if (typeName != "void")
@@ -253,7 +253,7 @@ namespace NaiveAPI.DocumentBuilder
                 {
                     ParamData param = new ParamData();
                     param.ParamName = parameter.Name;
-                    param.Type = DocumentBuilderParser.CalGenericTypeName(parameter.ParameterType);
+                    param.Type = TypeReader.GetName(parameter.ParameterType);
                     data.AddNewParams(param);
                 }
             }

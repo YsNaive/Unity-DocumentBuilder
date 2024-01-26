@@ -54,32 +54,35 @@ namespace NaiveAPI.DocumentBuilder
             {
                 var textElement = new DSTextElement(text);
                 textElement.style.paddingLeft = DocStyle.Current.LineHeight.Value / 2f;
+                textElement.style.paddingRight = DocStyle.Current.MainTextSize / 2;
                 textElement.style.paddingTop = textElement.style.paddingBottom = 2;
                 textElement.style.borderBottomWidth = 1.5f;
                 textElement.style.borderBottomColor = DocStyle.Current.SubBackgroundColor;
                 textElement.style.whiteSpace = WhiteSpace.NoWrap;
+                textElement.style.flexGrow = 1;
+                textElement.style.flexShrink = 0;
                 return textElement;
             }
-            DSTextElement createSubMenu(node node)
+            DSHorizontal createSubMenu(node node)
             {
                 var title = createMenuText(node.value);
                 var arrow = new VisualElement();
                 arrow.style.SetIS_Style(DocStyle.Current.ArrowIcon);
-                arrow.style.marginRight = DocStyle.Current.MainTextSize / 2f;
                 arrow.style.marginLeft = StyleKeyword.Auto;
-                arrow.style.marginTop = arrow.style.marginBottom = 0;
-                title.RegisterCallback<PointerEnterEvent>(evt => { title.style.backgroundColor = DocStyle.Current.SubBackgroundColor; });
-                title.RegisterCallback<PointerLeaveEvent>(evt => { title.style.backgroundColor = Color.clear; });
-                title.RegisterCallback<PointerDownEvent>(evt => { title.style.backgroundColor = Color.clear; });
-                title.Add(arrow);
+                var hor = new DSHorizontal();
+                hor.Add(title);
+                hor.Add(arrow);
+                hor.RegisterCallback<PointerEnterEvent>(evt => { hor.style.backgroundColor = DocStyle.Current.SubBackgroundColor; });
+                hor.RegisterCallback<PointerLeaveEvent>(evt => { hor.style.backgroundColor = Color.clear; });
+                hor.RegisterCallback<PointerDownEvent>(evt => { hor.style.backgroundColor = Color.clear; });
                 var childMenu = new MenuContainer(node, OnSelected);
                 childMenu.CoverMask.pickingMode = PickingMode.Ignore;
                 OnClosed += childMenu.Close;
                 bool isInside = false;
-                title.RegisterCallback<PointerEnterEvent>(evt =>
+                hor.RegisterCallback<PointerEnterEvent>(evt =>
                 {
                     isInside = true;
-                    title.schedule.Execute(() =>
+                    hor.schedule.Execute(() =>
                     {
                         if (!isInside) return;
                         foreach (var child in ChildMenuContainer)
@@ -88,14 +91,14 @@ namespace NaiveAPI.DocumentBuilder
                         EventCallback<GeometryChangedEvent> changeEvt = null;
                         changeEvt = evt =>
                         {
-                            var pos = new Vector2(0, title.worldBound.y - 1);
-                            if (childMenu.parent.worldBound.xMax - title.worldBound.xMax > childMenu.resolvedStyle.width)
+                            var pos = new Vector2(0, hor.worldBound.y - 1);
+                            if (childMenu.parent.worldBound.xMax - hor.worldBound.xMax > childMenu.resolvedStyle.width)
                             {
-                                pos.x = title.worldBound.xMax;
+                                pos.x = hor.worldBound.xMax;
                             }
                             else
                             {
-                                pos.x = title.worldBound.x - childMenu.resolvedStyle.width;
+                                pos.x = hor.worldBound.x - childMenu.resolvedStyle.width;
                                 pos.y += DocStyle.Current.LineHeight.Value / 2f;
                             }
 
@@ -117,7 +120,7 @@ namespace NaiveAPI.DocumentBuilder
                     isInside = false;
                 });
                 ChildMenuContainer.Add(childMenu);
-                return title;
+                return hor;
             }
         }
         private class node

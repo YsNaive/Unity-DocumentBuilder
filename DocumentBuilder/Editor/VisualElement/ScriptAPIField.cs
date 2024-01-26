@@ -11,15 +11,15 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
-    public class ScriptAPIField : ScriptAPIElement
+    public class ScriptAPIField : DSScriptAPIElement
     {
         SOScriptAPIInfo target;
-        DocComponentsField DescriptionField, TutorialField, TooltipField;
+        DocComponentsField DescriptionField, TooltipField;
         List<VisualElement> FieldInfoFields = new();
         SplitView EditSplitView;
         DSScrollView EditPanelContainer;
         DSScrollView TypeFieldScrollView;
-        List<ScriptAPIElement> scriptAPIElements = new();
+        List<DSScriptAPIElement> scriptAPIElements = new();
         SerializedObject serializedObject;
         public ScriptAPIField(Type type)
         {
@@ -156,9 +156,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     addMemberInfo(method);
                 }
             }
-            TypeFieldScrollView.Add(new DSTextElement("Type Tutorial"));
-            TutorialField = new DocComponentsField(serializedObject.FindProperty("Tutorial"));
-            TypeFieldScrollView.Add(TutorialField);
             var highlight = new ISBorder(DocStyle.Current.SubFrontgroundColor, 0) { Left = DocStyle.Current.MainTextSize / 6 };
             var clear = new ISBorder(Color.clear, 0);
             foreach(var pair in VisitMember())
@@ -186,7 +183,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             var targetMemberInfo = SOScriptAPIInfo.GetMemberInfo(serializedObject,SOScriptAPIInfo.GetMemberID(info));
             VisualElement container = new DSHorizontal();
-            ScriptAPIElement title = getTitle(info);
+            DSScriptAPIElement title = getTitle(info);
             scriptAPIElements.Add(title);
             DSToggle displayToggle = new DSToggle();
             displayToggle.style.alignItems = Align.FlexStart;
@@ -202,19 +199,19 @@ namespace NaiveAPI_Editor.DocumentBuilder
             FieldInfoFields.Add(container);
             TypeFieldScrollView.Add(container);
         }
-        ScriptAPIElement getTitle(ICustomAttributeProvider info)
+        DSScriptAPIElement getTitle(ICustomAttributeProvider info)
         {
             return info switch
             {
-                FieldInfo asField => new FieldInfoElement(asField),
-                PropertyInfo asProp => new PropertyInfoElement(asProp),
-                MethodInfo asMethod => new MethodInfoElement(asMethod),
-                ConstructorInfo asCtor => new MethodInfoElement(asCtor),
-                ParameterInfo asParam => new ParameterInfoElement(asParam),
+                FieldInfo asField => new DSFieldInfoElement(asField),
+                PropertyInfo asProp => new DSPropertyInfoElement(asProp),
+                MethodInfo asMethod => new DSMethodInfoElement(asMethod),
+                ConstructorInfo asCtor => new DSMethodInfoElement(asCtor),
+                ParameterInfo asParam => new DSParameterInfoElement(asParam),
                 _ => null
             };
         }
-        public override IEnumerable<TypeNameElement> VisitTypeName()
+        public override IEnumerable<DSTypeNameElement> VisitTypeName()
         {
             foreach (var ve in scriptAPIElements)
             {
@@ -223,7 +220,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
         }
 
-        public override IEnumerable<ParameterInfoElement> VisitParameter()
+        public override IEnumerable<DSParameterInfoElement> VisitParameter()
         {
             foreach (var ve in scriptAPIElements)
             {

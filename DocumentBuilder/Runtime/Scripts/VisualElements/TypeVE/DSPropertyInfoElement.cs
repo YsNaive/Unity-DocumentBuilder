@@ -7,17 +7,17 @@ using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    public class PropertyInfoElement : ScriptAPIElement
+    public class DSPropertyInfoElement : DSScriptAPIElement
     {
         public PropertyInfo Target => m_Target;
         private PropertyInfo m_Target;
         public DSTextElement AreaText => m_AreaText;
         private DSTextElement m_AreaText;
-        public TypeNameElement TypeText => m_TypeText;
-        private TypeNameElement m_TypeText;
+        public DSTypeNameElement TypeText => m_TypeText;
+        private DSTypeNameElement m_TypeText;
         public DSTextElement NameText => m_NameText;
         private DSTextElement m_NameText;
-        public PropertyInfoElement(PropertyInfo propertyInfo)
+        public DSPropertyInfoElement(PropertyInfo propertyInfo)
             : base()
         {
             m_Target = propertyInfo;
@@ -31,7 +31,7 @@ namespace NaiveAPI.DocumentBuilder
             setText.style.opacity = propertyInfo.CanWrite ? 1f : 0.4f;
             setText.style.marginLeft = padding;
 
-            m_TypeText = new TypeNameElement(propertyInfo.PropertyType);
+            m_TypeText = new DSTypeNameElement(propertyInfo.PropertyType);
             m_TypeText.style.color = DocStyle.Current.TypeColor;
             m_TypeText.style.marginLeft = padding;
 
@@ -45,14 +45,15 @@ namespace NaiveAPI.DocumentBuilder
             Add(m_NameText);
         }
 
-        public override IEnumerable<TypeNameElement> VisitTypeName()
+        public override IEnumerable<DSTypeNameElement> VisitTypeName()
         {
-            yield return m_TypeText;
+            foreach(var ve in m_TypeText.VisitTypeName())
+                yield return ve;
         }
 
-        public override IEnumerable<ParameterInfoElement> VisitParameter()
+        public override IEnumerable<DSParameterInfoElement> VisitParameter()
         {
-            return Enumerable.Empty<ParameterInfoElement>();
+            return Enumerable.Empty<DSParameterInfoElement>();
         }
 
         public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element, string id)> VisitMember()
