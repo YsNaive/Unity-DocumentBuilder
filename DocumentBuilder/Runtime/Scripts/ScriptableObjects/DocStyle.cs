@@ -90,7 +90,20 @@ namespace NaiveAPI.DocumentBuilder
         public ISLength LabelWidth = new ISLength { Unit = LengthUnit.Pixel, Value = 120 };
 
 
-        public ISStyle ArrowIcon = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Background | ISStyleFlag.Size);
+        public ISStyle ArrowIcon
+        {
+            get
+            {
+                var copy = IconStyle.Copy();
+                copy.Background.Sprite = ArrowSprite;
+                return copy;
+            }
+        }
+
+        public ISStyle IconStyle = new ISStyle(ISStyleFlag.Editable | ISStyleFlag.Background | ISStyleFlag.Size);
+        public Sprite ArrowSprite;
+        public Sprite GearSprite;
+
 
         public Length ContentWidth(VisualElement ve)
         {
@@ -169,7 +182,9 @@ namespace NaiveAPI.DocumentBuilder
             docStyle.ScrollerWidth = this.ScrollerWidth;
             docStyle.ComponentSpace = this.ComponentSpace;
 
-            docStyle.ArrowIcon = this.ArrowIcon.Copy();
+            docStyle.IconStyle = this.IconStyle.Copy();
+            docStyle.ArrowSprite = this.ArrowSprite;
+            docStyle.GearSprite = this.GearSprite;
 
             return docStyle;
         }

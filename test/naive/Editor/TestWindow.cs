@@ -32,7 +32,6 @@ public class TestWindow : EditorWindow
         root.style.backgroundColor = DocStyle.Current.BackgroundColor;
         root.style.SetIS_Style(ISPadding.Pixel(10));
         var sc = new DSScrollView();
-        Dictionary<int, List<(string spaceName, string typeName)>> searchResult = new();
         var field = new DSTextField();
         var btn = new DSButton();
         List<(string spaceName, string typeName)> allName = new ();
@@ -46,7 +45,7 @@ public class TestWindow : EditorWindow
         
         field.RegisterValueChangedCallback(evt =>
         {
-            searchResult.Clear();
+            Dictionary<int, List<(string spaceName, string typeName)>> searchResult = new();
             var input = field.value;
             Stopwatch levenshteinWatch = Stopwatch.StartNew();
             foreach (var name in allName)
@@ -92,8 +91,7 @@ public class TestWindow : EditorWindow
             }
         });
 
-        root.Add(field);
-        root.Add(btn);
+        root.Add(new DSTypeField("Type"));
         root.Add(sc);
     }
 }
