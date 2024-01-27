@@ -9,6 +9,8 @@ namespace NaiveAPI.DocumentBuilder
 {
     public sealed class DocImage : DocVisual<DocImage.Data>
     {
+        public Action<float> OnHeightChanged;
+        public Action<float> OnWidthChanged;
         private int m_val;
         public int Value
         {
@@ -29,6 +31,16 @@ namespace NaiveAPI.DocumentBuilder
         }
         public override string VisualID => "5";
         static ISBorder border = new ISBorder(DocStyle.Current.SubBackgroundColor, 1f);
+        public DocImage()
+        {
+            RegisterCallback<GeometryChangedEvent>(e =>
+            {
+                if (e.oldRect.width != e.newRect.width)
+                    OnWidthChanged?.Invoke(e.newRect.width);
+                if (e.oldRect.height != e.newRect.height)
+                    OnHeightChanged?.Invoke(e.newRect.height);
+            });
+        }
         protected override void OnCreateGUI()
         {
             MakeValid(Target);

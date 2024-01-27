@@ -1,14 +1,48 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 namespace NaiveAPI.DocumentBuilder
 {
     public static class TypeReader
     {
+        public static IEnumerable<Type> ActiveTypes => m_ActiveTypes;
+        private static List<Type> m_ActiveTypes = new List<Type>();
+        static TypeReader()
+        {
+            foreach(var asm in AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Where(asm => { return !DocRuntimeData.Instance.IgnoreAssemblyName.Contains(asm.GetName().Name); }))
+            {
+                foreach(var type in asm
+                    .GetTypes()
+                    .Where(type => { return !type.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true); }))
+                {
+                    m_ActiveTypes.Add(type);
+                }
+            }
+        }
+
+        public const string Str_PublicConstructor = "Public Constructor";
+        public const string Str_NonPublicConstructor = "Private Constructor";
+        public const string Str_PublicField = "Public Field";
+        public const string Str_NonPublicField = "Private Field";
+        public const string Str_PublicStaticField = "Public Static Field";
+        public const string Str_NonPublicStaticField = "Private Static Field";
+        public const string Str_PublicProperty = "Public Property";
+        public const string Str_NonPublicProperty = "Private Property";
+        public const string Str_PublicStaticProperty = "Public Static Property";
+        public const string Str_NonPublicStaticProperty = "Private Static Property";
+        public const string Str_PublicMethod = "Public Method";
+        public const string Str_NonPublicMethod = "Private Method";
+        public const string Str_PublicStaticMethod = "Public Static Method";
+        public const string Str_NonPublicStaticMethod = "Private Static Method";
+
         public const BindingFlags DeclaredPublicInstance  = BindingFlags.Public    | BindingFlags.Instance | BindingFlags.DeclaredOnly;
         public const BindingFlags DeclaredPublicStatic    = BindingFlags.Public    | BindingFlags.Static   | BindingFlags.DeclaredOnly;
         public const BindingFlags DeclaredPrivateInstance = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
@@ -21,38 +55,68 @@ namespace NaiveAPI.DocumentBuilder
             { typeof(int), "int" },
             { typeof(uint), "uint" },
             { typeof(short), "short" },
+            { typeof(ushort), "ushort" },
             { typeof(double), "double" },
             { typeof(long), "long" },
             { typeof(bool), "bool" }};
+        public static string GetPrefix(Type type)
+        {
+            var result = "";
+            if (type == null) return result;
+            if (type.IsPublic || type.IsNestedPublic)
+                result += "public ";
+
+            if (type.IsAbstract)
+                result += "abstract ";
+            else if (type.IsSealed)
+                result += "sealed ";
+
+            if (type.IsClass)
+                result += "class ";
+            else if (type.IsInterface)
+                result += "interface ";
+            else if (type.IsEnum)
+                result += "enum ";
+            else if (type.IsValueType)
+                result += "struct ";
+
+            return result;
+        }
         public static string GetAccessLevel(FieldInfo fieldInfo)
         {
-            if (fieldInfo == null) return "";
+            var result = "";
+            if (fieldInfo == null) return result;
             if (fieldInfo.IsPublic)
             {
-                return "public";
+                result+= "public ";
             }
             else if (fieldInfo.IsFamily)
             {
-                return "protected";
+                result += "protected ";
             }
             else if (fieldInfo.IsPrivate)
             {
-                return "private";
+                result += "private ";
             }
             else if (fieldInfo.IsAssembly)
             {
-                return "internal";
+                result += "internal ";
             }
             else if (fieldInfo.IsFamilyAndAssembly)
             {
-                return "protected internal";
+                result += "protected internal ";
             }
             else if (fieldInfo.IsFamilyOrAssembly)
             {
-                return "protected internal";
+                result += "protected internal ";
             }
-
-            return "";
+            if(fieldInfo.IsLiteral)
+                result += "const ";
+            else if (fieldInfo.IsStatic)
+                result += "static ";
+            if (fieldInfo.IsInitOnly)
+                result += "readonly ";
+            return result;
         }
         public static string GetAccessLevel(MethodBase methodInfo)
         {
@@ -168,7 +232,42 @@ namespace NaiveAPI.DocumentBuilder
 
             return stringBuilder.ToString();
         }
-
+        public static List<Type> FindAllTypesWhere(Func<Type, bool> where)
+        {
+            List<Type> ret = new List<Type>();
+            foreach (var type in ActiveTypes)
+            {
+                if (where(type))
+                    ret.Add(type);
+            }
+            return ret;
+        }
+        public static IEnumerable<(string memberType, IEnumerable<MemberInfo> members)> VisitDeclearedMember(Type type, Func<MemberInfo, bool> match = null)
+        {
+            if (match == null) match = m => true;
+            foreach (var pair in new (string memberType, IEnumerable<MemberInfo> members)[]{
+                new(Str_PublicConstructor,      type.GetConstructors(DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_NonPublicConstructor,   type.GetConstructors(DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_PublicField,            type.GetFields      (DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_NonPublicField,         type.GetFields      (DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_PublicProperty,         type.GetProperties  (DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_NonPublicProperty,      type.GetProperties  (DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_PublicMethod,           type.GetMethods     (DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_NonPublicMethod,        type.GetMethods     (DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_PublicStaticField,      type.GetFields      (DeclaredPublicStatic)    .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_NonPublicStaticField,   type.GetFields      (DeclaredPrivateStatic)   .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_PublicStaticProperty,   type.GetProperties  (DeclaredPublicStatic)    .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_NonPublicStaticProperty,type.GetProperties  (DeclaredPrivateStatic)   .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_PublicStaticMethod,     type.GetMethods     (DeclaredPublicStatic)    .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_NonPublicStaticMethod,  type.GetMethods     (DeclaredPrivateStatic)   .Where(match).OrderBy(selector=>{ return selector.Name; })),
+            })
+            {
+                if (pair.members.Any())
+                {
+                    yield return pair;
+                }
+            }
+        }
     }
 
 }

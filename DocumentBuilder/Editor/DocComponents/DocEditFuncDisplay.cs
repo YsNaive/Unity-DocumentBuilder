@@ -63,7 +63,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             stringBuilder.Append(Target.TextData[0]).AppendLine("<br>");
             stringBuilder.Append("Syntaxs").AppendLine("<br>");
             foreach (string str in visualData.Syntaxs)
-                stringBuilder.Append("&emsp;").Append(DocumentBuilderParser.FunctionParser(str, true)).AppendLine("<br>");
+                stringBuilder.Append("&emsp;").Append(DocumentBuilderParser.ParseMethodSyntax(str, true)).AppendLine("<br>");
             if (visualData.Params.Count > 0)
                 stringBuilder.AppendLine("Parameters<br>");
             for (int i = 0;i < visualData.Params.Count; i++)

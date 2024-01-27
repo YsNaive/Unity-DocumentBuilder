@@ -7,6 +7,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 namespace NaiveAPI.DocumentBuilder
 {
@@ -20,6 +21,7 @@ namespace NaiveAPI.DocumentBuilder
         {
             style.flexDirection = FlexDirection.Column;
             ScriptAPIInfoHolder.Infos.TryGetValue(type, out apiInfo);
+
             var fontSize = DocStyle.Current.MainTextSize;
             DocStyle.Current.MainTextSize = (int)(DocStyle.Current.MainTextSize * 1.5f);
             var typeElement = new DSTypeNameElement(type);
@@ -34,7 +36,12 @@ namespace NaiveAPI.DocumentBuilder
                 typeElement.Add(scriptAPIElements[^1]);
             }
             DocStyle.Current.MainTextSize = fontSize;
-            var fullname = new DSTextElement($"{type.Namespace}{{ {TypeReader.GetName(type)} }}");
+
+            var abstractText = new DSTextElement(TypeReader.GetPrefix(type));
+            abstractText.style.color = DocStyle.Current.PrefixColor;
+            Add(abstractText);
+
+            var fullname = new DSTextElement($"{type.Namespace}{{ {TypeReader.GetName(type)} }} in {type.Assembly.GetName().Name}");
             fullname.style.opacity = 0.6f;
             Add(fullname);
             Func<ICustomAttributeProvider, bool> displayCheck = attr =>
@@ -43,11 +50,16 @@ namespace NaiveAPI.DocumentBuilder
                 {
                     var method = attr as MethodBase;
                     if (method.Name[0] == '<') return false;
+                    if (method.Name.StartsWith("op_")) return false;
                     if (method.Name.StartsWith("get_")) return false;
                     if (method.Name.StartsWith("set_")) return false;
+                    if (method.Name.StartsWith("add_")) return false;
+                    if (method.Name.StartsWith("remove_")) return false;
                 }
                 if (apiInfo == null)
                 {
+                    if (attr.IsDefined(typeof(ObsoleteAttribute), false))
+                        return false;
                     return attr switch
                     {
                         MethodBase asMethod => asMethod.IsPublic && !(
@@ -74,20 +86,8 @@ namespace NaiveAPI.DocumentBuilder
             if (!type.IsEnum)
             {
                 Add(DocVisual.Create(DocDividline.CreateComponent()));
-                var ctors = type.GetConstructors().Where(displayCheck).ToArray();
-                Add(createMemberInfos("Constructor", ctors));
-                var publicField = type.GetFields(TypeReader.DeclaredPublicInstance).Where(displayCheck).ToArray();
-                Add(createMemberInfos("Public Field", publicField));
-                var privateField = type.GetFields(TypeReader.DeclaredPrivateInstance).Where(displayCheck).ToArray();
-                Add(createMemberInfos("Private Field", privateField));
-                var publicProp = type.GetProperties(TypeReader.DeclaredPublicInstance).Where(displayCheck).ToArray();
-                Add(createMemberInfos("Public Property", publicProp));
-                var privateProp = type.GetProperties(TypeReader.DeclaredPrivateInstance).Where(displayCheck).ToArray();
-                Add(createMemberInfos("Private Property", privateProp));
-                var publicMethod = type.GetMethods(TypeReader.DeclaredPublicInstance).Where(displayCheck).ToArray();
-                Add(createMemberInfos("Public Method", publicMethod));
-                var privateMethod = type.GetMethods(TypeReader.DeclaredPrivateInstance).Where(displayCheck).ToArray();
-                Add(createMemberInfos("Private Method", privateMethod));
+                foreach (var pair in TypeReader.VisitDeclearedMember(type, displayCheck))
+                    Add(createMemberInfos(pair.memberType, pair.members));
             }
             else
             {
@@ -96,14 +96,15 @@ namespace NaiveAPI.DocumentBuilder
                 Add(DocVisual.Create(com));
             }
         }
-        VisualElement createMemberInfos(string title, ICustomAttributeProvider[] infos)
+        VisualElement createMemberInfos(string title, IEnumerable<MemberInfo> infos)
         {
-            if (infos.Length == 0) return null;
             var root = new VisualElement();
-            root.style.marginBottom = DocStyle.Current.LineHeight;
-            root.Add(new DSTextElement(title));
-            var grid = new GridView(infos.Length, 2, 1.5f, DocStyle.Current.SubBackgroundColor, GridView.AlignMode.FixedContent);
-            grid.style.marginLeft = DocStyle.Current.LineHeight;
+            var titleText = new DSTextElement(title);
+            titleText.style.opacity = 0.6f;
+            root.Add(titleText);
+            var grid = new GridView(infos.Count(), 2, DocStyle.Current.SubBackgroundColor, GridView.AlignMode.FixedContent);
+            grid.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
+            grid.style.marginLeft = DocStyle.Current.LineHeight.Value;
             int i = 0;
             foreach (var info in infos)
             {
@@ -119,7 +120,7 @@ namespace NaiveAPI.DocumentBuilder
             gridViews.Add(grid);
             return root;
         }
-        VisualElement createMemberInfo(ICustomAttributeProvider info)
+        VisualElement createMemberInfo(MemberInfo info)
         {
             VisualElement container = new DSHorizontal();
             DSScriptAPIElement title = DSScriptAPIElement.Create(info);
@@ -142,7 +143,7 @@ namespace NaiveAPI.DocumentBuilder
                     yield return it;
             }
         }
-        public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element, string id)> VisitMember()
+        public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element)> VisitMember()
         {
             foreach (var ve in scriptAPIElements)
             {

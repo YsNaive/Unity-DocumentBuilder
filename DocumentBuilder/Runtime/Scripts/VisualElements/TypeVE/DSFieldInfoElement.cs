@@ -19,17 +19,17 @@ namespace NaiveAPI.DocumentBuilder
             : base()
         {
             m_Target = fieldInfo;
-            var areaText = new DSTextElement(TypeReader.GetAccessLevel(fieldInfo));
-            areaText.style.color = DocStyle.Current.PrefixColor;
+            //var areaText = new DSTextElement(TypeReader.GetAccessLevel(fieldInfo));
+            //areaText.style.color = DocStyle.Current.PrefixColor;
 
             m_TypeText = new DSTypeNameElement(fieldInfo.FieldType);
-            m_TypeText.style.marginLeft = DocStyle.Current.MainTextSize / 2f;
+            //m_TypeText.style.marginLeft = DocStyle.Current.MainTextSize / 2f;
 
             m_NameText = new DSTextElement(fieldInfo.Name);
             m_NameText.style.color = DocStyle.Current.ArgsColor;
             m_NameText.style.marginLeft = DocStyle.Current.MainTextSize/2f;
 
-            Add(areaText);
+            //Add(areaText);
             Add(m_TypeText);
             Add(m_NameText);
         }
@@ -45,9 +45,9 @@ namespace NaiveAPI.DocumentBuilder
             return Enumerable.Empty<DSParameterInfoElement>();
         }
 
-        public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element, string id)> VisitMember()
+        public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element)> VisitMember()
         {
-            yield return (Target, m_NameText, SOScriptAPIInfo.GetMemberID(Target));
+            yield return (Target, m_NameText);
         }
     }
 

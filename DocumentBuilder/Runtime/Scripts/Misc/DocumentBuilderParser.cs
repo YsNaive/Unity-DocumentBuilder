@@ -129,7 +129,7 @@ namespace NaiveAPI.DocumentBuilder
             }
         }
 
-        public static string FunctionParser(string func, bool isHTML)
+        public static string ParseMethodSyntax(string func, bool isHTML)
         {
             StringBuilder stringBuilder = new StringBuilder(func);
             Func<StringBuilder, int, int, Color, int> action;
@@ -399,46 +399,24 @@ namespace NaiveAPI.DocumentBuilder
             }
         }
 
-        public static List<Token> Tokenize(string source, List<string> expression, List<TokenType> type)
+        public static int LevenshteinDistance(this string lhs, string rhs)
         {
-            SortedDictionary<int, Token> table = new SortedDictionary<int, Token>();
-            for (int i = 0; i < expression.Count; i++)
+            int[,] dp = new int[lhs.Length+1, rhs.Length+1];
+            dp[0,0] = 0;
+            for (int i = 0; i < lhs.Length; i++)
+                dp[i + 1, 0] = i + 1;
+            for (int i = 0; i < rhs.Length; i++)
+                dp[0, i + 1] = i + 1;
+            for(int y=0; y < lhs.Length; y++)
             {
-                var matches = Regex.Matches(source, expression[i]);
-                foreach (Match match in matches)
+                for(int x=0; x < rhs.Length; x++)
                 {
-                    table.Add(match.Index, new Token(match.Value, type[i]));
+                    var val = Math.Min(Math.Min(dp[y, x], dp[y + 1, x]), dp[y, x + 1]);
+                    if (lhs[y] != rhs[x]) val++;
+                    dp[y + 1, x + 1] = val;
                 }
             }
-
-            List<Token> tokens = new List<Token>();
-            int index = 0;
-            foreach (int key in table.Keys)
-            {
-                if (key < index) continue;
-                Token token = table[key];
-                index = key + token.value.Length;
-                tokens.Add(token);
-            }
-
-            return tokens;
-        }
-
-        public class Token
-        {
-            public string value;
-            public TokenType type;
-
-            public Token(string value, TokenType type)
-            {
-                this.value = value;
-                this.type = type;
-            }
-        }
-
-        public enum TokenType
-        {
-            Hello, World
+            return dp[lhs.Length, rhs.Length];
         }
     }
 }

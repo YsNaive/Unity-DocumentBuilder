@@ -18,5 +18,7 @@ namespace NaiveAPI.DocumentBuilder
         private static DocRuntimeData instance;
 
         public SODocStyle CurrentStyle;
+        public IEnumerable<string> IgnoreAssemblyName => m_IgnoreAssemblyName;
+        [SerializeField] List<string> m_IgnoreAssemblyName;
     }
 }

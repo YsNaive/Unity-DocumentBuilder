@@ -13,6 +13,8 @@ namespace NaiveAPI.DocumentBuilder
         private MethodBase m_Target;
         public DSTypeNameElement ReturnTypeText => m_ReturnTypeText;
         private DSTypeNameElement m_ReturnTypeText;
+        public DSTypeNameElement[] GenericTypeText => m_GenericTypeText;
+        private DSTypeNameElement[] m_GenericTypeText;
         public DSTextElement NameText => m_NameText;
         private DSTextElement m_NameText;
         public DSParameterInfoElement[] ParamTexts => m_ParamTexts;
@@ -23,8 +25,8 @@ namespace NaiveAPI.DocumentBuilder
             m_Target = info;
             style.flexWrap = Wrap.Wrap;
             var padding = DocStyle.Current.MainTextSize / 2f;
-            var areaText = new DSTextElement(TypeReader.GetAccessLevel(info));
-            areaText.style.color = DocStyle.Current.PrefixColor;
+            //var areaText = new DSTextElement(TypeReader.GetAccessLevel(info));
+            //areaText.style.color = DocStyle.Current.PrefixColor;
 
             m_ReturnTypeText = new DSTypeNameElement(info switch
             {
@@ -32,7 +34,7 @@ namespace NaiveAPI.DocumentBuilder
                 ConstructorInfo asConstructor => asConstructor.ReflectedType,
                 _ => null
             });
-            m_ReturnTypeText.style.marginLeft = padding;
+            //m_ReturnTypeText.style.marginLeft = padding;
 
 
             var paramInfos = info.GetParameters();
@@ -40,7 +42,7 @@ namespace NaiveAPI.DocumentBuilder
             for (int i = 0; i < paramInfos.Length; i++)
                 m_ParamTexts[i] = new DSParameterInfoElement(paramInfos[i]);
 
-            Add(areaText);
+            //Add(areaText);
             Add(m_ReturnTypeText);
             if (!info.IsConstructor)
             {
@@ -48,6 +50,27 @@ namespace NaiveAPI.DocumentBuilder
                 m_NameText.style.color = DocStyle.Current.FuncColor;
                 m_NameText.style.marginLeft = padding;
                 Add(m_NameText);
+                if (info.IsGenericMethod)
+                {
+                    Add(new DSTextElement("<"));
+                    var margin = DocStyle.Current.MainTextSize / 2f;
+                    var args = info.GetGenericArguments();
+                    m_GenericTypeText = new DSTypeNameElement[args.Length];
+                    var i = 0;
+                    foreach (var t in args)
+                    {
+                        m_GenericTypeText[i] = new DSTypeNameElement(t);
+                        Add(m_GenericTypeText[i]);
+                        i++;
+                        var element = new DSTextElement(",");
+                        element.style.marginRight = margin;
+                        Add(element);
+                    }
+                    var last = ((DSTextElement)this[childCount - 1]);
+                    last.text = ">";
+                    last.style.marginRight = 0;
+                }
+
             }
             Add(new DSTextElement("("));
             if(m_ParamTexts.Length != 0)
@@ -77,6 +100,14 @@ namespace NaiveAPI.DocumentBuilder
                 foreach (var ve in param.VisitTypeName())
                     yield return ve;
             }
+            if (m_GenericTypeText != null)
+            {
+                foreach (var param in m_GenericTypeText)
+                {
+                    foreach (var ve in param.VisitTypeName())
+                        yield return ve;
+                }
+            }
         }
 
         public override IEnumerable<DSParameterInfoElement> VisitParameter()
@@ -85,9 +116,9 @@ namespace NaiveAPI.DocumentBuilder
                 yield return param;
         }
 
-        public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element, string id)> VisitMember()
+        public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element)> VisitMember()
         {
-            yield return (Target, (Target.IsConstructor ? m_ReturnTypeText : m_NameText), SOScriptAPIInfo.GetMemberID(Target));
+            yield return (Target, (Target.IsConstructor ? m_ReturnTypeText : m_NameText));
             foreach (var param in m_ParamTexts)
             {
                 foreach (var it in param.VisitMember())

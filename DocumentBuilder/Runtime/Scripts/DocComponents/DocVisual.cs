@@ -12,17 +12,8 @@ namespace NaiveAPI.DocumentBuilder
     {
         public DocVisual()
         {
-            RegisterCallback<GeometryChangedEvent>(e =>
-            {
-                if (e.oldRect.width != e.newRect.width)
-                    OnWidthChanged?.Invoke(e.newRect.width);
-                if (e.oldRect.height != e.newRect.height)
-                    OnHeightChanged?.Invoke(e.newRect.height);
-            });
         }
         public abstract string VisualID { get; }
-        public Action<float> OnHeightChanged;
-        public Action<float> OnWidthChanged;
         public DocComponent Target => m_target;
 
         protected DocComponent m_target;
@@ -41,7 +32,7 @@ namespace NaiveAPI.DocumentBuilder
         static DocVisual()
         {
             VisualID_Dict.Clear();
-            foreach (var type in DocRuntime.FindAllTypesWhere(t => { return (t.IsSubclassOf(typeof(DocVisual)) && !t.IsAbstract); }))
+            foreach (var type in TypeReader.FindAllTypesWhere(t => { return (t.IsSubclassOf(typeof(DocVisual)) && !t.IsAbstract); }))
                 VisualID_Dict.Add(((DocVisual)Activator.CreateInstance(type)).VisualID, type);
         }
         public static DocVisual Create(DocComponent docComponent)

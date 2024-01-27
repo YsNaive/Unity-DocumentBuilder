@@ -47,15 +47,12 @@ namespace NaiveAPI.DocumentBuilder
                 container.Clear();
                 if (evt.newValue == "") return;
                 List<Type> matchedType = new();
-                foreach (var asmdef in AppDomain.CurrentDomain.GetAssemblies())
+                foreach (var type in TypeReader.ActiveTypes)
                 {
-                    foreach (var type in asmdef.GetTypes())
+                    string name = type.Name;
+                    if (name.Contains(evt.newValue))
                     {
-                        string name = type.Name;
-                        if (name.Contains(evt.newValue))
-                        {
-                            matchedType.Add(type);
-                        }
+                        matchedType.Add(type);
                     }
                 }
                 int i = 1;

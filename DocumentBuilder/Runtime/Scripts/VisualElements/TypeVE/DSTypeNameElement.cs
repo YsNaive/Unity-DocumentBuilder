@@ -77,9 +77,9 @@ namespace NaiveAPI.DocumentBuilder
         {
             return Enumerable.Empty<DSParameterInfoElement>();
         }
-        public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element, string id)> VisitMember()
+        public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element)> VisitMember()
         {
-            return Enumerable.Empty<(ICustomAttributeProvider, VisualElement, string)>();
+            return Enumerable.Empty<(ICustomAttributeProvider, VisualElement)>();
         }
     }
 }

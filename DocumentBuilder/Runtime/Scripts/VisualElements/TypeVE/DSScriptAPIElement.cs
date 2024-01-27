@@ -10,7 +10,7 @@ namespace NaiveAPI.DocumentBuilder
     {
         public abstract IEnumerable<DSTypeNameElement> VisitTypeName();
         public abstract IEnumerable<DSParameterInfoElement> VisitParameter();
-        public abstract IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element, string id)> VisitMember();
+        public abstract IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element)> VisitMember();
         public static DSScriptAPIElement Create(ICustomAttributeProvider info)
         {
             return info switch

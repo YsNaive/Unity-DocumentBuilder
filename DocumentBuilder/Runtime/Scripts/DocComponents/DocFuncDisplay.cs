@@ -67,7 +67,7 @@ namespace NaiveAPI.DocumentBuilder
             for (int i = 0;i < data.Syntaxs.Count; i++)
             {
                 TextElement syntaxText = new TextElement();
-                syntaxText.text = DocumentBuilderParser.FunctionParser(data.Syntaxs[i], false);
+                syntaxText.text = DocumentBuilderParser.ParseMethodSyntax(data.Syntaxs[i], false);
                 syntaxText.style.ClearMarginPadding();
                 syntaxText.style.paddingLeft = Length.Percent(tabGap);
                 syntaxText.style.SetIS_Style(DocStyle.Current.MainText);

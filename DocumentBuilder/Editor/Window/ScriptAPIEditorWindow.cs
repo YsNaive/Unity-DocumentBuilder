@@ -8,7 +8,6 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Settings = NaiveAPI_Editor.DocumentBuilder.ScriptAPIWindow.Settings;
 namespace NaiveAPI_Editor.DocumentBuilder
 {
     public class ScriptAPIEditorWindow : EditorWindow
@@ -18,13 +17,33 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             GetWindow<ScriptAPIEditorWindow>("Script API Editor");
         }
+        [Serializable]
+        public class Settings : ISerializationCallbackReceiver
+        {
+            public float SplitViewPercent = 25;
+            public Type ActiveType;
+            [SerializeField] string s_ActiveType;
+
+            public void OnAfterDeserialize()
+            {
+                ActiveType = Type.GetType(s_ActiveType);
+            }
+
+            public void OnBeforeSerialize()
+            {
+                if (ActiveType == null)
+                    s_ActiveType = "";
+                else
+                    s_ActiveType = ActiveType.AssemblyQualifiedName;
+            }
+        }
         Settings settings;
         DSTypeField typeField;
         VisualElement LeftPanel, MidPanel;
         SplitView splitView;
         private void CreateGUI()
         {
-            settings = JsonUtility.FromJson<Settings>(DocCache.LoadData("SciprtAPIWindowSettings.json"));
+            settings = JsonUtility.FromJson<Settings>(DocCache.LoadData("SciprtAPIWindowEditorSettings.json"));
             settings ??= new();
             LeftPanel = new();
             MidPanel = new();
@@ -47,7 +66,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             LeftPanel.Add(typeField);
             typeField.value = settings.ActiveType;
-            foreach (var type in DocRuntime.FindAllTypesWhere(t => { return t.IsSubclassOf(typeof(ScriptAPIMenuDefinition)); }))
+            foreach (var type in TypeReader.FindAllTypesWhere(t => { return t.IsSubclassOf(typeof(ScriptAPIMenuDefinition)); }))
                 LeftPanel.Add(((ScriptAPIMenuDefinition)Activator.CreateInstance(type)).CreateFoldoutHierarchy(null, ve =>
                 {
                     ve.RegisterCallback<PointerEnterEvent>(evt =>
@@ -68,14 +87,27 @@ namespace NaiveAPI_Editor.DocumentBuilder
         }
         private void OnDisable()
         {
-            settings = JsonUtility.FromJson<Settings>(DocCache.LoadData("SciprtAPIWindowSettings.json"));
+            settings = JsonUtility.FromJson<Settings>(DocCache.LoadData("SciprtAPIWindowEditorSettings.json"));
             settings ??= new();
             if (splitView != null)
                 settings.SplitViewPercent = splitView.SplitPercent;
             if (typeField != null)
                 settings.ActiveType = typeField.value;
-            DocCache.SaveData("SciprtAPIWindowSettings.json", JsonUtility.ToJson(settings));
+            DocCache.SaveData("SciprtAPIWindowEditorSettings.json", JsonUtility.ToJson(settings));
         }
     }
 
+    [CustomEditor(typeof(SOScriptAPIInfo))]
+    class SOScriptAPIInfoEditor : Editor
+    {
+        public override VisualElement CreateInspectorGUI()
+        {
+            VisualElement root = new();
+            root.style.SetIS_Style(ISPadding.Pixel(5));
+            root.style.backgroundColor = DocStyle.Current.BackgroundColor;
+            root.Add(DocVisual.Create(DocDescription.CreateComponent("Edit it on ScriptAPI Editor", DocDescription.DescriptionType.Hint)));
+            root.Add(new DSButton("Open", () => { ScriptAPIEditorWindow.GetWindow(); }));
+            return root;
+        }
+    }
 }

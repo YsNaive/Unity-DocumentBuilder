@@ -68,7 +68,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 NameList.Clear();
                 NameList.Add("None");
                 Dictionary<string, List<(CustomDocEditVisualAttribute attr, Type docType)>> dir2Types = new() { { "", new() } };
-                foreach (var type in DocRuntime.FindAllTypesWhere((t) =>
+                foreach (var type in TypeReader.FindAllTypesWhere((t) =>
                 {
                     if (t.IsAbstract)
                         return false;

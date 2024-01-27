@@ -13,3 +13,15 @@ MonoBehaviour:
   m_Name: DocRuntimeData
   m_EditorClassIdentifier: 
   CurrentStyle: {fileID: 11400000, guid: 4f4cc2f18f09caa42a5337654ad9e793, type: 2}
+  m_IgnoreAssemblyName:
+  - Mono.Security
+  - Naive.DocumentBuilder.Sample
+  - asset-store-tools-editor
+  - Bee.BeeDriver
+  - ExCSS.Unity
+  - Mono.Posix
+  - PlayerBuildProgramLibrary.Data
+  - ReportGeneratorMerged
+  - System.ServiceModel.Internals
+  - unityplastic
+  - System.Numerics

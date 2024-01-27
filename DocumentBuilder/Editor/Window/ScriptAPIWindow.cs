@@ -53,7 +53,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             settings = JsonUtility.FromJson<Settings>(DocCache.LoadData("SciprtAPIWindowSettings.json"));
             settings ??= new();
-            var padding = ISPadding.Pixel(10);
+            var padding = ISPadding.Pixel(5);
             LeftPanel = new();
             RightPanel = new();
             RightPanelHeader = new();
@@ -96,7 +96,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             LeftPanel.Add(typeField);
             typeField.value = settings.ActiveType;
-            foreach (var type in DocRuntime.FindAllTypesWhere(t => { return t.IsSubclassOf(typeof(ScriptAPIMenuDefinition)); }))
+            foreach (var type in TypeReader.FindAllTypesWhere(t => { return t.IsSubclassOf(typeof(ScriptAPIMenuDefinition)); }))
                 LeftPanel.Add(((ScriptAPIMenuDefinition)Activator.CreateInstance(type)).CreateFoldoutHierarchy(null, ve =>
                 {
                     ve.RegisterCallback<PointerEnterEvent>(evt =>

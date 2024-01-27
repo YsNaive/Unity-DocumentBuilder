@@ -37,7 +37,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         static List<string> choices = new();
         static DocPageFactoryField()
         {
-            foreach (var type in DocRuntime.FindAllTypesWhere(t =>
+            foreach (var type in TypeReader.FindAllTypesWhere(t =>
             {
                 if (t.IsAbstract) return false;
                 if(!t.IsSubclassOf(typeof(DocPageFactory))) return false;

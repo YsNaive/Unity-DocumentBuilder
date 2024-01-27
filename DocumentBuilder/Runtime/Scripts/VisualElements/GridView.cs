@@ -28,6 +28,7 @@ public class GridView : VisualElement
             for (int j = 0; j < col; j++)
             {
                 VisualElement element = new VisualElement();
+                element.style.position = Position.Absolute;
                 veBorderLine(element, i, j);
                 element.style.paddingLeft = 5;
                 element.style.paddingRight = 5;
@@ -69,7 +70,6 @@ public class GridView : VisualElement
                 childs[i, j].style.height = StyleKeyword.Auto;
             }
         }
-        this.MarkDirtyRepaint();
         this.RegisterCallback<GeometryChangedEvent>(repaintMatrix);
     }
 
@@ -83,13 +83,13 @@ public class GridView : VisualElement
         {
             for (int j = 0; j < Col; j++)
             {
-                if (maxWidth[j] < childs[i, j].layout.width)
+                if (maxWidth[j] < childs[i, j].layout.width + 2)
                 {
-                    maxWidth[j] = childs[i, j].layout.width;
+                    maxWidth[j] = childs[i, j].layout.width + 2;
                 }
-                if (maxHeight[i] < childs[i, j].layout.height)
+                if (maxHeight[i] < childs[i, j].layout.height + 2)
                 {
-                    maxHeight[i] = childs[i, j].layout.height;
+                    maxHeight[i] = childs[i, j].layout.height + 2;
                 }
             }
         }

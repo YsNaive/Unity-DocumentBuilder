@@ -4,8 +4,10 @@ using NaiveAPI_UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -31,23 +33,23 @@ namespace NaiveAPI_Editor.DocumentBuilder
             else
             {
                 Add(new DSTextElement("Create a SOScriptAPIInfo to start edit."));
-                var dir = "";
                 var createBtn = new DSButton("Create");
-                createBtn.SetEnabled(false);
-                var folderField = DocEditor.NewObjectField<DefaultAsset>(evt =>
+                var folderPath = DocCache.LoadData("CreateScriptAPIInfoPath.txt");
+                var folderField = new DSAssetFolderField();
+                if (!AssetDatabase.IsValidFolder(folderPath)) folderPath = "Assets";
+                folderField.value = folderPath;
+                folderField.RegisterValueChangedCallback(evt =>
                 {
-                    if (evt.newValue == null) return;
-                    dir = AssetDatabase.GetAssetPath(evt.newValue);
-                    createBtn.SetEnabled(AssetDatabase.IsValidFolder(dir));
+                    DocCache.SaveData("CreateScriptAPIInfoPath.txt", evt.newValue);
                 });
                 createBtn.clicked += () =>
                 {
                     var info = ScriptableObject.CreateInstance<SOScriptAPIInfo>();
                     info.TargetType = type;
-                    info.MakeValid();
                     target = info;
-                    AssetDatabase.CreateAsset(info, $"{dir}/{TypeReader.GetGenericName(type)}.asset");
+                    AssetDatabase.CreateAsset(info, $"{folderField.value}/{TypeReader.GetGenericName(type)}.asset");
                     AssetDatabase.Refresh();
+                    ScriptAPIInfoHolder.Infos.Add(type, target);
                     init();
                 };
                 Add(folderField);
@@ -64,6 +66,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
         void init()
         {
             Clear();
+            var obj = DocEditor.NewObjectField<SOScriptAPIInfo>("Editing");
+            obj.style.opacity = 0.75f;
+            obj.RegisterValueChangedCallback(evt => {  obj.SetValueWithoutNotify(evt.newValue); });
+            obj.value = target;
+            Add(obj);
             serializedObject = new SerializedObject(target);
             EditPanelContainer = new DSScrollView();
             EditPanelContainer.style.SetIS_Style(ISPadding.Pixel(DocStyle.Current.MainTextSize / 2));
@@ -84,7 +91,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             EditSplitView.Add(leftCover);
             EditSplitView.Add(EditPanelContainer);
-            target.MakeValid();
             repaintType();
             Add(TypeFieldScrollView);
         }
@@ -97,65 +103,30 @@ namespace NaiveAPI_Editor.DocumentBuilder
             TypeFieldScrollView.Add(new DSTextElement("Type Description"));
             DescriptionField = new DocComponentsField(serializedObject.FindProperty("Description"));
             TypeFieldScrollView.Add(DescriptionField);
-            var ctors = target.TargetType.GetConstructors();
-            if (ctors.Length != 0)
+            Func<MemberInfo, bool> displayCheck = attr =>
             {
-                TypeFieldScrollView.Add(new DSTextElement("Constructor"));
-                foreach (var constructor in ctors)
-                    addMemberInfo(constructor);
-            }
-            var publicField = target.TargetType.GetFields(TypeReader.DeclaredPublicInstance);
-            if (publicField.Length != 0)
-            {
-                TypeFieldScrollView.Add(new DSTextElement("Public Field"));
-                foreach (var field in publicField)
-                    addMemberInfo(field);
-            }
-            var privateField = target.TargetType.GetFields(TypeReader.DeclaredPrivateInstance);
-            if (privateField.Length != 0)
-            {
-                TypeFieldScrollView.Add(new DSTextElement("Private Field"));
-                foreach (var field in privateField)
-                    addMemberInfo(field);
-            }
-            var publicProp = target.TargetType.GetProperties(TypeReader.DeclaredPublicInstance);
-            if (publicProp.Length != 0)
-            {
-                TypeFieldScrollView.Add(new DSTextElement("Public Property"));
-                foreach (var prop in publicProp)
-                    addMemberInfo(prop);
-            }
-            var privateProp = target.TargetType.GetProperties(TypeReader.DeclaredPrivateInstance);
-            if (privateProp.Length != 0)
-            {
-                TypeFieldScrollView.Add(new DSTextElement("Private Property"));
-                foreach (var prop in privateProp)
-                    addMemberInfo(prop);
-            }
-            var publicMethod = target.TargetType.GetMethods(TypeReader.DeclaredPublicInstance);
-            if (publicMethod.Length != 0)
-            {
-                TypeFieldScrollView.Add(new DSTextElement("Public Method"));
-                foreach (var method in publicMethod)
+                if (typeof(MethodBase).IsAssignableFrom(attr.GetType()))
                 {
-                    if (method.Name[0] == '<') continue;
-                    if (method.Name.StartsWith("get_")) continue;
-                    if (method.Name.StartsWith("set_")) continue;
-                    addMemberInfo(method);
+                    var method = attr as MethodBase;
+                    if (method.Name[0] == '<') return false;
+                    if (method.Name.StartsWith("op_")) return false;
+                    if (method.Name.StartsWith("get_")) return false;
+                    if (method.Name.StartsWith("set_")) return false;
+                    if (method.Name.StartsWith("add_")) return false;
+                    if (method.Name.StartsWith("remove_")) return false;
                 }
-            }
-            var privateMethod = target.TargetType.GetMethods(TypeReader.DeclaredPrivateInstance);
-            if (privateMethod.Length != 0)
+                return true;
+            };
+            foreach (var pair in TypeReader.VisitDeclearedMember(target.TargetType, displayCheck))
             {
-                TypeFieldScrollView.Add(new DSTextElement("Private Method"));
-                foreach (var method in privateMethod)
-                {
-                    if (method.Name[0] == '<') continue;
-                    if (method.Name.StartsWith("get_")) continue;
-                    if (method.Name.StartsWith("set_")) continue;
-                    addMemberInfo(method);
-                }
+                var text = new DSTextElement(pair.memberType);
+                text.style.marginTop = DocStyle.Current.LineHeight.Value / 2;
+                text.style.opacity = 0.6f;
+                TypeFieldScrollView.Add(text);
+                foreach (var info in pair.members)
+                    addMemberInfo(info);
             }
+
             var highlight = new ISBorder(DocStyle.Current.SubFrontgroundColor, 0) { Left = DocStyle.Current.MainTextSize / 6 };
             var clear = new ISBorder(Color.clear, 0);
             foreach(var pair in VisitMember())
@@ -175,13 +146,13 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     Add(EditSplitView);
                     EditPanelContainer.Clear();
                     EditPanelContainer.Add(getTitle(pair.memberInfo));
-                    EditPanelContainer.Add(new ScriptAPIMemberField(SOScriptAPIInfo.GetMemberInfo(serializedObject, pair.id)));
+                    EditPanelContainer.Add(new ScriptAPIMemberField(SOScriptAPIInfo.GetMemberInfo(serializedObject, pair.memberInfo)));
                 });
             }
         }
         void addMemberInfo(MemberInfo info)
         {
-            var targetMemberInfo = SOScriptAPIInfo.GetMemberInfo(serializedObject,SOScriptAPIInfo.GetMemberID(info));
+            var targetMemberInfo = SOScriptAPIInfo.GetMemberInfo(serializedObject, info);
             VisualElement container = new DSHorizontal();
             DSScriptAPIElement title = getTitle(info);
             scriptAPIElements.Add(title);
@@ -229,7 +200,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             }
         }
 
-        public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element, string id)> VisitMember()
+        public override IEnumerable<(ICustomAttributeProvider memberInfo, VisualElement element)> VisitMember()
         {
             foreach (var ve in scriptAPIElements)
             {
