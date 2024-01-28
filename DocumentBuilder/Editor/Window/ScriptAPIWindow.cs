@@ -1,14 +1,12 @@
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static PlasticGui.Configuration.CloudEdition.GetFirstCloudServer;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {
