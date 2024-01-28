@@ -9,11 +9,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public class DocVisualDebugWindow : EditorWindow
     {
-        [MenuItem("Tools/NaiveAPI/DocumentBuilder/DocVisual Debugger", priority = 2)]
-        public static void ShowWindow()
-        {
-            GetWindow<DocVisualDebugWindow>("DocVisual Debugger");
-        }
         VisualElement root;
         SplitView splitView;
         float propertyChangeTime;

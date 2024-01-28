@@ -244,20 +244,20 @@ namespace NaiveAPI.DocumentBuilder
         {
             if (match == null) match = m => true;
             foreach (var pair in new (string memberType, IEnumerable<MemberInfo> members)[]{
-                new(Str_PublicConstructor,      type.GetConstructors(DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_NonPublicConstructor,   type.GetConstructors(DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_PublicField,            type.GetFields      (DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_NonPublicField,         type.GetFields      (DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_PublicProperty,         type.GetProperties  (DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_NonPublicProperty,      type.GetProperties  (DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_PublicMethod,           type.GetMethods     (DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_NonPublicMethod,        type.GetMethods     (DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_PublicStaticField,      type.GetFields      (DeclaredPublicStatic)    .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_NonPublicStaticField,   type.GetFields      (DeclaredPrivateStatic)   .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_PublicStaticProperty,   type.GetProperties  (DeclaredPublicStatic)    .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_NonPublicStaticProperty,type.GetProperties  (DeclaredPrivateStatic)   .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_PublicStaticMethod,     type.GetMethods     (DeclaredPublicStatic)    .Where(match).OrderBy(selector=>{ return selector.Name; })),
-                new(Str_NonPublicStaticMethod,  type.GetMethods     (DeclaredPrivateStatic)   .Where(match).OrderBy(selector=>{ return selector.Name; })),
+                new(Str_PublicConstructor,      type.GetConstructors(DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.Name.LevenshteinDistance("aeiouegh"); })),
+                new(Str_NonPublicConstructor,   type.GetConstructors(DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.Name.LevenshteinDistance("aeiouegh"); })),
+                new(Str_PublicField,            type.GetFields      (DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.ReflectedType; })),
+                new(Str_NonPublicField,         type.GetFields      (DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.ReflectedType; })),
+                new(Str_PublicProperty,         type.GetProperties  (DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.ReflectedType; })),
+                new(Str_NonPublicProperty,      type.GetProperties  (DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.ReflectedType; })),
+                new(Str_PublicMethod,           type.GetMethods     (DeclaredPublicInstance)  .Where(match).OrderBy(selector=>{ return selector.Name.LevenshteinDistance("aeiouegh"); })),
+                new(Str_NonPublicMethod,        type.GetMethods     (DeclaredPrivateInstance) .Where(match).OrderBy(selector=>{ return selector.Name.LevenshteinDistance("aeiouegh"); })),
+                new(Str_PublicStaticField,      type.GetFields      (DeclaredPublicStatic)    .Where(match).OrderBy(selector=>{ return selector.ReflectedType; })),
+                new(Str_NonPublicStaticField,   type.GetFields      (DeclaredPrivateStatic)   .Where(match).OrderBy(selector=>{ return selector.ReflectedType; })),
+                new(Str_PublicStaticProperty,   type.GetProperties  (DeclaredPublicStatic)    .Where(match).OrderBy(selector=>{ return selector.ReflectedType; })),
+                new(Str_NonPublicStaticProperty,type.GetProperties  (DeclaredPrivateStatic)   .Where(match).OrderBy(selector=>{ return selector.ReflectedType; })),
+                new(Str_PublicStaticMethod,     type.GetMethods     (DeclaredPublicStatic)    .Where(match).OrderBy(selector=>{ return selector.Name.LevenshteinDistance("aeiouegh"); })),
+                new(Str_NonPublicStaticMethod,  type.GetMethods     (DeclaredPrivateStatic)   .Where(match).OrderBy(selector=>{ return selector.Name.LevenshteinDistance("aeiouegh"); })),
             })
             {
                 if (pair.members.Any())

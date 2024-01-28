@@ -5,14 +5,6 @@ namespace NaiveAPI.DocumentBuilder
 {
     public class DocumentBuilderDocsWindow : EditorWindow
     {
-        // Create MenuItem static function
-        [MenuItem("Tools/NaiveAPI/Documentation/Document Builder", priority = 1)]
-        public static void ShowWindow()
-        {
-            GetWindow<DocumentBuilderDocsWindow>("DocumentBuilder docs");
-        }
-
-        // Create and Add BookVisual
         private void CreateGUI()
         {
             SODocPage rootPage = DocEditorData.Instance.DocumentBuilderDocsRoot;

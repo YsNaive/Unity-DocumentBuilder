@@ -38,14 +38,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
             parent.Remove(root);
             parent.Add(CreateInspectorGUI());
         }
-        public override void OnInspectorGUI()
-        {
-            if(Event.current.type == EventType.KeyDown)
-            {
-                if (Event.current.control)
-                    EditRoot.CtrlHotKeyAction(Event.current.keyCode);
-            }
-        }
         public SODocPage Target;
         VisualElement root;
         VisualElement contents;
@@ -53,21 +45,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
         ObjectField icon;
         public ObjectField IconField => icon;
         List<string> buildinIconList = new List<string>(); 
-        [SerializeField] private List<DocComponent> undoBuffer;
-        void reCalHeigth()
-        {
-            float sum = 0;
-            foreach (var ve in root.Children()) { sum += ve.layout.height; }
-            if ((root.style.height.value.value <= sum + 500))
-            {
-                root.style.height = sum + 800;
-            }
-        }
         public override VisualElement CreateInspectorGUI()
         {
             var styleTemp = DocStyle.Current.Copy();
             Target = target as SODocPage;
-            root = new IMGUIContainer(OnInspectorGUI);
+            root = new VisualElement();
             
             #region mod bar
             root.style.SetIS_Style(ISPadding.Pixel(10));

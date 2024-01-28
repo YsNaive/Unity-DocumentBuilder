@@ -9,14 +9,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
     public class SODocComponentsEditor : Editor
     {
         DocComponentsField editField;
-        public override void OnInspectorGUI()
-        {
-            if (Event.current.type == EventType.KeyDown)
-            {
-                if (Event.current.control)
-                    editField.CtrlHotKeyAction(Event.current.keyCode);
-            }
-        }
         public override VisualElement CreateInspectorGUI()
         {
             var so = new SerializedObject(target);

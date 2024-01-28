@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    [CreateAssetMenu(menuName = "Naive API/DocumentBuilder/new ScriptAPI Info")]
     public class SOScriptAPIInfo : ScriptableObject, ISerializationCallbackReceiver
     {
         public Type TargetType
@@ -24,21 +23,6 @@ namespace NaiveAPI.DocumentBuilder
         public List<DocComponent> Description = new();
         [SerializeField] private List<string> m_MemberInfoKeys = new();
         [SerializeField] private List<ScriptAPIMemberInfo> m_MemberInfos = new();
-        public void ClearNonUsing()
-        {
-            List<int> deleteIndex = new();
-            for(int i = 0; i < m_MemberInfos.Count; i++)
-            {
-                if (m_MemberInfos[i].IsEmpty)
-                    deleteIndex.Add(i);
-            }
-            deleteIndex.Reverse();
-            foreach (var i in deleteIndex)
-            {
-                m_MemberInfoKeys.RemoveAt(i);
-                m_MemberInfos.RemoveAt(i);
-            }
-        }
         public void ClearAll()
         {
             m_MemberInfoKeys.Clear();
@@ -130,10 +114,6 @@ namespace NaiveAPI.DocumentBuilder
                     _ => false
                 };
             }
-        }
-        public bool IsEmpty
-        {
-            get => Tooltip.Count == 0 && Description.Count == 0;
         }
         public bool IsDisplay;
         public List<DocComponent> Tooltip = new();

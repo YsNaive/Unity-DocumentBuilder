@@ -32,11 +32,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     s_ActiveType = ActiveType.AssemblyQualifiedName;
             }
         }
-        [MenuItem("Tools/NaiveAPI/Script API", priority = 99)]
-        public static void GetWindow()
-        {
-            GetWindow<ScriptAPIWindow>("Script API");
-        }
         Settings settings;
         Stack<Type> VisitHistory = new();
         DSTypeField typeField;

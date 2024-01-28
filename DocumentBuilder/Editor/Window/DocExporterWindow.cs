@@ -13,11 +13,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public class DocExporterWindow : EditorWindow
     {
-        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Exporter", priority = 5)]
-        public static void ShowWindow()
-        {
-            GetWindow<DocExporterWindow>("Document Exporter");
-        }
 
         public const string CommonChar = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
         public const string SpChar = "\\n\\t\\r\\0\\b\\f\\v\\\\\\'\\";

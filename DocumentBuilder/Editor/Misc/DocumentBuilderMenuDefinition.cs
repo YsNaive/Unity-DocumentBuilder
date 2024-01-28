@@ -115,10 +115,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
                             typeof(DocEditCodeblock),
                             typeof(DocEditFuncDisplay),
                             typeof(DocEditDividline),
-                            typeof(DocBookVisual),
-                            typeof(DocPageMenu),
-                            typeof(DocPageMenuItem),
-                            typeof(DocPageVisual),
                             typeof(DocPageCreator),
                             typeof(DocPageDeleter)
                             ),

@@ -9,11 +9,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public class ScriptAPIEditorWindow : EditorWindow
     {
-        [MenuItem("Tools/NaiveAPI/Script API Editor", priority = 100)]
-        public static void GetWindow()
-        {
-            GetWindow<ScriptAPIEditorWindow>("Script API Editor");
-        }
         [Serializable]
         public class Settings : ISerializationCallbackReceiver
         {
@@ -63,8 +58,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
             });
             LeftPanel.Add(typeField);
             typeField.value = settings.ActiveType;
+            DSScrollView leftScrollView = new DSScrollView( );
+            leftScrollView.mode = ScrollViewMode.VerticalAndHorizontal;
             foreach (var type in TypeReader.FindAllTypesWhere(t => { return t.IsSubclassOf(typeof(ScriptAPIMenuDefinition)); }))
-                LeftPanel.Add(((ScriptAPIMenuDefinition)Activator.CreateInstance(type)).CreateFoldoutHierarchy(null, ve =>
+                leftScrollView.Add(((ScriptAPIMenuDefinition)Activator.CreateInstance(type)).CreateFoldoutHierarchy(null, ve =>
                 {
                     ve.RegisterCallback<PointerEnterEvent>(evt =>
                     {
@@ -81,6 +78,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                         MidPanel.Add(new ScriptAPIField(ve.TargetType));
                     });
                 }));
+            LeftPanel.Add(leftScrollView);
         }
         private void OnDisable()
         {
@@ -103,7 +101,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.style.SetIS_Style(ISPadding.Pixel(5));
             root.style.backgroundColor = DocStyle.Current.BackgroundColor;
             root.Add(DocVisual.Create(DocDescription.CreateComponent("Edit it on ScriptAPI Editor", DocDescription.DescriptionType.Hint)));
-            root.Add(new DSButton("Open", () => { ScriptAPIEditorWindow.GetWindow(); }));
+            root.Add(new DSButton("Open", () => { DocumentBuilderMenuItem.GetScriptAPIEditor(); }));
             return root;
         }
     }

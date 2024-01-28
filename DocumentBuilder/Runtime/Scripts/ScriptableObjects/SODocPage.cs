@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NaiveAPI.DocumentBuilder
 {
-    [CreateAssetMenu(menuName ="Naive API/DocumentBuilder/Doc Page")]
+    [CreateAssetMenu(menuName ="Naive API/Doc Page", order = 2)]
     public class SODocPage : ScriptableObject, ISerializationCallbackReceiver
     {
         public Texture2D Icon;

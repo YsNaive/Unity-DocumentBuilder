@@ -42,6 +42,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     var info = ScriptableObject.CreateInstance<SOScriptAPIInfo>();
                     info.TargetType = type;
+                    info.Description.Add(DocDescription.CreateComponent(""));
                     target = info;
                     var assetName = type.Name;
                     if (type.Namespace != null)
@@ -144,7 +145,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 {
                     Add(EditSplitView);
                     EditPanelContainer.Clear();
-                    EditPanelContainer.Add(getTitle(pair.memberInfo));
+                    EditPanelContainer.Add(Create(pair.memberInfo));
                     EditPanelContainer.Add(new ScriptAPIMemberField(SOScriptAPIInfo.GetMemberInfo(serializedObject, pair.memberInfo)));
                 });
             }
@@ -153,7 +154,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
         {
             var targetMemberInfo = SOScriptAPIInfo.GetMemberInfo(serializedObject, info);
             VisualElement container = new DSHorizontal();
-            DSScriptAPIElement title = getTitle(info);
+            DSScriptAPIElement title = Create(info);
             scriptAPIElements.Add(title);
             DSToggle displayToggle = new DSToggle();
             displayToggle.style.alignItems = Align.FlexStart;
@@ -161,6 +162,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             displayToggle.RegisterValueChangedCallback(evt =>
             {
                 targetMemberInfo.FindPropertyRelative("IsDisplay").boolValue = evt.newValue;
+                targetMemberInfo.serializedObject.ApplyModifiedProperties();
                 title.SetEnabled(evt.newValue); 
             });
             title.SetEnabled(displayToggle.value);
@@ -169,18 +171,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
             FieldInfoFields.Add(container);
             TypeFieldScrollView.Add(container);
         }
-        DSScriptAPIElement getTitle(ICustomAttributeProvider info)
-        {
-            return info switch
-            {
-                FieldInfo asField => new DSFieldInfoElement(asField),
-                PropertyInfo asProp => new DSPropertyInfoElement(asProp),
-                MethodInfo asMethod => new DSMethodInfoElement(asMethod),
-                ConstructorInfo asCtor => new DSMethodInfoElement(asCtor),
-                ParameterInfo asParam => new DSParameterInfoElement(asParam),
-                _ => null
-            };
-        }
+
         public override IEnumerable<DSTypeNameElement> VisitTypeName()
         {
             foreach (var ve in scriptAPIElements)

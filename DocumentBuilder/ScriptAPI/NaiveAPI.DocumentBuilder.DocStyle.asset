@@ -1,0 +1,277 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee828d8e285f9245b396faeebb269ae, type: 3}
+  m_Name: NaiveAPI.DocumentBuilder.DocStyle
+  m_EditorClassIdentifier: 
+  s_type: NaiveAPI.DocumentBuilder.DocStyle, Naive.DocumentBuilder.Runtime, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  Tooltip: []
+  Description:
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - 'Define style set, can store in SODocStyle.
+
+      Create from Create / NaiveAPI
+      / DocumentBuilder / DocStyle
+
+
+      Main using in:'
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 8
+    JsonData: 
+    TextData:
+    - DSVisualElement Set
+    - All element in DocunemtBuilder UI
+    ObjsData: []
+    VisualVersion: 0
+  m_MemberInfoKeys:
+  - .ctor()
+  - MainTextStyle
+  - LabelTextStyle
+  - ButtonTextStyle
+  - InputFieldStyle
+  - ElementMarginPadding
+  - BackgroundColor
+  - SubBackgroundColor
+  - FrontgroundColor
+  - SubFrontgroundColor
+  - FuncColor
+  - ArgsColor
+  - TypeColor
+  - ValueTypeColor
+  - PrefixColor
+  - StringColor
+  - NumberColor
+  - ControlColor
+  - CommentsColor
+  - CodeBackgroundColor
+  - CodeTextColor
+  - SuccessColor
+  - WarningColor
+  - DangerColor
+  - HintColor
+  - SuccessTextColor
+  - WarningTextColor
+  - DangerTextColor
+  - HintTextColor
+  - LineHeight
+  - LabelWidth
+  - IconStyle
+  - ArrowSprite
+  - GearSprite
+  - ScrollerWidth
+  - ComponentSpace
+  - m_ISLengthBuffer
+  - MainTextSize
+  - LabelTextSize
+  - ButtonTextSize
+  - MainText
+  - LabelText
+  - ButtonText
+  - ArrowIcon
+  - MarginVer
+  - MarginHor
+  - PaddingVer
+  - PaddingHor
+  - BeginLabelWidth(ISLength)
+  - EndLabelWidth()
+  - Copy()
+  - OnStyleChanged
+  - m_current
+  - Current
+  - ApplyByMask(VisualElement,DocStyleFlag)
+  m_MemberInfos:
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - Push current width and use new
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - Pop last Pushed width as LabelWidth
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - Apply IStyle on element base on flag
+      ObjsData: []
+      VisualVersion: 0
+    Description: []

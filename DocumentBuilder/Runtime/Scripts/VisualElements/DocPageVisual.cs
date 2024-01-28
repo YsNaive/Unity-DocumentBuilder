@@ -18,6 +18,7 @@ namespace NaiveAPI.DocumentBuilder
         {
             var boundBefore = contentContainer.localBound;
             Clear();
+            if (Target == null) return;
             foreach (var com in Target.Components)
             {
                 DocVisual docVisual = DocRuntime.CreateDocVisual(com);

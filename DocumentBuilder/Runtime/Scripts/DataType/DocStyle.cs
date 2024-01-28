@@ -103,14 +103,6 @@ namespace NaiveAPI.DocumentBuilder
         public Sprite ArrowSprite;
         public Sprite GearSprite;
 
-
-        public Length ContentWidth(VisualElement ve)
-        {
-            if (LabelWidth.Unit == LengthUnit.Percent)
-                return Length.Percent(100 - LabelWidth.Value);
-            if (ve.parent == null) return new Length(0);
-            return new Length(ve.parent.resolvedStyle.width - LabelWidth.Value);
-        }
         public float MarginVer => ElementMarginPadding.Margin.Left.Value.Value;
         public float MarginHor => ElementMarginPadding.Margin.Top.Value.Value;
         public float PaddingVer => ElementMarginPadding.Padding.Left.Value.Value;

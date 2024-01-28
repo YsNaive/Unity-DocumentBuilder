@@ -11,22 +11,6 @@ namespace NaiveAPI_Editor.DocumentBuilder
 {
     public class DocEditorWindow : EditorWindow, IHasCustomMenu
     {
-        #region get window
-        [MenuItem("Tools/NaiveAPI/DocumentBuilder/Document Editor", priority = 1)]
-        public static void ShowWindow()
-        {
-            m_editorInstance = GetWindow<DocEditorWindow>("Document Editor");
-        }
-        public static DocEditorWindow Instance
-        {
-            get
-            {
-                m_editorInstance ??= GetWindow<DocEditorWindow>("Document Editor");
-                return m_editorInstance;
-            }
-        }
-        static DocEditorWindow m_editorInstance;
-        #endregion
         void IHasCustomMenu.AddItemsToMenu(GenericMenu menu)
         {
             GUIContent content = new GUIContent("Tutorial");
@@ -545,7 +529,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             var addBtn = (Button)rightTopContainer[0];
             addBtn.clicked += () =>
             {
-                rightTopContainer.Remove(msg);
+                if(rightTopContainer.Contains(msg))
+                    rightTopContainer.Remove(msg);
                 addBtn.SetEnabled(false);
                 var btnHor = editorContainer[0][editorContainer[0].childCount - 1];
                 editorContainer.SetEnabled(true);

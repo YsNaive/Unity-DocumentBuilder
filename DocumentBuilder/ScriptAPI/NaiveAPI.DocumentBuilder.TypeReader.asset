@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee828d8e285f9245b396faeebb269ae, type: 3}
+  m_Name: NaiveAPI.DocumentBuilder.TypeReader
+  m_EditorClassIdentifier: 
+  s_type: NaiveAPI.DocumentBuilder.TypeReader, Naive.DocumentBuilder.Runtime, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  Tooltip: []
+  Description:
+  - VisualID: 2
+    JsonData: '{"Type":0}'
+    TextData:
+    - Utils about System.Type
+    ObjsData: []
+    VisualVersion: 0
+  m_MemberInfoKeys:
+  - Str_PublicConstructor
+  - Str_NonPublicConstructor
+  - Str_PublicField
+  - Str_NonPublicField
+  - Str_PublicStaticField
+  - Str_NonPublicStaticField
+  - Str_PublicProperty
+  - Str_NonPublicProperty
+  - Str_PublicStaticProperty
+  - Str_NonPublicStaticProperty
+  - Str_PublicMethod
+  - Str_NonPublicMethod
+  - Str_PublicStaticMethod
+  - Str_NonPublicStaticMethod
+  - DeclaredPublicInstance
+  - DeclaredPublicStatic
+  - DeclaredPrivateInstance
+  - DeclaredPrivateStatic
+  - TypeNameTable
+  - m_ActiveTypes
+  - ActiveTypes
+  - GetPrefix(Type)
+  - GetName(Type)
+  - GetGenericName(Type)
+  - GetSignature(MethodBase)
+  - GetAccessLevel(FieldInfo)
+  - GetAccessLevel(MethodBase)
+  - GetNestedName(Type)
+  - FindAllTypesWhere(Func<Type, bool>)
+  - VisitDeclearedMember(Type,Func<MemberInfo, bool>)
+  m_MemberInfos:
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - some system type to its friendly name
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - iteration DocumentBuilder ActiveType
+      ObjsData: []
+      VisualVersion: 0
+    - VisualID: 2
+      JsonData: '{"Type":2}'
+      TextData:
+      - Not ALL Type in CurrentDomain !
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - public, static etc.
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - Foo`1    to   Nest.Foo<T>
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - List`1   to   List<T>
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip: []
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - public, private, protect, internal
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - public, private, protect, internal
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - Foo   to   Nest.Foo
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 1
+    Tooltip:
+    - VisualID: 2
+      JsonData: 
+      TextData:
+      - find in this.ActiveTypes
+      ObjsData: []
+      VisualVersion: 0
+    Description: []
+  - IsDisplay: 0
+    Tooltip: []
+    Description: []
