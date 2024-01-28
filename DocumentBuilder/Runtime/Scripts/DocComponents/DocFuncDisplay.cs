@@ -31,6 +31,11 @@ namespace NaiveAPI.DocumentBuilder
         {
             Data data = JsonUtility.FromJson<Data>(Target.JsonData);
             if (data == null) return;
+            if (Target.TextData.Count == 0)
+            {
+                Add(Create(DocDescription.CreateComponent("DocFuncDisplay wrong format", DocDescription.DescriptionType.Warning)));
+                return;
+            }
             TextElement nameText = new DSTextElement(data.Name);
             nameText.style.SetIS_Style(funcNameTextStyle);
             VisualElement child = new VisualElement();

@@ -90,7 +90,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
 
         private void init()
         {
-            if (visualData.Syntaxs.Count == 0)
+            if (visualData.Syntaxs.Count == 0 || visualData.Syntaxs[0] == "")
             {
                 Target.TextData.FromList(visualData.GetTexts());
             }

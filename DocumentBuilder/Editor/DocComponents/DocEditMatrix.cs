@@ -226,6 +226,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     SaveDataToTarget();
                     ((TextField)rowColVisual[0]).value = visualData.row.ToString();
                 };
+                if (visualData.row == 1)
+                    deleteButton.SetEnabled(false);
                 child.Add(deleteButton);
                 root.Add(child);
             }
@@ -245,14 +247,16 @@ namespace NaiveAPI_Editor.DocumentBuilder
             for (int i = 0;i < visualData.col; i++)
             {
                 int i1 = i;
-                Button deleteButton = new DSButton("",DocStyle.Current.DangerColor, () =>
-                {
-                    visualData.DeleteCol(i1);
-                    SaveDataToTarget();
-                    ((TextField)rowColVisual[1]).value = visualData.col.ToString();
-                });
+                DSButton deleteButton = new DSButton("",DocStyle.Current.DangerColor, () =>
+                    {
+                        visualData.DeleteCol(i1);
+                        SaveDataToTarget();
+                        ((TextField)rowColVisual[1]).value = visualData.col.ToString();
+                    });
                 deleteButton.style.width = Length.Percent(percent);
                 deleteButton.style.ClearMarginPadding();
+                if (visualData.col == 1)
+                    deleteButton.SetEnabled(false);
                 deleteColButton.Add(deleteButton);
             }
 
