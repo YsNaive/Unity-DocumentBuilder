@@ -287,8 +287,14 @@ namespace NaiveAPI_Editor.DocumentBuilder
             style.marginBottom = 1;
             Target = docComponent;
             Target.OnPropertyChanged += (info) => { OnPropertyChanged?.Invoke(info); };
+            bool isInit = true;
             RegisterCallback<GeometryChangedEvent>(e =>
             {
+                if (isInit)
+                {
+                    isInit = false;
+                    return;
+                }
                 if (e.oldRect.y == 0) return;
                 Vector2 orgpos = transform.position;
                 Vector2 toPos = orgpos;

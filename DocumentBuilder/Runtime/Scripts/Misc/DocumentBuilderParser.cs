@@ -9,36 +9,27 @@ namespace NaiveAPI.DocumentBuilder
 {
     public static class DocumentBuilderParser
     {
-        public const string variable = @"\b([A-Za-z_]\w*)";
-        public const string type = @"(?:(?:[<,]\s*)?\b" + variable + @"(?:\[.*?\])?[>]*)+";
-        public const string functype = @"((?:(?:[<,]\s*)?\b" + variable + @"(?:\[.*?\])?[>]*)+)";
-        public const string prefix = @"(?:(public|private|protected|internal|static|readonly|override|const|abstract)\s*)*";
-        public const string test = "(?:class|interface|enum|if|else|switch|case|default|do|while|for|foreach|break|continue|goto|return|using|using static|new)";
-        public const string funcEqual = @"(?:\s*=[^\)]*?)?";
-        public const string fieldEqual = @"(?:\s*=[^;{]*?)?";
-        public const string classPattern = @"\b" + prefix + @"(class|enum|interface)\s+(?:(?:\s*[:,]\s*)?(\w+))*";
-        public const string stringPattern = @"""([^""]*)""";
-        public const string controlReservedWordPattern = @"\b(?:if|else|switch|case|do|while|for|foreach|break|continue|goto|return|catch|try)\b";
-        public const string funcPattern = @"\b" + prefix + @"(?!\b" + test + @"\b)" + functype + @"\s+" + type +
-            @"\s*\((?:(?:,\s*)?(params|this|in|out|ref)?\s*" + functype + @"\s+(\w+)" + funcEqual + @")*\)";
-        public const string fieldPattern = @"\b" + prefix + @"(?!\b" + test + @"\b)" + type + @"\s+(?:" + variable + fieldEqual +
-            @")(?:,\s*" + variable + fieldEqual + ")*(?:;|{)";
-        public const string commentPattern = @"//.*(?:\n|$)|/\*[\s\S]*?\*/";
-        public const string newPattern = @"\bnew\s+" + type + @"(?:;|\()";
-        public const string reservedWordPattern = @"\b(?:var|in|get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
-        public const string methodPattern = @"\b" + type + @"\(";
-        public const string numberPattern = @"[+-]?\b(\d+(?:\.\d+)?(?:[fFLlDdBb]|[Xx]\d+)?)";
-        public const string pattern1 = @"\b(?<var>" + variable + @")\b(?(<)(?:(?'Open'<)|" +
-                @"(?<var>" + variable + @")|(?'Close-Open'>)|(?:,\s*(?<var>" + variable + @")))*)(?(Open)(?!))";
-        public static readonly Dictionary<Type, string> typeNameTable = new Dictionary<Type, string> {
-            { typeof(string) , "string"},
-            { typeof(void), "void" },
-            { typeof(float), "float" },
-            { typeof(int), "int" },
-            { typeof(short), "short" },
-            { typeof(double), "double" },
-            { typeof(long), "long" },
-            { typeof(bool), "bool" }};
+        public const string VariableRegex = @"\b([A-Za-z_]\w*)";
+        public const string TypeRegex = @"(?:(?:[<,]\s*)?\b" + VariableRegex + @"(?:\[.*?\])?[>]*)+";
+        public const string FuncTypeRegex = @"((?:(?:[<,]\s*)?\b" + VariableRegex + @"(?:\[.*?\])?[>]*)+)";
+        public const string PrefixRegex = @"(?:(public|private|protected|internal|static|readonly|override|const|abstract)\s*)*";
+        public const string FuncEqualRegex = @"(?:\s*=[^\)]*?)?";
+        public const string FieldEqualRegex = @"(?:\s*=[^;{]*?)?";
+        public const string ClassRegex = @"\b" + PrefixRegex + @"(class|struct|enum|interface)\s+(?:(?:\s*[:,]\s*)?(\w+))*";
+        public const string StringRegex = @"""([^""]*)""";
+        public const string ControlReservedWordRegex = @"\b(?:if|else|switch|case|do|while|for|foreach|break|continue|goto|return|catch|try)\b";
+        private const string temp1 = "(?:class|interface|enum|if|else|switch|case|default|do|while|for|foreach|break|continue|goto|return|using|using static|new)";
+        public const string FuncRegex = @"\b" + PrefixRegex + @"(?!\b" + temp1 + @"\b)" + FuncTypeRegex + @"\s+" + TypeRegex +
+            @"\s*\((?:(?:,\s*)?(params|this|in|out|ref)?\s*" + FuncTypeRegex + @"\s+(\w+)" + FuncEqualRegex + @")*\)";
+        public const string FieldRegex = @"\b" + PrefixRegex + @"(?!\b" + temp1 + @"\b)" + TypeRegex + @"\s+(?:" + VariableRegex + FieldEqualRegex +
+            @")(?:,\s*" + VariableRegex + FieldEqualRegex + ")*(?:;|{)";
+        public const string CommentRegex = @"//.*(?:\n|$)|/\*[\s\S]*?\*/";
+        public const string NewConstructRegex = @"\bnew\s+" + TypeRegex + @"(?:;|\()";
+        public const string ReservedWordRegex = @"\b(?:var|in|get|set|public|private|protected|static|abstract|as|base|bool|byte|char|checked|const|decimal|default|delegate|double|enum|event|explicit|extern|false|finally|fixed|float|implicit|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|params|readonly|ref|sbyte|sealed|short|sizeof|stackalloc|string|struct|this|throw|true|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile)\b";
+        public const string MethodRegex = @"\b" + TypeRegex + @"\(";
+        public const string NumberRegex = @"[+-]?\b(\d+(?:\.\d+)?(?:[fFLlDdBbWw]|[Xx]\d+)?)";
+        private const string pattern1 = @"\b(?<var>" + VariableRegex + @")\b(?(<)(?:(?'Open'<)|" +
+                @"(?<var>" + VariableRegex + @")|(?'Close-Open'>)|(?:,\s*(?<var>" + VariableRegex + @")))*)(?(Open)(?!))";
         public static string ParseSyntax(string synatx)
         {
             try
@@ -137,7 +128,7 @@ namespace NaiveAPI.DocumentBuilder
             else
                 action = VisualElementExtension.UnityRTF;
             int offset = 0;
-            MatchCollection matches = Regex.Matches(stringBuilder.ToString(), funcPattern);
+            MatchCollection matches = Regex.Matches(stringBuilder.ToString(), FuncRegex);
             foreach (Match match in matches)
             {
                 foreach (Capture capture in match.Groups[1].Captures)
@@ -194,17 +185,17 @@ namespace NaiveAPI.DocumentBuilder
                 foreach (Capture capture in match.Groups["var"].Captures)
                     Debug.Log(capture.Value);
             }*/
-            matches = Regex.Matches(stringBuilder.ToString(), commentPattern);
+            matches = Regex.Matches(stringBuilder.ToString(), CommentRegex);
             foreach (Match match in matches)
             {
                 addTable(table, match, 0, DocStyle.Current.CommentsColor, ParseType.Single, "Comment");
             }
-            matches = Regex.Matches(stringBuilder.ToString(), stringPattern);
+            matches = Regex.Matches(stringBuilder.ToString(), StringRegex);
             foreach (Match match in matches)
             {
                 addTable(table, match, 0, DocStyle.Current.StringColor, ParseType.Single, "String");
             }
-            matches = Regex.Matches(stringBuilder.ToString(), fieldPattern);
+            matches = Regex.Matches(stringBuilder.ToString(), FieldRegex);
             foreach (Match match in matches)
             {
                 addTable(table, match, 1, DocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
@@ -219,17 +210,17 @@ namespace NaiveAPI.DocumentBuilder
                     args.Append("|");
                 }
             }
-            matches = Regex.Matches(stringBuilder.ToString(), reservedWordPattern);
+            matches = Regex.Matches(stringBuilder.ToString(), ReservedWordRegex);
             foreach (Match match in matches)
             {
                 addTable(table, match, 0, DocStyle.Current.PrefixColor, ParseType.Single, "ReserveWord");
             }
-            matches = Regex.Matches(stringBuilder.ToString(), numberPattern);
+            matches = Regex.Matches(stringBuilder.ToString(), NumberRegex);
             foreach (Match match in matches)
             {
                 addTable(table, match, 1, DocStyle.Current.NumberColor, ParseType.Single, "Number");
             }
-            matches = Regex.Matches(stringBuilder.ToString(), funcPattern);
+            matches = Regex.Matches(stringBuilder.ToString(), FuncRegex);
             foreach (Match match in matches)
             {
                 addTable(table, match, 1, DocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
@@ -255,24 +246,24 @@ namespace NaiveAPI.DocumentBuilder
                     args.Append("|");
                 }
             }
-            matches = Regex.Matches(stringBuilder.ToString(), classPattern);
+            matches = Regex.Matches(stringBuilder.ToString(), ClassRegex);
             foreach (Match match in matches)
             {
                 addTable(table, match, 1, DocStyle.Current.PrefixColor, ParseType.Capture, "Prefix");
                 addTable(table, match, 2, DocStyle.Current.PrefixColor, ParseType.Single, "Prefix");
                 addTable(table, match, 3, DocStyle.Current.TypeColor, ParseType.Capture, "Type");
             }
-            matches = Regex.Matches(stringBuilder.ToString(), controlReservedWordPattern);
+            matches = Regex.Matches(stringBuilder.ToString(), ControlReservedWordRegex);
             foreach (Match match in matches)
             {
                 addTable(table, match, 0, DocStyle.Current.ControlColor, ParseType.Single, "Control");
             }
-            matches = Regex.Matches(stringBuilder.ToString(), newPattern);
+            matches = Regex.Matches(stringBuilder.ToString(), NewConstructRegex);
             foreach (Match match in matches)
             {
                 addTable(table, match, 1, DocStyle.Current.TypeColor, ParseType.Capture, "Type");
             }
-            matches = Regex.Matches(stringBuilder.ToString(), methodPattern);
+            matches = Regex.Matches(stringBuilder.ToString(), MethodRegex);
             foreach (Match match in matches)
             {
                 addTable(table, match, 1, DocStyle.Current.TypeColor, ParseType.Func, "Type");
@@ -365,7 +356,7 @@ namespace NaiveAPI.DocumentBuilder
                 ReturnType = "";
                 paramsType.Clear();
                 paramsName.Clear();
-                MatchCollection matches = Regex.Matches(syntax, funcPattern);
+                MatchCollection matches = Regex.Matches(syntax, FuncRegex);
                 foreach (Match match in matches)
                 {
                     ReturnType = match.Groups[2].Value;

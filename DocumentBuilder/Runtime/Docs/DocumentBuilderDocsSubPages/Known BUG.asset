@@ -21,9 +21,11 @@ MonoBehaviour:
     - DocumentEditor might crash Unity with pressing "Play" while using it, reinstall
       libs may solve the problem. (works for me)
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
-  IntroMode: 1
-  OuttroMode: 1
-  IntroDuration: 200
-  OuttroDuration: 200
+  - VisualID: 2
+    JsonData: '{"Type":2}'
+    TextData:
+    - If you Undo(Ctrl^Z) while editing DocComponent with no more operate before,
+      It will come out with error.
+    ObjsData: []
+    VisualVersion: 0

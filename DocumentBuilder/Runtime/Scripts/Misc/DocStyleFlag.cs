@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NaiveAPI
+namespace NaiveAPI_UI
 {
     public enum DocStyleFlag
     {

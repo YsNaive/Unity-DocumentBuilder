@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.UIElements;
 namespace NaiveAPI.DocumentBuilder
@@ -56,7 +57,7 @@ namespace NaiveAPI.DocumentBuilder
         private static readonly List<SearchInfo> SearchTable = new();
         private static PopupElement popup;
         private static PopupElement settingsPopup;
-        private static DSScrollView container;
+        private static DSScrollView choiceContainer;
 
         static DSTypeField()
         {
@@ -66,13 +67,13 @@ namespace NaiveAPI.DocumentBuilder
             popup.style.minHeight = DocStyle.Current.LineHeight;
             popup.style.minWidth = DocStyle.Current.LabelWidth;
             popup.style.backgroundColor = DocStyle.Current.BackgroundColor;
-            container = new DSScrollView();
-            container.RegisterCallback<GeometryChangedEvent>(evt =>
+            choiceContainer = new DSScrollView();
+            choiceContainer.RegisterCallback<GeometryChangedEvent>(evt =>
             {
-                container.style.maxHeight = container.panel.visualTree.worldBound.height * 0.75f;
-                container.style.maxWidth = container.panel.visualTree.worldBound.width * 0.75f;
+                choiceContainer.style.maxHeight = choiceContainer.panel.visualTree.worldBound.height * 0.75f;
+                choiceContainer.style.maxWidth = choiceContainer.panel.visualTree.worldBound.width * 0.75f;
             });
-            popup.Add(container);
+            popup.Add(choiceContainer);
 
             var padding = ISPadding.Pixel(5);
             settingsPopup = new PopupElement();
@@ -144,10 +145,21 @@ namespace NaiveAPI.DocumentBuilder
             style.minHeight = DocStyle.Current.LineHeight;
             searchField = new DSTextField(label);
             Add(searchField);
+            searchField.RegisterCallback<FocusInEvent>(evt =>
+            {
+                if (evt.target != searchField) return;
+                choiceContainer.Clear();
+                addNullChoice();
+                openPopup(popup);
+            });
             searchField.RegisterValueChangedCallback(evt =>
             {
-                container.Clear();
-                if (evt.newValue == "") return;
+                choiceContainer.Clear();
+                if (evt.newValue == "")
+                {
+                    addNullChoice();
+                    return;
+                }
                 Dictionary<int, List<SearchInfo>> searchResult = new();
                 var input = evt.newValue;
                 if(IgnoreCase) input = input.ToLower();
@@ -185,12 +197,13 @@ namespace NaiveAPI.DocumentBuilder
                         var spaceName = new DSTextElement("  " + val.space);
                         spaceName.style.opacity = 0.7f;
                         hor.Add(spaceName);
-                        container.Add(hor);
+                        choiceContainer.Add(hor);
                         i++;
                         if (i > m_ChoiceDisplayCount) break;
                     }
                     if (i > m_ChoiceDisplayCount) break;
                 }
+                addNullChoice();
                 openPopup(popup);
             });
             searchField.RegisterCallback<FocusOutEvent>(evt =>
@@ -201,12 +214,27 @@ namespace NaiveAPI.DocumentBuilder
                     searchField.SetValueWithoutNotify("");
                 popup.Close();
             });
-
             var editBtn = new VisualElement();
             editBtn.style.SetIS_Style(DocStyle.Current.IconStyle);
             editBtn.style.backgroundImage = new StyleBackground(DocStyle.Current.GearSprite);
             editBtn.RegisterCallback<PointerDownEvent>(evt => { openPopup(settingsPopup); });
             searchField.Add(editBtn);
+        }
+        void addNullChoice()
+        {
+            var nullChoice = new DSTextElement("Null");
+            nullChoice.style.backgroundColor = DocStyle.Current.CodeBackgroundColor;
+            nullChoice.RegisterCallback<PointerEnterEvent>(evt => { nullChoice.style.backgroundColor = DocStyle.Current.SubBackgroundColor; });
+            nullChoice.RegisterCallback<PointerLeaveEvent>(evt => { nullChoice.style.backgroundColor = DocStyle.Current.BackgroundColor; });
+            nullChoice.style.paddingLeft = DocStyle.Current.MainTextSize;
+            nullChoice.style.paddingRight = DocStyle.Current.MainTextSize;
+            nullChoice.style.minHeight = DocStyle.Current.LineHeight;
+            nullChoice.style.borderBottomColor = DocStyle.Current.SubBackgroundColor;
+            nullChoice.style.borderBottomWidth = 1.5f;
+            nullChoice.RegisterCallback<PointerDownEvent>(evt => { value = null; });
+            var c = nullChoice.style.color.value; c.a = 0.7f;
+            nullChoice.style.color = c;
+            choiceContainer.Add(nullChoice);
         }
         void openPopup(PopupElement popup)
         {

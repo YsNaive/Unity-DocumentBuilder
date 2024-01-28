@@ -206,12 +206,12 @@ MonoBehaviour:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 20
+            Value: 16
         Height:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 20
+            Value: 16
     - rid: 3933373726834294785
       type: {class: ISBackground, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
@@ -221,7 +221,7 @@ MonoBehaviour:
         texture: {fileID: 0}
         renderTexture: {fileID: 0}
         vectorImage: {fileID: 0}
-        ScaleMode: 0
+        ScaleMode: 2
     - rid: 3933373726834294786
       type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
@@ -229,22 +229,22 @@ MonoBehaviour:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 0
+            Value: 2
         Top:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 0
+            Value: 2
         Right:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 0
+            Value: 2
         Bottom:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 0
+            Value: 2
     - rid: 8869985085687332875
       type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:

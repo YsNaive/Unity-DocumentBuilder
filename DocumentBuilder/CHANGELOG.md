@@ -1,5 +1,51 @@
 # Changelog
 
+## [2.2.0] -2024-01-28
+### **<u>IMPORTANT</u>**
+This version has reconstructed the way the ScriptingAPI is edited. As a result, the details and invocation of functions related to this API may be affected. Please be mindful of any update requirements.
+
+Also, a part of the folder structure has been changed. It is recommended to delete it first and then reimport it.
+
+Affected API:
+- `DocumentBuilderParser.CalXXXTypeName()` move into `TypeReader` as
+    - TypeReader.GetName()
+    - TypeReader.GetSignature()
+    - TypeReader.GetNestedName()
+    - TypeReader.GetGenericName()
+    - TypeReader.GetAccessLevel()
+    - TypeReader.GetPrefix()
+- `DocRuntime.FindAllTypesWhere()`
+    - TypeReader.FindAllTypesWhere()
+- Animation Feture on 
+    - DocVisual
+    - DocEditVisual
+    - DocPage
+    - DocPageVisual
+    - DocBookVisual
+
+### Delete.
+In the upcoming plan, adjustments will be made to the style, animations, and other aspects of the VisualElement. Therefore, the below content will be temporarily removed.
+- Default DocStyle except DarkTheme
+- Animation part on DocType
+
+### Add.
+- ScriptAPI Edit and View
+    - ScriptAPI Editor
+    - ScriptAPI Window
+- DocComponentProperty, allow you to interaction with DocComponent or SerializedProperty in same API call.
+- TypeReader, handle feture about System.Type
+- ScriptAPIElement, display info base on MemberInfo/System.Type
+
+### Refactored.
+- DSTypeField, better search method and view
+
+### Fixed.
+- DocFuncDisplay error on wrong format.
+- DocEditMatrix error on zero col/row.
+
+### Obsolete.
+- DocFuncDisplay
+
 ## [2.1.0] -2023-11-05
 ### This version change some API about DocStyle VisualElement.
 ### You need to add a Attribute to your CustomDocEditVisual after this version.

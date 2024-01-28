@@ -20,13 +20,12 @@ MonoBehaviour:
     TextData:
     - In Progress
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 8
     JsonData: '{"num":1}'
     TextData:
-    - Code Cleaning
-    - API Docs
+    - Animation of VisualElement
+    - Improve DocEditor over resize while content contains image
     ObjsData:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
@@ -55,33 +54,25 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - TODO
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 8
     JsonData: '{"num":9}'
     TextData:
-    - Other programming language parser
     - More default Theme
-    - Improve to markdown
     - Imporve tutorial
-    - Improve Search function
     - UIElement Extension Docs
     - Launguage translation
-    - Codeblock to markdown
-    - Previous/Next page in DocBookVisual
     ObjsData:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
@@ -98,9 +89,17 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
-  IntroMode: 1
-  OuttroMode: 1
-  IntroDuration: 200
-  OuttroDuration: 200
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - Maybe
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 8
+    JsonData: 
+    TextData:
+    - Other programming language parser
+    - Full implement of ToMarkDown()
+    ObjsData: []
+    VisualVersion: 0

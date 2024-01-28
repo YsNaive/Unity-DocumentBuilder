@@ -43,7 +43,10 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     var info = ScriptableObject.CreateInstance<SOScriptAPIInfo>();
                     info.TargetType = type;
                     target = info;
-                    AssetDatabase.CreateAsset(info, $"{folderField.value}/{TypeReader.GetGenericName(type)}.asset");
+                    var assetName = type.Name;
+                    if (type.Namespace != null)
+                        assetName = $"{type.Namespace}.{assetName}";
+                    AssetDatabase.CreateAsset(info, $"{folderField.value}/{assetName}.asset");
                     AssetDatabase.Refresh();
                     ScriptAPIInfoHolder.Infos.Add(type, target);
                     init();

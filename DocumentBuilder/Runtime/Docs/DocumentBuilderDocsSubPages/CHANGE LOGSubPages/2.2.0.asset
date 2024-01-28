@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f84ab4ec20274e86f91d6e2a30257, type: 3}
+  m_Name: 2.2.0
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
+  SubPages: []
+  Components:
+  - VisualID: 1
+    JsonData: 
+    TextData:
+    - 2.2.0
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: '{"Type":3}'
+    TextData:
+    - This version has reconstructed the way the ScriptingAPI is edited. As a result,
+      the details and invocation of functions related to this API may be affected.
+      Please be mindful of any update requirements.
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - Affected API
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: 
+    TextData:
+    - "- DocumentBuilderParser.CalXXXTypeName() move into TypeReader as\r\n    -
+      TypeReader.GetName()\r\n    - TypeReader.GetSignature()\r\n    - TypeReader.GetNestedName()\r\n   
+      - TypeReader.GetGenericName()\r\n    - TypeReader.GetAccessLevel()\r\n    -
+      TypeReader.GetPrefix()\r\n- DocRuntime.FindAllTypesWhere()\n    - TypeReader.FindAllTypesWhere()\r\n-
+      Animation Feture on \r\n    - DocVisual\r\n    - DocEditVisual\r\n    - DocPage\r\n   
+      - DocPageVisual\r\n    - DocBookVisual"
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - Delete.
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 2
+    JsonData: '{"Type":2}'
+    TextData:
+    - 'In the upcoming plan, adjustments will be made to the style, animations, and
+      other aspects of the VisualElement. Therefore, the below content will be temporarily
+      removed.
+
+      - Default DocStyle except DarkTheme
+
+      - Animation part
+      on DocType'
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - Add.
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 8
+    JsonData: 
+    TextData:
+    - ScriptAPI Edit and View
+    - DocComponentProperty
+    - TypeReader
+    - ScriptAPIElement
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - Refactored.
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 8
+    JsonData: 
+    TextData:
+    - DSTypeField
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - Fixed.
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 8
+    JsonData: 
+    TextData:
+    - DocFuncDisplay
+    - DocEditMatrix
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 1
+    JsonData: '{"Level":2}'
+    TextData:
+    - Obsolete.
+    ObjsData: []
+    VisualVersion: 0
+  - VisualID: 8
+    JsonData: 
+    TextData:
+    - DocFuncDisplay
+    ObjsData: []
+    VisualVersion: 0

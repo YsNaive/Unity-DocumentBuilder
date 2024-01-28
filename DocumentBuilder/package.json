@@ -1,6 +1,6 @@
 {
     "name": "com.naive.documentbuilder",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "displayName": "Document Builder",
     "description": "This is package that can build up yor documentation in Unity.",
     "unity": "2021.3.29f1",
@@ -18,5 +18,4 @@
       "name": "Naive",
       "email": "yi.shi.4589@gmail.com"
     }
-  }
-  
+}

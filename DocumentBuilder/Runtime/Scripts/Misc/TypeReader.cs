@@ -46,16 +46,17 @@ namespace NaiveAPI.DocumentBuilder
         public const BindingFlags DeclaredPrivateStatic   = BindingFlags.NonPublic | BindingFlags.Static   | BindingFlags.DeclaredOnly;
 
         public static readonly Dictionary<Type, string> TypeNameTable = new Dictionary<Type, string> {
-            { typeof(string) , "string"},
-            { typeof(void), "void" },
-            { typeof(float), "float" },
-            { typeof(int), "int" },
-            { typeof(uint), "uint" },
-            { typeof(short), "short" },
-            { typeof(ushort), "ushort" },
-            { typeof(double), "double" },
-            { typeof(long), "long" },
-            { typeof(bool), "bool" }};
+            { typeof(void)  , "void"    },
+            { typeof(string), "string"  },
+            { typeof(float) , "float"   },
+            { typeof(int)   , "int"     },
+            { typeof(uint)  , "uint"    },
+            { typeof(short) , "short"   },
+            { typeof(ushort), "ushort"  },
+            { typeof(double), "double"  },
+            { typeof(long)  , "long"    },
+            { typeof(ulong) , "ulong"   },
+            { typeof(bool)  , "bool"   }};
         public static string GetPrefix(Type type)
         {
             var result = "";

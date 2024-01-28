@@ -57,8 +57,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             root.Add(splitView);
             typeField.RegisterValueChangedCallback(evt =>
             {
-                if (evt.newValue == null) return;
                 MidPanel.Clear();
+                if (evt.newValue == null) return;
                 MidPanel.Add(new ScriptAPIField(evt.newValue));
             });
             LeftPanel.Add(typeField);

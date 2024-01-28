@@ -175,6 +175,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 editorContainer.Clear();
                 var editor = Editor.CreateEditor(e.TargetPage) as SODocPageEditor;
                 var editorVisual = editor.CreateInspectorGUI();
+                var space = new VisualElement();
+                space.style.marginBottom = Screen.height / 2.5f;
+                editorVisual.Add(space);
                 editor.IconField.RegisterValueChangedCallback(e =>
                 {
                     pageMenu.Selecting.Repaint();
