@@ -1,16 +1,12 @@
-using NaiveAPI;
 using NaiveAPI.DocumentBuilder;
 using NaiveAPI_UI;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Debug = UnityEngine.Debug;
 
 namespace NaiveAPI_Editor.DocumentBuilder
 {

@@ -1,7 +1,5 @@
 using NaiveAPI_UI;
-using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder
 {

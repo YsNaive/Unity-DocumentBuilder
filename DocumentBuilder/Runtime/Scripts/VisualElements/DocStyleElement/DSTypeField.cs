@@ -65,6 +65,7 @@ namespace NaiveAPI.DocumentBuilder
             popup.style.SetIS_Style(new ISBorder(DocStyle.Current.FrontgroundColor, 1));
             popup.style.minHeight = DocStyle.Current.LineHeight;
             popup.style.minWidth = DocStyle.Current.LabelWidth;
+            popup.style.backgroundColor = DocStyle.Current.BackgroundColor;
             container = new DSScrollView();
             container.RegisterCallback<GeometryChangedEvent>(evt =>
             {
@@ -79,6 +80,7 @@ namespace NaiveAPI.DocumentBuilder
             settingsPopup.style.SetIS_Style(new ISBorder(DocStyle.Current.FrontgroundColor, 1));
             settingsPopup.style.minHeight = DocStyle.Current.LineHeight;
             settingsPopup.style.minWidth = DocStyle.Current.LabelWidth;
+            settingsPopup.style.backgroundColor = DocStyle.Current.BackgroundColor;
 
             var toggle = new DSToggle("Ignore Case");
             toggle.value = IgnoreCase;
@@ -200,13 +202,10 @@ namespace NaiveAPI.DocumentBuilder
                 popup.Close();
             });
 
-            var editBtn = new DSButton();
+            var editBtn = new VisualElement();
             editBtn.style.SetIS_Style(DocStyle.Current.IconStyle);
             editBtn.style.backgroundImage = new StyleBackground(DocStyle.Current.GearSprite);
-            editBtn.clicked += () =>
-            {
-                openPopup(settingsPopup);
-            };
+            editBtn.RegisterCallback<PointerDownEvent>(evt => { openPopup(settingsPopup); });
             searchField.Add(editBtn);
         }
         void openPopup(PopupElement popup)

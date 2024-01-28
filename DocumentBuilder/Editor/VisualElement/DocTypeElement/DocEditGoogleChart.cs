@@ -1,8 +1,4 @@
 using NaiveAPI_Editor.DocumentBuilder;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Graphs;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace NaiveAPI.DocumentBuilder

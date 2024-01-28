@@ -1,8 +1,5 @@
-using NaiveAPI_UI;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 namespace NaiveAPI.DocumentBuilder

@@ -146,7 +146,7 @@ MonoBehaviour:
     NumberColor: {r: 0.6, g: 0.8, b: 0.6, a: 1}
     ControlColor: {r: 0.84, g: 0.45, b: 0.61, a: 1}
     CommentsColor: {r: 0.4, g: 0.6, b: 0.35, a: 1}
-    CodeBackgroundColor: {r: 0.08, g: 0.08, b: 0.09, a: 1}
+    CodeBackgroundColor: {r: 0.09654679, g: 0.09654679, b: 0.11320752, a: 1}
     CodeTextColor: {r: 0.85, g: 0.85, b: 0.85, a: 1}
     SuccessColor: {r: 0.2, g: 0.3, b: 0.2, a: 1}
     WarningColor: {r: 0.3, g: 0.3, b: 0.2, a: 1}
@@ -162,7 +162,7 @@ MonoBehaviour:
     LabelWidth:
       Unit: 0
       Value: 120
-    ArrowIcon:
+    IconStyle:
       EnableMask: 609
       Display:
         rid: -2
@@ -173,19 +173,21 @@ MonoBehaviour:
       Align:
         rid: -2
       Size:
-        rid: 79920231271366673
+        rid: 3933373726834294784
       Margin:
-        rid: 79920231271366678
+        rid: 3933373726834294786
       Padding:
         rid: -2
       Text:
         rid: -2
       Background:
-        rid: 79920231271366674
+        rid: 3933373726834294785
       Border:
         rid: -2
       Radius:
         rid: -2
+    ArrowSprite: {fileID: 21300000, guid: 439f66e45eaca4a43b7f48fc334f7254, type: 3}
+    GearSprite: {fileID: 21300000, guid: 47d56ed579389e345bb1d3d480cac7e9, type: 3}
     ScrollerWidth:
       Unit: 0
       Value: 12
@@ -197,52 +199,52 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 79920231271366673
+    - rid: 3933373726834294784
       type: {class: ISSize, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Width:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 14
+            Value: 20
         Height:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 14
-    - rid: 79920231271366674
+            Value: 20
+    - rid: 3933373726834294785
       type: {class: ISBackground, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Color: {r: 0, g: 0, b: 0, a: 0}
-        ImageTint: {r: 0.54901963, g: 0.54901963, b: 0.6, a: 1}
-        sprite: {fileID: 21300000, guid: 439f66e45eaca4a43b7f48fc334f7254, type: 3}
+        ImageTint: {r: 0.6028302, g: 0.6229198, b: 0.6698113, a: 1}
+        sprite: {fileID: 0}
         texture: {fileID: 0}
         renderTexture: {fileID: 0}
         vectorImage: {fileID: 0}
         ScaleMode: 0
-    - rid: 79920231271366678
+    - rid: 3933373726834294786
       type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:
         Left:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 3
+            Value: 0
         Top:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 3
+            Value: 0
         Right:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 3
+            Value: 0
         Bottom:
           Keyword: 0
           Value:
             Unit: 0
-            Value: 3
+            Value: 0
     - rid: 8869985085687332875
       type: {class: ISMargin, ns: NaiveAPI_UI, asm: Naive.UIElementExtension.Runtime}
       data:

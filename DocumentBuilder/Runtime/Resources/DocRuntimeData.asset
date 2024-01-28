@@ -14,14 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentStyle: {fileID: 11400000, guid: 4f4cc2f18f09caa42a5337654ad9e793, type: 2}
   m_IgnoreAssemblyName:
-  - Mono.Security
-  - Naive.DocumentBuilder.Sample
+  - unityplastic
   - asset-store-tools-editor
   - Bee.BeeDriver
+  - log4net
   - ExCSS.Unity
   - Mono.Posix
+  - Mono.Security
+  - Naive.DocumentBuilder.Sample
+  - nunit.framework
   - PlayerBuildProgramLibrary.Data
   - ReportGeneratorMerged
-  - System.ServiceModel.Internals
-  - unityplastic
   - System.Numerics
+  - System.ServiceModel.Internals
+  - Unity.2D.Sprite.Editor
+  - Unity.Cecil
+  - Unity.CollabProxy.Editor
+  - Unity.EditorCoroutines.Editor
+  - Unity.Performance.Profile-Analyzer.Editor
+  - Unity.PlasticSCM.Editor
+  - Unity.Rider.Editor
+  - Unity.Settings.Editor
+  - Unity.Plastic.Antlr3.Runtime
+  - Unity.Plastic.Newtonsoft.Json
+  - Unity.TestTools.CodeCoverage.Editor
+  - Unity.TestTools.CodeCoverage.Editor.OpenCover.Model
+  - Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection
+  - Unity.TextMeshPro.Editor
+  - Unity.Timeline.Editor
+  - Unity.VisualScripting.Core.Editor
+  - Unity.VisualScripting.Flow.Editor
+  - Unity.VisualScripting.SettingsProvider.Editor
+  - Unity.VisualScripting.Shared.Editor
+  - Unity.VisualScripting.State.Editor
+  - Unity.VisualStudio.Editor
+  - Unity.VSCode.Editor
+  - UnityEditor.UIElementsSamplesModule
