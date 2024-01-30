@@ -16,8 +16,8 @@ MonoBehaviour:
   SubPages:
   - {fileID: 11400000, guid: 4d5723fc8ce059843811ed4d65fe2bf2, type: 2}
   - {fileID: 11400000, guid: 1aeaadc18195c9e4991d9047c415abe7, type: 2}
+  - {fileID: 11400000, guid: 6d5d5e7714fce2145ab3aee48be5d3be, type: 2}
   - {fileID: 11400000, guid: 60222d52b2a432b4f8dc35c5d246fd27, type: 2}
-  - {fileID: 11400000, guid: 0627d091661d3054f95bd5a2a33d333c, type: 2}
   - {fileID: 11400000, guid: 0d148262349f444438d080ba64b51cab, type: 2}
   - {fileID: 11400000, guid: 15973c28bbcb1704b9ea19594d4f616f, type: 2}
   - {fileID: 11400000, guid: 3a09a4ab9c627fb40a51de3d59a6abe7, type: 2}
@@ -27,14 +27,12 @@ MonoBehaviour:
     TextData:
     - Document Builder
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 5
     JsonData: '{"scale":-1.0,"url":"https://drive.google.com/uc?id=135flwh2lTftow6tz-3X4HIfEhRgrbNLR","base64":"","mode":0}'
     TextData: []
     ObjsData:
     - {fileID: 0}
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 6
     JsonData: '{"height":400,"url":"https://github.com/YsNaive/Unity-DocumentBuilder","mode":1,"IntroAniMode":1,"OuttroAniMode":1,"IntroDuration":250,"OuttroDuration":250}'
@@ -43,7 +41,6 @@ MonoBehaviour:
     - Git Hub Page
     ObjsData:
     - {fileID: 0}
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 3
     JsonData: '{"row":2,"col":2,"anchors":[3,3],"mode":1}'
@@ -53,20 +50,17 @@ MonoBehaviour:
     - Discord
     - .ysnaive
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - Feature
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 8
     JsonData: '{"num":6}'
@@ -190,20 +184,17 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
     - {fileID: 2800000, guid: 7c96eb4a8f2b4ba48a012519285cd6ab, type: 3}
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 0
     JsonData: 
     TextData: []
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 1
     JsonData: 
     TextData:
     - What's New in 2.0?
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 2
     JsonData: 
@@ -215,7 +206,6 @@ MonoBehaviour:
       2.0 is not compatible with the older 1.x version. If you have a specific requirement
       for the older version, you can download it from the GitHub page.
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 2
     JsonData: 
@@ -227,7 +217,6 @@ MonoBehaviour:
       version empowers you to tailor the documentation to your specific needs and
       requirements, enhancing the overall user experience.\r"
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
   - VisualID: 2
     JsonData: 
@@ -237,9 +226,4 @@ MonoBehaviour:
       The built-in components also come with default Intro and Outtro animations,
       making it easy to add dynamic and engaging visual effects to your documents.
     ObjsData: []
-    AniSettings: 01000000fa00000001000000fa000000
     VisualVersion: 0
-  IntroMode: 3
-  OuttroMode: 3
-  IntroDuration: 50
-  OuttroDuration: 20

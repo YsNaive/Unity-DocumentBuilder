@@ -207,6 +207,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 else
                     pageMenu.Selecting = preSelect;
             }));
+            EditorUtility.SetDirty(preSelect.TargetPage);
         }
         void deletePage()
         {
@@ -342,6 +343,7 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     }
 
                     DocPageEditorUtils.MovePageAsset(pageToMove, DocPageEditorUtils.ValidSubPageFolderPath(toPage));
+                    EditorUtility.SetDirty(pageToMove);
                     pageMenu?.RepaintMenuHierarchy();
                     initPageMenuExtend();
                 }
@@ -527,7 +529,8 @@ namespace NaiveAPI_Editor.DocumentBuilder
             animation.Start();
             msg.Fade(1, 750);
             var addBtn = (Button)rightTopContainer[0];
-            addBtn.clicked += () =>
+            Action addCallback = null;
+            addCallback = () =>
             {
                 if(rightTopContainer.Contains(msg))
                     rightTopContainer.Remove(msg);
@@ -535,7 +538,9 @@ namespace NaiveAPI_Editor.DocumentBuilder
                 var btnHor = editorContainer[0][editorContainer[0].childCount - 1];
                 editorContainer.SetEnabled(true);
                 btnHor[1].SetEnabled(false);
-                editorContainer.Q<DocPageCreator>().callback += (val) =>
+                Action<SODocPage> callback = null;
+                var creater = editorContainer.Q<DocPageCreator>();
+                callback = (val) =>
                 {
 
                     editorContainer.Clear();
@@ -561,12 +566,11 @@ namespace NaiveAPI_Editor.DocumentBuilder
                     container[2].style.marginTop = DocStyle.Current.LineHeight;
                     container[2].style.marginBottom = DocStyle.Current.LineHeight;
                     rootVisualElement.Add(container);
-                };
-            };
-
-
+                    creater.callback -= callback;
+                };  creater.callback += callback;
+                addBtn.clicked -= addCallback;
+            };  addBtn.clicked += addCallback;
         }
-
         #endregion
     }
 }

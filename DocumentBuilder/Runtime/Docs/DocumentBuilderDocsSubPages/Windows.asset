@@ -18,7 +18,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 578e7024e63c9ec4684b73a323028f6e, type: 2}
   - {fileID: 11400000, guid: a5086e1c5ffb2214e8865fdc764d8e90, type: 2}
   Components: []
-  IntroMode: 1
-  OuttroMode: 1
-  IntroDuration: 200
-  OuttroDuration: 200
