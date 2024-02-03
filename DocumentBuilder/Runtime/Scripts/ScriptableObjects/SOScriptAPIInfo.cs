@@ -40,7 +40,11 @@ namespace NaiveAPI.DocumentBuilder
             m_MemberInfos.Add(newInfo);
             return newInfo;
         }
-
+#if UNITY_EDITOR
+        /// <summary>
+        /// <b>This Method Only Callable in Editor</b>
+        /// </summary>
+        /// <returns></returns>
         public static SerializedProperty GetMemberInfo(SerializedObject so, ICustomAttributeProvider info)
         {
             var id = GetMemberID(info);
@@ -60,7 +64,7 @@ namespace NaiveAPI.DocumentBuilder
             vals.GetArrayElementAtIndex(j).FindPropertyRelative("IsDisplay").boolValue = new ScriptAPIMemberInfo(info).IsDisplay;
             return vals.GetArrayElementAtIndex(j);
         }
-
+#endif
         public void OnAfterDeserialize()
         {
             TargetType = Type.GetType(s_type);

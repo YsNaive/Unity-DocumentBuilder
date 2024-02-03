@@ -1,6 +1,6 @@
 {
     "name": "com.naive.documentbuilder",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "displayName": "Document Builder",
     "description": "This is package that can build up yor documentation in Unity.",
     "unity": "2021.3.29f1",
@@ -12,7 +12,8 @@
       "Annotation",
       "Editor",
       "Runtime",
-      "Teams"
+      "Teams",
+      "Scripting API"
     ],
     "author": {
       "name": "Naive",

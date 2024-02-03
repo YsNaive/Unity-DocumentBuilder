@@ -56,7 +56,8 @@ namespace NaiveAPI.DocumentBuilder
             { typeof(double), "double"  },
             { typeof(long)  , "long"    },
             { typeof(ulong) , "ulong"   },
-            { typeof(bool)  , "bool"   }};
+            { typeof(bool)  , "bool"    },
+            { typeof(object), "object" }};
         public static string GetPrefix(Type type)
         {
             var result = "";

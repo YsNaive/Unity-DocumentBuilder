@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1] -2024-02-03
+Fixed.
+- EditorNamespace using in TypeField
+- EditorNamespace using in SOScriptAPIInfo
+- DSToggle not apply style
+- Add object to TypeReader name table
+
 ## [2.2.0] -2024-01-28
 ### **<u>IMPORTANT</u>**
 This version has reconstructed the way the ScriptingAPI is edited. As a result, the details and invocation of functions related to this API may be affected. Please be mindful of any update requirements.

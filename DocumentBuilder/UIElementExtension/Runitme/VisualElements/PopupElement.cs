@@ -10,7 +10,6 @@ namespace NaiveAPI_UI
     {
         public bool IsOpend => panel != null;
         public bool AutoClose = true;
-        private bool isHoverOnPopup = false;
         public event Action<IPanel> OnOpend;
         public event Action OnClosed;
         public VisualElement CoverMask;

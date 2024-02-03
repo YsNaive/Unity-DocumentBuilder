@@ -13,7 +13,9 @@ namespace NaiveAPI.DocumentBuilder
             style.minHeight = DocStyle.Current.LineHeight;
             style.SetIS_Style(DocStyle.Current.MainTextStyle);
             var checkMark = this.Q("unity-checkmark");
-            checkMark.style.SetIS_Style(new ISBorder(DocStyle.Current.FrontgroundColor, DocStyle.Current.LineHeight.Value * .05f));
+            checkMark.style.SetIS_Style(new ISBorder(DocStyle.Current.SubBackgroundColor, 1f));
+            checkMark.style.backgroundColor = DocStyle.Current.InputFieldStyle.Background.ImageTint;
+            checkMark.style.unityBackgroundImageTintColor = DocStyle.Current.MainText.Color;
             checkMark.style.width = DocStyle.Current.LineHeight;
             checkMark.style.height = DocStyle.Current.LineHeight;
             checkMark.style.scale = new Scale(new Vector3(.7f, .7f, .7f));
